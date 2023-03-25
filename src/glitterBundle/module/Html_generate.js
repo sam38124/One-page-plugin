@@ -3,6 +3,7 @@ export class HtmlGenerate {
     constructor(setting, hover = []) {
         this.setting = setting;
         const editContainer = window.glitter.getUUID();
+        let lastIndex = undefined;
         setting.map((dd) => {
             dd.css = dd.css ?? {};
             dd.css.style = dd.css.style ?? {};
@@ -28,51 +29,6 @@ export class HtmlGenerate {
                 }
                 catch (e) {
                     console.log(`${e.message}<br>${e.stack}<br>${e.line}`);
-                }
-            };
-            dd.styleManager = {
-                get: (tag) => {
-                    return dd.css.style[tag.tag] ?? tag.def;
-                },
-                editor: (gvc, array, title = "設計樣式") => {
-                    return gvc.bindView(() => {
-                        const id = gvc.glitter.getUUID();
-                        return {
-                            bind: id,
-                            view: () => {
-                                if (Object.keys(array).length > 0) {
-                                    if (!Object.values(array).find((d2) => {
-                                        return d2.tag === dd.selectStyle;
-                                    })) {
-                                        dd.selectStyle = Object.values(array)[0].tag;
-                                    }
-                                    const select = Object.values(array).find((d2) => {
-                                        return d2.tag === dd.selectStyle;
-                                    });
-                                    return `
-<div class="alert alert-warning">
-<h3 class="text-white" style="font-size: 16px;">${title}</h3>
-<select class="form-control form-select" onchange="${gvc.event((e) => {
-                                        dd.selectStyle = e.value;
-                                        dd.refreshComponent();
-                                    })}">
-${Object.values(array).map((d2) => {
-                                        return `<option value="${d2.tag}" ${(dd.selectStyle === d2.tag) ? `selected` : ``}>${d2.title}</option>`;
-                                    }).join('')}
-</select>
-${HtmlGenerate.share.styleEditor.render({
-                                        tag: select.tag, widget: dd, gvc: gvc, title: select.title, def: select.def
-                                    })}
-</div>
-`;
-                                }
-                                else {
-                                    return ``;
-                                }
-                            },
-                            divCreate: {}
-                        };
-                    });
                 }
             };
             return dd;
@@ -149,18 +105,24 @@ ${HtmlGenerate.share.styleEditor.render({
                                         let k = ['margin-top', 'margin-bottom', 'margin-left', 'margin-right'];
                                         return `${k[index]}:${(dd.data[d2] && dd.data[d2] !== '') ? dd.data[d2] : '0'};`;
                                     }))} ${dd.style ?? ''} ${(hover.indexOf(dd.id) !== -1) ? `border: 4px solid dodgerblue;border-radius: 5px;box-sizing: border-box;` : ``}
-                                     ${dd.styleManager.get({ title: '區塊樣式', tag: 'containerStyle', def: `` })}
                                     `,
-                                    class: `position-relative ${dd.class ?? ''}
-                                      ${dd.styleManager.get({ title: '區塊樣式', tag: 'containerClass', def: `` })}`
+                                    class: `position-relative ${dd.class ?? ''}`
                                 },
                                 onCreate: () => {
-                                    if (hover.indexOf(dd.id) !== -1) {
+                                    if (hover.indexOf(dd.id) !== -1 && lastIndex !== dd.id) {
+                                        lastIndex = dd.id;
                                         console.log('hover');
-                                        setTimeout(() => {
-                                            const scrollTOP = (gvc.glitter.$('#' + gvc.id(component)).offset().top) - (gvc.glitter.$('html').offset().top) + (gvc.glitter.$('html').scrollTop());
-                                            gvc.glitter.$('html').animate({ scrollTop: scrollTOP - gvc.glitter.$('html').height() / 2 }, 200);
-                                        }, 100);
+                                        gvc.glitter.$('html').get(0).scrollTo({
+                                            top: 0,
+                                            left: 0,
+                                            behavior: 'instant'
+                                        });
+                                        const scrollTOP = (gvc.glitter.$('#' + gvc.id(component)).offset().top) - (gvc.glitter.$('html').offset().top) + (gvc.glitter.$('html').scrollTop());
+                                        gvc.glitter.$('html').get(0).scrollTo({
+                                            top: scrollTOP - gvc.glitter.$('html').height() / 2,
+                                            left: 0,
+                                            behavior: 'instant'
+                                        });
                                     }
                                     console.log('onCreate');
                                 }
@@ -234,51 +196,6 @@ ${HtmlGenerate.share.styleEditor.render({
                     }
                     else {
                         return gvc.map((option.setting ?? setting).map((dd, index) => {
-                            dd.styleManager = {
-                                get: (tag) => {
-                                    return dd.css.style[tag.tag] ?? tag.def;
-                                },
-                                editor: (gvc, array, title = "設計樣式") => {
-                                    return gvc.bindView(() => {
-                                        const id = gvc.glitter.getUUID();
-                                        return {
-                                            bind: id,
-                                            view: () => {
-                                                if (Object.keys(array).length > 0) {
-                                                    if (!Object.values(array).find((d2) => {
-                                                        return d2.tag === dd.selectStyle;
-                                                    })) {
-                                                        dd.selectStyle = Object.values(array)[0].tag;
-                                                    }
-                                                    const select = Object.values(array).find((d2) => {
-                                                        return d2.tag === dd.selectStyle;
-                                                    });
-                                                    return `
-<div class="alert alert-warning">
-<h3 class="text-white" style="font-size: 16px;">${title}</h3>
-<select class="form-control form-select" onchange="${gvc.event((e) => {
-                                                        dd.selectStyle = e.value;
-                                                        dd.refreshComponent();
-                                                    })}">
-${Object.values(array).map((d2) => {
-                                                        return `<option value="${d2.tag}" ${(dd.selectStyle === d2.tag) ? `selected` : ``}>${d2.title}</option>`;
-                                                    }).join('')}
-</select>
-${HtmlGenerate.share.styleEditor.render({
-                                                        tag: select.tag, widget: dd, gvc: gvc, title: select.title, def: select.def
-                                                    })}
-</div>
-`;
-                                                }
-                                                else {
-                                                    return ``;
-                                                }
-                                            },
-                                            divCreate: {}
-                                        };
-                                    });
-                                }
-                            };
                             try {
                                 const component = gvc.glitter.getUUID();
                                 dd.refreshAllParameter = dd.refreshAllParameter ?? {
@@ -367,14 +284,12 @@ ${gvc.bindView({
                                             return ``;
                                         }
                                         try {
-                                            return gvc.map([`
-                                                <div class="alert-dark alert">
+                                            return gvc.map([`<div class="alert-dark alert">
 <h3 class="text-white  m-1" style="font-size: 16px;">模塊路徑</h3>
 <h3 class="text-warning alert-primary  m-1" style="font-size: 14px;">${dd.js}</h3>
 <h3 class="text-white  m-1 mt-2" style="font-size: 16px;">函式路徑</h3>
 <h3 class="text-warning alert-primary m-1" style="font-size: 14px;">${dd.type}</h3>
-</div>
-                                                `,
+</div>`,
                                                 HtmlGenerate.editeInput({
                                                     gvc: gvc,
                                                     title: '模塊名稱',
@@ -392,78 +307,12 @@ ${gvc.bindView({
                                                         dd.expandStyle = !dd.expandStyle;
                                                         gvc.notifyDataChange(uid);
                                                     });
-                                                    const layout = {
-                                                        containerClass: { title: 'Class', tag: 'containerClass', def: `` },
-                                                        containerStyle: { title: 'Style', tag: 'containerStyle', def: `` }
-                                                    };
                                                     return {
                                                         bind: uid,
                                                         view: () => {
-                                                            return `
-${dd.styleManager.editor(gvc, layout, "容器設計樣式")}`;
-                                                        },
-                                                        divCreate: { class: 'mt-2' }
-                                                    };
-                                                }),
-                                                gvc.bindView(() => {
-                                                    const uid = gvc.glitter.getUUID();
-                                                    const toggleEvent = gvc.event(() => {
-                                                        dd.expandStyle = !dd.expandStyle;
-                                                        gvc.notifyDataChange(uid);
-                                                    });
-                                                    return {
-                                                        bind: uid,
-                                                        view: () => {
-                                                            return `<div class="w-100  rounded p-2 " style="background-color: #0062c0;">
-<div class="w-100 d-flex p-0 align-items-center" onclick="${toggleEvent}" style="cursor: pointer;"><h3 style="font-size: 16px;" class="m-0 p-0">容器版面設計</h3>
-<div class="flex-fill"></div>
-${(dd.expandStyle ? `<div style="cursor: pointer;" >收合<i class="fa-solid fa-up ms-2 text-white"></i></div>` : `<div style="cursor: pointer;">展開<i class="fa-solid fa-down ms-2 text-white"></i></div>\``)}
-</div>
-
-<div class="d-flex flex-wrap align-items-center mt-2 ${(dd.expandStyle) ? `` : `d-none`}">
-<span class="w-100 mb-2 fw-500" style="color: orange;">外間距 [ 單位 : %,PX ]</span>
-${gvc.map(['上', '下', '左', '右'].map((d2, index) => {
-                                                                let key = ['marginT', 'marginB', 'marginL', 'marginR'][index];
-                                                                return `<div class="d-flex align-items-center mb-2" style="width: calc(50%);"><span class="mx-2">${d2}</span>
-<input class="form-control" value="${dd.data[key] ?? ''}" onchange="${gvc.event((e) => {
-                                                                    dd.data[key] = e.value;
-                                                                    option.refreshAll();
-                                                                    dd.refreshAll();
-                                                                })}"></div>`;
-                                                            }))}
-<span class="w-100 mb-2 fw-500" style="color: orange;">內間距 [ 單位 : %,PX ]</span>
-${gvc.map(['上', '下', '左', '右'].map((d2, index) => {
-                                                                let key = ['paddingT', 'paddingB', 'paddingL', 'paddingR'][index];
-                                                                return `<div class="d-flex align-items-center mb-2" style="width: calc(50%);"><span class="mx-2">${d2}</span>
-<input class="form-control" value="${dd.data[key] ?? ''}" onchange="${gvc.event((e) => {
-                                                                    dd.data[key] = e.value;
-                                                                    option.refreshAll();
-                                                                    dd.refreshAll();
-                                                                })}"></div>`;
-                                                            }))}
-${HtmlGenerate.editeInput({
-                                                                gvc: gvc,
-                                                                title: "Class",
-                                                                default: dd.class ?? "",
-                                                                placeHolder: ``,
-                                                                callback: (text) => {
-                                                                    dd.class = text;
-                                                                    option.refreshAll();
-                                                                    dd.refreshAll();
-                                                                }
-                                                            })}
-${HtmlGenerate.editeText({
-                                                                gvc: gvc,
-                                                                title: "Style",
-                                                                default: dd.style ?? "",
-                                                                placeHolder: ``,
-                                                                callback: (text) => {
-                                                                    dd.style = text;
-                                                                    option.refreshAll();
-                                                                    dd.refreshAll();
-                                                                }
-                                                            })}
-</div></div>`;
+                                                            return gvc.glitter.htmlGenerate.styleEditor(dd).editor(gvc, () => {
+                                                                option.refreshAll();
+                                                            }, "容器設計樣式");
                                                         },
                                                         divCreate: { class: "mt-2" }
                                                     };
@@ -510,6 +359,39 @@ ${e.line}
             return JSON.stringify(setting);
         };
     }
+    static styleEditor(data) {
+        return {
+            editor: (gvc, widget, title) => {
+                const glitter = window.glitter;
+                return `
+<button type="button" class="btn btn-dark w-100 mt-2" onclick="${gvc.event(() => {
+                    glitter.openDiaLog("glitterBundle/plugins/dialog-style-editor.js", "dialog-style-editor", {
+                        callback: () => {
+                            if (typeof widget === 'function') {
+                                widget();
+                            }
+                            else {
+                                widget.refreshComponent();
+                            }
+                        },
+                        data: data
+                    });
+                })}">${title ?? "設計樣式"}</button>`;
+            },
+            class: () => {
+                return data.class ?? "";
+            },
+            style: () => {
+                let styleString = [data.style];
+                (data.styleList ?? []).map((dd) => {
+                    Object.keys(dd.data).map((d2) => {
+                        styleString.push([d2, dd.data[d2]].join(":"));
+                    });
+                });
+                return styleString.join(';');
+            }
+        };
+    }
     static editeInput(obj) {
         return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
 <input class="form-control" placeholder="${obj.placeHolder}" onchange="${obj.gvc.event((e) => {
@@ -535,6 +417,7 @@ HtmlGenerate.saveEvent = () => {
 HtmlGenerate.setHome = (obj) => {
     const glitter = Glitter.glitter;
     glitter.setHome('glitterBundle/plugins/html-render.js', obj.tag, {
+        page_config: obj.page_config ?? {},
         config: obj.config,
         editMode: obj.editMode,
         data: obj.data

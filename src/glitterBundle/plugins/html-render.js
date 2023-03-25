@@ -10,7 +10,9 @@ init((gvc, glitter, gBundle) => {
                         ||
                             new glitter.htmlGenerate(gBundle.config, []).render(gvc);
                 },
-                divCreate: {}
+                divCreate: {
+                    class: gBundle.page_config.classText ?? "", style: `min-height: 100vh;min-width: 100vw;${gBundle.page_config.styleText ?? ""}`
+                }
             });
         }
     };
