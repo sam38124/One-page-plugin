@@ -22,8 +22,3 @@
                         btn: {name: "觀看作品案例", link: "#project"},
                     }
                 }
-
-
-                解析錯誤:Cannot read properties of undefined (reading 'color')
-                TypeError: Cannot read properties of undefined (reading 'color') at http://127.0.0.1:3080/lionHtmlExtension/one-page/style-1.js:1300:129 at Array.map () at http://127.0.0.1:3080/lionHtmlExtension/one-page/style-1.js:1297:55 at Glitter.print (http://127.0.0.1:3080/liondesign/glitterBundle/Glitter.js:728:20) at http://127.0.0.1:3080/lionHtmlExtension/one-page/style-1.js:1295:41 at Array.map () at http://127.0.0.1:3080/lionHtmlExtension/one-page/style-1.js:1279:54 at Glitter.print (http://127.0.0.1:3080/liondesign/glitterBundle/Glitter.js:728:20) at Object.view (http://127.0.0.1:3080/lionHtmlExtension/one-page/style-1.js:1277:27) at GVC.bindView (http://127.0.0.1:3080/liondesign/glitterBundle/GVController.js:195:8)
-                undefined

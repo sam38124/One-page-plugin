@@ -4787,9 +4787,6 @@
       <change afterPath="$PROJECT_DIR$/../../Glitter星澄基地/src/modules/api.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Glitter星澄基地/src/modules/editor.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Glitter星澄基地/src/modules/sweetAlert.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/base.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/official.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-2.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/android/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/android/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/android/.idea/.name" afterDir="false" />
@@ -12927,17 +12924,21 @@
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/module/PageManager.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/NaviGation.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/click-event.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/dialog-style-editor.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/editor-elem.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/html-render.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/plugin-creater.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/seo-manager.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/style-attr.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/style-editor.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/test.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/glitter-create/glitter-create/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entry.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/editor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/home/template.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/home/template.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/dist/index.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/index.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/d" beforeDir="false" afterPath="$PROJECT_DIR$/src/d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/home/template.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/home/template.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/one-page/style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/one-page/style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.ts" afterDir="false" />
@@ -19282,7 +19283,7 @@
       <change beforePath="$PROJECT_DIR$/../../../npm_library/Glitter/create.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/create.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../npm_library/Glitter/glitterdoc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../npm_library/Glitter/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../npm_library/Glitter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../npm_library/Glitter/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../npm_library/Glitter/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../npm_library/Glitter/install.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/install.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/Entry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/Entry.ts" afterDir="false" />
@@ -19381,7 +19382,7 @@
       <recent name="$PROJECT_DIR$/src/home" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.create">
+  <component name="RunManager" selected="npm.start">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/backend_default/package.json" />
       <command value="run" />
@@ -19424,10 +19425,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.start" />
         <item itemvalue="npm.build:tscAuto" />
         <item itemvalue="npm.create" />
         <item itemvalue="npm.build" />
-        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -19440,7 +19441,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679282242173</updated>
       <workItem from="1679282243578" duration="26048000" />
-      <workItem from="1679390323506" duration="107387000" />
+      <workItem from="1679390323506" duration="116857000" />
     </task>
     <servers />
   </component>

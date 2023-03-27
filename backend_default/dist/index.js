@@ -38,7 +38,7 @@ const app = (0, express_1.default)();
 })();
 Glitter.setUP(app, [
     {
-        rout: '/test',
+        rout: '/lionHtmlExtension',
         path: path_1.default.resolve(__dirname, '../../src'),
         seoManager: () => {
             return '';
