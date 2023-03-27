@@ -31,7 +31,6 @@ ClickEvent.create(import.meta.url,{
     link: {
         title: "連結跳轉",
         fun: (gvc, widget, object) => {
-            object.type=object.type??"inlink"
             return {
                 editor: () => {
                     return gvc.bindView(()=>{

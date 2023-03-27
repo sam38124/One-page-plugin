@@ -160,12 +160,12 @@ ${Editor.h3(obj.title)}
                 view:()=>{
                     if(obj.data.expand){
                         return  `<div class="w-100  rounded p-2 "  style="background: ${color}; ">
-<div class="w-100 d-flex p-0 align-items-center mb-2" onclick="${
+<div class="d-flex p-0 align-items-center mb-2 w-100"  onclick="${
                             obj.gvc.event(() => {
                                 obj.data.expand = !obj.data.expand
                                 obj.gvc.notifyDataChange(id)
                             })
-                        }" data-gs-event-1055="event" style="cursor: pointer;"><h3 style="font-size: 16px;color: lightpink;" class="m-0 p-0">${obj.title}</h3>
+                        }"  style="cursor: pointer;"><h3 style="font-size: 16px;color: lightpink;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
 <div class="flex-fill"></div>
 <div style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-white" ></i></div>
 </div>
@@ -181,7 +181,7 @@ ${
                             obj.data.expand=!obj.data.expand
                             obj.gvc.notifyDataChange(id)
                         })
-                    }" style="cursor: pointer;"><h3 style="font-size: 16px;color: lightpink;" class="m-0 p-0">${obj.title}</h3>
+                    }" style="cursor: pointer;"><h3 style="font-size: 16px;color: lightpink;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
 <div class="flex-fill"></div>
 <div style="cursor: pointer;">展開<i class="fa-solid fa-down ms-2 text-white"></i></div>
 </div>
@@ -266,7 +266,7 @@ ${obj.gvc.bindView(() => {
     public static select(obj:{
         title:string,
         gvc:any,
-        def:string,array:string[],
+        def:string,array:string[]|{title:string,value:string}[],
         callback: (text:string) => void
     }){
         const glitter=(window as any).glitter
@@ -277,7 +277,11 @@ ${Editor.h3(obj.title)}
             obj.callback(e.value)
         })}">
 ${obj.array.map((dd)=>{
-    return `<option value="${dd}" ${(dd===obj.def) ? `selected`:``}>${dd}</option>`
+    if(typeof dd === 'object'){
+        return `<option value="${dd.value}" ${(dd.value===obj.def) ? `selected`:``}>${dd.title}</option>`
+    }else{
+        return `<option value="${dd}" ${(dd===obj.def) ? `selected`:``}>${dd}</option>`
+    }
         }).join('')}
 </select>    
 `

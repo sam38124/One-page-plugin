@@ -9,5 +9,13 @@ export class Entry {
                 return src.replace(`$style1`, `https://sam38124.github.io/One-page-plugin/src`);
             }
         };
+        glitter.htmlGenerate.resourceHook = (src) => {
+            if (location.host === `127.0.0.1:3080`) {
+                return src.replace(`$style1`, `http://127.0.0.1:3080/lionHtmlExtension`);
+            }
+            else {
+                return src.replace(`$style1`, `https://sam38124.github.io/One-page-plugin/src`);
+            }
+        };
     }
 }

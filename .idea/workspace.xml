@@ -4787,6 +4787,9 @@
       <change afterPath="$PROJECT_DIR$/../../Glitter星澄基地/src/modules/api.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Glitter星澄基地/src/modules/editor.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Glitter星澄基地/src/modules/sweetAlert.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/base.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/official.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/one-page/style-2.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/android/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/android/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/android/.idea/.name" afterDir="false" />
@@ -12927,6 +12930,18 @@
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/plugin-creater.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/test.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/glitter-create/glitter-create/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entry.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/editor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/home/template.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/home/template.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/home/template.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/home/template.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page/style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page/style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" afterDir="false" />
@@ -19347,7 +19362,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/src/dialog",
+    "last_opened_file_path": "/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/src/api",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -19359,6 +19374,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/api" />
       <recent name="$PROJECT_DIR$/src/dialog" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/one-page" />
@@ -19424,7 +19440,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679282242173</updated>
       <workItem from="1679282243578" duration="26048000" />
-      <workItem from="1679390323506" duration="78736000" />
+      <workItem from="1679390323506" duration="107387000" />
     </task>
     <servers />
   </component>
@@ -19458,11 +19474,13 @@
         <option value="$PROJECT_DIR$/src/event.js" />
         <option value="$PROJECT_DIR$/src/api/base.js" />
         <option value="$PROJECT_DIR$/src/api/user.js" />
-        <option value="$PROJECT_DIR$/src/api/pageConfig.js" />
         <option value="$PROJECT_DIR$/src/dialog/ShareDialog.js" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" />
+        <option value="$PROJECT_DIR$/src/official.js" />
+        <option value="$PROJECT_DIR$/src/api/base.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-2.js" />
       </list>
     </option>
   </component>

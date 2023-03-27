@@ -7,6 +7,8 @@ import {ClickEvent} from "../glitterBundle/plugins/click-event";
 Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
     return {
         temp:{
+            title: "網站導覽列",
+            subContent: "顯示多個超連結與頁面跳轉導覽的區塊．",
             defaultData:{},
             render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
                 return {
