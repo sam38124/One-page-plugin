@@ -12934,15 +12934,6 @@
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/test.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/glitter-create/glitter-create/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/index.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/index.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/d" beforeDir="false" afterPath="$PROJECT_DIR$/src/d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/home/template.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/home/template.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/one-page/style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/one-page/style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" afterDir="false" />
@@ -19441,7 +19432,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679282242173</updated>
       <workItem from="1679282243578" duration="26048000" />
-      <workItem from="1679390323506" duration="116857000" />
+      <workItem from="1679390323506" duration="118386000" />
     </task>
     <servers />
   </component>
