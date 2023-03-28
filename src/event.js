@@ -73,7 +73,7 @@ ClickEvent.create(import.meta.url, {
                                         return `<select
                                             class="form-select form-control mt-2"
                                             onchange="${gvc.event((e) => {
-                                            object.link = $(e).val();
+                                            object.link = window.$(e).val();
                                         })}"
                                         >
                                             ${GlobalData.data.pageList.map((dd) => {

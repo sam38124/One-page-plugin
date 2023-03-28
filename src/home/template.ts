@@ -92,7 +92,8 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
 //                                     return {
 //                                         title:dd.name || `區塊:${index+1}`,
 //                                         expand:dd,
-//                                         innerHtml:glitter.htmlGenerate.editeInput({
+//                                         innerHtml:
+//                                         glitter.htmlGenerate.editeInput({
 //                                             gvc: gvc,
 //                                             title: `標題`,
 //                                             default: dd.name,

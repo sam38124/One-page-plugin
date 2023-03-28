@@ -1,7 +1,8 @@
-import { ShareDialog } from "./dialog/ShareDialog.js";
+import { ShareDialog } from './dialog/ShareDialog.js';
 export class Editor {
     static uploadImage(obj) {
         const glitter = window.glitter;
+        const $ = glitter.$;
         return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
                             <div class="d-flex align-items-center mb-3">
                                 <input class="flex-fill form-control " placeholder="請輸入圖片連結" value="${obj.def}" onchange="${obj.gvc.event((e) => {
@@ -27,23 +28,24 @@ export class Editor {
                             data: file,
                             processData: false,
                             crossDomain: true,
-                            success: (data2) => {
+                            success: () => {
                                 dialog.dataLoading({ visible: false });
                                 obj.callback(data1.fullUrl);
                             },
-                            error: (err) => {
+                            error: () => {
                                 dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: "上傳失敗" });
+                                dialog.errorMessage({ text: '上傳失敗' });
                             },
                         });
                     });
-                }
+                },
             });
         })}"></i>
                             </div>`;
     }
     static uploadLottie(obj) {
         const glitter = window.glitter;
+        const $ = glitter.$;
         return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
 <div class="alert alert-dark alert-dismissible fade show" role="alert" style="white-space: normal;word-break: break-word;">
 <a onclick="${obj.gvc.event(() => {
@@ -75,17 +77,17 @@ export class Editor {
                             data: file,
                             processData: false,
                             crossDomain: true,
-                            success: (data2) => {
+                            success: () => {
                                 dialog.dataLoading({ visible: false });
                                 obj.callback(data1.fullUrl);
                             },
-                            error: (err) => {
+                            error: () => {
                                 dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: "上傳失敗" });
+                                dialog.errorMessage({ text: '上傳失敗' });
                             },
                         });
                     });
-                }
+                },
             });
         })}"></i>
                             </div>`;
@@ -99,7 +101,7 @@ export class Editor {
     }
     static fontawesome(obj) {
         const glitter = window.glitter;
-        return `
+        return (`
 ${Editor.h3(obj.title)}
         <div class="alert alert-dark alert-dismissible fade show p-2" role="alert" style="white-space: normal;word-break: break-all;">
 <a onclick="${obj.gvc.event(() => {
@@ -108,15 +110,16 @@ ${Editor.h3(obj.title)}
             glitter.openNewTab('https://boxicons.com/');
         })}" class=" fw text-white" style="cursor: pointer;">box-icon</a> 是開放且免費的icon提供平台，可以前往挑選合適標籤進行設定.
 </div>
-        ` + glitter.htmlGenerate.editeInput({
-            gvc: obj.gvc,
-            title: '',
-            default: obj.def,
-            placeHolder: "請輸入ICON-標籤",
-            callback: (text) => {
-                obj.callback(text);
-            }
-        });
+        ` +
+            glitter.htmlGenerate.editeInput({
+                gvc: obj.gvc,
+                title: '',
+                default: obj.def,
+                placeHolder: '請輸入ICON-標籤',
+                callback: (text) => {
+                    obj.callback(text);
+                },
+            }));
     }
     static toggleExpand(obj) {
         const color = obj.color ?? `#4144b0;`;
@@ -149,7 +152,7 @@ ${obj.innerText}</div>`;
 </div>
 </div>`;
                 },
-                divCreate: {}
+                divCreate: {},
             };
         })}`;
     }
@@ -162,6 +165,7 @@ ${obj.innerText}</div>`;
     static searchInput(obj) {
         const glitter = window.glitter;
         const gvc = obj.gvc;
+        const $ = glitter.$;
         return `
 ${Editor.h3(obj.title)}
 <div class="btn-group dropdown w-100">
@@ -189,25 +193,29 @@ ${obj.gvc.bindView(() => {
                             }, 100);
                         })}" >`;
                     },
-                    divCreate: { class: `w-100` }
+                    divCreate: { class: `w-100` },
                 };
             })}
 ${obj.gvc.bindView(() => {
                 return {
                     bind: id,
                     view: () => {
-                        return obj.array.filter((d2) => {
+                        return obj.array
+                            .filter((d2) => {
                             return d2.toUpperCase().indexOf(obj.def.toUpperCase()) !== -1;
-                        }).map((d3) => {
+                        })
+                            .map((d3) => {
                             return `<button  class="dropdown-item" onclick="${gvc.event(() => {
                                 obj.def = d3;
                                 obj.callback(obj.def);
                             })}">${d3}</button>`;
-                        }).join('');
+                        })
+                            .join('');
                     },
                     divCreate: {
-                        class: `dropdown-menu`, style: `transform: translateY(40px);`
-                    }
+                        class: `dropdown-menu`,
+                        style: `transform: translateY(40px);`,
+                    },
                 };
             })}                                 
                                             `;
@@ -223,25 +231,37 @@ ${Editor.h3(obj.title)}
 <select class="form-select" onchange="${obj.gvc.event((e) => {
             obj.callback(e.value);
         })}">
-${obj.array.map((dd) => {
+${obj.array
+            .map((dd) => {
             if (typeof dd === 'object') {
-                return `<option value="${dd.value}" ${(dd.value === obj.def) ? `selected` : ``}>${dd.title}</option>`;
+                return `<option value="${dd.value}" ${dd.value === obj.def ? `selected` : ``}>${dd.title}</option>`;
             }
             else {
-                return `<option value="${dd}" ${(dd === obj.def) ? `selected` : ``}>${dd}</option>`;
+                return `<option value="${dd}" ${dd === obj.def ? `selected` : ``}>${dd}</option>`;
             }
-        }).join('')}
+        })
+            .join('')}
 </select>    
 `;
     }
     static arrayItem(obj) {
-        return `<div class="mb-2"></div>` + Editor.toggleExpand({
-            gvc: obj.gvc, title: obj.title, data: obj.expand, innerText: obj.array.map((dd) => {
-                return Editor.toggleExpand({
-                    gvc: obj.gvc, title: Editor.minusTitle(dd.title, dd.minus), data: dd.expand, innerText: dd.innerHtml, color: `#004081`
-                });
-            }).join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event),
-            color: `#0062c0`
-        });
+        return (`<div class="mb-2"></div>` +
+            Editor.toggleExpand({
+                gvc: obj.gvc,
+                title: obj.title,
+                data: obj.expand,
+                innerText: obj.array
+                    .map((dd) => {
+                    return Editor.toggleExpand({
+                        gvc: obj.gvc,
+                        title: Editor.minusTitle(dd.title, dd.minus),
+                        data: dd.expand,
+                        innerText: dd.innerHtml,
+                        color: `#004081`,
+                    });
+                })
+                    .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event),
+                color: `#0062c0`,
+            }));
     }
 }

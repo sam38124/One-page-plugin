@@ -1,6 +1,6 @@
 import { init } from '../GVController.js';
-import { EditorElem } from "./editor-elem.js";
-import { styleAttr } from "./style-attr.js";
+import { EditorElem } from './editor-elem.js';
+import { styleAttr } from './style-attr.js';
 init((gvc, glitter, gBundle) => {
     const design = {
         get style() {
@@ -21,7 +21,7 @@ init((gvc, glitter, gBundle) => {
         },
         set styleList(data) {
             gBundle.data.styleLis = data;
-        }
+        },
     };
     return {
         onCreateView: () => {
@@ -42,38 +42,42 @@ ${gvc.map([
                     gvc: gvc,
                     title: 'Class參數',
                     default: design.class,
-                    placeHolder: "輸入Class",
+                    placeHolder: '輸入Class',
                     callback: (text) => {
                         design.class = text;
-                    }
+                    },
                 }),
                 glitter.htmlGenerate.editeText({
                     gvc: gvc,
                     title: 'Style樣式',
                     default: design.style,
-                    placeHolder: "輸入Style樣式",
+                    placeHolder: '輸入Style樣式',
                     callback: (text) => {
                         design.style = text;
-                    }
+                    },
                 }),
                 `
-${EditorElem.h3("設計樣式")}
+${EditorElem.h3('設計樣式')}
 ${gvc.bindView(() => {
                     const idl = glitter.getUUID();
                     return {
                         bind: idl,
                         view: () => {
                             return `<div class="alert-dark alert ">
-${design.styleList.map((dd, index) => {
+${design.styleList
+                                .map((dd, index) => {
                                 let title = (styleAttr.find((d2) => {
                                     return dd.tag === d2.tag;
-                                }) ?? {}).title ?? "尚未設定";
+                                }) ?? {}).title ?? '尚未設定';
                                 return `
     ${EditorElem.toggleExpand({
-                                    gvc: gvc, title: EditorElem.minusTitle(title, gvc.event(() => {
+                                    gvc: gvc,
+                                    title: EditorElem.minusTitle(title, gvc.event(() => {
                                         design.styleList.splice(index, 1);
                                         gvc.notifyDataChange(idl);
-                                    })), data: dd, innerText: (() => {
+                                    })),
+                                    data: dd,
+                                    innerText: () => {
                                         return `
 <div class="mb-2">
 </div>
@@ -81,7 +85,7 @@ ${design.styleList.map((dd, index) => {
   ${(() => {
                                             let title = (styleAttr.find((d2) => {
                                                 return dd.tag === d2.tag;
-                                            }) ?? {}).title ?? "";
+                                            }) ?? {}).title ?? '';
                                             const id = glitter.getUUID();
                                             const id2 = glitter.getUUID();
                                             return `
@@ -90,10 +94,10 @@ ${gvc.bindView(() => {
                                                     bind: id2,
                                                     view: () => {
                                                         return `<input class="form-control w-100" style="height: 40px;" placeholder="關鍵字搜尋" onfocus="${gvc.event(() => {
-                                                            $('#' + gvc.id(id)).addClass(`show`);
+                                                            window.$('#' + gvc.id(id)).addClass(`show`);
                                                         })}" onblur="${gvc.event(() => {
                                                             setTimeout(() => {
-                                                                $('#' + gvc.id(id)).removeClass(`show`);
+                                                                window.$('#' + gvc.id(id)).removeClass(`show`);
                                                             }, 300);
                                                         })}" oninput="${gvc.event((e) => {
                                                             title = e.value;
@@ -104,26 +108,30 @@ ${gvc.bindView(() => {
                                                             gvc.notifyDataChange(id);
                                                         })}" value="${title}">`;
                                                     },
-                                                    divCreate: { class: `w-100` }
+                                                    divCreate: { class: `w-100` },
                                                 };
                                             })}
 ${gvc.bindView(() => {
                                                 return {
                                                     bind: id,
                                                     view: () => {
-                                                        return styleAttr.filter((d2) => {
+                                                        return styleAttr
+                                                            .filter((d2) => {
                                                             return d2.title.indexOf(title) !== -1;
-                                                        }).map((d3) => {
+                                                        })
+                                                            .map((d3) => {
                                                             return `<button  class="dropdown-item" onclick="${gvc.event(() => {
                                                                 dd.tag = d3.tag;
                                                                 title = d3.title;
                                                                 gvc.notifyDataChange(idl);
                                                             })}">${d3.title}</button>`;
-                                                        }).join('');
+                                                        })
+                                                            .join('');
                                                     },
                                                     divCreate: {
-                                                        class: `dropdown-menu`, style: `transform: translateY(40px);`
-                                                    }
+                                                        class: `dropdown-menu`,
+                                                        style: `transform: translateY(40px);`,
+                                                    },
                                                 };
                                             })}                                 
                                             `;
@@ -133,9 +141,9 @@ ${gvc.bindView(() => {
                                             return {
                                                 bind: styleContainer,
                                                 view: () => {
-                                                    let data = (styleAttr.find((d2) => {
+                                                    let data = styleAttr.find((d2) => {
                                                         return dd.tag === d2.tag;
-                                                    }));
+                                                    });
                                                     if (data) {
                                                         return data.innerHtml(gvc, dd.data);
                                                     }
@@ -143,23 +151,24 @@ ${gvc.bindView(() => {
                                                         return ``;
                                                     }
                                                 },
-                                                divCreate: {}
+                                                divCreate: {},
                                             };
                                         })}           
 `;
-                                    })
+                                    },
                                 })}`;
-                            }).join('<div class="my-2"></div>')}
-${EditorElem.plusBtn("添加特徵", gvc.event((e, event) => {
+                            })
+                                .join('<div class="my-2"></div>')}
+${EditorElem.plusBtn('添加特徵', gvc.event((e, event) => {
                                 design.styleList.push({
-                                    tag: "",
-                                    data: {}
+                                    tag: '',
+                                    data: {},
                                 });
                                 gvc.notifyDataChange(idl);
                             }))}
 </div>`;
                         },
-                        divCreate: {}
+                        divCreate: {},
                     };
                 })}
                 <button class="w-100 btn btn-primary" onclick="${gvc.event(() => {
@@ -168,13 +177,13 @@ ${EditorElem.plusBtn("添加特徵", gvc.event((e, event) => {
                 })}">
                 儲存
 </button>
-`
+`,
             ])}
 </div>
 
 </div>
 </div>
             `;
-        }
+        },
     };
 });

@@ -9,6 +9,8 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
         return new URL('./' + link, import.meta.url).href;
     }
 
+    const $ = glitter.$;
+
     let hi: boolean = false;
 
     function initialScript(gvc: any, widget: HtmlJson) {
@@ -129,23 +131,28 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
                             return h;
                         }
 
-                        return `
-
-                        <header class="position-fixed header navbar navbar-expand-lg navbar-light bg-light navbar-sticky w-100" style="z-index:5;top: 0px;">
-          <div class="container px-3">
-            <a class="navbar-brand fs-lg pe-0 pe-sm-3" onclick="${gvc.event(() => {
-                const url = new URL('./', location.href);
-                url.searchParams.set('page', 'home');
-                location.href = url.href;
-            })}" style="cursor:pointer">
-              <img class="me-2" src="${nav.logo.url}" width="30" style="${nav.logo.style}" />${glitter.ut.frSize(
+                        return `<header
+                                class="position-fixed header navbar navbar-expand-lg navbar-light bg-light navbar-sticky w-100"
+                                style="z-index:5;top: 0px;"
+                            >
+                                <div class="container px-3">
+                                    <a
+                                        class="navbar-brand fs-lg pe-0 pe-sm-3"
+                                        onclick="${gvc.event(() => {
+                                            const url = new URL('./', location.href);
+                                            url.searchParams.set('page', 'home');
+                                            location.href = url.href;
+                                        })}"
+                                        style="cursor:pointer"
+                                    >
+                                        <img class="me-2" src="${nav.logo.url}" width="30" style="${nav.logo.style}" />${glitter.ut.frSize(
                             { sm: nav.title.pc },
                             nav.title.phone
                         )}
-            </a>
-                 ${
-                     nav.btn.visible
-                         ? /*html*/ `<button
+                                    </a>
+                                    ${
+                                        nav.btn.visible
+                                            ? /*html*/ `<button
                                class="btn ${nav.btn.class}   d-md-none kv-btn w-25 position-absolute"
                                onclick="${gvc.event(() => {
                                    ClickEvent.trigger({
@@ -158,29 +165,29 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
                            >
                                &nbsp;${nav.btn.name}
                            </button>`
-                         : ``
-                 }
-       
-            <div id="navbarNav" class="offcanvas offcanvas-end">
-              <div class="offcanvas-header border-bottom">
-                <h5 class="offcanvas-title">${nav.title.pc ?? nav.title.phone}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
-              <div class="offcanvas-body">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <!-- Menu -->
-                  ${glitter.print(function () {
-                      var tmp = '';
-                      nav.bar.list.map((r: any) => (tmp += recursive(r, true)));
-                      return tmp;
-                  })}
-                </ul>
-              </div>
-              <div class="offcanvas-footer border-top">
-                <!-- Menu button -->
-                 ${
-                     nav.btn.visible
-                         ? /*html*/ `<a
+                                            : ``
+                                    }
+
+                                    <div id="navbarNav" class="offcanvas offcanvas-end">
+                                        <div class="offcanvas-header border-bottom">
+                                            <h5 class="offcanvas-title">${nav.title.pc ?? nav.title.phone}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                        </div>
+                                        <div class="offcanvas-body">
+                                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                                <!-- Menu -->
+                                                ${glitter.print(function () {
+                                                    var tmp = '';
+                                                    nav.bar.list.map((r: any) => (tmp += recursive(r, true)));
+                                                    return tmp;
+                                                })}
+                                            </ul>
+                                        </div>
+                                        <div class="offcanvas-footer border-top">
+                                            <!-- Menu button -->
+                                            ${
+                                                nav.btn.visible
+                                                    ? /*html*/ `<a
                                class="btn ${nav.btn.class} w-100 mt-2"
                                onclick="${gvc.event(() => {
                                    ClickEvent.trigger({
@@ -193,16 +200,16 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
                            >
                                &nbsp;${nav.btn.name}
                            </a>`
-                         : ``
-                 }
-              </div>
-            </div>
-            <div class="row">
-              <!-- Menu button (Mobile) -->
-           <div class="col-6">
-           ${
-               nav.btn.visible
-                   ? `  <a
+                                                    : ``
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- Menu button (Mobile) -->
+                                        <div class="col-6">
+                                            ${
+                                                nav.btn.visible
+                                                    ? `  <a
                         class="btn ${nav.btn.class} btn-sm fs-sm rounded d-none d-lg-inline-flex "
                         onclick="${gvc.event(() => {
                             ClickEvent.trigger({
@@ -215,26 +222,24 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
                       >
                         &nbsp;${nav.btn.name}
                       </a>`
-                   : ``
-           }
-                    
-                    </div>
-            </div>
-            <button
-              type="button"
-              class="navbar-toggler"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          </div>
-        </header>
-                    <div class="w-100" style="height: 50px;"></div>
-                        `;
+                                                    : ``
+                                            }
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        class="navbar-toggler"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#navbarNav"
+                                        aria-controls="navbarNav"
+                                        aria-expanded="false"
+                                        aria-label="Toggle navigation"
+                                    >
+                                        <span class="navbar-toggler-icon"></span>
+                                    </button>
+                                </div>
+                            </header>
+                            <div class="w-100" style="height: 50px;"></div> `;
                     },
                     editor: () => {
                         widget.data.nav.btnExpand = widget.data.nav.btnExpand ?? {};

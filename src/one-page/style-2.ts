@@ -90,7 +90,7 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
                                 <div class="col-md-7">
                                     ${glitter.print(() => {
                                         let h = '';
-                                        const bi = Number($(window).width()) / 1920;
+                                        const bi = Number((window as any).$(window).width()) / 1920;
                                         widget.data.lottie.map(
                                             (x: { displayOrder: number; json: string; size: number; top: number; right: number }) => {
                                                 h += /*html*/ `<div
