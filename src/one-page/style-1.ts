@@ -2242,10 +2242,15 @@ ${gvc.bindView(() => {
                                 },
                                 bind: id,
                                 divCreate: {
+<<<<<<< HEAD
                                     class: `jarallax dark-mode bg-dark py-xxl-5 mt-5`,
                                     style: `height:100%;`,
                                 },
                                 onCreate: () => {
+=======
+                                    class: `jarallax dark-mode bg-dark py-xxl-5`, style: `height:100%;`
+                                }, onCreate: () => {
+>>>>>>> 009eef9f19a86b6e69e4cbdfc4de595d194de76f
                                     //@ts-ignore
                                     const swiper = new Swiper(`#${gvc.id(id)} .swiper`, {
                                         spaceBetween: 12,
@@ -2399,7 +2404,7 @@ ${gvc.bindView(() => {
                         <section class="jarallax dark-mode bg-dark py-xxl-5 m-0" id="contact">
           <div class="jarallax-img opacity-25" style="background-image: url(${contact.bg})"></div>
           <div class="container">
-            <div class="row mt-sm-5">
+            <div class="row py-3">
               <!-- Contact form -->
               <div class="rounded p-3 m-auto col-11 col-sm-6" style="border: 1px solid white;">
                 <h2 class="h2 text-center text-md-center mt-2">${contact.form.title}</h2>

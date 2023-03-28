@@ -12933,6 +12933,11 @@
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/style-editor.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/test.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/glitter-create/glitter-create/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page/style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page/style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" afterDir="false" />
@@ -19372,7 +19377,7 @@
       <recent name="$PROJECT_DIR$/src/home" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.start">
+  <component name="RunManager" selected="npm.build:tscAuto">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/backend_default/package.json" />
       <command value="run" />
@@ -19415,8 +19420,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start" />
         <item itemvalue="npm.build:tscAuto" />
+        <item itemvalue="npm.start" />
         <item itemvalue="npm.create" />
         <item itemvalue="npm.build" />
       </list>
@@ -19431,7 +19436,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679282242173</updated>
       <workItem from="1679282243578" duration="26048000" />
-      <workItem from="1679390323506" duration="118690000" />
+      <workItem from="1679390323506" duration="121237000" />
     </task>
     <servers />
   </component>
