@@ -1,9 +1,9 @@
-import { Plugin } from "../glitterBundle/plugins/plugin-creater.js";
+import { Plugin } from '../glitterBundle/plugins/plugin-creater.js';
 Plugin.create(import.meta.url, (glitter, editMode) => {
     return {
         temp: {
-            title: "網站導覽列",
-            subContent: "顯示多個超連結與頁面跳轉導覽的區塊．",
+            title: '網站導覽列',
+            subContent: '顯示多個超連結與頁面跳轉導覽的區塊．',
             defaultData: {},
             render: (gvc, widget, setting, hoverID) => {
                 return {
@@ -12,9 +12,9 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                     },
                     editor: () => {
                         return ``;
-                    }
+                    },
                 };
-            }
-        }
+            },
+        },
     };
 });

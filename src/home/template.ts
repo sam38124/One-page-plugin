@@ -1,28 +1,28 @@
-import {HtmlJson, Plugin} from "../glitterBundle/plugins/plugin-creater.js";
-import {Glitter} from "../glitterBundle/Glitter.js";
-import {GVC} from "../glitterBundle/GVController";
-import {Editor} from "../editor";
-import {ClickEvent} from "../glitterBundle/plugins/click-event";
+import { HtmlJson, Plugin } from '../glitterBundle/plugins/plugin-creater.js';
+import { Glitter } from '../glitterBundle/Glitter.js';
+import { GVC } from '../glitterBundle/GVController';
+import { Editor } from '../editor';
+import { ClickEvent } from '../glitterBundle/plugins/click-event';
 
-Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
+Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
-        temp:{
-            title: "網站導覽列",
-            subContent: "顯示多個超連結與頁面跳轉導覽的區塊．",
-            defaultData:{},
+        temp: {
+            title: '網站導覽列',
+            subContent: '顯示多個超連結與頁面跳轉導覽的區塊．',
+            defaultData: {},
             render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
                 return {
-                    view:()=>{
-                        return ``
+                    view: () => {
+                        return ``;
                     },
-                    editor:()=>{
-                        return ``
-                    }
-                }
-            }
-        }
-    }
-})
+                    editor: () => {
+                        return ``;
+                    },
+                };
+            },
+        },
+    };
+});
 
 // glitter.htmlGenerate.editeText({
 //     gvc: gvc,
@@ -51,7 +51,6 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
 
 // htmlGenerate.styleEditor(dd)
 
-
 // <div class="alert-dark alert p-2 mt-2">
 // ${Editor.h3("按鈕設定")}
 // glitter.htmlGenerate.editeText({
@@ -72,11 +71,9 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
 //                                 })}
 // </div>
 
-
 // (keyVision2.m.lottie.split('.').pop() === 'json') ? `
 //                 <lottie-player autoplay loop mode="normal" src="${keyVision2.m.lottie}" style="height: 32vh;width: 32vh;">`:`
 //                 <img src="${keyVision2.m.lottie}" style="height: 32vh;width: 32vh;">`
-
 
 // Editor.uploadLottie({
 //     gvc: gvc,
