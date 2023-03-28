@@ -1,4 +1,6 @@
 ./.idea/
 ./.vscode/
 ./node_modules/
+/node_modules/
+./backend_default/node_modules/
 ./tsconfig.tsbuildinfo

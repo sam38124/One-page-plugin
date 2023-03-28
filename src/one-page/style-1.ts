@@ -2242,15 +2242,8 @@ ${gvc.bindView(() => {
                                 },
                                 bind: id,
                                 divCreate: {
-<<<<<<< HEAD
-                                    class: `jarallax dark-mode bg-dark py-xxl-5 mt-5`,
-                                    style: `height:100%;`,
-                                },
-                                onCreate: () => {
-=======
                                     class: `jarallax dark-mode bg-dark py-xxl-5`, style: `height:100%;`
                                 }, onCreate: () => {
->>>>>>> 009eef9f19a86b6e69e4cbdfc4de595d194de76f
                                     //@ts-ignore
                                     const swiper = new Swiper(`#${gvc.id(id)} .swiper`, {
                                         spaceBetween: 12,
