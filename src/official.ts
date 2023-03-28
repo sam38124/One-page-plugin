@@ -17,17 +17,25 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
                             const id=glitter.getUUID()
                             let data:any=undefined
                             const saasConfig=(window as any).saasConfig
-                            BaseApi.create({
-                                "url": saasConfig.config.url+`/api/v1/template?appName=${saasConfig.config.appName}&tag=${widget.data.tag}`,
-                                "type": "GET",
-                                "timeout": 0,
-                                "headers": {
-                                    "Content-Type": "application/json"
-                                }
-                            }).then((d2)=>{
-                                data=d2.response.result[0]
-                                gvc.notifyDataChange(id)
-                            })
+                            function getData(){
+                                BaseApi.create({
+                                    "url": saasConfig.config.url+`/api/v1/template?appName=${saasConfig.config.appName}&tag=${widget.data.tag}`,
+                                    "type": "GET",
+                                    "timeout": 0,
+                                    "headers": {
+                                        "Content-Type": "application/json"
+                                    }
+                                }).then((d2)=>{
+                                    if(!d2.result){
+                                        setTimeout(()=>{getData()},200)
+                                    }else{
+                                        data=d2.response.result[0]
+                                        gvc.notifyDataChange(id)
+                                    }
+
+                                })
+                            }
+                            getData()
                             return {
                                 bind:id,
                                 view:()=>{
