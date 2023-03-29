@@ -1445,8 +1445,9 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
                         return `
 ${gvc.bindView(() => {
                             const swiperID = gvc.glitter.getUUID();
+                            const pjid=glitter.getUUID()
                             return {
-                                bind: `project`,
+                                bind: pjid,
                                 view: () => {
                                     return /*html*/ `<h2 class="h1 pb-3 pb-lg-4 text-center">${project.title}</h2>
                 <!-- Multiple slides responsive slider with external Prev / Next buttons and bullets outside -->
@@ -1579,7 +1580,7 @@ ${gvc.bindView(() => {
                                         });
                                     }catch (e){
                                         setTimeout(()=>{
-                                            gvc.notifyDataChange(swiperID)
+                                            gvc.notifyDataChange(pjid)
                                         },100)
                                     }
                                 },
