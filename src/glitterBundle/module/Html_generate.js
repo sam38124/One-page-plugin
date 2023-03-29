@@ -38,18 +38,23 @@ export class HtmlGenerate {
             gvc.glitter.defaultSetting.pageLoading();
             function getData() {
                 async function add(set) {
+                    let falseArray = [];
                     for (const a of set) {
                         if (!gvc.glitter.share.htmlExtension[gvc.glitter.htmlGenerate.resourceHook(a.js)]) {
                             await new Promise((resolve, reject) => {
                                 gvc.glitter.addMtScript([{ src: `${gvc.glitter.htmlGenerate.resourceHook(a.js)}`, type: 'module' }], () => {
                                     resolve(true);
                                 }, () => {
+                                    falseArray.push(gvc.glitter.htmlGenerate.resourceHook(a.js));
                                     resolve(false);
                                 });
                             });
                         }
                         if (a.type === 'container') {
                             await add(a.data.setting);
+                        }
+                        if (falseArray.length > 0) {
+                            await add(falseArray);
                         }
                     }
                     return true;
@@ -150,11 +155,13 @@ export class HtmlGenerate {
             function getData() {
                 async function add(set) {
                     for (const a of set) {
+                        let falseArray = [];
                         if (!gvc.glitter.share.htmlExtension[gvc.glitter.htmlGenerate.resourceHook(a.js)]) {
                             await new Promise((resolve, reject) => {
                                 gvc.glitter.addMtScript([{ src: `${gvc.glitter.htmlGenerate.resourceHook(a.js)}`, type: 'module' }], () => {
                                     resolve(true);
                                 }, () => {
+                                    falseArray.push(gvc.glitter.htmlGenerate.resourceHook(a.js));
                                     resolve(false);
                                 });
                             });
@@ -162,22 +169,9 @@ export class HtmlGenerate {
                         if (a.type === 'container') {
                             await add(a.data.setting);
                         }
-                    }
-                    if (!HtmlGenerate.share.styleEditor) {
-                        const glitter = window.glitter;
-                        await new Promise((resolve, reject) => {
-                            glitter.addMtScript([
-                                {
-                                    src: 'glitterBundle/plugins/style-editor.js',
-                                    type: 'module',
-                                    id: glitter.getUUID(),
-                                },
-                            ], () => {
-                                resolve(true);
-                            }, () => {
-                                resolve(true);
-                            });
-                        });
+                        if (falseArray.length > 0) {
+                            await add(falseArray);
+                        }
                     }
                     return true;
                 }
