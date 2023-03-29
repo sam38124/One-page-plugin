@@ -12934,9 +12934,7 @@
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/test.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/glitter-create/glitter-create/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/one-page/style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/one-page/style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" afterDir="false" />
@@ -19435,7 +19433,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679282242173</updated>
       <workItem from="1679282243578" duration="26048000" />
-      <workItem from="1679390323506" duration="132749000" />
+      <workItem from="1679390323506" duration="133414000" />
     </task>
     <servers />
   </component>
@@ -19443,38 +19441,36 @@
     <option name="version" value="3" />
     <option name="exactExcludedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/Entry.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" />
         <option value="$PROJECT_DIR$/backend_default/index.js" />
-        <option value="$PROJECT_DIR$/backend_default/index.js.map" />
-        <option value="$PROJECT_DIR$/backend_default/index.d.ts" />
+        <option value="$PROJECT_DIR$/src/home/index.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/funnel.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js" />
+        <option value="$PROJECT_DIR$/src/home/template.js" />
+        <option value="$PROJECT_DIR$/src/Entry.js" />
         <option value="$PROJECT_DIR$/src/jspage/helloworld.js" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js" />
-        <option value="$PROJECT_DIR$/src/home/index.js" />
-        <option value="$PROJECT_DIR$/src/home/template.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/Glitter.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/GVController.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/funnel.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" />
         <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1.js" />
-        <option value="$PROJECT_DIR$/src/one-page/assets/vendor/nouislider/src/nouislider.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/GVController.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" />
+        <option value="$PROJECT_DIR$/backend_default/index.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" />
         <option value="$PROJECT_DIR$/src/editor.js" />
+        <option value="$PROJECT_DIR$/src/one-page/assets/vendor/nouislider/src/nouislider.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/Glitter.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" />
+        <option value="$PROJECT_DIR$/backend_default/index.js.map" />
         <option value="$PROJECT_DIR$/src/event.js" />
         <option value="$PROJECT_DIR$/src/api/base.js" />
-        <option value="$PROJECT_DIR$/src/api/user.js" />
-        <option value="$PROJECT_DIR$/src/dialog/ShareDialog.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" />
         <option value="$PROJECT_DIR$/src/official.js" />
-        <option value="$PROJECT_DIR$/src/api/base.js" />
+        <option value="$PROJECT_DIR$/src/dialog/ShareDialog.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-2.js" />
       </list>
     </option>

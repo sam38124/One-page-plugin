@@ -1555,27 +1555,33 @@ ${gvc.bindView(() => {
                                     style: glitter.htmlGenerate.styleEditor(widget.data.bg).style(),
                                 },
                                 onCreate: () => {
-                                    //@ts-ignore
-                                    const swiper = new Swiper(`#${swiperID}`, {
-                                        slidesPerView: 1,
-                                        loop: true,
-                                        pagination: {
-                                            el: `#${swiperID} .swiper-pagination`,
-                                            clickable: true,
-                                        },
-                                        navigation: {
-                                            prevEl: '#prev-news',
-                                            nextEl: '#next-news',
-                                        },
-                                        breakpoints: {
-                                            '500': {
-                                                slidesPerView: 2,
+                                    try{
+                                        //@ts-ignore
+                                        const swiper = new Swiper(`#${swiperID}`, {
+                                            slidesPerView: 1,
+                                            loop: true,
+                                            pagination: {
+                                                el: `#${swiperID} .swiper-pagination`,
+                                                clickable: true,
                                             },
-                                            '1000': {
-                                                slidesPerView: 3,
+                                            navigation: {
+                                                prevEl: '#prev-news',
+                                                nextEl: '#next-news',
                                             },
-                                        },
-                                    });
+                                            breakpoints: {
+                                                '500': {
+                                                    slidesPerView: 2,
+                                                },
+                                                '1000': {
+                                                    slidesPerView: 3,
+                                                },
+                                            },
+                                        });
+                                    }catch (e){
+                                        setTimeout(()=>{
+                                            gvc.notifyDataChange(swiperID)
+                                        },100)
+                                    }
                                 },
                             };
                         })}
@@ -1890,32 +1896,38 @@ ${gvc.bindView(() => {
                                     style: ``,
                                 },
                                 onCreate: () => {
-                                    //@ts-ignore
-                                    const swiper = new Swiper(`#${gvc.id(cl)} .swiper`, {
-                                        slidesPerView: 2,
-                                        pagination: {
-                                            el: `#${gvc.id(cl)} .swiper-pagination`,
-                                            clickable: true,
-                                        },
-                                        breakpoints: {
-                                            '500': {
-                                                slidesPerView: 3,
-                                                spaceBetween: 8,
-                                            },
-                                            '650': {
-                                                slidesPerView: 4,
-                                                spaceBetween: 8,
-                                            },
-                                            '900': {
-                                                slidesPerView: 5,
-                                                spaceBetween: 8,
-                                            },
-                                            '1100': {
-                                                slidesPerView: 6,
-                                                spaceBetween: 8,
-                                            },
-                                        },
-                                    });
+                                   try{
+                                       //@ts-ignore
+                                       const swiper = new Swiper(`#${gvc.id(cl)} .swiper`, {
+                                           slidesPerView: 2,
+                                           pagination: {
+                                               el: `#${gvc.id(cl)} .swiper-pagination`,
+                                               clickable: true,
+                                           },
+                                           breakpoints: {
+                                               '500': {
+                                                   slidesPerView: 3,
+                                                   spaceBetween: 8,
+                                               },
+                                               '650': {
+                                                   slidesPerView: 4,
+                                                   spaceBetween: 8,
+                                               },
+                                               '900': {
+                                                   slidesPerView: 5,
+                                                   spaceBetween: 8,
+                                               },
+                                               '1100': {
+                                                   slidesPerView: 6,
+                                                   spaceBetween: 8,
+                                               },
+                                           },
+                                       });
+                                   }catch (e){
+                                       setTimeout(()=>{
+                                           gvc.notifyDataChange(cl)
+                                       },100)
+                                   }
                                 },
                             };
                         });
@@ -2276,19 +2288,26 @@ ${gvc.bindView(() => {
                                 divCreate: {
                                     class: `jarallax dark-mode bg-dark py-xxl-5`, style: `height:100%;`
                                 }, onCreate: () => {
-                                    //@ts-ignore
-                                    const swiper = new Swiper(`#${gvc.id(id)} .swiper`, {
-                                        spaceBetween: 12,
-                                        loop: true,
-                                        pagination: {
-                                            el: '.swiper-pagination',
-                                            clickable: true,
-                                        },
-                                        navigation: {
-                                            prevEl: '#team-prev',
-                                            nextEl: '#team-next',
-                                        },
-                                    });
+                                    try{
+                                        //@ts-ignore
+                                        const swiper = new Swiper(`#${gvc.id(id)} .swiper`, {
+                                            spaceBetween: 12,
+                                            loop: true,
+                                            pagination: {
+                                                el: '.swiper-pagination',
+                                                clickable: true,
+                                            },
+                                            navigation: {
+                                                prevEl: '#team-prev',
+                                                nextEl: '#team-next',
+                                            },
+                                        });
+                                    }catch (e){
+                                        setTimeout(()=>{
+                                            gvc.notifyDataChange(id)
+                                        },100)
+                                    }
+
                                 },
                             };
                         });
