@@ -12933,6 +12933,7 @@
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/lib/glitterBundle/plugins/style-editor.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/Glitter/test.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../npm_library/glitter-create/glitter-create/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" beforeDir="false" afterPath="$PROJECT_DIR$/../../Orange Electronic/KENDA/Glitter" afterDir="false" />
@@ -19415,8 +19416,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build:tscAuto" />
         <item itemvalue="npm.start" />
+        <item itemvalue="npm.build:tscAuto" />
         <item itemvalue="npm.create" />
         <item itemvalue="npm.build" />
       </list>
@@ -19431,7 +19432,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679282242173</updated>
       <workItem from="1679282243578" duration="26048000" />
-      <workItem from="1679390323506" duration="133965000" />
+      <workItem from="1679390323506" duration="135380000" />
     </task>
     <servers />
   </component>

@@ -1162,6 +1162,9 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
                                                     <a
                                                         class="card card-hover h-100 border-0 shadow-sm text-decoration-none pt-5 px-sm-3 px-md-0 px-lg-3 pb-sm-3 pb-md-0 pb-lg-3 ms-xl-2"
                                                         onclick="${gvc.event(() => {
+                                    ClickEvent.trigger({
+                                        gvc, widget, clickEvent: s,
+                                    })
                                 })}"
                                                         style="cursor:pointer"
                                                     >
@@ -1263,6 +1266,11 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
                                                         widget.refreshComponent();
                                                     },
                                                 }),
+                                                ClickEvent.editer(gvc, widget, dd, {
+                                                    hover: true,
+                                                    option: [],
+                                                    title: "點擊事件"
+                                                })
                                             ]),
                                         });
                                     })
