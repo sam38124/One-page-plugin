@@ -1191,13 +1191,6 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
                         </section>`;
                     },
                     editor: () => {
-                        // {
-                        //     name: "電商應用",
-                        //         link: ["service_detail"],
-                        //     tab: "shop",
-                        //     icon: "bx bx-store-alt",
-                        //     desc: "從電商網站設計、後台管理、產品投放分析、網站架設、金流串接，我們都有經驗能替您完成服務",
-                        // }
                         return gvc.map([
                             glitter.htmlGenerate.editeText({
                                 gvc: gvc,
