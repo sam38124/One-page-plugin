@@ -1,20 +1,22 @@
-import { Animation, AnimationConfig } from './Animation.js';
-import { Glitter } from '../Glitter.js';
+import {Animation, AnimationConfig} from './Animation.js';
+import {Glitter} from '../Glitter.js';
 
 export class DefaultSetting {
     public pageBgColor: string;
     public pageAnimation: AnimationConfig;
     public dialogAnimation: AnimationConfig;
 
-    public pageLoading = () => {};
-    public pageLoadingFinish = () => {};
+    public pageLoading = () => {
+    };
+    public pageLoadingFinish = () => {
+    };
 
     constructor(obj: {
-        pageBgColor: string;
-        pageAnimation: AnimationConfig;
-        dialogAnimation: AnimationConfig;
-        pageLoading: () => void;
-        pageLoadingFinish: () => void;
+        pageBgColor: string,
+        pageAnimation: AnimationConfig,
+        dialogAnimation: AnimationConfig,
+        pageLoading: () => void,
+        pageLoadingFinish: () => void
     }) {
         this.pageLoading = obj.pageLoading;
         this.pageLoadingFinish = obj.pageLoadingFinish;
@@ -26,7 +28,7 @@ export class DefaultSetting {
 
 export enum GVCType {
     Page,
-    Dialog,
+    Dialog
 }
 
 export class PageConfig {
@@ -40,23 +42,15 @@ export class PageConfig {
     public type: GVCType;
     public animation: AnimationConfig;
     public backGroundColor: string;
-    public scrollTop: number = 0;
+    public scrollTop: number=0;
 
     public getElement(): any {
         return Glitter.glitter.$(`#page${this.id}`);
     }
 
     constructor(par: {
-        id: string;
-        obj: any;
-        goBack: boolean;
-        src: string;
-        tag: string;
-        createResource: () => void;
-        deleteResource: () => void;
-        type: GVCType;
-        animation: AnimationConfig;
-        backGroundColor: string;
+        id: string, obj: any, goBack: boolean, src: string, tag: string, createResource: () => void, deleteResource: () => void,
+        type: GVCType, animation: AnimationConfig, backGroundColor: string
     }) {
         this.tag = par.tag;
         this.id = par.id;
@@ -72,14 +66,13 @@ export class PageConfig {
 }
 
 export class PageManager {
+
     public static hidePageView(id: string, del: boolean = false) {
         const glitter = Glitter.glitter;
         try {
-            const index = glitter.pageConfig
-                .map((data) => {
-                    return data.id;
-                })
-                .indexOf(id);
+            const index = glitter.pageConfig.map((data) => {
+                return data.id;
+            }).indexOf(id);
             if (del) {
                 glitter.pageConfig[index].deleteResource();
                 glitter.$(`#page` + glitter.pageConfig[index].id).remove();
@@ -89,35 +82,35 @@ export class PageManager {
                 glitter.$(`#page` + glitter.pageConfig[index].id).hide();
                 glitter.$(`#` + glitter.pageConfig[index].id).hide();
             }
-        } catch (e) {}
+        } catch (e) {
+        }
     }
 
     public static showPageView(id: string) {
         const glitter = Glitter.glitter;
         try {
-            const index = glitter.pageConfig
-                .map((data) => {
-                    return data.id;
-                })
-                .indexOf(id);
+            const index = glitter.pageConfig.map((data) => {
+                return data.id;
+            }).indexOf(id);
             glitter.$(`#page` + glitter.pageConfig[index].id).show();
             glitter.$(`#` + glitter.pageConfig[index].id).show();
             glitter.pageConfig[index].createResource();
             glitter.setUrlParameter('page', glitter.pageConfig[index].tag);
-            if (glitter.pageConfig[index].type === GVCType.Page) {
-                Glitter.glitter.$('html').stop().animate({ scrollTop: glitter.pageConfig[index].scrollTop });
+            if(glitter.pageConfig[index].type === GVCType.Page){
+                Glitter.glitter.$('html').stop().animate({scrollTop:glitter.pageConfig[index].scrollTop});
             }
             //
             //
             // console.log('scrollTop'+glitter.pageConfig[index].scrollTop)
-        } catch (e) {}
+        } catch (e) {
+        }
     }
 
     public static hideLoadingView() {
         Glitter.glitter.$('#loadingView').hide();
     }
 
-    public static setHome(url: string, tag: string, obj: any, option: { animation?: AnimationConfig; backGroundColor?: string } = {}) {
+    public static setHome(url: string, tag: string, obj: any, option: { animation?: AnimationConfig, backGroundColor?: string } = {}) {
         const glitter = Glitter.glitter;
         if (glitter.waitChangePage || PageManager.clock.stop() < 300) {
             setTimeout(() => {
@@ -132,21 +125,25 @@ export class PageManager {
                     glitter.hidePageView(glitter.pageConfig[a].id, true);
                 }
             }
-            const config = new PageConfig({
-                id: glitter.getUUID(),
-                obj: obj,
-                goBack: true,
-                src: url,
-                tag: tag,
-                deleteResource: () => {},
-                createResource: () => {},
-                backGroundColor: option.backGroundColor ?? 'white',
-                type: GVCType.Page,
-                animation: option.animation ?? glitter.animation.none,
-            });
-            (window as any).$('#glitterPage').append(`<div id="page${config!.id}" style="min-width: 100vw;min-height: 100vh;left: 0;top: 0;
+            const config = new PageConfig(
+                {
+                    id: glitter.getUUID(),
+                    obj: obj,
+                    goBack: true,
+                    src: url,
+                    tag: tag,
+                    deleteResource: () => {
+                    },
+                    createResource: () => {
+                    },
+                    backGroundColor: option.backGroundColor ?? 'white',
+                    type: GVCType.Page,
+                    animation: option.animation ?? glitter.animation.none
+                }
+            );
+            $('#glitterPage').append(`<div id="page${config!.id}" style="min-width: 100vw;min-height: 100vh;left: 0;top: 0;
 background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: hidden;">
-</div>`);
+</div>`)
             glitter.nowPageConfig = config;
             let module = glitter.modelJsList.find((dd) => {
                 return `${dd.src}` == url;
@@ -156,48 +153,39 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
                 const search = glitter.setSearchParam(glitter.removeSearchParam(glitter.window.location.search, 'page'), 'page', tag);
                 try {
                     glitter.window.history.pushState({}, glitter.document.title, search);
-                } catch (e) {}
+                } catch (e) {
+                }
                 glitter.pageConfig = [];
                 glitter.pageConfig.push(config);
                 glitter.setUrlParameter('page', tag);
+
             } else {
-                glitter.addMtScript(
-                    [
-                        {
-                            src: url,
-                            type: 'module',
-                            id: config.id,
-                        },
-                    ],
-                    () => {
-                        const search = glitter.setSearchParam(
-                            glitter.removeSearchParam(glitter.window.location.search, 'page'),
-                            'page',
-                            tag
-                        );
-                        try {
-                            glitter.window.history.pushState({}, glitter.document.title, search);
-                        } catch (e) {}
-                        glitter.pageConfig = [];
-                        glitter.pageConfig.push(config);
-                        glitter.setUrlParameter('page', tag);
-                    },
-                    () => {
-                        console.log("can't find script src:" + url);
-                        glitter.waitChangePage = false;
-                    },
-                    { multiple: true }
-                );
+                glitter.addMtScript([{
+                    src: url,
+                    type: 'module',
+                    id: config.id
+                }], () => {
+                    const search = glitter.setSearchParam(glitter.removeSearchParam(glitter.window.location.search, 'page'), 'page', tag);
+                    try {
+                        glitter.window.history.pushState({}, glitter.document.title, search);
+                    } catch (e) {
+                    }
+                    glitter.pageConfig = [];
+                    glitter.pageConfig.push(config);
+                    glitter.setUrlParameter('page', tag);
+
+                }, () => {
+                    console.log('can\'t find script src:' + url);
+                    glitter.waitChangePage = false;
+                }, {multiple: true});
             }
         }
-    }
+    };
 
     public static setLoadingView(link: string) {
         const glitter = Glitter.glitter;
         glitter.$('#loadingView').hide();
-        glitter
-            .$('#loadingView')
-            .append('<iframe  src="' + link + '" style="width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.5);"></iframe>');
+        glitter.$('#loadingView').append('<iframe  src="' + link + '" style="width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.5);"></iframe>');
     }
 
     public static changePageListener(tag: string) {
@@ -205,15 +193,17 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
         for (const data of glitter.changePageCallback) {
             try {
                 data(tag);
-            } catch (e) {}
+            } catch (e) {
+            }
         }
     }
 
     public static showLoadingView() {
         Glitter.glitter.$('#loadingView').show();
-    }
+    };
 
-    public static changeWait = function () {};
+    public static changeWait = function () {
+    };
 
     public static setAnimation(page: PageConfig) {
         const glitter = Glitter.glitter;
@@ -239,17 +229,17 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
             glitter.waitChangePage = true;
             setTimeout(() => {
                 glitter.waitChangePage = false;
-                if (page.type === GVCType.Page) {
-                    let lastPage: any = glitter.pageConfig.filter((a) => {
-                        return a.type !== GVCType.Dialog;
+                if(page.type===GVCType.Page){
+                    let lastPage:any=glitter.pageConfig.filter((a) => {
+                        return a.type !== GVCType.Dialog
                     });
-                    lastPage = lastPage[lastPage.length - 2];
-                    if (lastPage) {
+                    lastPage=lastPage[lastPage.length-2]
+                    if(lastPage){
                         lastPage.scrollTop = glitter.$('html').get(0).scrollTop;
-                        console.log('lastPage.scrollTop:' + lastPage.scrollTop);
+                        console.log('lastPage.scrollTop:'+lastPage.scrollTop)
                     }
-                    console.log('scrollTop--' + page);
-                    glitter.$('html').stop().animate({ scrollTop: 0 }, 0);
+                    console.log('scrollTop--'+page)
+                    glitter.$('html').stop().animate({scrollTop: 0 }, 0);
                 }
             }, 100);
         });
@@ -258,20 +248,14 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
     public static clock = {
         start: new Date(),
         stop: function () {
-            return new Date().getTime() - this.start.getTime();
+            return ((new Date()).getTime() - (this.start).getTime());
         },
         zeroing: function () {
             this.start = new Date();
-        },
+        }
     };
 
-    public static changePage(
-        url: string,
-        tag: string,
-        goBack: boolean,
-        obj: any,
-        option: { animation?: AnimationConfig; backGroundColor?: string } = {}
-    ) {
+    public static changePage(url: string, tag: string, goBack: boolean, obj: any, option: { animation?: AnimationConfig, backGroundColor?: string } = {}) {
         const glitter = Glitter.glitter;
 
         if (glitter.waitChangePage || PageManager.clock.stop() < 300) {
@@ -282,24 +266,26 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
             glitter.defaultSetting.pageLoading();
             PageManager.clock.zeroing();
             glitter.waitChangePage = true;
-            const config = new PageConfig({
-                id: glitter.getUUID(),
-                obj: obj,
-                goBack: goBack,
-                src: url,
-                tag: tag,
-                deleteResource: () => {},
-                createResource: () => {},
-                backGroundColor: option.backGroundColor ?? 'white',
-                type: GVCType.Page,
-                animation: option.animation ?? glitter.defaultSetting.pageAnimation,
-            });
-            (window as any).$('#glitterPage').append(`<div  id="page${config.id}" style="width:100vw;height:100vh;
-background: transparent;background: ${
-                config!.backGroundColor
-            };display: none;position: absolute;top: 0;left: 0;z-index: 999999;overflow: hidden;">
-</div>`);
-            config.scrollTop = glitter.$('html').get(0).scrollTop;
+            const config = new PageConfig(
+                {
+                    id: glitter.getUUID(),
+                    obj: obj,
+                    goBack: goBack,
+                    src: url,
+                    tag: tag,
+                    deleteResource: () => {
+                    },
+                    createResource: () => {
+                    },
+                    backGroundColor: option.backGroundColor ?? 'white',
+                    type: GVCType.Page,
+                    animation: option.animation ?? glitter.defaultSetting.pageAnimation
+                }
+            );
+            $('#glitterPage').append(`<div  id="page${config.id}" style="width:100vw;height:100vh;
+background: transparent;background: ${config!.backGroundColor};display: none;position: absolute;top: 0;left: 0;z-index: 999999;overflow: hidden;">
+</div>`)
+            config.scrollTop=glitter.$('html').get(0).scrollTop
             glitter.nowPageConfig = config;
             let module = glitter.modelJsList.find((dd) => {
                 return `${dd.src}` == url;
@@ -311,29 +297,18 @@ background: transparent;background: ${
                 glitter.setUrlParameter('page', tag);
                 module.create(glitter);
             } else {
-                glitter.addMtScript(
-                    [
-                        {
-                            src: url,
-                            type: 'module',
-                            id: config.id,
-                        },
-                    ],
-                    () => {
-                        const search = glitter.setSearchParam(
-                            glitter.removeSearchParam(glitter.window.location.search, 'page'),
-                            'page',
-                            tag
-                        );
-                        glitter.window.history.pushState({}, glitter.document.title, search);
-                        glitter.pageConfig.push(config);
-                    },
-                    () => {
-                        console.log("can't find script src:" + url);
-                        glitter.waitChangePage = false;
-                    },
-                    { multiple: true }
-                );
+                glitter.addMtScript([{
+                    src: url,
+                    type: 'module',
+                    id: config.id
+                }], () => {
+                    const search = glitter.setSearchParam(glitter.removeSearchParam(glitter.window.location.search, 'page'), 'page', tag);
+                    glitter.window.history.pushState({}, glitter.document.title, search);
+                    glitter.pageConfig.push(config);
+                }, () => {
+                    console.log('can\'t find script src:' + url);
+                    glitter.waitChangePage = false;
+                }, {multiple: true});
             }
         }
     }
@@ -345,9 +320,9 @@ background: transparent;background: ${
         if (pg) {
             this.hidePageView(pg.id, true);
         }
-    }
+    };
 
-    public static openDiaLog(url: string, tag: string, obj: any, option: { animation?: AnimationConfig; backGroundColor?: string } = {}) {
+    public static openDiaLog(url: string, tag: string, obj: any, option: { animation?: AnimationConfig, backGroundColor?: string } = {}) {
         const glitter = Glitter.glitter;
         if (glitter.waitChangePage || PageManager.clock.stop() < 300) {
             setTimeout(() => {
@@ -356,21 +331,25 @@ background: transparent;background: ${
         } else {
             PageManager.clock.zeroing();
             glitter.waitChangePage = true;
-            const config = new PageConfig({
-                id: glitter.getUUID(),
-                obj: obj,
-                goBack: true,
-                src: url,
-                tag: tag,
-                deleteResource: () => {},
-                createResource: () => {},
-                backGroundColor: option.backGroundColor ?? 'transparent',
-                type: GVCType.Dialog,
-                animation: option.animation ?? glitter.defaultSetting.dialogAnimation,
-            });
-            (window as any).$('#glitterPage').append(`<div id="page${config!.id}" style="min-width: 100vw;min-height: 100vh;left: 0;top: 0;
+            const config = new PageConfig(
+                {
+                    id: glitter.getUUID(),
+                    obj: obj,
+                    goBack: true,
+                    src: url,
+                    tag: tag,
+                    deleteResource: () => {
+                    },
+                    createResource: () => {
+                    },
+                    backGroundColor: option.backGroundColor ?? 'transparent',
+                    type: GVCType.Dialog,
+                    animation: option.animation ?? glitter.defaultSetting.dialogAnimation
+                }
+            );
+            $('#glitterPage').append(`<div id="page${config!.id}" style="min-width: 100vw;min-height: 100vh;left: 0;top: 0;
 background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: hidden;position: fixed;width:100vw;height: 100vh;" >
-</div>`);
+</div>`)
             glitter.nowPageConfig = config;
 
             let module = glitter.modelJsList.find((dd) => {
@@ -381,27 +360,23 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
                 glitter.pageConfig.push(config);
                 glitter.setUrlParameter('dialog', tag);
             } else {
-                glitter.addMtScript(
-                    [
-                        {
-                            src: url,
-                            type: 'module',
-                            id: config.id,
-                        },
-                    ],
-                    () => {
-                        glitter.pageConfig.push(config);
-                        glitter.setUrlParameter('dialog', tag);
-                    },
-                    () => {
-                        console.log("can't find script src:" + url);
-                        glitter.waitChangePage = false;
-                    },
-                    { multiple: true }
-                );
+                glitter.addMtScript([{
+                    src: url,
+                    type: 'module',
+                    id: config.id
+                }], () => {
+                    glitter.pageConfig.push(config);
+                    glitter.setUrlParameter('dialog', tag);
+
+                }, () => {
+                    console.log('can\'t find script src:' + url);
+                    glitter.waitChangePage = false;
+                }, {multiple: true});
+
             }
         }
-    }
+
+    };
 
     public static closeDiaLog(tag?: string) {
         const glitter = Glitter.glitter;
@@ -413,13 +388,14 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
             PageManager.clock.zeroing();
             glitter.waitChangePage = true;
             for (let a = glitter.pageConfig.length - 1; a >= 0; a--) {
-                if (glitter.pageConfig[a].type === GVCType.Dialog && (glitter.pageConfig[a].tag === tag || tag === undefined)) {
+                if (glitter.pageConfig[a].type === GVCType.Dialog && ((glitter.pageConfig[a].tag === tag) || tag === undefined)) {
                     glitter.pageConfig[a].animation.outView(glitter.pageConfig[a], () => {
                         this.hidePageView(glitter.pageConfig[a].id, true);
                     });
                 }
             }
             glitter.waitChangePage = false;
+
         }
     }
 
@@ -437,11 +413,9 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
                     this.hidePageView(pageHide.id, true);
                 });
             }
-        } else if (
-            glitter.pageConfig.find((dd) => {
-                return dd.tag === tag;
-            })
-        ) {
+        } else if (glitter.pageConfig.find((dd) => {
+            return dd.tag === tag;
+        })) {
             const pageHide: PageConfig = glitter.pageConfig[glitter.pageConfig.length - 1];
             let pageShow: any = undefined;
             for (let a = glitter.pageConfig.length - 1; a >= 0; a--) {
@@ -462,7 +436,7 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
                 });
             }
         }
-    }
+    };
 
     public static goMenu() {
         const glitter = Glitter.glitter;

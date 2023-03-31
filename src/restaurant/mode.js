@@ -86,7 +86,8 @@ class Mode {
         <!-- End Header -->`;
     }
     function footer() {
-      return /*html*/ `<!-- ======= Footer ======= -->
+      return /*html*/ `
+        <!-- ======= Footer ======= -->
         <footer id="footer">
           <div class="footer-top">
             <div class="container">
