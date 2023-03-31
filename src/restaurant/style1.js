@@ -1,4 +1,6 @@
 import { Plugin } from "../glitterBundle/plugins/plugin-creater.js";
+import { Editor } from "../editor.js";
+import { ClickEvent } from "../glitterBundle/plugins/click-event.js";
 Plugin.create(import.meta.url, (glitter, editMode) => {
     function getRout(link) {
         return new URL("./" + link, import.meta.url).href;
@@ -46,21 +48,21 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
         var h = "";
         if (r.list === undefined) {
             h += `
-          <li>
-            <a
-              class="${first ? "nav-link" : ""} scrollto"
-              onclick=""
-              style="cursor:pointer"
-              data-hash=${r.link}
-            >
-              ${r.name}
-            </a>
-          </li>
-        `;
+              <li>
+                <a
+                  class="${first ? "nav-link" : ""} scrollto"
+                  onclick=""
+                  style="cursor:pointer"
+                  data-hash=${r.link}
+                >
+                  ${r.title}
+                </a>
+              </li>
+            `;
         }
         else {
             h += ` <li class="dropdown">
-          <a class="">${r.name}<i class="bi bi-chevron-${first ? "down" : "right"}"></i></a>
+          <a class="">${r.title}<i class="bi bi-chevron-${first ? "down" : "right"}"></i></a>
           <ul class="">
             ${(() => {
                 var tmp = "";
@@ -99,15 +101,27 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             return xxl;
         }
     }
-    function urlIcon(url, size) {
-        const domains = new URL(url).hostname.split(".");
-        let socialDomain = ["instagram", "twitter", "facebook"];
-        let returnString = "";
-        if (domains[0] == "www") {
-            returnString = domains[1];
+    function urlIcon(link, size) {
+        if (link == "#") {
+            if (size == "bi")
+                return `bi bi-link-45deg`;
+            else if (size == "bx")
+                return `bx bx-link-alt`;
+        }
+        let domains = "";
+        if (link.match("https://")) {
+            domains = link.split("https://")[1];
         }
         else {
-            returnString = domains[0];
+            domains = link.split("http://")[1];
+        }
+        let socialDomain = ["instagram", "twitter", "facebook"];
+        let returnString = "";
+        if (domains.split(".")[0] == "www") {
+            returnString = domains.split(".")[1];
+        }
+        else {
+            returnString = domains.split(".")[0];
         }
         const isMatch = socialDomain.some((domain) => domain.toLowerCase() === returnString.toLowerCase());
         if (isMatch) {
@@ -119,29 +133,48 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             else if (size == "bx")
                 return `bx bx-link-alt`;
         }
-        console.log(returnString);
         return "";
     }
     return {
         topbar: {
             title: "導覽列上方的資訊",
             subContent: "用來顯示聯絡資訊",
-            defaultData: {},
+            defaultData: {
+                INF: [
+                    {
+                        title: "",
+                        value: "",
+                        img: ""
+                    },
+                    {
+                        title: "",
+                        value: "",
+                        img: ""
+                    }
+                ]
+            },
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
                         initialScript(gvc, widget);
-                        const top = {
-                            phone: "0918-563-927",
-                            clock: "週一至週五 09:00 - 19:00",
-                        };
+                        const INF = widget.data.INF;
                         return `
                         <div id="topbar" class="d-flex align-items-center fixed-top">
                             <div class="container d-flex justify-content-center justify-content-md-between">
                                 <div class="contact-info d-flex align-items-center">
-                                    <i class="bi bi-phone d-flex align-items-center"><span>${top.phone}</span></i>
-                                    <i class="bi bi-clock d-flex align-items-center ms-4"><span> ${top.clock}</span></i>
+                                    ${(() => {
+                            return gvc.map(INF.map((INFData) => {
+                                return `
+                                                <div class="d-flex align-items-center me-4">
+                                                    <img src="${INFData.img}" style="width: 14px;height: 14px;margin-right: 5px;" alt="SVG image">
+                                                    <span>${INFData.value}</span>
+                                                </div>
+                                                
+                                            `;
+                            }));
+                        })()}
                                 </div>
+<!--                                 todo-->
                                 <div class="languages d-none d-md-flex align-items-center">
                                     <ul>
                                       <li>中文</li>
@@ -153,7 +186,56 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                         `;
                     },
                     editor: () => {
-                        return ``;
+                        return gvc.map([
+                            Editor.toggleExpand({
+                                gvc: gvc,
+                                title: '聯絡資訊設定',
+                                data: widget.data,
+                                innerText: gvc.map([
+                                    gvc.map(widget.data.INF.map((INFData, index) => {
+                                        return `<div class="ps-2 pt-2 mb-3 border" style="">
+                                            <h5>資訊${index + 1}</h5>
+                                        ` + `
+                                        ${glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: '標題',
+                                            default: INFData.title,
+                                            placeHolder: '請描述此連絡資訊',
+                                            callback: (text) => {
+                                                INFData.title = text;
+                                                widget.refreshComponent();
+                                            },
+                                        })}
+                                        ` + `
+                                        ${glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: '資訊',
+                                            default: INFData.value,
+                                            placeHolder: '請輸入資訊',
+                                            callback: (text) => {
+                                                INFData.value = text;
+                                                widget.refreshComponent();
+                                            },
+                                        })}
+                                        ` + `
+                                        ${Editor.uploadImage({
+                                            gvc: gvc,
+                                            title: `圖片`,
+                                            def: INFData.img,
+                                            callback: (e) => {
+                                                INFData.img = e;
+                                                widget.refreshComponent();
+                                            },
+                                        })}
+                                        ` + `</div>`;
+                                    })),
+                                    Editor.plusBtn('添加聯絡資訊', gvc.event(() => {
+                                        widget.data.INF.push({ title: '聯絡資訊', value: '', img: '' });
+                                        widget.refreshComponent();
+                                    }))
+                                ]),
+                            }),
+                        ]);
                     }
                 };
             }
@@ -161,24 +243,23 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
         nav: {
             title: "導覽列",
             subContent: "用來快速抵達頁面各處的nav",
-            defaultData: {},
+            defaultData: {
+                bar: [],
+                moreLink: [],
+            },
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
                         initialScript(gvc, widget);
                         const nav = {
-                            title: "萊恩設計",
-                            logo: "../../../glitterBundle/img/logo.svg",
+                            title: widget.data.title ?? "萊恩設計",
+                            logo: widget.data.logo ?? "",
                             bar: [
-                                { name: "菜單", link: "#menu" },
-                                { name: "產品介紹", link: "#feature" },
-                                { name: "定價方案", link: "#slider" },
-                                { name: "聯絡我們", link: "#contact" },
+                                ...widget.data.bar,
                                 {
-                                    name: "更多內容",
+                                    title: "更多內容",
                                     list: [
-                                        { name: "技術領域", link: "#banner" },
-                                        { name: "公司團隊", link: "#team" },
+                                        ...widget.data.moreLink
                                     ],
                                 },
                             ],
@@ -222,7 +303,99 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                             `;
                     },
                     editor: () => {
-                        return ``;
+                        return gvc.map([
+                            Editor.uploadImage({
+                                gvc: gvc,
+                                title: `Logo圖片`,
+                                def: widget.data.logo,
+                                callback: (e) => {
+                                    widget.data.logo = e;
+                                    widget.refreshComponent();
+                                },
+                            }),
+                            glitter.htmlGenerate.editeInput({
+                                gvc: gvc,
+                                title: '公司名稱',
+                                default: widget.data.title ?? '',
+                                placeHolder: '請輸入公司名稱',
+                                callback: (text) => {
+                                    widget.data.title = text;
+                                    widget.refreshComponent();
+                                },
+                            }),
+                            `<div class="mt-3"></div>`,
+                            Editor.toggleExpand({
+                                gvc: gvc,
+                                title: '導覽列',
+                                data: widget.data,
+                                innerText: gvc.map([
+                                    gvc?.map(widget.data?.bar?.map((BARData, index) => {
+                                        return `
+                                        <div class="ps-2 pt-2 mb-3 border" style="">
+                                            <h5>連結${index + 1}</h5>
+                                        ` + `
+                                        ${glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: '連結名稱',
+                                            default: BARData.title,
+                                            placeHolder: '請描述此連結的顯示資訊',
+                                            callback: (text) => {
+                                                BARData.title = text;
+                                                widget.refreshComponent();
+                                            },
+                                        })}
+                                        ` + `
+                                        ${ClickEvent.editer(gvc, widget, BARData.link, {
+                                            hover: true,
+                                            option: [],
+                                            title: "這個連結做的事情"
+                                        })}
+
+                                        ` + `</div>`;
+                                    })),
+                                    Editor.plusBtn('添加連結資訊', gvc.event(() => {
+                                        widget.data.bar.push({ title: '聯絡資訊', link: '' });
+                                        widget.refreshComponent();
+                                    }))
+                                ]),
+                            }),
+                            `<div class="mt-3"></div>`,
+                            Editor.toggleExpand({
+                                gvc: gvc,
+                                title: '更多內容',
+                                data: widget.data,
+                                innerText: gvc.map([
+                                    gvc?.map(widget.data?.moreLink?.map((hiddenData, index) => {
+                                        return `
+                                        <div class="ps-2 pt-2 mb-3 border" style="">
+                                            <h5>連結${index + 1}</h5>
+                                        ` + `
+                                        ${glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: '連結名稱',
+                                            default: hiddenData.title,
+                                            placeHolder: '請描述此連結的顯示資訊',
+                                            callback: (text) => {
+                                                hiddenData.title = text;
+                                                widget.refreshComponent();
+                                            },
+                                        })}
+                                        ` + `
+                                        ${ClickEvent.editer(gvc, widget, hiddenData.link, {
+                                            hover: true,
+                                            option: [],
+                                            title: "這個連結做的事情"
+                                        })}
+
+                                        ` + `</div>`;
+                                    })),
+                                    Editor.plusBtn('添加連結資訊', gvc.event(() => {
+                                        widget.data.moreLink.push({ title: '聯絡資訊', link: '' });
+                                        widget.refreshComponent();
+                                    }))
+                                ]),
+                            }),
+                        ]);
                     }
                 };
             }
@@ -230,46 +403,41 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
         footer: {
             title: "頁腳",
             subContent: "放在最下方的資訊，以及對網站所有地方的導引",
-            defaultData: {},
+            defaultData: {
+                outro: {
+                    title: "萊恩設計",
+                    desc: "提供直覺的操作，讓您在電腦、平板、手機都能隨心所欲地瀏覽您的網站",
+                    social: ["https://www.facebook.com/", "https://twitter.com/", "https://www.instagram.com/", "https://squarestudio.tw/"],
+                },
+                map: [
+                    {
+                        title: "網站導覽",
+                        list: [
+                            { name: "菜單", link: "#menu" },
+                            { name: "產品介紹", link: "#feature" },
+                            { name: "定價方案", link: "#slider" },
+                            { name: "技術領域", link: "#banner" },
+                            { name: "公司團隊", link: "#team" },
+                        ],
+                    },
+                    {
+                        title: "推薦網站",
+                        list: [
+                            { name: "Google", link: "https://www.google.com.tw/" },
+                            { name: "Yahoo", link: "https://tw.yahoo.com/" },
+                        ],
+                    },
+                ],
+                subs: { desc: "想收到與萊恩設計有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。", link: "#" },
+            },
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
                         initialScript(gvc, widget);
                         const footer = {
                             subs: { desc: "想收到與萊恩設計有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。", link: "#" },
-                            outro: {
-                                title: "萊恩設計",
-                                desc: "提供直覺的操作，讓您在電腦、平板、手機都能隨心所欲地瀏覽您的網站",
-                                social: ["https://www.facebook.com/", "https://twitter.com/", "https://www.instagram.com/", "https://squarestudio.tw/"],
-                            },
-                            map: [
-                                {
-                                    title: "網站導覽",
-                                    list: [
-                                        { name: "菜單", link: "#menu" },
-                                        { name: "產品介紹", link: "#feature" },
-                                        { name: "定價方案", link: "#slider" },
-                                        { name: "技術領域", link: "#banner" },
-                                        { name: "公司團隊", link: "#team" },
-                                    ],
-                                },
-                                {
-                                    title: "推薦網站",
-                                    list: [
-                                        { name: "Google", link: "https://www.google.com.tw/" },
-                                        { name: "Yahoo", link: "https://tw.yahoo.com/" },
-                                    ],
-                                },
-                            ],
-                            info: {
-                                title: "聯絡資訊",
-                                list: [
-                                    { icon: "bx bx-map", title: "台中市臺灣大道二段285號20樓" },
-                                    { icon: "bx bx-phone-call", title: "(886) 0978-028-730" },
-                                    { icon: "bx bx-time", title: `週一至週五 09:00 AM – 19:00 PM` },
-                                    { icon: "bx bx-envelope", title: `jianzhi.wang@ncdesign.info` },
-                                ],
-                            },
+                            outro: widget.data.outro,
+                            map: widget.data.map,
                         };
                         let id = glitter.getUUID();
                         return gvc.bindView({
@@ -283,7 +451,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                             <div class="row">
                                                 <div class="col-lg-3 col-md-6">
                                                     <div class="footer-info">
-                                                        <h3>${footer.outro.title}</h3>
+                                                        <h3 style="color: white">${footer.outro.title}</h3>
                                                         <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">${footer.outro.desc}</p>
                                                         <div class="social-links mt-3">
                                                             ${(() => {
@@ -332,7 +500,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                 })()}                                                                                                       
                                                 <div class="col-lg-4 col-md-6 footer-newsletter">
                                                     <h4>訂閱</h4>
-                                                    <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">想收到與萊恩設計有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。</p>
+                                                    <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">想收到與${footer.outro.title}有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。</p>
                                                     <form><input type="email" name="email" /><input type="submit" value="送出" onclick="${gvc.event(() => {
                                     event.preventDefault();
                                     return "";
@@ -361,7 +529,157 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                         });
                     },
                     editor: () => {
-                        return ``;
+                        return gvc.map([
+                            `<div class="mt-2"></div>`,
+                            Editor.toggleExpand({
+                                gvc: gvc,
+                                title: '基本資訊',
+                                data: widget.data.outro,
+                                innerText: `${glitter.htmlGenerate.editeInput({
+                                    gvc: gvc,
+                                    title: '左大標題',
+                                    default: widget.data.outro.title,
+                                    placeHolder: '請輸入左大標題',
+                                    callback: (text) => {
+                                        widget.data.outro.title = text;
+                                        widget.refreshComponent();
+                                    },
+                                })}` +
+                                    `
+                                ${glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: '左大標敘文',
+                                        default: widget.data.outro.desc,
+                                        placeHolder: '請輸入左大標下方的描述文',
+                                        callback: (text) => {
+                                            widget.data.outro.desc = text;
+                                            widget.refreshComponent();
+                                        },
+                                    })}
+                                ` +
+                                    `
+                                ${Editor.toggleExpand({
+                                        gvc: gvc,
+                                        title: `社群資訊`,
+                                        data: widget.data.outro.social,
+                                        innerText: `${gvc.map(widget.data.outro.social.map((social) => {
+                                            return glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: '社群網址',
+                                                default: social,
+                                                placeHolder: `請輸入社群網站的網址`,
+                                                callback: (text) => {
+                                                    social = text;
+                                                    widget.refreshComponent();
+                                                }
+                                            });
+                                        }))}` + `
+                                    ${Editor.plusBtn('添加社群網址', gvc.event(() => {
+                                            widget.data.outro.social.push("");
+                                            widget.refreshComponent();
+                                        }))}
+                                    `
+                                    })}
+                                `
+                            }),
+                            `<div class="mt-2"></div>`,
+                            Editor.toggleExpand({
+                                gvc: gvc,
+                                title: '中間資訊',
+                                data: widget.data.map,
+                                innerText: gvc.map([
+                                    ``,
+                                    gvc?.map(widget.data?.map?.map((lineData, index) => {
+                                        return `
+                                        <div class="ps-2 pt-2 mb-3 border" style="">
+                                            <h5>第${index + 1}行資訊</h5>
+                                        ` + `
+                                        ${glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: '連結名稱',
+                                            default: lineData.title,
+                                            placeHolder: '請描述此連結的顯示資訊',
+                                            callback: (text) => {
+                                                lineData.title = text;
+                                                widget.refreshComponent();
+                                            },
+                                        })}
+                                        ` + `
+                                        ${Editor.toggleExpand({
+                                            gvc: gvc,
+                                            title: '行內資訊',
+                                            data: lineData,
+                                            innerText: `${gvc.map(lineData.list.map((rowData, rowIndex) => {
+                                                return `                                                   
+                                                <div class="ps-2 pt-2 mb-3 border" style="">
+                                                    <h5>第${rowIndex + 1}列</h5>
+                                                ` + `
+                                                ${glitter.htmlGenerate.editeInput({
+                                                    gvc: gvc,
+                                                    title: '連結名稱',
+                                                    default: rowData.name,
+                                                    placeHolder: '請描述此連結的顯示資訊',
+                                                    callback: (text) => {
+                                                        rowData.name = text;
+                                                        widget.refreshComponent();
+                                                    },
+                                                })}    
+                                                ` + `
+                                                ${ClickEvent.editer(gvc, widget, rowData.link, {
+                                                    hover: true,
+                                                    option: [],
+                                                    title: "這個連結做的事情"
+                                                })}
+                                                ` + `
+                                                ${Editor.plusBtn('再加一列', gvc.event(() => {
+                                                    rowData.push({ name: '', link: "" });
+                                                    widget.refreshComponent();
+                                                }))}
+                                                `
+                                                    + `
+                                                </div>
+                                                `;
+                                            }))}
+                                                
+                                            `
+                                        })}
+                                        ` + `</div>`;
+                                    })),
+                                    Editor.plusBtn('再加一行', gvc.event(() => {
+                                        widget.data.moreLink.push({ title: '', list: [] });
+                                        widget.refreshComponent();
+                                    }))
+                                ]),
+                            }),
+                            `<div class="mt-2"></div>`,
+                            Editor.toggleExpand({
+                                gvc: gvc,
+                                title: '右端資訊',
+                                data: widget.data.subs,
+                                innerText: `${glitter.htmlGenerate.editeText({
+                                    gvc: gvc,
+                                    title: '訂閱資訊',
+                                    default: widget.data.subs.desc,
+                                    placeHolder: '請輸入訂閱的介紹文',
+                                    callback: (text) => {
+                                        widget.data.subs.desc = text;
+                                        widget.refreshComponent();
+                                    },
+                                })}` +
+                                    `
+                                    ${glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: '送出的目的地',
+                                        default: widget.data.subs.link,
+                                        placeHolder: '請輸入左大標下方的描述文',
+                                        callback: (text) => {
+                                            widget.data.subs.link = text;
+                                            widget.refreshComponent();
+                                        },
+                                    })}
+                                `
+                            }),
+                        ]);
                     }
                 };
             }
@@ -369,21 +687,23 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
         banner: {
             title: "橫幅",
             subContent: "簡單介紹",
-            defaultData: {},
+            defaultData: {
+                keyVision: {
+                    title: "關於<span>萊恩設計</span>我們能為您做什麼？",
+                    desc: "優質服務範圍包括網路連線諮詢與服務，從電商網站設計、後台管理、產品投放分析、網站架設、金流串接，我們都有經驗能替您完成服務",
+                    video: "https://www.youtube.com/watch?v=u6BOC7CDUTQ",
+                    img: getRout("assets/img/hero-bg.jpg"),
+                    list: [
+                        { name: "菜單", link: "#" },
+                        { name: "門市據點", link: "#" },
+                    ],
+                }
+            },
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
                         initialScript(gvc, widget);
-                        const keyVision = {
-                            title: "關於<span>萊恩設計</span>我們能為您做什麼？",
-                            desc: "優質服務範圍包括網路連線諮詢與服務，從電商網站設計、後台管理、產品投放分析、網站架設、金流串接，我們都有經驗能替您完成服務",
-                            video: "https://www.youtube.com/watch?v=u6BOC7CDUTQ",
-                            img: getRout("assets/img/hero-bg.jpg"),
-                            list: [
-                                { name: "菜單", link: "#" },
-                                { name: "門市據點", link: "#" },
-                            ],
-                        };
+                        const keyVision = widget.data.keyVision;
                         return ` 
                         <section id="hero" class="d-flex align-items-center" style="background: url(${keyVision.img}) top center">
                             <!--         data-aos="zoom-in"不能作動                   -->
@@ -400,7 +720,13 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                 tmp += `
                                                         <a
                                                             class="btn-menu animated fadeInUp scrollto"
-                                                            onclick="${gvc.event(() => { })}"
+                                                            onclick="${gvc.event(() => {
+                                    ClickEvent.trigger({
+                                        gvc,
+                                        widget,
+                                        clickEvent: l.link,
+                                    });
+                                })}"
                                                             style="cursor:pointer"
                                                             >${l.name}</a>
                                                     `;
@@ -422,7 +748,77 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                         </section>`;
                     },
                     editor: () => {
-                        return ``;
+                        return `
+                        ${glitter.htmlGenerate.editeText({
+                            gvc: gvc,
+                            title: '大標題',
+                            default: widget.data.keyVision.title,
+                            placeHolder: '請輸入大標題所顯示的文字，也能用簡單的html敘述',
+                            callback: (text) => {
+                                widget.data.keyVision.title = text;
+                                widget.refreshComponent();
+                            },
+                        })}
+                        ` + `
+                        ${Editor.uploadImage({
+                            gvc: gvc,
+                            title: `圖片`,
+                            def: widget.data.keyVision.img,
+                            callback: (e) => {
+                                widget.data.keyVision.img = e;
+                                widget.refreshComponent();
+                            },
+                        })}
+                        ` + `
+                        ${Editor.uploadVideo({
+                            gvc: gvc,
+                            title: `播放影片連結`,
+                            def: widget.data.keyVision.video,
+                            callback: (e) => {
+                                widget.data.keyVision.video = e;
+                                widget.refreshComponent();
+                            },
+                        })}
+                        ` + `
+                        ${glitter.htmlGenerate.editeText({
+                            gvc: gvc,
+                            title: '副標題',
+                            default: widget.data.keyVision.desc,
+                            placeHolder: '請輸入副標題所要顯示的文字',
+                            callback: (text) => {
+                                widget.data.keyVision.desc = text;
+                                widget.refreshComponent();
+                            },
+                        })}` +
+                            `
+                        <div class="mt-3"></div>
+                        ` + `${Editor.toggleExpand({
+                            gvc: gvc,
+                            title: '按鍵區塊',
+                            data: widget.data.keyVision.list,
+                            innerText: `${gvc.map(widget.data.keyVision.list.map((linkData) => {
+                                return `
+                                 ${glitter.htmlGenerate.editeInput({
+                                    gvc: gvc,
+                                    title: '按鍵名稱',
+                                    default: linkData.name,
+                                    placeHolder: '這個按鍵會顯示的名稱',
+                                    callback: (text) => {
+                                        linkData.name = text;
+                                        widget.refreshComponent();
+                                    },
+                                })}
+                                 ${ClickEvent.editer(gvc, widget, linkData.link, {
+                                    hover: true,
+                                    option: [],
+                                    title: "這個連結做的事情"
+                                })}
+                                 <div class="mb-3 mt-3" style="width: 100%;height: 1px;background: black"></div>
+                                `;
+                            }))}
+                                
+                            `
+                        })}`;
                     }
                 };
             }
@@ -430,23 +826,22 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
         about: {
             title: "關於我們",
             subContent: "用來介紹這網站的用途",
-            defaultData: {},
+            defaultData: {
+                about: {
+                    background: getRout("assets/img/about-bg.jpg"),
+                    img: getRout("assets/img/about.jpg"),
+                    title: "《人類大未來：下一個五十年》",
+                    descArray: [`若說我們可從中得出以下關乎人類未來的啟示，應不至於有爭議：每個人的身分不再像過去那般單一且固定，將變得比我們想像的更多元。我們在不同的情況下使用不同的身分；這些身分互有重疊而且日益難分，卻又能清楚地以不同的方式劃定個人的觀點和選擇。特別是傳統用來界定身分的社會標準（例如年齡和國籍）都將不再那麼重要，公私身分的界線也變得越來越模糊。以社會階級、族群歸屬、政治立場為本的身分定義，將讓位給新的劃分標準，例如出身城鄉或教育程度的高低。`,
+                        `如果個人身分的傳統特質變得支離破碎，可以想見未來社群的向心力將會更為疏遠，社會階層的流動性降低或是邊緣化，讓種族隔離或極端主義有機可趁。但換個角度來看，科技及網路帶來人際關係的「超連結」（hyperconnectivity），將有機會強化正向群體認同，賦予營造社群的新契機。未來，無論是生活或身分，人與人都會逐漸變得密不可分。這究竟是好事還是壞事？我認為有好也有壞，而且不論何者的影響都會越來越大。`
+                    ],
+                    extend: {}
+                }
+            },
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
                         initialScript(gvc, widget);
-                        const about = {
-                            background: getRout("assets/img/about-bg.jpg"),
-                            img: getRout("assets/img/about.jpg"),
-                            title: "《人類大未來：下一個五十年》",
-                            desc: `
-                                <p class="py-3" style="white-space:normal;word-wrap:break-word;word-break:break-all;">
-                                    若說我們可從中得出以下關乎人類未來的啟示，應不至於有爭議：每個人的身分不再像過去那般單一且固定，將變得比我們想像的更多元。我們在不同的情況下使用不同的身分；這些身分互有重疊而且日益難分，卻又能清楚地以不同的方式劃定個人的觀點和選擇。特別是傳統用來界定身分的社會標準（例如年齡和國籍）都將不再那麼重要，公私身分的界線也變得越來越模糊。以社會階級、族群歸屬、政治立場為本的身分定義，將讓位給新的劃分標準，例如出身城鄉或教育程度的高低。
-                                </p>
-                                <p class="py-3" style="white-space:normal;word-wrap:break-word;word-break:break-all;">
-                                    如果個人身分的傳統特質變得支離破碎，可以想見未來社群的向心力將會更為疏遠，社會階層的流動性降低或是邊緣化，讓種族隔離或極端主義有機可趁。但換個角度來看，科技及網路帶來人際關係的「超連結」（hyperconnectivity），將有機會強化正向群體認同，賦予營造社群的新契機。未來，無論是生活或身分，人與人都會逐漸變得密不可分。這究竟是好事還是壞事？我認為有好也有壞，而且不論何者的影響都會越來越大。
-                                </p>`,
-                        };
+                        const about = widget.data.about;
                         return gvc.bindView({
                             bind: glitter.getUUID(),
                             view: () => {
@@ -458,12 +853,16 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                             <!--data-aos="zoom-in" data-aos-delay="100"-->
                                             <div class="col-lg-6 order-1 order-lg-2"  data-aos="zoom-in" data-aos-delay="100">
                                                 <div class="about-img">
-                                                    <img src="${about.img}" alt="" />
+                                                    <img class="" src="${about.img}" alt="" />
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-                                                <h3 style="white-space:normal;word-wrap:break-word;word-break:break-all;">${about.title}</h3>
-                                                <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">${about.desc}</p>
+                                                <h3 style="color:white;white-space:normal;word-wrap:break-word;word-break:break-all;">${about.title}</h3>
+                                                ${(() => {
+                                    return gvc.map(about.descArray.map((desc) => {
+                                        return `<p class="py-3" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${desc}</p>`;
+                                    }));
+                                })()}
                                             </div>
                                         </div>
                                     </div>
@@ -476,7 +875,59 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                         });
                     },
                     editor: () => {
-                        return ``;
+                        return `
+                        ${glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: '大標題',
+                            default: widget.data.about.title,
+                            placeHolder: '請輸入大標題所顯示的文字',
+                            callback: (text) => {
+                                widget.data.about.title = text;
+                                widget.refreshComponent();
+                            },
+                        })}
+                        ` + `
+                        <div class="mt-3"></div>
+                        ` + `
+                         ${Editor.uploadImage({
+                            gvc: gvc,
+                            title: `圖片`,
+                            def: widget.data.about.img,
+                            callback: (e) => {
+                                widget.data.about.img = e;
+                                widget.refreshComponent();
+                            },
+                        })}
+                        ` + `
+                        <div class="mt-3"></div>
+                        ` + `
+                        ${Editor.toggleExpand({
+                            gvc: gvc,
+                            title: '左邊大塊文字',
+                            data: widget.data.about.extend,
+                            innerText: `${gvc.map(widget.data.about.descArray.map((desc, index) => {
+                                return `
+                                 ${glitter.htmlGenerate.editeText({
+                                    gvc: gvc,
+                                    title: `第${index + 1}段落文字`,
+                                    default: desc,
+                                    placeHolder: '請輸入此段落的文字',
+                                    callback: (text) => {
+                                        widget.data.about.descArray[index] = text;
+                                        widget.refreshComponent();
+                                    },
+                                })}                                 
+                                 <div class="mb-3 mt-3" style="width: 100%;height: 1px;background: black"></div>
+                                `;
+                            }))}
+                            ${Editor.plusBtn('添加文字區塊', gvc.event(() => {
+                                widget.data.about.descArray.push("");
+                                widget.refreshComponent();
+                            }))}
+                                
+                            `
+                        })}
+                        `;
                     }
                 };
             }
@@ -489,6 +940,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                 return {
                     view: () => {
                         initialScript(gvc, widget);
+                        let id = glitter.getUUID();
                         const banner = {
                             title: "我們擅長的領域",
                             desc: "從一開始的產品規劃與需求傾聽，再到頁面、Logo設計、UI／UX，最後的軟體開發與部署",
@@ -501,7 +953,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                             ],
                         };
                         return gvc.bindView({
-                            bind: glitter.getUUID(),
+                            bind: id,
                             view: () => {
                                 return `
                                     <!-- ======= Why Us Section ======= -->
@@ -1084,33 +1536,31 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                             var tmp = "";
                             team.list.map((l) => {
                                 tmp += `
-                                                        <div class="col-lg-4 col-md-6">
-                                                            <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                                                                <img src="${getRout(l.img)}" class="img-fluid" alt="" />
-                                                                <div class="member-info">
-                                                                    <div class="member-info-content">
-                                                                        <h4>${l.name}</h4>
-                                                                        <span>${l.pro}</span>
-                                                                    </div>
-                                                                    <div class="social">
-                                                                        ${(() => {
+                                                    <div class="col-lg-4 col-md-6">
+                                                        <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                                                            <img src="${getRout(l.img)}" class="img-fluid" alt="" />
+                                                            <div class="member-info">
+                                                                <div class="member-info-content">
+                                                                    <h4>${l.name}</h4>
+                                                                    <span>${l.pro}</span>
+                                                                </div>
+                                                                <div class="social">
+                                                                    ${(() => {
                                     let tmp = "";
                                     l.link.map((k) => {
-                                        console.log("資料");
-                                        console.log(k);
                                         tmp += `
-                                                                                    <a onclick="" style="cursor:pointer"
-                                                                                        ><i class="${urlIcon(k, "bi")}"></i
-                                                                                    ></a>
-                                                                                `;
+                                                                                <a onclick="" style="cursor:pointer"
+                                                                                    ><i class="${urlIcon(k, "bi")}"></i
+                                                                                ></a>
+                                                                            `;
                                     });
                                     return tmp;
                                 })()}                                                                    
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        `;
+                                                    </div>
+                                                    `;
                             });
                             return tmp;
                         })}
