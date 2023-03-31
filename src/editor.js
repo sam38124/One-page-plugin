@@ -52,6 +52,49 @@ export class Editor {
                 ></i>
             </div>`;
     }
+    static uploadVideo(obj) {
+        const glitter = window.glitter;
+        const $ = glitter.$;
+        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+                            <div class="d-flex align-items-center mb-3">
+                                <input class="flex-fill form-control " placeholder="請輸入圖片連結" value="${obj.def}" onchange="${obj.gvc.event((e) => {
+            obj.callback(e.value);
+        })}">
+                                <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
+                                <i class="fa-regular fa-upload text-white ms-2" style="cursor: pointer;" onclick="${obj.gvc.event(() => {
+            glitter.ut.chooseMediaCallback({
+                single: true,
+                accept: 'json,video/*',
+                callback(data) {
+                    const saasConfig = window.saasConfig;
+                    const dialog = new ShareDialog(obj.gvc.glitter);
+                    dialog.dataLoading({ visible: true });
+                    const file = data[0].file;
+                    saasConfig.api.uploadFile(file.name).then((data) => {
+                        dialog.dataLoading({ visible: false });
+                        const data1 = data.response;
+                        dialog.dataLoading({ visible: true });
+                        $.ajax({
+                            url: data1.url,
+                            type: 'put',
+                            data: file,
+                            processData: false,
+                            crossDomain: true,
+                            success: () => {
+                                dialog.dataLoading({ visible: false });
+                                obj.callback(data1.fullUrl);
+                            },
+                            error: () => {
+                                dialog.dataLoading({ visible: false });
+                                dialog.errorMessage({ text: '上傳失敗' });
+                            },
+                        });
+                    });
+                },
+            });
+        })}"></i>
+                            </div>`;
+    }
     static uploadLottie(obj) {
         const glitter = window.glitter;
         const $ = glitter.$;

@@ -18,6 +18,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
         gvc.addStyleLink([
             getRout('assets/vendor/boxicons/css/boxicons.min.css'),
             getRout('assets/vendor/swiper/swiper-bundle.min.css'),
+            'https://unpkg.com/aos@next/dist/aos.css',
             getRout('assets/css/theme.min.css'),
             getRout('app.css'),
         ]).then();
@@ -33,13 +34,15 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             { src: getRout(`assets/vendor/imagesloaded/imagesloaded.pkgd.min.js`) },
             { src: getRout(`assets/vendor/imagesloaded/imagesloaded.pkgd.min.js`) },
             { src: getRout(`assets/js/theme.min.js`) },
-            { src: getRout(`assets/js/main.js`) },
+            { src: getRout(`assets/js/main.js`) }
         ], () => {
             try {
                 widget.refreshComponent();
             }
-            catch (e) { }
-        }, () => { });
+            catch (e) {
+            }
+        }, () => {
+        });
     }
     return {
         topNav: {
@@ -454,7 +457,11 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                             r: widget.data.desktop.r,
                             m: widget.data.mobile.m,
                         };
-                        return `  <section id="keyVision2">
+                        return gvc.bindView(() => {
+                            return {
+                                bind: glitter.getUUID(),
+                                view: () => {
+                                    return `  <section id="keyVision2">
           <!-- Web View -->
           <div class="d-none d-md-flex " style="">
             <div class="kv2 vh-100" style="background-image:url(${keyVision2.l.img})">
@@ -477,12 +484,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                     <button
                       class="btn btn-danger mt-3 w-50 fs-5 kv-btn ${glitter.htmlGenerate.styleEditor(keyVision2.l.btn).class()}"
                       onclick="${gvc.event(() => {
-                            ClickEvent.trigger({
-                                gvc,
-                                widget,
-                                clickEvent: keyVision2.l.btn,
-                            });
-                        })}"
+                                        ClickEvent.trigger({
+                                            gvc,
+                                            widget,
+                                            clickEvent: keyVision2.l.btn,
+                                        });
+                                    })}"
                       style="cursor:pointer ${glitter.htmlGenerate.styleEditor(keyVision2.l.btn).style()}"
                     >
                       ${keyVision2.l.btn.name}
@@ -501,12 +508,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                     <button
                       class="btn btn-primary mt-3 w-50 fs-5 kv-btn ${glitter.htmlGenerate.styleEditor(keyVision2.r.btn).class()}"
                       onclick="${gvc.event(() => {
-                            ClickEvent.trigger({
-                                gvc,
-                                widget,
-                                clickEvent: keyVision2.r.btn,
-                            });
-                        })}"
+                                        ClickEvent.trigger({
+                                            gvc,
+                                            widget,
+                                            clickEvent: keyVision2.r.btn,
+                                        });
+                                    })}"
                       style="cursor:pointer;${glitter.htmlGenerate.styleEditor(keyVision2.r.btn).style()}"
                     >
                       ${keyVision2.r.btn.name}
@@ -540,9 +547,9 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                 >
                 <img src="">
                 ${keyVision2.m.lottie.split('.').pop() === 'json'
-                            ? `
+                                        ? `
                 <lottie-player autoplay loop mode="normal" src="${keyVision2.m.lottie}" style="height: 32vh;width: 32vh;">`
-                            : `
+                                        : `
                 <img src="${keyVision2.m.lottie}" style="height: 32vh;width: 32vh;">`}
                   
                   </lottie-player>
@@ -552,27 +559,36 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
 
                 <div class="mt-5 d-flex justify-content-evenly">
                 ${keyVision2.m.btn
-                            .map((dd) => {
-                            return `<button
+                                        .map((dd) => {
+                                        return `<button
                             class="btn btn-primary kv-btn ${glitter.htmlGenerate.styleEditor(dd).class()}"
                             onclick="${gvc.event(() => {
-                                ClickEvent.trigger({
-                                    gvc,
-                                    widget,
-                                    clickEvent: dd,
-                                });
-                            })}"
+                                            ClickEvent.trigger({
+                                                gvc,
+                                                widget,
+                                                clickEvent: dd,
+                                            });
+                                        })}"
                             style="${glitter.htmlGenerate.styleEditor(dd).style()}"
                         >
                             ${dd.title}
                         </button>`;
-                        })
-                            .join('')}
+                                    })
+                                        .join('')}
                 </div>
               </div>
             </div>
           </div>
         </section>`;
+                                },
+                                divCreate: {},
+                                onCreate: () => {
+                                    glitter.addMtScript([{ src: `https://unpkg.com/aos@next/dist/aos.js` }], () => {
+                                        AOS.init();
+                                    }, () => { });
+                                }
+                            };
+                        });
                     },
                     editor: () => {
                         widget.data.mobile.m.btnExpand = widget.data.mobile.m.btnExpand ?? {};
@@ -1088,7 +1104,11 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                                 <div class="col-xl-4 col-md-6 py-4 my-2 my-sm-3">
                                                     <a
                                                         class="card card-hover h-100 border-0 shadow-sm text-decoration-none pt-5 px-sm-3 px-md-0 px-lg-3 pb-sm-3 pb-md-0 pb-lg-3 ms-xl-2"
-                                                        onclick="${gvc.event(() => { })}"
+                                                        onclick="${gvc.event(() => {
+                                    ClickEvent.trigger({
+                                        gvc, widget, clickEvent: s,
+                                    });
+                                })}"
                                                         style="cursor:pointer"
                                                     >
                                                         <div class="card-body pt-3 px-2">
@@ -1181,6 +1201,11 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                                 widget.refreshComponent();
                                             },
                                         }),
+                                        ClickEvent.editer(gvc, widget, dd, {
+                                            hover: true,
+                                            option: [],
+                                            title: "點擊事件"
+                                        })
                                     ]),
                                 });
                             })
@@ -1359,8 +1384,9 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                         return `
 ${gvc.bindView(() => {
                             const swiperID = gvc.glitter.getUUID();
+                            const pjid = glitter.getUUID();
                             return {
-                                bind: `project`,
+                                bind: pjid,
                                 view: () => {
                                     return `<h2 class="h1 pb-3 pb-lg-4 text-center">${project.title}</h2>
                 <!-- Multiple slides responsive slider with external Prev / Next buttons and bullets outside -->
@@ -1469,26 +1495,33 @@ ${gvc.bindView(() => {
                                     style: glitter.htmlGenerate.styleEditor(widget.data.bg).style(),
                                 },
                                 onCreate: () => {
-                                    const swiper = new Swiper(`#${swiperID}`, {
-                                        slidesPerView: 1,
-                                        loop: true,
-                                        pagination: {
-                                            el: `#${swiperID} .swiper-pagination`,
-                                            clickable: true,
-                                        },
-                                        navigation: {
-                                            prevEl: '#prev-news',
-                                            nextEl: '#next-news',
-                                        },
-                                        breakpoints: {
-                                            '500': {
-                                                slidesPerView: 2,
+                                    try {
+                                        const swiper = new Swiper(`#${swiperID}`, {
+                                            slidesPerView: 1,
+                                            loop: true,
+                                            pagination: {
+                                                el: `#${swiperID} .swiper-pagination`,
+                                                clickable: true,
                                             },
-                                            '1000': {
-                                                slidesPerView: 3,
+                                            navigation: {
+                                                prevEl: '#prev-news',
+                                                nextEl: '#next-news',
                                             },
-                                        },
-                                    });
+                                            breakpoints: {
+                                                '500': {
+                                                    slidesPerView: 2,
+                                                },
+                                                '1000': {
+                                                    slidesPerView: 3,
+                                                },
+                                            },
+                                        });
+                                    }
+                                    catch (e) {
+                                        setTimeout(() => {
+                                            gvc.notifyDataChange(pjid);
+                                        }, 100);
+                                    }
                                 },
                             };
                         })}
@@ -1553,97 +1586,111 @@ ${gvc.bindView(() => {
                             }),
                             `<div class="alert alert-dark p-2 mt-2">
                                 ${Editor.h3('案例列表')}
-                                ${widget.data.list
-                                .map((data, index) => {
-                                data.tabExpand = data.tabExpand ?? {};
-                                return Editor.toggleExpand({
-                                    gvc: gvc,
-                                    title: Editor.minusTitle(data.title || `案例:${index + 1}`, gvc.event(() => {
-                                        widget.data.list.splice(index, 1);
-                                        widget.refreshComponent();
-                                    })),
-                                    data: data,
-                                    innerText: gvc.map([
-                                        glitter.htmlGenerate.editeInput({
-                                            gvc: gvc,
-                                            title: '標題',
-                                            default: data.title ?? '',
-                                            placeHolder: '輸入標題',
-                                            callback: (text) => {
-                                                data.title = text;
-                                                widget.refreshComponent();
-                                            },
-                                        }),
-                                        glitter.htmlGenerate.editeText({
-                                            gvc: gvc,
-                                            title: '子標題',
-                                            default: data.sub ?? '',
-                                            placeHolder: '輸入子標題',
-                                            callback: (text) => {
-                                                data.sub = text;
-                                                widget.refreshComponent();
-                                            },
-                                        }),
-                                        `<div class="mb-2"></div>`,
-                                        Editor.toggleExpand({
-                                            gvc: gvc,
-                                            title: `標籤設定`,
-                                            data: data.tabExpand,
-                                            innerText: data.tag
-                                                .map((d2, index) => {
-                                                return Editor.searchInput({
-                                                    gvc: gvc,
-                                                    title: Editor.minusTitle(d2 || `標籤:${index + 1}`, gvc.event(() => {
-                                                        data.tag.splice(index, 1);
+                                ${(() => {
+                                let dragm = {
+                                    start: 0,
+                                    end: 0,
+                                };
+                                return widget.data.list
+                                    .map((data, index) => {
+                                    data.tabExpand = data.tabExpand ?? {};
+                                    return Editor.toggleExpand({
+                                        gvc: gvc,
+                                        title: `<div    draggable="true"  ondragenter="${gvc.event((e, event) => {
+                                            dragm.end = index;
+                                        })}" ondragstart="${gvc.event(() => {
+                                            dragm.start = index;
+                                            dragm.end = index;
+                                        })}"   ondragend="${gvc.event(() => {
+                                            swapArr(widget.data.list, dragm.start, dragm.end);
+                                            widget.refreshComponent();
+                                        })}">${Editor.minusTitle(data.title || `案例:${index + 1}`, gvc.event(() => {
+                                            widget.data.list.splice(index, 1);
+                                            widget.refreshComponent();
+                                        }))}</div>`,
+                                        data: data,
+                                        innerText: gvc.map([
+                                            glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: '標題',
+                                                default: data.title ?? '',
+                                                placeHolder: '輸入標題',
+                                                callback: (text) => {
+                                                    data.title = text;
+                                                    widget.refreshComponent();
+                                                },
+                                            }),
+                                            glitter.htmlGenerate.editeText({
+                                                gvc: gvc,
+                                                title: '子標題',
+                                                default: data.sub ?? '',
+                                                placeHolder: '輸入子標題',
+                                                callback: (text) => {
+                                                    data.sub = text;
+                                                    widget.refreshComponent();
+                                                },
+                                            }),
+                                            `<div class="mb-2"></div>`,
+                                            Editor.toggleExpand({
+                                                gvc: gvc,
+                                                title: `標籤設定`,
+                                                data: data.tabExpand,
+                                                innerText: data.tag
+                                                    .map((d2, index) => {
+                                                    return Editor.searchInput({
+                                                        gvc: gvc,
+                                                        title: Editor.minusTitle(d2 || `標籤:${index + 1}`, gvc.event(() => {
+                                                            data.tag.splice(index, 1);
+                                                            widget.refreshComponent();
+                                                        })),
+                                                        def: d2,
+                                                        placeHolder: '標籤',
+                                                        callback: (text) => {
+                                                            data.tag[index] = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                        array: widget.data.tag.map((dd) => {
+                                                            return dd.title;
+                                                        }),
+                                                    });
+                                                })
+                                                    .join(`<div class="my-2"></div>`) +
+                                                    Editor.plusBtn('添加標籤', gvc.event(() => {
+                                                        data.tag.push('');
                                                         widget.refreshComponent();
                                                     })),
-                                                    def: d2,
-                                                    placeHolder: '標籤',
-                                                    callback: (text) => {
-                                                        data.tag[index] = text;
-                                                        widget.refreshComponent();
-                                                    },
-                                                    array: widget.data.tag.map((dd) => {
-                                                        return dd.title;
-                                                    }),
-                                                });
-                                            })
-                                                .join(`<div class="my-2"></div>`) +
-                                                Editor.plusBtn('添加標籤', gvc.event(() => {
-                                                    data.tag.push('');
+                                                color: `#0062c0`,
+                                            }),
+                                            Editor.uploadImage({
+                                                gvc: gvc,
+                                                title: '圖片',
+                                                def: data.img,
+                                                callback: (text) => {
+                                                    data.img = text;
                                                     widget.refreshComponent();
-                                                })),
-                                            color: `#0062c0`,
-                                        }),
-                                        Editor.uploadImage({
-                                            gvc: gvc,
-                                            title: '圖片',
-                                            def: data.img,
-                                            callback: (text) => {
-                                                data.img = text;
-                                                widget.refreshComponent();
-                                            },
-                                        }),
-                                        glitter.htmlGenerate.editeInput({
-                                            gvc: gvc,
-                                            title: '按鈕標題',
-                                            default: data.btn.title,
-                                            placeHolder: '輸入標題',
-                                            callback: (text) => {
-                                                data.btn.title = text;
-                                                widget.refreshComponent();
-                                            },
-                                        }),
-                                        glitter.htmlGenerate.styleEditor(data.btn).editor(gvc, widget, '按鈕設計樣式'),
-                                        ClickEvent.editer(gvc, widget, data.btn, {
-                                            hover: true,
-                                            option: [],
-                                            title: '點擊事件',
-                                        }),
-                                    ]),
-                                });
-                            })
-                                .join(`<div class="my-2"></div>`)}
+                                                },
+                                            }),
+                                            glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: '按鈕標題',
+                                                default: data.btn.title,
+                                                placeHolder: '輸入標題',
+                                                callback: (text) => {
+                                                    data.btn.title = text;
+                                                    widget.refreshComponent();
+                                                },
+                                            }),
+                                            glitter.htmlGenerate.styleEditor(data.btn).editor(gvc, widget, '按鈕設計樣式'),
+                                            ClickEvent.editer(gvc, widget, data.btn, {
+                                                hover: true,
+                                                option: [],
+                                                title: '點擊事件',
+                                            }),
+                                        ]),
+                                    });
+                                })
+                                    .join(`<div class="my-2"></div>`);
+                            })()}
                                 ${Editor.plusBtn('添加案例', gvc.event(() => {
                                 widget.data.list.push({
                                     title: '萊恩設計',
@@ -1764,31 +1811,38 @@ ${gvc.bindView(() => {
                                     style: ``,
                                 },
                                 onCreate: () => {
-                                    const swiper = new Swiper(`#${gvc.id(cl)} .swiper`, {
-                                        slidesPerView: 2,
-                                        pagination: {
-                                            el: `#${gvc.id(cl)} .swiper-pagination`,
-                                            clickable: true,
-                                        },
-                                        breakpoints: {
-                                            '500': {
-                                                slidesPerView: 3,
-                                                spaceBetween: 8,
+                                    try {
+                                        const swiper = new Swiper(`#${gvc.id(cl)} .swiper`, {
+                                            slidesPerView: 2,
+                                            pagination: {
+                                                el: `#${gvc.id(cl)} .swiper-pagination`,
+                                                clickable: true,
                                             },
-                                            '650': {
-                                                slidesPerView: 4,
-                                                spaceBetween: 8,
+                                            breakpoints: {
+                                                '500': {
+                                                    slidesPerView: 3,
+                                                    spaceBetween: 8,
+                                                },
+                                                '650': {
+                                                    slidesPerView: 4,
+                                                    spaceBetween: 8,
+                                                },
+                                                '900': {
+                                                    slidesPerView: 5,
+                                                    spaceBetween: 8,
+                                                },
+                                                '1100': {
+                                                    slidesPerView: 6,
+                                                    spaceBetween: 8,
+                                                },
                                             },
-                                            '900': {
-                                                slidesPerView: 5,
-                                                spaceBetween: 8,
-                                            },
-                                            '1100': {
-                                                slidesPerView: 6,
-                                                spaceBetween: 8,
-                                            },
-                                        },
-                                    });
+                                        });
+                                    }
+                                    catch (e) {
+                                        setTimeout(() => {
+                                            gvc.notifyDataChange(cl);
+                                        }, 100);
+                                    }
                                 },
                             };
                         });
@@ -2144,18 +2198,25 @@ ${gvc.bindView(() => {
                                 divCreate: {
                                     class: `jarallax dark-mode bg-dark py-xxl-5`, style: `height:100%;`
                                 }, onCreate: () => {
-                                    const swiper = new Swiper(`#${gvc.id(id)} .swiper`, {
-                                        spaceBetween: 12,
-                                        loop: true,
-                                        pagination: {
-                                            el: '.swiper-pagination',
-                                            clickable: true,
-                                        },
-                                        navigation: {
-                                            prevEl: '#team-prev',
-                                            nextEl: '#team-next',
-                                        },
-                                    });
+                                    try {
+                                        const swiper = new Swiper(`#${gvc.id(id)} .swiper`, {
+                                            spaceBetween: 12,
+                                            loop: true,
+                                            pagination: {
+                                                el: '.swiper-pagination',
+                                                clickable: true,
+                                            },
+                                            navigation: {
+                                                prevEl: '#team-prev',
+                                                nextEl: '#team-next',
+                                            },
+                                        });
+                                    }
+                                    catch (e) {
+                                        setTimeout(() => {
+                                            gvc.notifyDataChange(id);
+                                        }, 100);
+                                    }
                                 },
                             };
                         });
@@ -3314,156 +3375,326 @@ ${gvc.bindView(() => {
             },
         },
         template: {
-            title: '模板瀏覽',
+            title: "模板瀏覽",
             subContent: '顯示模板瀏覽的內容',
             defaultData: {},
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
                         initialScript(gvc, widget);
+                        widget.data.tag = widget.data.tag ?? [
+                            { className: "*", title: "所有模板" },
+                            { className: "onepage", title: "單頁式網頁" },
+                            { className: "shop", title: "電商服務" },
+                            { className: "social", title: "社群平台" },
+                            { className: "event", title: "活動網站" },
+                            { className: "dashboard", title: "儀錶板" },
+                            { className: "blog", title: "部落格" },
+                        ];
+                        widget.data.title = widget.data.title ?? "萊恩設計網頁模板";
+                        widget.data.desc = widget.data.desc ?? "一頁式網站、多功能前後台、只要您有需求和資料，萊恩設計都能提供相對應的模板，點擊圖片可開啟該模板演示";
+                        widget.data.list = widget.data.list ?? [
+                            {
+                                img: getRout(`img/template/restaurantly.png`),
+                                tag: ["onepage"],
+                                name: "企業形象單頁式網站 - 活躍藍",
+                                link: `${glitter.webUrl}/restaurantly/home`,
+                            },
+                            {
+                                img: getRout("img/template/scaffold.png"),
+                                tag: ["onepage"],
+                                name: "企業形象單頁式網站 - 活躍藍",
+                                link: `${glitter.webUrl}/scaffold/home`
+                            },
+                            {
+                                img: getRout("img/template/maxim.png"),
+                                tag: ["onepage"],
+                                name: "企業形象單頁式網站 - 綠意黑",
+                                link: `${glitter.webUrl}/maxim/home`
+                            },
+                            {
+                                img: getRout("img/template/herobiz.png"),
+                                tag: ["onepage"],
+                                name: "企業形象單頁式網站 - 靈活青",
+                                link: `${glitter.webUrl}/herobiz2/home`
+                            },
+                            {
+                                img: getRout("img/template/theday.png"),
+                                tag: ["onepage"],
+                                name: "企業形象單頁式網站 - 紅光黑",
+                                link: `${glitter.webUrl}/theday2/home`
+                            },
+                        ];
                         const template = {
-                            title: '萊恩設計網頁模板',
-                            desc: '一頁式網站、多功能前後台、只要您有需求和資料，萊恩設計都能提供相對應的模板，點擊圖片可開啟該模板演示',
-                            tag: [
-                                { className: '*', title: '所有模板' },
-                                { className: '.onepage', title: '單頁式網頁' },
-                                { className: '.shop', title: '電商服務' },
-                                { className: '.social', title: '社群平台' },
-                                { className: '.event', title: '活動網站' },
-                                { className: '.dashboard', title: '儀錶板' },
-                                { className: '.blog', title: '部落格' },
-                            ],
-                            list: [
-                                {
-                                    img: getRout(`img/template/restaurantly.png`),
-                                    tag: ['onepage'],
-                                    name: '企業形象單頁式網站 - 活躍藍',
-                                    link: `${glitter.webUrl}/restaurantly/home`,
-                                },
-                                {
-                                    img: getRout('img/template/scaffold.png'),
-                                    tag: ['onepage'],
-                                    name: '企業形象單頁式網站 - 活躍藍',
-                                    link: `${glitter.webUrl}/scaffold/home`,
-                                },
-                                {
-                                    img: getRout('img/template/maxim.png'),
-                                    tag: ['onepage'],
-                                    name: '企業形象單頁式網站 - 綠意黑',
-                                    link: `${glitter.webUrl}/maxim/home`,
-                                },
-                                {
-                                    img: getRout('img/template/herobiz.png'),
-                                    tag: ['onepage'],
-                                    name: '企業形象單頁式網站 - 靈活青',
-                                    link: `${glitter.webUrl}/herobiz2/home`,
-                                },
-                                {
-                                    img: getRout('img/template/theday.png'),
-                                    tag: ['onepage'],
-                                    name: '企業形象單頁式網站 - 紅光黑',
-                                    link: `${glitter.webUrl}/theday2/home`,
-                                },
-                            ],
+                            title: widget.data.title,
+                            desc: widget.data.desc,
+                            tag: widget.data.tag,
+                            list: widget.data.list,
                         };
                         const id = glitter.getUUID();
                         return gvc.bindView(() => {
                             return {
                                 bind: id,
                                 view: () => {
-                                    return `<h2 class="h1 mb-4 text-center">${template.title}</h2>
-                                        <p class="fs-lg pb-2 pb-md-3 pb-lg-0 mb-4 mb-lg-5 text-center">${template.desc}</p>
-                                        <ul
-                                            class="nav nav-tabs flex-nowrap justify-content-lg-center overflow-auto pb-2 mb-3 mb-lg-4"
-                                            role="tablist"
-                                        >
-                                            ${glitter.print(function () {
-                                        var tmp = '';
+                                    return ` <h2 class="h1 mb-4 text-center">${template.title}</h2>
+          <p class="fs-lg pb-2 pb-md-3 pb-lg-0 mb-4 mb-lg-5 text-center">${template.desc}</p>
+          <ul class="nav nav-tabs flex-nowrap justify-content-lg-center overflow-auto pb-2 mb-3 mb-lg-4" role="tablist">
+            ${glitter.print(function () {
+                                        var tmp = "";
                                         template.tag.map((a, i) => {
                                             tmp += `
-                                                        <li class="nav-item" role="presentation">
-                                                            <button
-                                                                class="nav-link text-nowrap ${i == 0 ? `active` : ``}"
-                                                                data-bs-toggle="tab"
-                                                                type="button"
-                                                                role="tab"
-                                                                onclick="${gvc.event(() => {
-                                                $('.isot').isotope({ filter: a.className });
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link text-nowrap ${i == 0 ? `active` : ``}"
+                      data-bs-toggle="tab"
+                      type="button"
+                      role="tab"
+                      onclick="${gvc.event(() => {
+                                                let b = a.className;
+                                                if (b !== "*") {
+                                                    b = "." + b;
+                                                }
+                                                $(".isot").isotope({ filter: b });
                                             })}"
-                                                            >
-                                                                ${a.title}
-                                                            </button>
-                                                        </li>
-                                                    `;
+                    >
+                      ${a.title}
+                    </button>
+                  </li>
+                `;
                                         });
                                         return tmp;
                                     })}
-                                        </ul>
-                                        <div class="masonry-grid row g-md-4 g-3 mb-4 isot">
-                                            <!-- Project grid -->
-                                            ${glitter.print(function () {
-                                        var tmp = '';
+          </ul>
+          <div class="masonry-grid row g-md-4 g-3 mb-4 isot">
+            <!-- Project grid -->
+            ${glitter.print(function () {
+                                        var tmp = "";
                                         template.list.map((p) => {
-                                            var tagClass = '';
+                                            var tagClass = "";
                                             p.tag.map((m) => (tagClass += `${m} `));
                                             tmp += `
-                                                        <div
-                                                            class="masonry-grid-item col-md-4 col-sm-6 col-12 ${tagClass}"
-                                                            style="display:none"
-                                                        >
-                                                            <a class="card card-portfolio card-hover bg-transparent border-0">
-                                                                <div
-                                                                    class="card-img-overlay d-flex flex-column align-items-center justify-content-center rounded-3"
-                                                                    onclick="${gvc.event(() => { })}"
-                                                                    style="cursor:pointer"
-                                                                >
-                                                                    <span
-                                                                        class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50 rounded-3"
-                                                                    ></span>
-                                                                    <div class="position-relative text-center zindex-2">
-                                                                        <h3 class="text-light mb-1">${p.name}</h3>
-                                                                        <i class="bx bx-link-alt mt-3 fs-xl mt-1 me-2"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card-img">
-                                                                    <div
-                                                                        style="background:url(${p.img});
+                  <div class="masonry-grid-item col-md-4 col-sm-6 col-12 ${tagClass}" style="display:none">
+                    <a class="card card-portfolio card-hover bg-transparent border-0">
+                      <div
+                        class="card-img-overlay d-flex flex-column align-items-center justify-content-center rounded-3"
+                        onclick="${gvc.event(() => {
+                                                ClickEvent.trigger({
+                                                    gvc, widget, clickEvent: p,
+                                                });
+                                            })}"
+                        style="cursor:pointer"
+                      >
+                        <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50 rounded-3"></span>
+                        <div class="position-relative text-center zindex-2">
+                          <h3 class="text-light mb-1">${p.name}</h3>
+                          <i class="bx bx-link-alt mt-3 fs-xl mt-1 me-2"></i>
+                        </div>
+                      </div>
+                      <div class="card-img">
+                        <div
+                          style="background:url(${p.img});
                             width: 100%;
                             padding-bottom: 70%;
                             background-size:cover;
                             background-position:center center;"
-                                                                    ></div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    `;
+                        ></div>
+                      </div>
+                    </a>
+                  </div>
+                `;
                                         });
                                         return tmp;
                                     })}
-                                        </div>`;
+          </div>`;
                                 },
                                 divCreate: {
-                                    elem: `section`,
-                                    class: `container mb-5 pt-lg-2 pt-xl-4 pb-2 pb-md-3 pb-lg-5`,
+                                    elem: `section`, class: `container mb-5 pt-lg-2 pt-xl-4 pb-2 pb-md-3 pb-lg-5`
                                 },
                                 onCreate: () => {
                                     try {
                                         const imagesLoaded = window.imagesLoaded;
                                         imagesLoaded(document.querySelector('#' + gvc.id(id)), function (instance) {
-                                            $('.isot').isotope({ filter: ':not("*")' }),
-                                                $('.isot').isotope({ filter: '*' });
+                                            $(".isot").isotope({ filter: ':not("*")' }), $(".isot").isotope({ filter: "*" });
                                         });
                                     }
-                                    catch (e) { }
-                                },
+                                    catch (e) {
+                                    }
+                                }
                             };
                         });
                     },
                     editor: () => {
-                        return ``;
-                    },
+                        widget.data.tabExpand = widget.data.tabExpand ?? {};
+                        return gvc.map([
+                            glitter.htmlGenerate.editeInput({
+                                gvc: gvc,
+                                title: `標題`,
+                                default: widget.data.title,
+                                placeHolder: "輸入標題名稱",
+                                callback: (text) => {
+                                    widget.data.title = text;
+                                    widget.refreshComponent();
+                                }
+                            }),
+                            glitter.htmlGenerate.editeText({
+                                gvc: gvc,
+                                title: `描述`,
+                                default: widget.data.desc,
+                                placeHolder: "輸入描述",
+                                callback: (text) => {
+                                    widget.data.desc = text;
+                                    widget.refreshComponent();
+                                }
+                            }),
+                            `<div class="my-2"></div>`,
+                            Editor.toggleExpand({
+                                gvc: gvc,
+                                title: `標籤設定`,
+                                data: widget.data.tabExpand,
+                                innerText: widget.data.tag.map((data, index) => {
+                                    return Editor.toggleExpand({
+                                        gvc: gvc,
+                                        title: Editor.minusTitle(data.title || "標籤" + (index + 1), gvc.event(() => {
+                                            widget.data.tag.splice(index, 1);
+                                            widget.refreshComponent();
+                                        })),
+                                        data: data,
+                                        innerText: gvc.map([
+                                            glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: '標籤名稱',
+                                                default: data.title,
+                                                placeHolder: "標籤",
+                                                callback: (text) => {
+                                                    data.title = text;
+                                                    widget.refreshComponent();
+                                                }
+                                            }),
+                                            glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: '標籤連結[* 代表全部]',
+                                                default: data.className,
+                                                placeHolder: "標籤",
+                                                callback: (text) => {
+                                                    data.className = text;
+                                                    widget.refreshComponent();
+                                                }
+                                            })
+                                        ]),
+                                        color: `#004281`
+                                    });
+                                }).join(`<div class="my-2"></div>`) + Editor.plusBtn("新增標籤", gvc.event(() => {
+                                    widget.data.tag.push({
+                                        style: `background-color:var(--bs-red);`,
+                                        class: ``,
+                                        title: `網頁設計`
+                                    });
+                                    widget.refreshComponent();
+                                })),
+                                color: `#0062c0`
+                            }),
+                            `<div class="alert alert-dark p-2 mt-2">
+${Editor.h3('項目列表')}
+${(() => {
+                                let dragm = {
+                                    start: 0,
+                                    end: 0,
+                                };
+                                return widget.data.list.map((data, index) => {
+                                    data.tabExpand = data.tabExpand ?? {};
+                                    return Editor.toggleExpand({
+                                        gvc: gvc,
+                                        title: `<div    draggable="true"  ondragenter="${gvc.event((e, event) => {
+                                            dragm.end = index;
+                                        })}" ondragstart="${gvc.event(() => {
+                                            dragm.start = index;
+                                            dragm.end = index;
+                                        })}"   ondragend="${gvc.event(() => {
+                                            swapArr(widget.data.list, dragm.start, dragm.end);
+                                            widget.refreshComponent();
+                                        })}">${Editor.minusTitle(data.name || `案例:${index + 1}`, gvc.event(() => {
+                                            widget.data.list.splice(index, 1);
+                                            widget.refreshComponent();
+                                        }))}</div>`,
+                                        data: data,
+                                        innerText: gvc.map([
+                                            glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: '標題',
+                                                default: data.name ?? "",
+                                                placeHolder: "輸入標題",
+                                                callback: (text) => {
+                                                    data.name = text;
+                                                    widget.refreshComponent();
+                                                }
+                                            }),
+                                            `<div class="mb-2"></div>`,
+                                            Editor.toggleExpand({
+                                                gvc: gvc,
+                                                title: `標籤設定`,
+                                                data: data.tabExpand,
+                                                innerText: data.tag.map((d2, index) => {
+                                                    return Editor.searchInput({
+                                                        gvc: gvc,
+                                                        title: Editor.minusTitle((widget.data.tag.find((dd) => {
+                                                            return dd.className === d2;
+                                                        }) ?? {}).title || `標籤:${index + 1}`, gvc.event(() => {
+                                                            data.tag.splice(index, 1);
+                                                            widget.refreshComponent();
+                                                        })),
+                                                        def: (widget.data.tag.find((dd) => {
+                                                            return dd.className === d2;
+                                                        }) ?? {}).title ?? "",
+                                                        placeHolder: "標籤",
+                                                        callback: (text) => {
+                                                            data.tag[index] = widget.data.tag.find((dd) => {
+                                                                return dd.title === text;
+                                                            }).className;
+                                                            widget.refreshComponent();
+                                                        },
+                                                        array: widget.data.tag.map((dd) => {
+                                                            return dd.title;
+                                                        })
+                                                    });
+                                                }).join(`<div class="my-2"></div>`) + Editor.plusBtn("添加標籤", gvc.event(() => {
+                                                    data.tag.push('');
+                                                    widget.refreshComponent();
+                                                })),
+                                                color: `#0062c0`
+                                            }),
+                                            Editor.uploadImage({
+                                                gvc: gvc,
+                                                title: '圖片',
+                                                def: data.img,
+                                                callback: (text) => {
+                                                    data.img = text;
+                                                    widget.refreshComponent();
+                                                }
+                                            }),
+                                            ClickEvent.editer(gvc, widget, data, {
+                                                hover: true,
+                                                option: [],
+                                                title: "點擊事件"
+                                            })
+                                        ])
+                                    });
+                                }).join(`<div class="my-2"></div>`);
+                            })()}
+${Editor.plusBtn("添加項目", gvc.event(() => {
+                                widget.data.list.push({
+                                    title: "萊恩設計",
+                                    sub: "官方形象網站",
+                                    tag: [],
+                                    img: getRout("img/project/LionWeb.png"),
+                                    page: `project`
+                                });
+                                widget.refreshComponent();
+                            }))}
+</div>`
+                        ]);
+                    }
                 };
-            },
+            }
         },
         price2: {
             title: '價位區塊',
@@ -3611,4 +3842,9 @@ function table_lion(json, stripe, hideHead) {
             </tbody>
         </table>
     `;
+}
+function swapArr(arr, index1, index2) {
+    const data = arr[index1];
+    arr.splice(index1, 1);
+    arr.splice(index2, 0, data);
 }
