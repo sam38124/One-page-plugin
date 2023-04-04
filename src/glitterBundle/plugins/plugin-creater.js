@@ -5,6 +5,46 @@ export class Plugin {
         const glitter = window.glitter;
         glitter.share.htmlExtension[url] = fun(glitter, window.parent.editerData !== undefined);
     }
+    static createComponent(url, fun) {
+        const glitter = window.glitter;
+        const val = fun(glitter, window.parent.editerData !== undefined);
+        glitter.share.componentCallback[url](val);
+    }
+    static setComponent(original, url) {
+        const glitter = window.glitter;
+        url.searchParams.set("original", original);
+        return (gvc, widget, setting, hoverID) => {
+            glitter.share.componentData = glitter.share.componentData ?? {};
+            let val = glitter.share.componentData[url.href];
+            glitter.share.componentCallback = glitter.share.componentCallback ?? {};
+            glitter.share.componentCallback[url.href] = (dd) => {
+                glitter.share.componentData[url.href] = dd;
+                widget.refreshComponent();
+            };
+            gvc.glitter.addMtScript([
+                {
+                    src: url,
+                    type: 'module'
+                }
+            ], () => { }, () => { });
+            return {
+                view: () => {
+                    if (!val) {
+                        return ``;
+                    }
+                    return val.render(gvc, widget, setting, hoverID)
+                        .view();
+                },
+                editor: () => {
+                    if (!val) {
+                        return ``;
+                    }
+                    return val.render(gvc, widget, setting, hoverID)
+                        .editor();
+                }
+            };
+        };
+    }
     static async initial(gvc, set) {
         for (const a of set) {
             if (!gvc.glitter.share.htmlExtension[a.js]) {

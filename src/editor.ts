@@ -1,4 +1,5 @@
 import { ShareDialog } from './dialog/ShareDialog.js';
+import {ScriptStyle1} from "./one-page/script-style-1.js";
 
 export class Editor {
     public static uploadImage(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
@@ -50,6 +51,58 @@ export class Editor {
                             },
                         });
                     })}"
+                ></i>
+            </div>`;
+    }
+    public static uploadFile(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
+        const glitter = (window as any).glitter;
+        const $ = glitter.$;
+        return /*html*/ `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+            <div class="d-flex align-items-center mb-3">
+                <input
+                    class="flex-fill form-control "
+                    placeholder="請輸入檔案連結"
+                    value="${obj.def}"
+                    onchange="${obj.gvc.event((e: any) => {
+            obj.callback(e.value);
+        })}"
+                />
+                <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
+                <i
+                    class="fa-regular fa-upload text-white ms-2"
+                    style="cursor: pointer;"
+                    onclick="${obj.gvc.event(() => {
+            glitter.ut.chooseMediaCallback({
+                single: true,
+                accept: 'json,image/*,video/*',
+                callback(data: any) {
+                    const saasConfig: { config: any; api: any } = (window as any).saasConfig;
+                    const dialog = new ShareDialog(obj.gvc.glitter);
+                    dialog.dataLoading({ visible: true });
+                    const file = data[0].file;
+                    saasConfig.api.uploadFile(file.name).then((data: any) => {
+                        dialog.dataLoading({ visible: false });
+                        const data1 = data.response;
+                        dialog.dataLoading({ visible: true });
+                        $.ajax({
+                            url: data1.url,
+                            type: 'put',
+                            data: file,
+                            processData: false,
+                            crossDomain: true,
+                            success: () => {
+                                dialog.dataLoading({ visible: false });
+                                obj.callback(data1.fullUrl);
+                            },
+                            error: () => {
+                                dialog.dataLoading({ visible: false });
+                                dialog.errorMessage({ text: '上傳失敗' });
+                            },
+                        });
+                    });
+                },
+            });
+        })}"
                 ></i>
             </div>`;
     }
@@ -162,11 +215,9 @@ export class Editor {
                 ></i>
             </div>`;
     }
-
     public static h3(title: string) {
         return /*html*/ `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${title}</h3>`;
     }
-
     public static plusBtn(title: string, event: any) {
         return /*html*/ `<div class="w-100 my-3" style="background: white;height: 1px;"></div>
             <div
@@ -177,7 +228,6 @@ export class Editor {
                 ${title}
             </div>`;
     }
-
     public static fontawesome(obj: { title: string; gvc: any; def: string; callback: (text: string) => void }) {
         const glitter = (window as any).glitter;
         return (
@@ -215,7 +265,6 @@ export class Editor {
             })
         );
     }
-
     public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: string; color?: string }) {
         const color = obj.color ?? `#4144b0;`;
         const glitter = (window as any).glitter;
@@ -260,7 +309,6 @@ export class Editor {
             };
         })}`;
     }
-
     public static minusTitle(title: string, event: string) {
         return /*html*/ `<div class="d-flex align-items-center">
             <i class="fa-regular fa-circle-minus text-danger me-2" style="font-size: 20px;cursor: pointer;" onclick="${event}"></i>
@@ -385,12 +433,19 @@ export class Editor {
         gvc: any;
         title: string;
         array: { title: string; innerHtml: string; expand: any; minus: string }[];
+        originalArray:any,
         expand: any;
         plus: {
             title: string;
             event: string;
         };
+        refreshComponent:()=>void,
+
     }) {
+        let dragm = {
+            start: 0,
+            end: 0,
+        };
         return (
             /*html*/ `<div class="mb-2"></div>` +
             Editor.toggleExpand({
@@ -399,10 +454,19 @@ export class Editor {
                 data: obj.expand,
                 innerText:
                     obj.array
-                        .map((dd) => {
+                        .map((dd,index) => {
+
                             return Editor.toggleExpand({
                                 gvc: obj.gvc,
-                                title: Editor.minusTitle(dd.title, dd.minus),
+                                title: `<div    draggable="true"  ondragenter="${obj.gvc.event((e:any, event:any) => {
+                                    dragm.end = index;
+                                })}" ondragstart="${obj.gvc.event(() => {
+                                    dragm.start = index;
+                                    dragm.end = index;
+                                })}"   ondragend="${obj.gvc.event(() => {
+                                    ScriptStyle1.swapArr(obj.originalArray, dragm.start, dragm.end);
+                                    obj.refreshComponent()
+                                })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
                                 data: dd.expand,
                                 innerText: dd.innerHtml,
                                 color: `#004081`,
@@ -412,5 +476,11 @@ export class Editor {
                 color: `#0062c0`,
             })
         );
+    }
+}
+
+export class Element{
+    constructor() {
+
     }
 }

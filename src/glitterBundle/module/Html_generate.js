@@ -364,7 +364,7 @@ ${e.line}
             editor: (gvc, widget, title) => {
                 const glitter = window.glitter;
                 return `
-<button type="button" class="btn btn-dark w-100 mt-2" onclick="${gvc.event(() => {
+<button type="button" class="btn  w-100 mt-2" style="background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);" onclick="${gvc.event(() => {
                     glitter.openDiaLog("glitterBundle/plugins/dialog-style-editor.js", "dialog-style-editor", {
                         callback: () => {
                             if (typeof widget === 'function') {

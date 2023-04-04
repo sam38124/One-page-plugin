@@ -1,5 +1,6 @@
 import {Glitter} from "../Glitter.js";
 import {GVC} from "../GVController.js";
+import * as zlib from "zlib";
 
 export interface HtmlJson {
     clickEvent?: {
@@ -24,14 +25,66 @@ export class Plugin {
     public static create(url: string, fun: (
         glitter: Glitter, editMode: boolean) => {
         [name: string]: {
-            defaultData: any, render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-                view: () => string,
-                editor: () => string
-            }
+            defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+                view: () => (Promise<string> | string),
+                editor: () => Promise<string> | string
+            })
         }
     }) {
         const glitter = (window as any).glitter
         glitter.share.htmlExtension[url] = fun(glitter, (window.parent as any).editerData !== undefined)
+
+    }
+
+    public static createComponent(url: string, fun: (
+        glitter: Glitter, editMode: boolean) => {
+        defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+            view: () => (Promise<string> | string),
+            editor: () => Promise<string> | string
+        })
+    }) {
+        const glitter = (window as any).glitter
+        const val=fun(glitter, (window.parent as any).editerData !== undefined)
+        glitter.share.componentCallback[url](val)
+    }
+
+    public static setComponent(original:string,url: URL):(gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+        view: () => (Promise<string> | string),
+        editor: () => Promise<string> | string
+    } {
+        const glitter = (window as any).glitter
+        url.searchParams.set("original",original)
+        return (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+            glitter.share.componentData=glitter.share.componentData??{}
+            let val:any=glitter.share.componentData[url.href]
+            glitter.share.componentCallback=glitter.share.componentCallback??{}
+            glitter.share.componentCallback[url.href]=(dd:any)=>{
+                glitter.share.componentData[url.href]=dd
+                widget.refreshComponent()
+            }
+            gvc.glitter.addMtScript([
+                {
+                    src: url,
+                    type: 'module'
+                }
+            ], () => { }, () => {})
+            return {
+                view: () => {
+                    if(!val){
+                        return ``
+                    }
+                    return val.render(gvc, widget, setting, hoverID)
+                        .view();
+                },
+                editor: () => {
+                    if(!val){
+                        return ``
+                    }
+                    return val.render(gvc, widget, setting, hoverID)
+                        .editor();
+                }
+            }
+        }
     }
 
     public static async initial(gvc: GVC, set: any[]) {

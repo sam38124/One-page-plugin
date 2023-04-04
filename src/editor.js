@@ -1,4 +1,5 @@
 import { ShareDialog } from './dialog/ShareDialog.js';
+import { ScriptStyle1 } from "./one-page/script-style-1.js";
 export class Editor {
     static uploadImage(obj) {
         const glitter = window.glitter;
@@ -21,6 +22,58 @@ export class Editor {
             glitter.ut.chooseMediaCallback({
                 single: true,
                 accept: 'json,image/*',
+                callback(data) {
+                    const saasConfig = window.saasConfig;
+                    const dialog = new ShareDialog(obj.gvc.glitter);
+                    dialog.dataLoading({ visible: true });
+                    const file = data[0].file;
+                    saasConfig.api.uploadFile(file.name).then((data) => {
+                        dialog.dataLoading({ visible: false });
+                        const data1 = data.response;
+                        dialog.dataLoading({ visible: true });
+                        $.ajax({
+                            url: data1.url,
+                            type: 'put',
+                            data: file,
+                            processData: false,
+                            crossDomain: true,
+                            success: () => {
+                                dialog.dataLoading({ visible: false });
+                                obj.callback(data1.fullUrl);
+                            },
+                            error: () => {
+                                dialog.dataLoading({ visible: false });
+                                dialog.errorMessage({ text: '上傳失敗' });
+                            },
+                        });
+                    });
+                },
+            });
+        })}"
+                ></i>
+            </div>`;
+    }
+    static uploadFile(obj) {
+        const glitter = window.glitter;
+        const $ = glitter.$;
+        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+            <div class="d-flex align-items-center mb-3">
+                <input
+                    class="flex-fill form-control "
+                    placeholder="請輸入檔案連結"
+                    value="${obj.def}"
+                    onchange="${obj.gvc.event((e) => {
+            obj.callback(e.value);
+        })}"
+                />
+                <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
+                <i
+                    class="fa-regular fa-upload text-white ms-2"
+                    style="cursor: pointer;"
+                    onclick="${obj.gvc.event(() => {
+            glitter.ut.chooseMediaCallback({
+                single: true,
+                accept: 'json,image/*,video/*',
                 callback(data) {
                     const saasConfig = window.saasConfig;
                     const dialog = new ShareDialog(obj.gvc.glitter);
@@ -354,16 +407,28 @@ export class Editor {
         `;
     }
     static arrayItem(obj) {
+        let dragm = {
+            start: 0,
+            end: 0,
+        };
         return (`<div class="mb-2"></div>` +
             Editor.toggleExpand({
                 gvc: obj.gvc,
                 title: obj.title,
                 data: obj.expand,
                 innerText: obj.array
-                    .map((dd) => {
+                    .map((dd, index) => {
                     return Editor.toggleExpand({
                         gvc: obj.gvc,
-                        title: Editor.minusTitle(dd.title, dd.minus),
+                        title: `<div    draggable="true"  ondragenter="${obj.gvc.event((e, event) => {
+                            dragm.end = index;
+                        })}" ondragstart="${obj.gvc.event(() => {
+                            dragm.start = index;
+                            dragm.end = index;
+                        })}"   ondragend="${obj.gvc.event(() => {
+                            ScriptStyle1.swapArr(obj.originalArray, dragm.start, dragm.end);
+                            obj.refreshComponent();
+                        })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
                         data: dd.expand,
                         innerText: dd.innerHtml,
                         color: `#004081`,
@@ -372,5 +437,9 @@ export class Editor {
                     .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event),
                 color: `#0062c0`,
             }));
+    }
+}
+export class Element {
+    constructor() {
     }
 }

@@ -3,6 +3,49 @@ import { BaseApi } from "./api/base.js";
 import { Editor } from "./editor.js";
 Plugin.create(import.meta.url, (glitter, editMode) => {
     return {
+        widget: {
+            title: 'HTML元件',
+            subContent: '添加一個HTML元素',
+            defaultData: {},
+            render: (gvc, widget, setting, hoverID) => {
+                widget.data.elem = widget.data.elem ?? "h3";
+                widget.data.inner = widget.data.inner ?? "";
+                return {
+                    view: () => {
+                        return `<${widget.data.elem}
+class="${glitter.htmlGenerate.styleEditor(widget.data).class()}" style="${glitter.htmlGenerate.styleEditor(widget.data).style()}"
+>${widget.data.inner}</${widget.data.elem}>`;
+                    },
+                    editor: () => {
+                        return gvc.map([
+                            glitter.htmlGenerate.editeInput({
+                                gvc: gvc,
+                                title: 'HTML元素標籤',
+                                default: widget.data.elem,
+                                placeHolder: "輸入元素標籤",
+                                callback: (text) => {
+                                    widget.data.elem = text;
+                                    widget.refreshComponent();
+                                }
+                            }),
+                            glitter.htmlGenerate.editeText({
+                                gvc: gvc,
+                                title: '內容',
+                                default: widget.data.inner,
+                                placeHolder: "輸入內容",
+                                callback: (text) => {
+                                    widget.data.inner = text;
+                                    widget.refreshComponent();
+                                }
+                            }),
+                            glitter.htmlGenerate.styleEditor(widget.data).editor(gvc, () => {
+                                widget.refreshComponent();
+                            }, '元素設計樣式')
+                        ]);
+                    },
+                };
+            },
+        },
         component: {
             title: "嵌入模塊",
             subContent: "可嵌入頁面的模塊．",
