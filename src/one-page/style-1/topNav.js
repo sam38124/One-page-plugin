@@ -92,7 +92,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                     </a>
                                     ${nav.btn.visible
                         ? `<button
-                               class="btn ${nav.btn.class}   d-md-none kv-btn w-25 position-absolute"
+                               class="btn  d-md-none kv-btn w-25 position-absolute ${glitter.htmlGenerate.styleEditor(nav.btn).class()}"
                                onclick="${gvc.event(() => {
                             ClickEvent.trigger({
                                 gvc,
@@ -100,7 +100,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 clickEvent: nav.btn,
                             });
                         })}"
-                               style="cursor:pointer;width: 100px;right: ${nav.bar.list.length > 0 ? '60' : '10'}px;height: 40px;${nav.btn.style ?? ''}"
+                               style="cursor:pointer;width: 100px;right: ${nav.bar.list.length > 0 ? '60' : '10'}px;height: 40px;${glitter.htmlGenerate.styleEditor(nav.btn).style()}"
                            >
                                &nbsp;${nav.btn.name}
                            </button>`
@@ -248,26 +248,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                         widget.refreshComponent();
                                     },
                                 }),
-                                glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '按鈕Class',
-                                    default: widget.data.nav.btn.class,
-                                    placeHolder: '輸入按鈕Class',
-                                    callback: (text) => {
-                                        widget.data.nav.btn.class = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '按鈕Style',
-                                    default: widget.data.nav.btn.style ?? '',
-                                    placeHolder: '輸入按鈕Style',
-                                    callback: (text) => {
-                                        widget.data.nav.btn.style = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
+                                glitter.htmlGenerate.styleEditor(widget.data.nav.btn).editor(gvc, () => {
+                                    widget.refreshComponent();
+                                }, '按鈕設計樣式'),
                                 ClickEvent.editer(gvc, widget, widget.data.nav.btn, {
                                     hover: true,
                                     option: [],

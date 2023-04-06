@@ -5,54 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2c38387-0fd8-4bea-9d0c-2eb4f00bedee" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/LionDesign.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/glitter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/script-style-1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/aboutUS.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/client.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/clientService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/contactUS.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/footer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/landingTop.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/otherService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/price.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/price2.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/project.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/serviceDetail.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/supportWidget.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/template.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/topBanner.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/topNav.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/One-page-plugin.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/boxicons_iconjar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/boxicons_iconjar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/boxicons_iconjar1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/boxicons_iconjar1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/login.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/index.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/index.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entry.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/editor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/official.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/official.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/official.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/official.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/one-page/assets/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/assets/css/theme.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/one-page/style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/one-page/style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page/style-1/topNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1/topNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page/style-1/topNav.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1/topNav.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +92,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680419718642</updated>
-      <workItem from="1680419720246" duration="41357000" />
+      <workItem from="1680419720246" duration="59258000" />
     </task>
     <servers />
   </component>
@@ -190,6 +152,7 @@
         <option value="$PROJECT_DIR$/src/one-page/style-1/price2.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-1/landingTop.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-1/supportWidget.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/login.js" />
       </list>
     </option>
   </component>

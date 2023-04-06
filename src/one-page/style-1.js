@@ -141,5 +141,11 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/supportWidget.js', import.meta.url)),
         },
+        login: {
+            title: '登入與註冊',
+            subContent: '顯示登入與註冊的區塊．',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/login.js', import.meta.url)),
+        },
     };
 });
