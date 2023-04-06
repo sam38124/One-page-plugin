@@ -34,7 +34,7 @@ const app = (0, express_1.default)();
         allowedHeaders: ['Content-Type', 'Authorization'],
     };
     app.use((0, cors_1.default)(corsOptions));
-    await app.listen(4000);
+    await app.listen(3090);
 })();
 Glitter.setUP(app, [
     {

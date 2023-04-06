@@ -149,3 +149,32 @@ widget.refreshComponent();
 },
 })
 ```
+
+## 點擊編輯
+```
+ClickEvent.editer(gvc, widget, widget.data.nav.btn, {
+    hover: true,
+    option: [],
+    title: "點擊事件"
+})
+```
+
+## 點擊觸發
+```
+ClickEvent.trigger({
+    gvc, widget, clickEvent: nav.btn,
+})
+```
+
+## style editor
+```
+glitter.htmlGenerate.styleEditor(dd).editor(gvc,()=>{
+                                        widget.refreshComponent()
+                                    },'標題設計樣式')
+```
+
+## style render
+```
+glitter.htmlGenerate.styleEditor(data.btn).class()
+glitter.htmlGenerate.styleEditor(data.btn).style()
+```

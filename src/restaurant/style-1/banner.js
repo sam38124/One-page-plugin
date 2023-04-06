@@ -1,0 +1,149 @@
+import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+import { ClickEvent } from "../../glitterBundle/plugins/click-event.js";
+import { Editor } from "../../editor.js";
+import { ScriptStyle1 } from "../script-style-1.js";
+Plugin.createComponent(import.meta.url, (glitter, editMode) => {
+    return {
+        defaultData: {},
+        render: (gvc, widget, setting, hoverID) => {
+            return {
+                view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
+                    const keyVision = widget.data.keyVision;
+                    return ` 
+                        <section id="hero" class="d-flex align-items-center" style="background: url(${keyVision.img}) top center">
+                            <!--         data-aos="zoom-in"不能作動                   -->
+                            <div class="container position-relative text-center text-lg-start"  data-aos-delay="100">
+                                <div class="row" style="">
+                                    <div class="col-lg-8">
+                                        <h1 class="mb-3" style="">${keyVision.title}</h1>
+                                        <h2 class="mb-5 text-left" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${keyVision.desc}</h2>
+                
+                                        <div class="btns">
+                                            ${glitter.print(function () {
+                        var tmp = "";
+                        keyVision.listData.list.map((l) => {
+                            tmp += `
+                            <a
+                                class="btn-menu animated fadeInUp scrollto"
+                                onclick="${gvc.event(() => {
+                                ClickEvent.trigger({
+                                    gvc,
+                                    widget,
+                                    clickEvent: l.link,
+                                });
+                            })}"
+                                                            style="cursor:pointer"
+                                                            >${l.name}</a>`;
+                        });
+                        return tmp;
+                    })}
+                                        </div>
+                                    </div>     
+                                    <!--data-aos="zoom-in"-->
+                                    <div
+                                        class="col-lg-4 d-flex align-items-center justify-content-center position-relative"
+                                        
+                                        data-aos-delay="200"
+                                      >
+                                        <a href="${keyVision.video}" class="glightbox play-btn"></a>
+                                      </div>                               
+                                </div>
+                          </div>
+                        </section>`;
+                },
+                editor: () => {
+                    return `
+                        ${glitter.htmlGenerate.editeText({
+                        gvc: gvc,
+                        title: '大標題',
+                        default: widget.data.keyVision.title,
+                        placeHolder: '請輸入大標題所顯示的文字，也能用簡單的html敘述',
+                        callback: (text) => {
+                            widget.data.keyVision.title = text;
+                            widget.refreshComponent();
+                        },
+                    })}
+                        ` + `
+                        ${Editor.uploadImage({
+                        gvc: gvc,
+                        title: `圖片`,
+                        def: widget.data.keyVision.img,
+                        callback: (e) => {
+                            widget.data.keyVision.img = e;
+                            widget.refreshComponent();
+                        },
+                    })}
+                        ` + `
+                        ${Editor.uploadVideo({
+                        gvc: gvc,
+                        title: `播放影片連結`,
+                        def: widget.data.keyVision.video,
+                        callback: (e) => {
+                            widget.data.keyVision.video = e;
+                            widget.refreshComponent();
+                        },
+                    })}
+                        ` + `
+                        ${glitter.htmlGenerate.editeText({
+                        gvc: gvc,
+                        title: '副標題',
+                        default: widget.data.keyVision.desc,
+                        placeHolder: '請輸入副標題所要顯示的文字',
+                        callback: (text) => {
+                            widget.data.keyVision.desc = text;
+                            widget.refreshComponent();
+                        },
+                    })}` +
+                        `
+                        <div class="mt-3"></div>
+                        ` +
+                        Editor.arrayItem({
+                            originalArray: widget.data.keyVision.listData,
+                            gvc: gvc,
+                            title: '按鍵區塊',
+                            array: widget.data.keyVision.listData.list.map((linkData, index) => {
+                                return {
+                                    title: `第${index + 1}個按鍵`,
+                                    expand: linkData,
+                                    innerHtml: `
+                                 ${glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: '按鍵名稱',
+                                        default: linkData.name,
+                                        placeHolder: '這個按鍵會顯示的名稱',
+                                        callback: (text) => {
+                                            linkData.name = text;
+                                            widget.refreshComponent();
+                                        },
+                                    })}
+                                 ${ClickEvent.editer(gvc, widget, linkData.link, {
+                                        hover: true,
+                                        option: [],
+                                        title: "這個按鍵的事件"
+                                    })}
+                                 <div class="mb-3 mt-3" style="width: 100%;height: 1px;background: black"></div>
+                                `,
+                                    minus: gvc.event(() => {
+                                        widget.data.keyVision.listData.list.splice(index, 1);
+                                        widget.refreshComponent();
+                                    }),
+                                };
+                            }),
+                            expand: widget.data.keyVision.listData,
+                            plus: {
+                                title: '添加行數',
+                                event: gvc.event(() => {
+                                    widget.data.keyVision.listData.list.push({ name: "", link: "" });
+                                    widget.refreshComponent();
+                                }),
+                            },
+                            refreshComponent: () => {
+                                widget.refreshComponent();
+                            }
+                        });
+                }
+            };
+        },
+    };
+});

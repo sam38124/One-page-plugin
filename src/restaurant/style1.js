@@ -1,49 +1,6 @@
 import { Plugin } from "../glitterBundle/plugins/plugin-creater.js";
-import { Editor } from "../editor.js";
-import { ClickEvent } from "../glitterBundle/plugins/click-event.js";
+import { ScriptStyle1 } from "./script-style-1.js";
 Plugin.create(import.meta.url, (glitter, editMode) => {
-    function getRout(link) {
-        return new URL("./" + link, import.meta.url).href;
-    }
-    let hi = false;
-    function initialScript(gvc, widget) {
-        if (hi) {
-            return;
-        }
-        hi = true;
-        window.mode = 'dark';
-        window.root = document.getElementsByTagName('html')[0];
-        window.root.classList.add('dark-mode');
-        gvc.addStyleLink([
-            getRout('assets/vendor/animate.css/animate.min.css'),
-            getRout('assets/vendor/aos/aos.css'),
-            getRout('assets/vendor/bootstrap/css/bootstrap.min.css'),
-            getRout('assets/vendor/bootstrap-icons/bootstrap-icons.css'),
-            getRout('assets/vendor/boxicons/css/boxicons.min.css'),
-            getRout('assets/vendor/glightbox/css/glightbox.min.css'),
-            getRout('assets/vendor/swiper/swiper-bundle.min.css'),
-            getRout('assets/css/style.css')
-        ]).then();
-        gvc.addMtScript([
-            "assets/vendor/aos/aos.js",
-            "assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
-            "assets/vendor/glightbox/js/glightbox.min.js",
-            "assets/vendor/isotope-layout/isotope.pkgd.min.js",
-            "assets/vendor/swiper/swiper-bundle.min.js",
-            "assets/vendor/php-email-form/validate.js",
-            'assets/vendor/animate.css/animate.js',
-            'assets/js/main.js'
-        ].map(((dd) => {
-            return { src: getRout(dd) };
-        })), () => {
-            try {
-                widget.refreshComponent();
-            }
-            catch (e) {
-            }
-        }, () => {
-        });
-    }
     function recursive(r, first) {
         var h = "";
         if (r.list === undefined) {
@@ -74,32 +31,6 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
         </li>`;
         }
         return h;
-    }
-    function frSize(sizeMap, def) {
-        var wi = window.innerWidth;
-        var sm = (sizeMap.sm ?? def);
-        var me = (sizeMap.me ?? sm);
-        var lg = (sizeMap.lg ?? me);
-        var xl = (sizeMap.xl ?? lg);
-        var xxl = (sizeMap.xxl ?? xl);
-        if (wi < 576) {
-            return def;
-        }
-        else if ((wi >= 576 && wi < 768)) {
-            return sm;
-        }
-        else if ((wi >= 768 && wi < 992)) {
-            return me;
-        }
-        else if ((wi >= 992 && wi < 1200)) {
-            return lg;
-        }
-        else if ((wi >= 1200 && wi < 1400)) {
-            return xl;
-        }
-        else if ((wi >= 1400)) {
-            return xxl;
-        }
     }
     function urlIcon(link, size) {
         if (link == "#") {
@@ -153,92 +84,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                     }
                 ]
             },
-            render: (gvc, widget, setting, hoverID) => {
-                return {
-                    view: () => {
-                        initialScript(gvc, widget);
-                        const INF = widget.data.INF;
-                        return `
-                        <div id="topbar" class="d-flex align-items-center fixed-top">
-                            <div class="container d-flex justify-content-center justify-content-md-between">
-                                <div class="contact-info d-flex align-items-center">
-                                    ${(() => {
-                            return gvc.map(INF.map((INFData) => {
-                                return `
-                                                <div class="d-flex align-items-center me-4">
-                                                    <img src="${INFData.img}" style="width: 14px;height: 14px;margin-right: 5px;" alt="SVG image">
-                                                    <span>${INFData.value}</span>
-                                                </div>
-                                                
-                                            `;
-                            }));
-                        })()}
-                                </div>
-<!--                                 todo-->
-                                <div class="languages d-none d-md-flex align-items-center">
-                                    <ul>
-                                      <li>中文</li>
-                                      <li><a href="#">English</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        `;
-                    },
-                    editor: () => {
-                        return gvc.map([
-                            Editor.toggleExpand({
-                                gvc: gvc,
-                                title: '聯絡資訊設定',
-                                data: widget.data,
-                                innerText: gvc.map([
-                                    gvc.map(widget.data.INF.map((INFData, index) => {
-                                        return `<div class="ps-2 pt-2 mb-3 border" style="">
-                                            <h5>資訊${index + 1}</h5>
-                                        ` + `
-                                        ${glitter.htmlGenerate.editeInput({
-                                            gvc: gvc,
-                                            title: '標題',
-                                            default: INFData.title,
-                                            placeHolder: '請描述此連絡資訊',
-                                            callback: (text) => {
-                                                INFData.title = text;
-                                                widget.refreshComponent();
-                                            },
-                                        })}
-                                        ` + `
-                                        ${glitter.htmlGenerate.editeInput({
-                                            gvc: gvc,
-                                            title: '資訊',
-                                            default: INFData.value,
-                                            placeHolder: '請輸入資訊',
-                                            callback: (text) => {
-                                                INFData.value = text;
-                                                widget.refreshComponent();
-                                            },
-                                        })}
-                                        ` + `
-                                        ${Editor.uploadImage({
-                                            gvc: gvc,
-                                            title: `圖片`,
-                                            def: INFData.img,
-                                            callback: (e) => {
-                                                INFData.img = e;
-                                                widget.refreshComponent();
-                                            },
-                                        })}
-                                        ` + `</div>`;
-                                    })),
-                                    Editor.plusBtn('添加聯絡資訊', gvc.event(() => {
-                                        widget.data.INF.push({ title: '聯絡資訊', value: '', img: '' });
-                                        widget.refreshComponent();
-                                    }))
-                                ]),
-                            }),
-                        ]);
-                    }
-                };
-            }
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/topbar.js', import.meta.url))
         },
         nav: {
             title: "導覽列",
@@ -247,158 +93,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                 bar: [],
                 moreLink: [],
             },
-            render: (gvc, widget, setting, hoverID) => {
-                return {
-                    view: () => {
-                        initialScript(gvc, widget);
-                        const nav = {
-                            title: widget.data.title ?? "萊恩設計",
-                            logo: widget.data.logo ?? "",
-                            bar: [
-                                ...widget.data.bar,
-                                {
-                                    title: "更多內容",
-                                    list: [
-                                        ...widget.data.moreLink
-                                    ],
-                                },
-                            ],
-                            top: {
-                                phone: "0918-563-927",
-                                clock: "週一至週五 09:00 - 19:00",
-                            },
-                            btn: { name: "登入", link: "#" },
-                        };
-                        return `
-                            <!-- ======= Header ======= -->
-                            <header id="header" class="fixed-top d-flex align-items-cente">
-                              <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-                                <div class="d-flex logo" onclick="${gvc.event(() => { })}" style="cursor:pointer">
-                                  <img src="${nav.logo}" alt="" class="img-fluid me-3" />
-                                  <h1 class="logo me-auto me-lg-0"><a>${nav.title}</a></h1>
-                                </div>
-                    
-                                <nav id="navbar" class="navbar order-last order-lg-0">
-                                  <ul>
-                                    ${(() => {
-                            var tmp = "";
-                            nav.bar.map((b) => (tmp += recursive(b, true)));
-                            return tmp;
-                        })()}
-                                   
-                                  </ul>
-<!--                                  todo 這顆漢堡不會作動-->
-                                  <i class="bi bi-list mobile-nav-toggle"></i>
-                                </nav>
-                    
-                                <a
-                                  class="book-a-table-btn scrollto d-none d-lg-flex"
-                                  onclick=""
-                                  style="cursor:pointer"
-                                  >${nav.btn.name}</a
-                                >
-                              </div>
-                            </header>
-                            <!-- End Header -->
-                            `;
-                    },
-                    editor: () => {
-                        return gvc.map([
-                            Editor.uploadImage({
-                                gvc: gvc,
-                                title: `Logo圖片`,
-                                def: widget.data.logo,
-                                callback: (e) => {
-                                    widget.data.logo = e;
-                                    widget.refreshComponent();
-                                },
-                            }),
-                            glitter.htmlGenerate.editeInput({
-                                gvc: gvc,
-                                title: '公司名稱',
-                                default: widget.data.title ?? '',
-                                placeHolder: '請輸入公司名稱',
-                                callback: (text) => {
-                                    widget.data.title = text;
-                                    widget.refreshComponent();
-                                },
-                            }),
-                            `<div class="mt-3"></div>`,
-                            Editor.toggleExpand({
-                                gvc: gvc,
-                                title: '導覽列',
-                                data: widget.data,
-                                innerText: gvc.map([
-                                    gvc?.map(widget.data?.bar?.map((BARData, index) => {
-                                        return `
-                                        <div class="ps-2 pt-2 mb-3 border" style="">
-                                            <h5>連結${index + 1}</h5>
-                                        ` + `
-                                        ${glitter.htmlGenerate.editeInput({
-                                            gvc: gvc,
-                                            title: '連結名稱',
-                                            default: BARData.title,
-                                            placeHolder: '請描述此連結的顯示資訊',
-                                            callback: (text) => {
-                                                BARData.title = text;
-                                                widget.refreshComponent();
-                                            },
-                                        })}
-                                        ` + `
-                                        ${ClickEvent.editer(gvc, widget, BARData.link, {
-                                            hover: true,
-                                            option: [],
-                                            title: "這個連結做的事情"
-                                        })}
-
-                                        ` + `</div>`;
-                                    })),
-                                    Editor.plusBtn('添加連結資訊', gvc.event(() => {
-                                        widget.data.bar.push({ title: '聯絡資訊', link: '' });
-                                        widget.refreshComponent();
-                                    }))
-                                ]),
-                            }),
-                            `<div class="mt-3"></div>`,
-                            Editor.toggleExpand({
-                                gvc: gvc,
-                                title: '更多內容',
-                                data: widget.data,
-                                innerText: gvc.map([
-                                    gvc?.map(widget.data?.moreLink?.map((hiddenData, index) => {
-                                        return `
-                                        <div class="ps-2 pt-2 mb-3 border" style="">
-                                            <h5>連結${index + 1}</h5>
-                                        ` + `
-                                        ${glitter.htmlGenerate.editeInput({
-                                            gvc: gvc,
-                                            title: '連結名稱',
-                                            default: hiddenData.title,
-                                            placeHolder: '請描述此連結的顯示資訊',
-                                            callback: (text) => {
-                                                hiddenData.title = text;
-                                                widget.refreshComponent();
-                                            },
-                                        })}
-                                        ` + `
-                                        ${ClickEvent.editer(gvc, widget, hiddenData.link, {
-                                            hover: true,
-                                            option: [],
-                                            title: "這個連結做的事情"
-                                        })}
-
-                                        ` + `</div>`;
-                                    })),
-                                    Editor.plusBtn('添加連結資訊', gvc.event(() => {
-                                        widget.data.moreLink.push({ title: '聯絡資訊', link: '' });
-                                        widget.refreshComponent();
-                                    }))
-                                ]),
-                            }),
-                        ]);
-                    }
-                };
-            }
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/nav.js', import.meta.url))
         },
         footer: {
             title: "頁腳",
@@ -407,282 +102,34 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                 outro: {
                     title: "萊恩設計",
                     desc: "提供直覺的操作，讓您在電腦、平板、手機都能隨心所欲地瀏覽您的網站",
-                    social: ["https://www.facebook.com/", "https://twitter.com/", "https://www.instagram.com/", "https://squarestudio.tw/"],
+                    socialData: {
+                        link: ["https://www.facebook.com/", "https://twitter.com/", "https://www.instagram.com/", "https://squarestudio.tw/"]
+                    }
                 },
                 map: [
                     {
                         title: "網站導覽",
-                        list: [
-                            { name: "菜單", link: "#menu" },
-                            { name: "產品介紹", link: "#feature" },
-                            { name: "定價方案", link: "#slider" },
-                            { name: "技術領域", link: "#banner" },
-                            { name: "公司團隊", link: "#team" },
-                        ],
+                        listData: {
+                            list: [{ name: "菜單", link: "#menu" },
+                                { name: "產品介紹", link: "#feature" },
+                                { name: "定價方案", link: "#slider" },
+                                { name: "技術領域", link: "#banner" },
+                                { name: "公司團隊", link: "#team" }]
+                        },
                     },
                     {
                         title: "推薦網站",
-                        list: [
-                            { name: "Google", link: "https://www.google.com.tw/" },
-                            { name: "Yahoo", link: "https://tw.yahoo.com/" },
-                        ],
+                        listData: {
+                            list: [
+                                { name: "Google", link: "https://www.google.com.tw/" },
+                                { name: "Yahoo", link: "https://tw.yahoo.com/" },
+                            ]
+                        },
                     },
                 ],
                 subs: { desc: "想收到與萊恩設計有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。", link: "#" },
             },
-            render: (gvc, widget, setting, hoverID) => {
-                return {
-                    view: () => {
-                        initialScript(gvc, widget);
-                        const footer = {
-                            subs: { desc: "想收到與萊恩設計有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。", link: "#" },
-                            outro: widget.data.outro,
-                            map: widget.data.map,
-                        };
-                        let id = glitter.getUUID();
-                        return gvc.bindView({
-                            bind: id,
-                            view: () => {
-                                return `
-                                <!-- ======= Footer ======= -->
-                                <footer id="footer">
-                                    <div class="footer-top">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-6">
-                                                    <div class="footer-info">
-                                                        <h3 style="color: white">${footer.outro.title}</h3>
-                                                        <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">${footer.outro.desc}</p>
-                                                        <div class="social-links mt-3">
-                                                            ${(() => {
-                                    let tmp = "";
-                                    footer.outro.social.map((r) => {
-                                        tmp += `
-                                                                    <a class="text-white" onclick="" style="cursor:pointer">
-                                                                        <i class="${urlIcon(r, "bx")}"></i>
-                                                                    </a>
-                                                                    `;
-                                    });
-                                    return tmp;
-                                })()}                                                           
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                ${(() => {
-                                    let tmp = "";
-                                    footer.map.map((m) => {
-                                        tmp += `
-                                                            <div class="col-lg-2 col-md-6 footer-links">
-                                                                <h4>${m.title}</h4>
-                                                                <ul>
-                                                                    ${(() => {
-                                            let tmp = "";
-                                            m.list.map((l) => {
-                                                tmp += `
-                                                                                        <li>
-                                                                                            <i class="bx bx-chevron-right"></i>
-                                                                                            <a
-                                                                                              class="scrollto"
-                                                                                              onclick=""
-                                                                                              style="cursor:pointer"
-                                                                                              data-hash=${l.link}
-                                                                                              >${l.name}</a
-                                                                                            >
-                                                                                        </li>`;
-                                            });
-                                            return tmp;
-                                        })()}                                                                   
-                                                                </ul>
-                                                            </div>
-                                                        `;
-                                    });
-                                    return tmp;
-                                })()}                                                                                                       
-                                                <div class="col-lg-4 col-md-6 footer-newsletter">
-                                                    <h4>訂閱</h4>
-                                                    <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">想收到與${footer.outro.title}有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。</p>
-                                                    <form><input type="email" name="email" /><input type="submit" value="送出" onclick="${gvc.event(() => {
-                                    event.preventDefault();
-                                    return "";
-                                })}"/></form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                            
-                                    <div class="container">
-<!--                                    todo funnel.copyRight("#cda45e")-->
-                                        <div class="copyright"></div>
-                                        <div class="credits">
-                                          <!-- All the links in the footer should remain intact. -->
-                                          <!-- You can delete the links only if you purchased the pro version. -->
-                                          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
-                                          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                                        </div>
-                                    </div>
-                                </footer>
-                                <!-- End Footer -->`;
-                            },
-                            divCreate: {},
-                            onCreate: () => { }
-                        });
-                    },
-                    editor: () => {
-                        return gvc.map([
-                            `<div class="mt-2"></div>`,
-                            Editor.toggleExpand({
-                                gvc: gvc,
-                                title: '基本資訊',
-                                data: widget.data.outro,
-                                innerText: `${glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '左大標題',
-                                    default: widget.data.outro.title,
-                                    placeHolder: '請輸入左大標題',
-                                    callback: (text) => {
-                                        widget.data.outro.title = text;
-                                        widget.refreshComponent();
-                                    },
-                                })}` +
-                                    `
-                                ${glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: '左大標敘文',
-                                        default: widget.data.outro.desc,
-                                        placeHolder: '請輸入左大標下方的描述文',
-                                        callback: (text) => {
-                                            widget.data.outro.desc = text;
-                                            widget.refreshComponent();
-                                        },
-                                    })}
-                                ` +
-                                    `
-                                ${Editor.toggleExpand({
-                                        gvc: gvc,
-                                        title: `社群資訊`,
-                                        data: widget.data.outro.social,
-                                        innerText: `${gvc.map(widget.data.outro.social.map((social) => {
-                                            return glitter.htmlGenerate.editeInput({
-                                                gvc: gvc,
-                                                title: '社群網址',
-                                                default: social,
-                                                placeHolder: `請輸入社群網站的網址`,
-                                                callback: (text) => {
-                                                    social = text;
-                                                    widget.refreshComponent();
-                                                }
-                                            });
-                                        }))}` + `
-                                    ${Editor.plusBtn('添加社群網址', gvc.event(() => {
-                                            widget.data.outro.social.push("");
-                                            widget.refreshComponent();
-                                        }))}
-                                    `
-                                    })}
-                                `
-                            }),
-                            `<div class="mt-2"></div>`,
-                            Editor.toggleExpand({
-                                gvc: gvc,
-                                title: '中間資訊',
-                                data: widget.data.map,
-                                innerText: gvc.map([
-                                    ``,
-                                    gvc?.map(widget.data?.map?.map((lineData, index) => {
-                                        return `
-                                        <div class="ps-2 pt-2 mb-3 border" style="">
-                                            <h5>第${index + 1}行資訊</h5>
-                                        ` + `
-                                        ${glitter.htmlGenerate.editeInput({
-                                            gvc: gvc,
-                                            title: '連結名稱',
-                                            default: lineData.title,
-                                            placeHolder: '請描述此連結的顯示資訊',
-                                            callback: (text) => {
-                                                lineData.title = text;
-                                                widget.refreshComponent();
-                                            },
-                                        })}
-                                        ` + `
-                                        ${Editor.toggleExpand({
-                                            gvc: gvc,
-                                            title: '行內資訊',
-                                            data: lineData,
-                                            innerText: `${gvc.map(lineData.list.map((rowData, rowIndex) => {
-                                                return `                                                   
-                                                <div class="ps-2 pt-2 mb-3 border" style="">
-                                                    <h5>第${rowIndex + 1}列</h5>
-                                                ` + `
-                                                ${glitter.htmlGenerate.editeInput({
-                                                    gvc: gvc,
-                                                    title: '連結名稱',
-                                                    default: rowData.name,
-                                                    placeHolder: '請描述此連結的顯示資訊',
-                                                    callback: (text) => {
-                                                        rowData.name = text;
-                                                        widget.refreshComponent();
-                                                    },
-                                                })}    
-                                                ` + `
-                                                ${ClickEvent.editer(gvc, widget, rowData.link, {
-                                                    hover: true,
-                                                    option: [],
-                                                    title: "這個連結做的事情"
-                                                })}
-                                                ` + `
-                                                ${Editor.plusBtn('再加一列', gvc.event(() => {
-                                                    rowData.push({ name: '', link: "" });
-                                                    widget.refreshComponent();
-                                                }))}
-                                                `
-                                                    + `
-                                                </div>
-                                                `;
-                                            }))}
-                                                
-                                            `
-                                        })}
-                                        ` + `</div>`;
-                                    })),
-                                    Editor.plusBtn('再加一行', gvc.event(() => {
-                                        widget.data.moreLink.push({ title: '', list: [] });
-                                        widget.refreshComponent();
-                                    }))
-                                ]),
-                            }),
-                            `<div class="mt-2"></div>`,
-                            Editor.toggleExpand({
-                                gvc: gvc,
-                                title: '右端資訊',
-                                data: widget.data.subs,
-                                innerText: `${glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '訂閱資訊',
-                                    default: widget.data.subs.desc,
-                                    placeHolder: '請輸入訂閱的介紹文',
-                                    callback: (text) => {
-                                        widget.data.subs.desc = text;
-                                        widget.refreshComponent();
-                                    },
-                                })}` +
-                                    `
-                                    ${glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: '送出的目的地',
-                                        default: widget.data.subs.link,
-                                        placeHolder: '請輸入左大標下方的描述文',
-                                        callback: (text) => {
-                                            widget.data.subs.link = text;
-                                            widget.refreshComponent();
-                                        },
-                                    })}
-                                `
-                            }),
-                        ]);
-                    }
-                };
-            }
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/footer.js', import.meta.url))
         },
         banner: {
             title: "橫幅",
@@ -692,309 +139,40 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                     title: "關於<span>萊恩設計</span>我們能為您做什麼？",
                     desc: "優質服務範圍包括網路連線諮詢與服務，從電商網站設計、後台管理、產品投放分析、網站架設、金流串接，我們都有經驗能替您完成服務",
                     video: "https://www.youtube.com/watch?v=u6BOC7CDUTQ",
-                    img: getRout("assets/img/hero-bg.jpg"),
-                    list: [
-                        { name: "菜單", link: "#" },
-                        { name: "門市據點", link: "#" },
-                    ],
+                    img: ScriptStyle1.getRout("assets/img/hero-bg.jpg"),
+                    listData: {
+                        list: [
+                            { name: "菜單", link: "#" },
+                            { name: "門市據點", link: "#" },
+                        ]
+                    },
                 }
             },
-            render: (gvc, widget, setting, hoverID) => {
-                return {
-                    view: () => {
-                        initialScript(gvc, widget);
-                        const keyVision = widget.data.keyVision;
-                        return ` 
-                        <section id="hero" class="d-flex align-items-center" style="background: url(${keyVision.img}) top center">
-                            <!--         data-aos="zoom-in"不能作動                   -->
-                            <div class="container position-relative text-center text-lg-start"  data-aos-delay="100">
-                                <div class="row" style="">
-                                    <div class="col-lg-8">
-                                        <h1 class="mb-3" style="">${keyVision.title}</h1>
-                                        <h2 class="mb-5 text-left" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${keyVision.desc}</h2>
-                
-                                        <div class="btns">
-                                            ${glitter.print(function () {
-                            var tmp = "";
-                            keyVision.list.map((l) => {
-                                tmp += `
-                                                        <a
-                                                            class="btn-menu animated fadeInUp scrollto"
-                                                            onclick="${gvc.event(() => {
-                                    ClickEvent.trigger({
-                                        gvc,
-                                        widget,
-                                        clickEvent: l.link,
-                                    });
-                                })}"
-                                                            style="cursor:pointer"
-                                                            >${l.name}</a>
-                                                    `;
-                            });
-                            return tmp;
-                        })}
-                                        </div>
-                                    </div>     
-                                    <!--data-aos="zoom-in"-->
-                                    <div
-                                        class="col-lg-4 d-flex align-items-center justify-content-center position-relative"
-                                        
-                                        data-aos-delay="200"
-                                      >
-                                        <a href="${keyVision.video}" class="glightbox play-btn"></a>
-                                      </div>                               
-                                </div>
-                          </div>
-                        </section>`;
-                    },
-                    editor: () => {
-                        return `
-                        ${glitter.htmlGenerate.editeText({
-                            gvc: gvc,
-                            title: '大標題',
-                            default: widget.data.keyVision.title,
-                            placeHolder: '請輸入大標題所顯示的文字，也能用簡單的html敘述',
-                            callback: (text) => {
-                                widget.data.keyVision.title = text;
-                                widget.refreshComponent();
-                            },
-                        })}
-                        ` + `
-                        ${Editor.uploadImage({
-                            gvc: gvc,
-                            title: `圖片`,
-                            def: widget.data.keyVision.img,
-                            callback: (e) => {
-                                widget.data.keyVision.img = e;
-                                widget.refreshComponent();
-                            },
-                        })}
-                        ` + `
-                        ${Editor.uploadVideo({
-                            gvc: gvc,
-                            title: `播放影片連結`,
-                            def: widget.data.keyVision.video,
-                            callback: (e) => {
-                                widget.data.keyVision.video = e;
-                                widget.refreshComponent();
-                            },
-                        })}
-                        ` + `
-                        ${glitter.htmlGenerate.editeText({
-                            gvc: gvc,
-                            title: '副標題',
-                            default: widget.data.keyVision.desc,
-                            placeHolder: '請輸入副標題所要顯示的文字',
-                            callback: (text) => {
-                                widget.data.keyVision.desc = text;
-                                widget.refreshComponent();
-                            },
-                        })}` +
-                            `
-                        <div class="mt-3"></div>
-                        ` + `${Editor.toggleExpand({
-                            gvc: gvc,
-                            title: '按鍵區塊',
-                            data: widget.data.keyVision.list,
-                            innerText: `${gvc.map(widget.data.keyVision.list.map((linkData) => {
-                                return `
-                                 ${glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '按鍵名稱',
-                                    default: linkData.name,
-                                    placeHolder: '這個按鍵會顯示的名稱',
-                                    callback: (text) => {
-                                        linkData.name = text;
-                                        widget.refreshComponent();
-                                    },
-                                })}
-                                 ${ClickEvent.editer(gvc, widget, linkData.link, {
-                                    hover: true,
-                                    option: [],
-                                    title: "這個連結做的事情"
-                                })}
-                                 <div class="mb-3 mt-3" style="width: 100%;height: 1px;background: black"></div>
-                                `;
-                            }))}
-                                
-                            `
-                        })}`;
-                    }
-                };
-            }
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/banner.js', import.meta.url))
         },
         about: {
             title: "關於我們",
             subContent: "用來介紹這網站的用途",
             defaultData: {
                 about: {
-                    background: getRout("assets/img/about-bg.jpg"),
-                    img: getRout("assets/img/about.jpg"),
+                    background: ScriptStyle1.getRout("assets/img/about-bg.jpg"),
+                    img: ScriptStyle1.getRout("assets/img/about.jpg"),
                     title: "《人類大未來：下一個五十年》",
-                    descArray: [`若說我們可從中得出以下關乎人類未來的啟示，應不至於有爭議：每個人的身分不再像過去那般單一且固定，將變得比我們想像的更多元。我們在不同的情況下使用不同的身分；這些身分互有重疊而且日益難分，卻又能清楚地以不同的方式劃定個人的觀點和選擇。特別是傳統用來界定身分的社會標準（例如年齡和國籍）都將不再那麼重要，公私身分的界線也變得越來越模糊。以社會階級、族群歸屬、政治立場為本的身分定義，將讓位給新的劃分標準，例如出身城鄉或教育程度的高低。`,
-                        `如果個人身分的傳統特質變得支離破碎，可以想見未來社群的向心力將會更為疏遠，社會階層的流動性降低或是邊緣化，讓種族隔離或極端主義有機可趁。但換個角度來看，科技及網路帶來人際關係的「超連結」（hyperconnectivity），將有機會強化正向群體認同，賦予營造社群的新契機。未來，無論是生活或身分，人與人都會逐漸變得密不可分。這究竟是好事還是壞事？我認為有好也有壞，而且不論何者的影響都會越來越大。`
-                    ],
+                    descObject: {
+                        text: [`若說我們可從中得出以下關乎人類未來的啟示，應不至於有爭議：每個人的身分不再像過去那般單一且固定，將變得比我們想像的更多元。我們在不同的情況下使用不同的身分；這些身分互有重疊而且日益難分，卻又能清楚地以不同的方式劃定個人的觀點和選擇。特別是傳統用來界定身分的社會標準（例如年齡和國籍）都將不再那麼重要，公私身分的界線也變得越來越模糊。以社會階級、族群歸屬、政治立場為本的身分定義，將讓位給新的劃分標準，例如出身城鄉或教育程度的高低。`,
+                            `如果個人身分的傳統特質變得支離破碎，可以想見未來社群的向心力將會更為疏遠，社會階層的流動性降低或是邊緣化，讓種族隔離或極端主義有機可趁。但換個角度來看，科技及網路帶來人際關係的「超連結」（hyperconnectivity），將有機會強化正向群體認同，賦予營造社群的新契機。未來，無論是生活或身分，人與人都會逐漸變得密不可分。這究竟是好事還是壞事？我認為有好也有壞，而且不論何者的影響都會越來越大。`
+                        ]
+                    },
                     extend: {}
                 }
             },
-            render: (gvc, widget, setting, hoverID) => {
-                return {
-                    view: () => {
-                        initialScript(gvc, widget);
-                        const about = widget.data.about;
-                        return gvc.bindView({
-                            bind: glitter.getUUID(),
-                            view: () => {
-                                return `                        
-                                <section id="about" class="about" style="background: url(${about.background}) center center">
-                                    <!--data-aos="fade-up"-->
-                                    <div class="container" data-aos="fade-up">
-                                        <div class="row">
-                                            <!--data-aos="zoom-in" data-aos-delay="100"-->
-                                            <div class="col-lg-6 order-1 order-lg-2"  data-aos="zoom-in" data-aos-delay="100">
-                                                <div class="about-img">
-                                                    <img class="" src="${about.img}" alt="" />
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-                                                <h3 style="color:white;white-space:normal;word-wrap:break-word;word-break:break-all;">${about.title}</h3>
-                                                ${(() => {
-                                    return gvc.map(about.descArray.map((desc) => {
-                                        return `<p class="py-3" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${desc}</p>`;
-                                    }));
-                                })()}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                `;
-                            }, divCreate: {},
-                            onCreate: () => {
-                                AOS.init();
-                            }
-                        });
-                    },
-                    editor: () => {
-                        return `
-                        ${glitter.htmlGenerate.editeInput({
-                            gvc: gvc,
-                            title: '大標題',
-                            default: widget.data.about.title,
-                            placeHolder: '請輸入大標題所顯示的文字',
-                            callback: (text) => {
-                                widget.data.about.title = text;
-                                widget.refreshComponent();
-                            },
-                        })}
-                        ` + `
-                        <div class="mt-3"></div>
-                        ` + `
-                         ${Editor.uploadImage({
-                            gvc: gvc,
-                            title: `圖片`,
-                            def: widget.data.about.img,
-                            callback: (e) => {
-                                widget.data.about.img = e;
-                                widget.refreshComponent();
-                            },
-                        })}
-                        ` + `
-                        <div class="mt-3"></div>
-                        ` + `
-                        ${Editor.toggleExpand({
-                            gvc: gvc,
-                            title: '左邊大塊文字',
-                            data: widget.data.about.extend,
-                            innerText: `${gvc.map(widget.data.about.descArray.map((desc, index) => {
-                                return `
-                                 ${glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: `第${index + 1}段落文字`,
-                                    default: desc,
-                                    placeHolder: '請輸入此段落的文字',
-                                    callback: (text) => {
-                                        widget.data.about.descArray[index] = text;
-                                        widget.refreshComponent();
-                                    },
-                                })}                                 
-                                 <div class="mb-3 mt-3" style="width: 100%;height: 1px;background: black"></div>
-                                `;
-                            }))}
-                            ${Editor.plusBtn('添加文字區塊', gvc.event(() => {
-                                widget.data.about.descArray.push("");
-                                widget.refreshComponent();
-                            }))}
-                                
-                            `
-                        })}
-                        `;
-                    }
-                };
-            }
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/about.js', import.meta.url))
         },
         whyUs: {
             title: "服務內容",
             subContent: "介紹公司服務的內容項目",
             defaultData: {},
-            render: (gvc, widget, setting, hoverID) => {
-                return {
-                    view: () => {
-                        initialScript(gvc, widget);
-                        let id = glitter.getUUID();
-                        const banner = {
-                            title: "我們擅長的領域",
-                            desc: "從一開始的產品規劃與需求傾聽，再到頁面、Logo設計、UI／UX，最後的軟體開發與部署",
-                            list: [
-                                { number: "01", title: "機台維護", desc: "日常維護保養，並進行故障排除、生產設備零件更換" },
-                                { number: "02", title: "資訊安全", desc: "網路、網際網路、端點、API、雲端、應用程式" },
-                                { number: "03", title: "客製化設定", desc: "設計預算有限也不影響製作品質，打造專屬頁面" },
-                                { number: "04", title: "即時線上服務", desc: "提供即時與處理緊急狀況的撥打專線，替您解除危機" },
-                                { number: "05", title: "前後台版型多樣性", desc: "多種板塊可自行設計或與我們說明想要的介面" },
-                            ],
-                        };
-                        return gvc.bindView({
-                            bind: id,
-                            view: () => {
-                                return `
-                                    <!-- ======= Why Us Section ======= -->
-                                    <section id="banner" class="why-us">
-                                        <div class="container" data-aos="fade-up">
-                                            <div class="section-title">
-                                                <h2>${banner.title}</h2>
-                                                <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">${banner.desc}</p>
-                                            </div>
-                                
-                                            <div class="row">
-                                                ${glitter.print(function () {
-                                    var tmp = "";
-                                    banner.list.map((l, i) => {
-                                        tmp += `
-                                                        <div class="col-lg-4 ${i == 0 && frSize({ sm: false }, true) ? `` : `mt-4`}">
-                                                            <div class="box" data-aos="zoom-in" data-aos-delay="200">
-                                                                <span>${l.number}</span>
-                                                                <h4>${l.title}</h4>
-                                                                <p>${l.desc}</p>
-                                                            </div>
-                                                        </div>
-                                                      `;
-                                    });
-                                    return tmp;
-                                })}
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <!-- End Why Us Section -->
-                                `;
-                            }, divCreate: {},
-                            onCreate: () => {
-                            }
-                        });
-                    },
-                    editor: () => {
-                        return ``;
-                    }
-                };
-            }
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/whyUs.js', import.meta.url))
         },
         menu: {
             title: "服務菜單",
@@ -1003,7 +181,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
-                        initialScript(gvc, widget);
+                        ScriptStyle1.initialScript(gvc, widget);
                         const menu = {
                             title: "菜單",
                             desc: "由米其林四星主廚坐鎮，給你最佳美食饗宴與餐廳服務",
@@ -1113,7 +291,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                         l.tag.map((m) => (tagClass += `${m} `));
                                         tmp += `
                                                     <div class="col-lg-6 menu-item ${tagClass}">
-                                                      <img src="${getRout(l.img)}" class="menu-img" alt="" />
+                                                      <img src="${ScriptStyle1.getRout(l.img)}" class="menu-img" alt="" />
                                                       <div class="menu-content" ><a href="#">${l.title}</a><span>$ ${l.price.toLocaleString()}</span></div>
                                                       <div class="menu-ingredients" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${l.desc}</div>
                                                     </div>
@@ -1145,7 +323,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
-                        initialScript(gvc, widget);
+                        ScriptStyle1.initialScript(gvc, widget);
                         const feature = {
                             title: "料理主題介紹",
                             desc: "這是我們堅持做出好料理的理念",
@@ -1228,7 +406,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                                                             <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">${l.desc}</p>
                                                                         </div>
                                                                         <div class="col-lg-4 text-center order-1 order-lg-2">
-                                                                            <img src="${getRout(l.img)}" alt="" class="img-fluid" />
+                                                                            <img src="${ScriptStyle1.getRout(l.img)}" alt="" class="img-fluid" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1260,7 +438,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
-                        initialScript(gvc, widget);
+                        ScriptStyle1.initialScript(gvc, widget);
                         const slider = {
                             title: "活動專案",
                             desc: "提供原創活動的餐點服務與流程",
@@ -1307,7 +485,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                                                 <div class="swiper-slide">
                                                                     <div class="row event-item">
                                                                         <div class="col-lg-6">
-                                                                            <img src="${getRout(l.img)}" class="img-fluid" alt="" />
+                                                                            <img src="${ScriptStyle1.getRout(l.img)}" class="img-fluid" alt="" />
                                                                         </div>
                                                                         <div class="col-lg-6 pt-4 pt-lg-0 content">
                                                                             <h3>${l.title}</h3>
@@ -1348,7 +526,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
-                        initialScript(gvc, widget);
+                        ScriptStyle1.initialScript(gvc, widget);
                         const test = {
                             title: "給客戶滿意的網站設計，是我們致力奉獻的服務",
                             desc: "可以看看我們的客戶與業主給我們什麼樣的回饋！",
@@ -1394,7 +572,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                                                             ${l.text}
                                                                         <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                                                                     </p>
-                                                              <img src="${getRout(l.img)}" class="testimonial-img" alt="" />
+                                                              <img src="${ScriptStyle1.getRout(l.img)}" class="testimonial-img" alt="" />
                                                               <h3>${l.name}</h3>
                                                               <h4>${l.pro}</h4>
                                                             </div>
@@ -1429,7 +607,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
-                        initialScript(gvc, widget);
+                        ScriptStyle1.initialScript(gvc, widget);
                         const gallery = {
                             title: "實際餐廳畫面",
                             desc: "餐廳空間設計與實際用餐的感覺",
@@ -1465,8 +643,8 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                         tmp += `
                                                         <div class="col-lg-3 col-md-4">
                                                             <div class="gallery-item">
-                                                                <a href="${getRout(l)}" class="gallery-lightbox" data-gall="gallery-item">
-                                                                    <img src="${getRout(l)}" alt="" class="img-fluid" />
+                                                                <a href="${ScriptStyle1.getRout(l)}" class="gallery-lightbox" data-gall="gallery-item">
+                                                                    <img src="${ScriptStyle1.getRout(l)}" alt="" class="img-fluid" />
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -1496,7 +674,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
-                        initialScript(gvc, widget);
+                        ScriptStyle1.initialScript(gvc, widget);
                         const team = {
                             title: "我們的主廚團隊",
                             desc: "優良的傳統中，持續將餐點優化，是我們共同維護的榮譽",
@@ -1538,7 +716,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                 tmp += `
                                                     <div class="col-lg-4 col-md-6">
                                                         <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                                                            <img src="${getRout(l.img)}" class="img-fluid" alt="" />
+                                                            <img src="${ScriptStyle1.getRout(l.img)}" class="img-fluid" alt="" />
                                                             <div class="member-info">
                                                                 <div class="member-info-content">
                                                                     <h4>${l.name}</h4>
@@ -1583,7 +761,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
-                        initialScript(gvc, widget);
+                        ScriptStyle1.initialScript(gvc, widget);
                         const contact = {
                             title: "想傳達您的訊息給萊恩設計嗎？",
                             desc: "若想要了解我們的服務，填妥表單，萊恩設計將儘速回應您。",
@@ -1686,7 +864,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: (gvc, widget, setting, hoverID) => {
                 return {
                     view: () => {
-                        initialScript(gvc, widget);
+                        ScriptStyle1.initialScript(gvc, widget);
                         const top = {
                             phone: "0918-563-927",
                             clock: "週一至週五 09:00 - 19:00",

@@ -5,15 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2c38387-0fd8-4bea-9d0c-2eb4f00bedee" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/one-page/style-1/login.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/restaurant/script-style-1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/restaurant/style-1/about.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/restaurant/style-1/banner.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/restaurant/style-1/empty.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/restaurant/style-1/footer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/restaurant/style-1/nav.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/restaurant/style-1/topbar.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/restaurant/style-1/whyUs.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/official.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/official.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/official.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/official.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/one-page/style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/one-page/style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/one-page/style-1/topNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1/topNav.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/one-page/style-1/topNav.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1/topNav.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style1.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,18 +47,20 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/src/one-page/style-1",
+    "last_opened_file_path": "C:/Users/User/Documents/GitHub/One-page-plugin/src/restaurant/style-1",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/node_modules/typescript/lib",
+    "ts.external.directory.path": "C:\\Users\\User\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\restaurant\style-1" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\restaurant" />
       <recent name="$PROJECT_DIR$/src/one-page/style-1" />
     </key>
   </component>
@@ -93,6 +101,7 @@
       <option name="presentableId" value="Default" />
       <updated>1680419718642</updated>
       <workItem from="1680419720246" duration="59258000" />
+      <workItem from="1680753552912" duration="18494000" />
     </task>
     <servers />
   </component>
@@ -153,7 +162,26 @@
         <option value="$PROJECT_DIR$/src/one-page/style-1/landingTop.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-1/supportWidget.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-1/login.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/whyUs.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/banner.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/about.js" />
       </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
     </option>
   </component>
 </project>
