@@ -38,7 +38,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                                     </a>
                                                                     `;
                                 });
-                                console.log(tmp);
                                 return tmp;
                             })()}                                                           
                                                         </div>

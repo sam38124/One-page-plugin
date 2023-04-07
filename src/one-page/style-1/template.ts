@@ -225,7 +225,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         }),
                         `<div class="alert alert-dark p-2 mt-2">
 ${Editor.h3('項目列表')}
-${
+                            ${
                             (() => {
                                 let dragm = {
                                     start: 0,

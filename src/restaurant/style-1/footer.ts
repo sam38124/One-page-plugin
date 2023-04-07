@@ -44,7 +44,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                                     </a>
                                                                     `;
                                                                 });
-                                console.log(tmp)
                                                                 return tmp;
                                                             })()}                                                           
                                                         </div>
