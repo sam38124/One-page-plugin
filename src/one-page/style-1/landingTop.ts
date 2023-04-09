@@ -1,7 +1,7 @@
 import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 
@@ -26,7 +26,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             }
             return {
                 view: () => {
-                    return ` <section
+                    return `<section
               class="overflow-hidden  position-lg-relative position-relative"
               style=""
             >
@@ -58,9 +58,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     </p>
                     <div class="w-100 d-flex">
                       <button
-                        class="btn btn-warning  fs-lg text-center text-md-start flex-fill me-1 d-flex align-items-center"
+                        class="btn btn-warning  fs-lg text-center text-md-start  me-1 d-flex align-items-center 
+                        ${glitter.htmlGenerate.styleEditor(widget.data.btn1).class()}"
+                        style="${glitter.htmlGenerate.styleEditor(widget.data.btn1).style()}"
                         onclick="${gvc.event(() => {
-                        ClickEvent.trigger({
+                        TriggerEvent.trigger({
                             gvc, widget, clickEvent: widget.data.btn1,
                         })
                     })}" 
@@ -68,9 +70,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         ${widget.data.btn1.title}
                       </button>
                       <button
-                        class="btn btn-danger  fs-lg text-center text-md-start flex-fill ms-1 d-flex align-items-center"
+                        class="btn btn-danger  fs-lg text-center text-md-start  ms-1 d-flex align-items-center  ${glitter.htmlGenerate.styleEditor(widget.data.btn2).class()}"
+                        style="${glitter.htmlGenerate.styleEditor(widget.data.btn2).style()}"
                         onclick="${gvc.event(() => {
-                        ClickEvent.trigger({
+                        TriggerEvent.trigger({
                             gvc, widget, clickEvent: widget.data.btn2,
                         })
                     })}"
@@ -168,7 +171,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     glitter.htmlGenerate.styleEditor(widget.data[key]).editor(gvc,()=>{
                                         widget.refreshComponent()
                                     },'按鈕設計樣式'),
-                                    ClickEvent.editer(gvc, widget, widget.data[key], {
+                                    TriggerEvent.editer(gvc, widget, widget.data[key], {
                                         hover: true,
                                         option: [],
                                         title: "點擊事件"

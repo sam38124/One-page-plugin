@@ -6,12 +6,10 @@ export class ScriptStyle1{
         return new URL('./' + link, import.meta.url).href;
     }
     public static initialScript(gvc: any, widget: HtmlJson) {
-
         if (ScriptStyle1.hi) {
             return;
         }
         ScriptStyle1.hi = true;
-        (window as any).mode = 'dark';
         (window as any).root = document.getElementsByTagName('html')[0];
         (window as any).root.classList.add('dark-mode');
         gvc.addStyleLink([

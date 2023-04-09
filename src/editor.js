@@ -258,7 +258,7 @@ export class Editor {
             }));
     }
     static toggleExpand(obj) {
-        const color = obj.color ?? `#4144b0;`;
+        const color = obj.color ?? `#1d1d64;`;
         const glitter = window.glitter;
         return `${obj.gvc.bindView(() => {
             const id = glitter.getUUID();
@@ -266,7 +266,7 @@ export class Editor {
                 bind: id,
                 view: () => {
                     if (obj.data.expand) {
-                        return `<div class="w-100  rounded p-2 " style="background: ${color}; ">
+                        return `<div class="w-100  rounded p-2 " style="background: ${color};">
                             <div
                                 class="d-flex p-0 align-items-center mb-2 w-100"
                                 onclick="${obj.gvc.event(() => {
@@ -431,11 +431,11 @@ export class Editor {
                         })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
                         data: dd.expand,
                         innerText: dd.innerHtml,
-                        color: `#004081`,
+                        color: `#2b115d`,
                     });
                 })
                     .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event),
-                color: `#0062c0`,
+                color: `#3333a2`,
             }));
     }
 }

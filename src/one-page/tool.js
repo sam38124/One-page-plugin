@@ -1,4 +1,5 @@
 export class Tool {
+    waitLoadModule;
     constructor() {
         this.waitLoadModule = (name, event, timeout, msg) => {
             let t = timeout && timeout > 500 ? timeout : 500;

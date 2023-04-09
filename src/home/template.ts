@@ -2,7 +2,7 @@ import { HtmlJson, Plugin } from '../glitterBundle/plugins/plugin-creater.js';
 import { Glitter } from '../glitterBundle/Glitter.js';
 import { GVC } from '../glitterBundle/GVController';
 import { Editor } from '../editor';
-import { ClickEvent } from '../glitterBundle/plugins/click-event';
+import { TriggerEvent } from '../glitterBundle/plugins/trigger-event.js';
 
 Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -39,13 +39,13 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
 //     gvc: gvc, title: "電腦版", data: widget.data.mobile.m, innerText: ``
 // })
 
-// ClickEvent.editer(gvc, widget, widget.data.nav.btn, {
+// TriggerEvent.editer(gvc, widget, widget.data.nav.btn, {
 //     hover: true,
 //     option: [],
 //     title: "點擊事件"
 // })
 // glitter.htmlGenerate.styleEditor(data.btn).editor(gvc,widget,'按鈕設計樣式')
-// ClickEvent.trigger({
+// TriggerEvent.trigger({
 //     gvc, widget, clickEvent: nav.btn,
 // })
 
@@ -64,7 +64,7 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
 //     }
 // })
 // ${(glitter.htmlGenerate as any).styleEditor(data.btn).editor(gvc,widget)}
-// ${ClickEvent.editer(gvc, widget, data.btn, {
+// ${TriggerEvent.editer(gvc, widget, data.btn, {
 //                                     hover: true,
 //                                     option: [],
 //                                     title: "點擊事件"

@@ -1,4 +1,4 @@
-import { ClickEvent } from './glitterBundle/plugins/click-event.js';
+import { TriggerEvent } from './glitterBundle/plugins/trigger-event.js';
 import { Editor } from './editor.js';
 class GlobalData {
     public static data = {
@@ -27,7 +27,7 @@ class GlobalData {
         },
     };
 }
-ClickEvent.create(import.meta.url, {
+TriggerEvent.create(import.meta.url, {
     link: {
         title: '連結跳轉',
         fun: (gvc, widget, object) => {
@@ -146,4 +146,29 @@ ClickEvent.create(import.meta.url, {
             };
         },
     },
+    code:{
+        title:'程式碼區塊',
+        fun:(gvc, widget, object)=>{
+            const glitter=(window as any).glitter
+            return {
+                editor: () => {
+                    object.code=object.code??""
+                    return glitter.htmlGenerate.editeText({
+                        gvc: gvc,
+                        title: '程式碼區塊',
+                        default: object.code,
+                        placeHolder: "程式碼區塊",
+                        callback: (text:string) => {
+                            object.code = text
+                            widget.refreshComponent()
+                        }
+                    });
+                },
+                event: () => {
+
+                    eval(object.code)
+                },
+            };
+        }
+    }
 });

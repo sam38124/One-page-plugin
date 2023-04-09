@@ -1,5 +1,6 @@
 'use strict';
 export class Editor {
+    generateForm;
     constructor(gvc) {
         const editor = this;
         const glitter = gvc.glitter;

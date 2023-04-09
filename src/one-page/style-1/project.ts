@@ -1,7 +1,7 @@
 import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 
@@ -244,7 +244,7 @@ ${gvc.bindView(() => {
                                             .styleEditor(l.btn)
                                             .class()}"
                                                             onclick="${gvc.event(() => {
-                                            ClickEvent.trigger({
+                                            TriggerEvent.trigger({
                                                 gvc,
                                                 widget,
                                                 clickEvent: l.btn,
@@ -482,7 +482,7 @@ ${gvc.bindView(() => {
                                                 },
                                             }),
                                             glitter.htmlGenerate.styleEditor(data.btn).editor(gvc, widget as any, '按鈕設計樣式'),
-                                            ClickEvent.editer(gvc, widget, data.btn, {
+                                            TriggerEvent.editer(gvc, widget, data.btn, {
                                                 hover: true,
                                                 option: [],
                                                 title: '點擊事件',

@@ -1,31 +1,31 @@
-import { ClickEvent } from './glitterBundle/plugins/click-event.js';
+import { TriggerEvent } from './glitterBundle/plugins/trigger-event.js';
 import { Editor } from './editor.js';
 class GlobalData {
+    static data = {
+        pageList: [],
+        isRunning: false,
+        run: () => {
+            if (GlobalData.data.isRunning) {
+                return;
+            }
+            GlobalData.data.isRunning = true;
+            const saasConfig = window.saasConfig;
+            saasConfig.api.getPage(saasConfig.config.appName).then((data) => {
+                if (data.result) {
+                    GlobalData.data.pageList = data.response.result.map((dd) => {
+                        dd.page_config = dd.page_config ?? {};
+                        return dd;
+                    });
+                }
+                else {
+                    GlobalData.data.isRunning = false;
+                    GlobalData.data.run();
+                }
+            });
+        },
+    };
 }
-GlobalData.data = {
-    pageList: [],
-    isRunning: false,
-    run: () => {
-        if (GlobalData.data.isRunning) {
-            return;
-        }
-        GlobalData.data.isRunning = true;
-        const saasConfig = window.saasConfig;
-        saasConfig.api.getPage(saasConfig.config.appName).then((data) => {
-            if (data.result) {
-                GlobalData.data.pageList = data.response.result.map((dd) => {
-                    dd.page_config = dd.page_config ?? {};
-                    return dd;
-                });
-            }
-            else {
-                GlobalData.data.isRunning = false;
-                GlobalData.data.run();
-            }
-        });
-    },
-};
-ClickEvent.create(import.meta.url, {
+TriggerEvent.create(import.meta.url, {
     link: {
         title: '連結跳轉',
         fun: (gvc, widget, object) => {
@@ -137,4 +137,28 @@ ClickEvent.create(import.meta.url, {
             };
         },
     },
+    code: {
+        title: '程式碼區塊',
+        fun: (gvc, widget, object) => {
+            const glitter = window.glitter;
+            return {
+                editor: () => {
+                    object.code = object.code ?? "";
+                    return glitter.htmlGenerate.editeText({
+                        gvc: gvc,
+                        title: '程式碼區塊',
+                        default: object.code,
+                        placeHolder: "程式碼區塊",
+                        callback: (text) => {
+                            object.code = text;
+                            widget.refreshComponent();
+                        }
+                    });
+                },
+                event: () => {
+                    eval(object.code);
+                },
+            };
+        }
+    }
 });

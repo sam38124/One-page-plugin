@@ -152,7 +152,7 @@ widget.refreshComponent();
 
 ## 點擊編輯
 ```
-ClickEvent.editer(gvc, widget, widget.data.nav.btn, {
+TriggerEvent.editer(gvc, widget, widget.data.nav.btn, {
     hover: true,
     option: [],
     title: "點擊事件"
@@ -161,7 +161,7 @@ ClickEvent.editer(gvc, widget, widget.data.nav.btn, {
 
 ## 點擊觸發
 ```
-ClickEvent.trigger({
+TriggerEvent.trigger({
     gvc, widget, clickEvent: nav.btn,
 })
 ```

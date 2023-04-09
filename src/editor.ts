@@ -266,7 +266,7 @@ export class Editor {
         );
     }
     public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: string; color?: string }) {
-        const color = obj.color ?? `#4144b0;`;
+        const color = obj.color ?? `#1d1d64;`;
         const glitter = (window as any).glitter;
         return /*html*/ `${obj.gvc.bindView(() => {
             const id = glitter.getUUID();
@@ -274,13 +274,13 @@ export class Editor {
                 bind: id,
                 view: () => {
                     if (obj.data.expand) {
-                        return /*html*/ `<div class="w-100  rounded p-2 " style="background: ${color}; ">
+                        return /*html*/ `<div class="w-100  rounded p-2 " style="background: ${color};">
                             <div
                                 class="d-flex p-0 align-items-center mb-2 w-100"
                                 onclick="${obj.gvc.event(() => {
-                                    obj.data.expand = !obj.data.expand;
-                                    obj.gvc.notifyDataChange(id);
-                                })}"
+                            obj.data.expand = !obj.data.expand;
+                            obj.gvc.notifyDataChange(id);
+                        })}"
                                 style="cursor: pointer;"
                             >
                                 <h3 style="font-size: 16px;color: lightpink;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
@@ -469,11 +469,11 @@ export class Editor {
                                 })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
                                 data: dd.expand,
                                 innerText: dd.innerHtml,
-                                color: `#004081`,
+                                color: `#2b115d`,
                             });
                         })
                         .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event),
-                color: `#0062c0`,
+                color: `#3333a2`,
             })
         );
     }

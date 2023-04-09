@@ -2,41 +2,37 @@
 import { GVCType } from "./module/PageManager.js";
 const $ = window.$;
 class LifeCycle {
-    constructor() {
-        this.onResume = function () {
-        };
-        this.onPause = function () {
-        };
-        this.onDestroy = function () {
-        };
-        this.onCreate = function () {
-        };
-        this.onCreateView = function () {
-            return "";
-        };
-        this.cssInitial = function () {
-            return '';
-        };
-    }
+    onResume = function () {
+    };
+    onPause = function () {
+    };
+    onDestroy = function () {
+    };
+    onCreate = function () {
+    };
+    onCreateView = function () {
+        return "";
+    };
+    cssInitial = function () {
+        return '';
+    };
     notifyDataChange() {
         $('body').html(this.onCreateView());
     }
+    constructor() {
+    }
 }
 export class GVC {
-    constructor() {
-        this.glitter = window.glitter;
-        this.parameter = {
-            clickMap: {},
-            pageConfig: undefined,
-            bindViewList: {},
-            clickID: 0,
-            styleList: [],
-            jsList: [],
-            styleLinks: [],
-        };
-        this.recreateView = () => {
-        };
-    }
+    glitter = window.glitter;
+    parameter = {
+        clickMap: {},
+        pageConfig: undefined,
+        bindViewList: {},
+        clickID: 0,
+        styleList: [],
+        jsList: [],
+        styleLinks: [],
+    };
     notifyDataChange(id) {
         const gvc = this;
         try {
@@ -63,6 +59,8 @@ export class GVC {
             }
         }
     }
+    recreateView = () => {
+    };
     addObserver(obj, callback, viewBind) {
         const gvc = this;
         try {
