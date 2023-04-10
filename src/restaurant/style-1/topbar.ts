@@ -12,6 +12,17 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             return {
                 view:()=>{
                     ScriptStyle1.initialScript(gvc,widget)
+                    widget.data.INF=widget.data.INF ?? [
+                        {
+                            value:"0978-028-730",
+                            img:"fa-light fa-phone"
+                        },
+                        {
+                            value:"週一至週五 09:00 - 19:00",
+                            img:"fa-regular fa-clock"
+                        }
+
+                    ]
                     const INF = widget.data.INF;
                     let id = glitter.getUUID()
 
@@ -26,19 +37,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         return gvc.map(INF.map((INFData:any)=>{
                                             return`
                                                 <div class="d-flex align-items-center me-4">
-                                                    <img src="${INFData.img}" style="width: 14px;height: 14px;margin-right: 5px;" alt="SVG image">
+                                                 <i class="${INFData.img} me-2" style="color: white;"></i>
                                                     <span>${INFData.value}</span>
                                                 </div>                                                
                                             `
                                         }))
                                     })()}
-                                </div>
-<!--                                 todo-->
-                                <div class="languages d-none d-md-flex align-items-center">
-                                    <ul>
-                                      <li>中文</li>
-                                      <li><a href="#">English</a></li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +63,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         title: '聯絡資訊設定',
                         array: widget.data.INF.map((dd: any, index: number) => {
                             return {
-                                title: `資訊:${index + 1}`,
+                                title: dd.value || `資訊:${index + 1}`,
                                 expand: dd,
                                 innerHtml: gvc.map([
                                     glitter.htmlGenerate.editeInput({
@@ -72,14 +76,14 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             widget.refreshComponent();
                                         },
                                     }),
-                                    Editor.uploadImage({
+                                    Editor.fontawesome({
                                         gvc: gvc,
-                                        title: `圖片`,
-                                        def: dd.img,
-                                        callback: (e) => {
-                                            dd.img = e;
-                                            widget.refreshComponent();
-                                        },
+                                        title: '圖示',
+                                        def: dd.img  ,
+                                        callback: (text) => {
+                                            dd.img = text
+                                            widget.refreshComponent()
+                                        }
                                     }),
                                     TriggerEvent.editer(gvc, widget, dd, {
                                         hover: true,

@@ -56,6 +56,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
@@ -195,10 +196,27 @@
       <change beforePath="$PROJECT_DIR$/src/restaurant/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/restaurant/mode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/mode.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/restaurant/original/index.html" beforeDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/one-page/script-style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/script-style-1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page/script-style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/script-style-1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/script-style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/script-style-1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/script-style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/script-style-1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/about.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/about.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/about.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/about.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/banner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/banner.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/banner.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/menu.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/menu.ts" afterDir="false" />
+>>>>>>> 3b64bf6 (fix ui)
       <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/nav.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/nav.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/nav.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/topbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/topbar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/topbar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/topbar.ts" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style1.ts" afterDir="false" />
+>>>>>>> 3b64bf6 (fix ui)
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -240,6 +258,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+<<<<<<< HEAD
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\one-page-blue\assets\js" />
@@ -252,6 +271,8 @@
       <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\one-page-blue\assets" />
     </key>
   </component>
+=======
+>>>>>>> 3b64bf6 (fix ui)
   <component name="RunManager" selected="npm.start">
     <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
@@ -287,11 +308,16 @@
       <created>1680419718642</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
+<<<<<<< HEAD
       <updated>1680419718642</updated>
       <workItem from="1680419720246" duration="59258000" />
       <workItem from="1680753552912" duration="18760000" />
       <workItem from="1681092481555" duration="4182000" />
       <workItem from="1681104658687" duration="16465000" />
+=======
+      <updated>1681033906519</updated>
+      <workItem from="1681033908440" duration="23686000" />
+>>>>>>> 3b64bf6 (fix ui)
     </task>
     <servers />
   </component>

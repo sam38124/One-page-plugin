@@ -9,11 +9,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+
             return {
                 view:()=>{
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID()
-
                     return gvc.bindView({
                         bind:id,
                         view:()=>{
@@ -32,74 +32,26 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 dataList : widget.data.dataList??{
                                     list: [
                                         {
-                                            img: "assets/img/menu/lobster-bisque.jpg",
+                                            img: ScriptStyle1.getRout("assets/img/menu/lobster-bisque.jpg"),
                                             title: "蝦滋圈",
                                             desc: "金黃色又澎又厚的圈圈，選用鮮美飽滿的100%純蝦泥，搭配梅子醬或灑上鹹蛋黃，鹹甜鹹甜的獨特口感，沾點辣粉更開胃，一朵圈圈多重滋味！",
-                                            price: 2390,
+                                            price: `$ 2390`,
                                             tag: ["starters"],
                                             expand:{}
                                         },
                                         {
-                                            img: "assets/img/menu/bread-barrel.jpg",
+                                            img: ScriptStyle1.getRout("assets/img/menu/bread-barrel.jpg"),
                                             title: "芋香黑糯米 (冰/熱)",
                                             desc: "享用糯米的獨特Q感，搭配芋頭的香鬆軟，熱熱吃更加香濃迷人~",
-                                            price: 109,
+                                            price: `$ 2390`,
                                             tag: ["specialty"],
                                             expand:{}
                                         },
                                         {
-                                            img: "assets/img/menu/cake.jpg",
+                                            img: ScriptStyle1.getRout("assets/img/menu/cake.jpg"),
                                             title: "泰式春捲",
                                             desc: "有冬粉、木耳、豬肉、竹筍、高麗菜的豐富內餡，外皮香酥，一口咬下、雙重滿足。",
-                                            price: 185,
-                                            tag: ["starters"],
-                                            expand:{}
-                                        },
-                                        {
-                                            img: "assets/img/menu/caesar.jpg",
-                                            title: "檸香月亮",
-                                            desc: "純鮮蝦泥拌入檸檬葉及香茅，使鮮美蝦味中多出迷人的南洋風味。",
-                                            price: 370,
-                                            tag: ["starters"],
-                                            expand:{}
-                                        },
-                                        {
-                                            img: "assets/img/menu/tuscan-grilled.jpg",
-                                            title: "泰式酥炸軟殼蟹(小份)",
-                                            desc: "酥炸至金黃的軟殼蟹香脆可口，搭配特調酸辣淋醬，還有洋蔥、蒜酥增添風味層次，酸、辣、鮮、甜的豐富滋味，唇齒留香～",
-                                            price: 420,
-                                            tag: ["salads"],
-                                            expand:{}
-                                        },
-                                        {
-                                            img: "assets/img/menu/mozzarella.jpg",
-                                            title: "辣味月亮",
-                                            desc: "主廚獨創出更豐富的蝦餅香鹹微辣層次，好味道真不是蓋的。",
-                                            price: 370,
-                                            tag: ["starters"],
-                                            expand:{}
-                                        },
-                                        {
-                                            img: "assets/img/menu/greek-salad.jpg",
-                                            title: "摩摩喳喳 (冰/熱)",
-                                            desc: "西米露、綠豆沙、亞達枳、菠蘿蜜、紅毛丹、石榴紅寶石等豐富材料， 淋上香氣出眾的七葉蘭糖汁及椰奶，瓦城超人氣招牌甜點。",
-                                            price: 99,
-                                            tag: ["specialty"],
-                                            expand:{}
-                                        },
-                                        {
-                                            img: "assets/img/menu/spinach-salad.jpg",
-                                            title: "綠咖哩海鮮",
-                                            desc: "選用新鮮蝦仁、中卷、蛤蜊與四季豆，加入泰國綠咖哩及椰奶醬汁快炒，海鮮和綠咖哩的組合吃起來特別鮮甜下飯，要不要點一份來試試呢？",
-                                            price: 375,
-                                            tag: ["salads"],
-                                            expand:{}
-                                        },
-                                        {
-                                            img: "assets/img/menu/lobster-roll.jpg",
-                                            title: "原味月亮",
-                                            desc: "每份月亮都經過 108 道用心料理步驟，真材實料、口口酥脆鮮美，一直是瓦城銷售排行第一名！",
-                                            price: 370,
+                                            price: `$ 2390`,
                                             tag: ["starters"],
                                             expand:{}
                                         },
@@ -109,6 +61,16 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             if (!widget.data.title){
                                 widget.data = menu;
                             }
+                            gvc.addStyle(`.menu .menu-contentnc::after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    right: 0;
+    top: -4px;
+    z-index: 1;
+    color: #bab3a6;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}`)
                             return /*html*/ `
                                 <!-- ======= Menu Section ======= -->
                                 <section id="menu" class="menu section-bg">
@@ -123,10 +85,14 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                 ${(()=>{
                                                     let tmp = "";
                                                     menu.tagObject.tags.map((t:any, i:number) => {
-                                                        tmp += /*html*/ ` <li data-filter=".${t.className}" ${i == 0 ? `class="filter-active"` : ``} onclick="${gvc.event(()=>{
-                                                            document.querySelector('#' + gvc.id(id)), function (instance: any) {
-                                                                ($(".menu-container") as any).isotope({filter: ':not("*")'}), ($(".menu-container") as any).isotope({filter: "*"});
+                                                        tmp += /*html*/ ` <li data-filter=".${t.className}" ${i == 0 ? `class="filter-active"` : ``} onclick="${gvc.event((e)=>{
+                                                            let b = t.className
+                                                            if (b !== "*") {
+                                                                b = "." + b
                                                             }
+                                                            $('.filter-active').removeClass('filter-active');
+                                                            $(e).addClass('filter-active');
+                                                            ($(".isot") as any).isotope({filter: b})
                                                         })}">${t.title}</li> `;
                                                     });
                                                     return tmp;
@@ -134,7 +100,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                 </ul>
                                             </div>
                                         </div>                                    
-                                        <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+                                        <div class="row menu-container isot" data-aos="fade-up" data-aos-delay="200">
                                             ${(()=>{
                                                 let tmp = "";
                                                 menu.dataList.list.map((l:any) => {
@@ -142,8 +108,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                     l.tag.map((m:any) => (tagClass += `${m} `));
                                                     tmp += /*html*/ `
                                                         <div class="col-lg-6 menu-item ${tagClass}">
-                                                          <img src="${ScriptStyle1.getRout(l.img)}" class="menu-img" alt="" />
-                                                          <div class="menu-content" ><a href="#">${l.title}</a><span>$ ${l.price.toLocaleString()}</span></div>
+                                                          <img src="${l.img}" class="menu-img" alt="" />
+                                                          <div class="menu-content " style="background: none !important;content: none!important;" ><a href="#">${l.title}</a><span>${l.price.toLocaleString()}</span></div>
                                                           <div class="menu-ingredients" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${l.desc}</div>
                                                         </div>
                                                       `;
@@ -159,6 +125,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         onCreate:()=>{
                             // @ts-ignore
                             AOS.init();
+                            ($(".isot") as any).isotope({filter: '*'})
+
                         }
 
                     })
