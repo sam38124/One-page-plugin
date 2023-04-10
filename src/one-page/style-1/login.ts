@@ -82,7 +82,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 var item = {
                     //登入頁面
                     signInView: function () {
-                        return `  <div class="w-100  pt-1 pt-md-4 pb-4 " style="max-width: 526px;">
+                        return `  <div class="w-100  pt-1 pt-md-4 pb-4 " style="width: 526px;max-width: 100%;">
             <h1 class="text-center text-xl-start">${widget.data.title}</h1>
             <p class="text-center text-xl-start pb-3 mb-3 text-white">還沒有帳號嗎? <a class="" style="color: deepskyblue;cursor: pointer;" onclick="${gvc.event(function () {
                             type = "Register"
@@ -113,7 +113,7 @@ gvc.notifyDataChange('SignInPlace')
                     //註冊頁面
                     registerView: function () {
                         return `  
-            <div class="w-100  pt-md-4 pb-4" style="max-width: 526px;">
+            <div class="w-100  pt-md-4 pb-4" style="width: 526px;max-width: 100%;">
             <h1 class="text-center text-xl-start">創建帳號</h1>
             <p class="text-center text-xl-start pb-3 mb-3 text-white">已經有帳號了嗎? <a onclick="${gvc.event(function () {
                             type = "SignIn"
@@ -217,7 +217,7 @@ gvc.notifyDataChange('SignInPlace')
                                 },
                                 divCreate: {
                                     elem: `section`, class: `position-relative   px-4`,
-                                    style: `overflow-y: scroll;max-height:calc(100vh);padding-top:100px;padding-bottom:50px;max-width: 100%;width: 526px;`
+                                    style: `overflow-y: scroll;max-height:calc(100vh);padding-top:100px;padding-bottom:50px;width: 526px;max-width: 100vw;`
 
                                 },
                                 dataList: [{
