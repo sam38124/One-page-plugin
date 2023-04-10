@@ -109,7 +109,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                     tmp += /*html*/ `
                                                         <div class="col-lg-6 menu-item ${tagClass}">
                                                           <img src="${l.img}" class="menu-img" alt="" />
-                                                          <div class="menu-content " style="background: none !important;content: none!important;" ><a href="#">${l.title}</a><span>${l.price.toLocaleString()}</span></div>
+                                                          <div class="menu-content " style="" ><a href="#">${l.title}</a><span>${l.price.toLocaleString()}</span></div>
                                                           <div class="menu-ingredients" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${l.desc}</div>
                                                         </div>
                                                       `;
