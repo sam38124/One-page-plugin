@@ -1,5 +1,5 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
-import { ClickEvent } from "../../glitterBundle/plugins/click-event.js";
+import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
 import { Editor } from "../../editor.js";
 import { ScriptStyle1 } from "../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
@@ -16,65 +16,145 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             const nav = {
                                 title: widget.data.title ?? "萊恩設計",
                                 logo: widget.data.logo ?? ScriptStyle1.getRout('./img/homeMark.svg'),
-                                bar: [
-                                    ...widget.data.bar ?? { title: "關於我們", link: "#" },
-                                    { title: "服務項目", link: "#" },
-                                    { title: "公司作品", link: "#" },
+                                bar: widget.data.bar ?? [
+                                    { title: "菜單", link: "#menu" },
+                                    { title: "產品介紹", link: "#feature" },
+                                    { title: "定價方案", link: "#slider" },
                                     { title: "聯絡我們", link: "#contact" },
                                     {
                                         title: "更多內容",
                                         list: [
-                                            ...widget.data.moreLink
+                                            { title: "技術領域", link: "#banner" },
+                                            { title: "公司團隊", link: "#team" },
                                         ],
                                     },
                                 ],
-                                top: {
-                                    phone: "0918-563-927",
-                                    clock: "週一至週五 09:00 - 19:00",
-                                },
-                                btn: { name: "登入", link: "#" },
+                                social: widget.data.social ?? {
+                                    links: [{ link: "https://www.facebook.com/" }, { link: "https://twitter.com/" }, { link: "https://www.instagram.com/" }, { link: "https://squarestudio.tw/" }]
+                                }
                             };
                             if (!widget.data.title) {
                                 widget.data = nav;
                             }
-                            return `
-                            <!-- ======= Header ======= -->
-                            <header id="header" class="fixed-top d-flex align-items-cente">
-                              <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-                                <div class="d-flex logo" onclick="${gvc.event(() => { })}" style="cursor:pointer">
-                                  <img src="${nav.logo}" alt="" class="img-fluid me-3" />
-                                  <h1 class="logo me-auto me-lg-0"><a>${nav.title}</a></h1>
-                                </div>
-                    
-                                <nav id="navbar" class="navbar order-last order-lg-0">
-                                  <ul>
-                                    ${(() => {
-                                var tmp = "";
-                                nav.bar.map((b) => (tmp += ScriptStyle1.recursive(b, true)));
+                            return `<!-- ======= Header ======= -->
+                              <header id="header" class="fixed-top d-flex align-items-center">
+                                <div class="container d-flex align-items-center justify-content-between">
+                                  <div class="logo d-flex align-items-center" onclick="${gvc.event(() => { glitter.location.reload(); })}" style="cursor:pointer">
+                                      <img src="${nav.logo}" alt="" class="img-fluid me-3" />
+                                      <h1 style="width:12rem"><a>${nav.title}</a></h1>
+                                  </div>
+                            
+                                  <nav id="navbar" class="navbar order-last order-lg-0">
+                                    <ul>
+                                      ${glitter.print(function () {
+                                let tmp = "";
+                                nav.bar.map((r) => (tmp += ScriptStyle1.recursive(r, 1)));
                                 return tmp;
-                            })()}
-                                   
-                                  </ul>
-<!--                                  todo 這顆漢堡不會作動-->
-                                  <i class="bi bi-list mobile-nav-toggle"></i>
-                                </nav>
-                    
-                                <a
-                                  class="book-a-table-btn scrollto d-none d-lg-flex"
-                                  onclick=""
-                                  style="cursor:pointer"
-                                  >${nav.btn.name}</a
-                                >
-                              </div>
-                            </header>
-                            <!-- End Header -->
-                            `;
+                            })}
+                                    </ul>
+                                    <i class="bi bi-list mobile-nav-toggle"></i>
+                                  </nav><!-- .navbar -->
+                            
+                                  <div class="header-social-links d-flex align-items-center">
+                                      ${glitter.print(function () {
+                                let tmp = "";
+                                nav.social.links.map((linkData) => {
+                                    tmp += `
+                                              <a class="facebbok" onclick="${gvc.event(() => { linkData.click; })}" style="cursor:pointer"
+                                                ><i class="${ScriptStyle1.urlIcon(linkData.link, "bi")}"></i
+                                              ></a>`;
+                                });
+                                return tmp;
+                            })}
+                                  </div>
+                            
+                                </div>
+                              </header><!-- End Header -->`;
                         }, divCreate: {},
                         onCreate: () => {
+                            AOS.init();
+                            function select(el, all = false) {
+                                el = el.trim();
+                                if (all) {
+                                    return [...document.querySelectorAll(el)];
+                                }
+                                else {
+                                    return document.querySelector(el);
+                                }
+                            }
+                            function on(type, el, listener, all = false) {
+                                let selectEl = select(el, all);
+                                if (selectEl) {
+                                    if (all) {
+                                        selectEl.forEach((e) => e.addEventListener(type, listener));
+                                    }
+                                    else {
+                                        selectEl.addEventListener(type, listener);
+                                    }
+                                }
+                            }
+                            function scrollto(el) {
+                                let header = select("#header");
+                                let offset = header.offsetHeight;
+                                let elementPos = select(el).offsetTop;
+                                window.scrollTo({
+                                    top: elementPos - offset,
+                                    behavior: "smooth",
+                                });
+                            }
+                            function onscroll(el, listener) {
+                                el.addEventListener("scroll", listener);
+                            }
+                            on("click", ".mobile-nav-toggle", function (e) {
+                                select("#navbar").classList.toggle("navbar-mobile");
+                                document.querySelector('#navbar').classList.toggle("navbar-mobile");
+                                console.log(e.classList);
+                            });
+                            on("click", ".navbar .dropdown > a", function (e) {
+                                if (select("#navbar").classList.contains("navbar-mobile")) {
+                                    e.preventDefault();
+                                    select("#navbar").nextElementSibling.classList.toggle("dropdown-active");
+                                }
+                            }, true);
+                            let navbarlinks = select("#navbar .scrollto", true);
+                            function navbarlinksActive() {
+                                navbarlinks.forEach((navbarlink) => {
+                                    if (!$(navbarlink).data("hash"))
+                                        return;
+                                    let section = document.querySelector($(navbarlink).data("hash"));
+                                    if (!section)
+                                        return;
+                                    let position = window.scrollY;
+                                    if ($(navbarlink).data("hash") != "#header")
+                                        position += 200;
+                                    if (position >= section.offsetTop && position <= section.offsetTop + section.offsetHeight) {
+                                        navbarlink.classList.add("active");
+                                    }
+                                    else {
+                                        navbarlink.classList.remove("active");
+                                    }
+                                });
+                            }
+                            window.addEventListener("load", navbarlinksActive);
+                            onscroll(document, navbarlinksActive);
+                            on("click", ".scrollto", function (e) {
+                                if (e.data("hash")) {
+                                    e.preventDefault();
+                                    let navbar = select("#navbar");
+                                    if (navbar.classList.contains("navbar-mobile")) {
+                                        navbar.classList.remove("navbar-mobile");
+                                        let navbarToggle = select(".mobile-nav-toggle");
+                                        navbarToggle.classList.toggle("bi-list");
+                                        navbarToggle.classList.toggle("bi-x");
+                                    }
+                                    scrollto(e.data("hash"));
+                                }
+                            }, true);
                         }
                     });
                 },
                 editor: () => {
+                    return ``;
                     return gvc.map([
                         Editor.uploadImage({
                             gvc: gvc,
@@ -115,7 +195,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                 widget.refreshComponent();
                                             },
                                         }),
-                                        ClickEvent.editer(gvc, widget, BARData, {
+                                        TriggerEvent.editer(gvc, widget, BARData, {
                                             hover: true,
                                             option: [],
                                             title: "點擊事件"
@@ -158,7 +238,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                 widget.refreshComponent();
                                             },
                                         }),
-                                        ClickEvent.editer(gvc, widget, hiddenData, {
+                                        TriggerEvent.editer(gvc, widget, hiddenData, {
                                             hover: true,
                                             option: [],
                                             title: "點擊事件"

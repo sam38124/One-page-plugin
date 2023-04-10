@@ -17,10 +17,12 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                            `;
                         }, divCreate: {},
                         onCreate: () => {
+                            AOS.init();
                         }
                     });
                 },
                 editor: () => {
+                    return ``;
                     return Editor.arrayItem({
                         originalArray: widget.data.list,
                         gvc: gvc,

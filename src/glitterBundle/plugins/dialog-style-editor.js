@@ -33,7 +33,7 @@ init((gvc, glitter, gBundle) => {
         <h3 class="modal-title fs-4" >設計樣式</h3>
         <i class="fa-solid fa-xmark text-white position-absolute " style="font-size:20px;transform: translateY(-50%);right: 20px;top: 50%;cursor: pointer;"
         onclick="${gvc.event(() => {
-                glitter.closeDiaLog();
+                glitter.closeDiaLog(gvc.parameter.pageConfig?.tag);
             })}"></i>
 </div>    
 <div class="w-100 p-3">
@@ -57,7 +57,7 @@ ${gvc.map([
                     }
                 }),
                 `
-${EditorElem.h3("設計樣式")}
+${EditorElem.h3("設計特徵")}
 ${gvc.bindView(() => {
                     const idl = glitter.getUUID();
                     return {
@@ -147,7 +147,7 @@ ${gvc.bindView(() => {
                                             };
                                         })}           
 `;
-                                    })
+                                    })()
                                 })}`;
                             }).join('<div class="my-2"></div>')}
 ${EditorElem.plusBtn("添加特徵", gvc.event((e, event) => {
@@ -164,7 +164,7 @@ ${EditorElem.plusBtn("添加特徵", gvc.event((e, event) => {
                 })}
                 <button class="w-100 btn btn-primary" onclick="${gvc.event(() => {
                     gBundle.callback();
-                    glitter.closeDiaLog();
+                    glitter.closeDiaLog(gvc.parameter.pageConfig?.tag);
                 })}">
                 儲存
 </button>

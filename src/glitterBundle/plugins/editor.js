@@ -1,11 +1,11 @@
 'use strict';
 export class Editor {
-    generateForm;
     constructor(gvc) {
+        var _a;
         const editor = this;
         const glitter = gvc.glitter;
         const $ = window.$;
-        glitter.share.formExtra = glitter.share.formExtra ?? {};
+        glitter.share.formExtra = (_a = glitter.share.formExtra) !== null && _a !== void 0 ? _a : {};
         this.generateForm = (data, window, callback, second) => {
             let id = glitter.getUUID();
             return `<div id="${id}" class="w-100">
@@ -14,6 +14,7 @@ export class Editor {
                 view: function () {
                     let html = ``;
                     data.map((dd, index) => {
+                        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
                         if (!dd.custom) {
                             html += `
                             <div class="w-100 fs-3 d-flex ">
@@ -21,7 +22,7 @@ export class Editor {
                                     <span class="fw-bold${dd.need ? `` : ` d-none`}" style="color: red; font-size: 18px; font-weight: 300;"
                                         >*</span
                                     >
-                                    ${(typeof dd.name === 'function' ? dd.name() ?? '' : dd.name ?? '') ?? ''}</label
+                                    ${(_c = (typeof dd.name === 'function' ? (_a = dd.name()) !== null && _a !== void 0 ? _a : '' : (_b = dd.name) !== null && _b !== void 0 ? _b : '')) !== null && _c !== void 0 ? _c : ''}</label
                                 >
                                 <div class="flex-fill"></div>
                                 ${dd.preView
@@ -117,13 +118,14 @@ export class Editor {
                             case 'checked':
                                 dd.option = glitter.ut.toJson(dd.option, []);
                                 dd.option.map((d2) => {
+                                    var _a;
                                     let labelID = glitter.getUUID();
                                     html += `
                                     <div class="py-1 d-flex">
                                         <input
                                             class="form-check-input"
                                             type="checkbox"
-                                            role="${dd.role ?? ''}"
+                                            role="${(_a = dd.role) !== null && _a !== void 0 ? _a : ''}"
                                             id="${labelID}"
                                             onchange="${gvc.event((e) => {
                                         dd.type === 'single' && dd.option.map((d3) => (d3.checked = false));
@@ -183,9 +185,9 @@ export class Editor {
                                         <input
                                             class="form-control"
                                             type="email"
-                                            placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
+                                            placeholder="${(_d = dd.placeholder) !== null && _d !== void 0 ? _d : '請輸入' + dd.name}"
                                             onchange="${gvc.event((e) => (dd.value = $(e).val()))}"
-                                            value="${dd.value ?? ''}"
+                                            value="${(_e = dd.value) !== null && _e !== void 0 ? _e : ''}"
                                             ${dd.readonly ? `readonly` : ``}
                                         />
                                         ${dd.needAuth
@@ -204,9 +206,9 @@ export class Editor {
                                         <input
                                             class="form-control"
                                             type="email"
-                                            placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
+                                            placeholder="${(_f = dd.placeholder) !== null && _f !== void 0 ? _f : '請輸入' + dd.name}"
                                             onchange="${gvc.event((e) => (dd.value = $(e).val()))}"
-                                            value="${dd.value ?? ''}"
+                                            value="${(_g = dd.value) !== null && _g !== void 0 ? _g : ''}"
                                             ${dd.readonly ? `readonly` : ``}
                                         />
                                         ${dd.needAuth
@@ -226,8 +228,8 @@ export class Editor {
                                             <input
                                                 type="text"
                                                 class="form-control w-100"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                                value="${dd.value ?? ''}"
+                                                placeholder="${(_h = dd.placeholder) !== null && _h !== void 0 ? _h : '請輸入' + dd.name}"
+                                                value="${(_j = dd.value) !== null && _j !== void 0 ? _j : ''}"
                                                 onchange="${gvc.event((e) => {
                                             dd.value = $(e).val();
                                             gvc.notifyDataChange(id), callback(dd);
@@ -243,12 +245,12 @@ export class Editor {
                                         <div class="w-100 input-group " id="${dateID}">
                                             <input
                                                 type="text"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
+                                                placeholder="${(_k = dd.placeholder) !== null && _k !== void 0 ? _k : '請輸入' + dd.name}"
                                                 class="form-control"
                                                 data-provide="datepicker"
                                                 data-date-format="yyyy/mm/dd"
                                                 data-date-container="#${dateID}"
-                                                value="${dd.value ?? ''}"
+                                                value="${(_l = dd.value) !== null && _l !== void 0 ? _l : ''}"
                                                 onchange="${gvc.event((e) => ((dd.value = $(e).val()), callback(dd)))}"
                                                 ${dd.readonly ? `readonly` : ``}
                                             />
@@ -261,8 +263,8 @@ export class Editor {
                                             <input
                                                 type="text"
                                                 class="form-control w-100"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                                value="${dd.value ?? ''}"
+                                                placeholder="${(_m = dd.placeholder) !== null && _m !== void 0 ? _m : '請輸入' + dd.name}"
+                                                value="${(_o = dd.value) !== null && _o !== void 0 ? _o : ''}"
                                                 onchange="${gvc.event((e) => {
                                             dd.value = glitter.utText.filterNumber($(e).val());
                                             gvc.notifyDataChange(id), callback(dd);
@@ -279,8 +281,8 @@ export class Editor {
                                             <input
                                                 type="text"
                                                 class="form-control w-100"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                                value="${dd.value ?? ''}"
+                                                placeholder="${(_p = dd.placeholder) !== null && _p !== void 0 ? _p : '請輸入' + dd.name}"
+                                                value="${(_q = dd.value) !== null && _q !== void 0 ? _q : ''}"
                                                 onchange="${gvc.event((e) => {
                                             dd.value = $(e).val().replace(/[\W]/g, '');
                                             gvc.notifyDataChange(id), callback(dd);
@@ -298,6 +300,7 @@ export class Editor {
                                             ${gvc.bindView({
                                             bind: pickerID,
                                             view: () => {
+                                                var _a, _b;
                                                 return `
                                                         <div
                                                             id="pickerID${pickerID}"
@@ -307,9 +310,8 @@ export class Editor {
                                                             onclick="${gvc.event(() => {
                                                 })}"
                                                         >
-                                                            ${dd.value ??
-                                                    `<span style="color: gray">
-                                                                ${dd.placeholder ?? '請輸入' + dd.name}</span
+                                                            ${(_a = dd.value) !== null && _a !== void 0 ? _a : `<span style="color: gray">
+                                                                ${(_b = dd.placeholder) !== null && _b !== void 0 ? _b : '請輸入' + dd.name}</span
                                                             >`}
                                                         </div>
                                                     `;
@@ -326,8 +328,8 @@ export class Editor {
                                             <input
                                                 type="${dd.type}"
                                                 class="form-control w-100"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                                value="${dd.value ?? ''}"
+                                                placeholder="${(_r = dd.placeholder) !== null && _r !== void 0 ? _r : '請輸入' + dd.name}"
+                                                value="${(_s = dd.value) !== null && _s !== void 0 ? _s : ''}"
                                                 onchange="${gvc.event((e) => {
                                             dd.value = $(e).val();
                                             gvc.notifyDataChange(id), callback(dd);
@@ -345,8 +347,8 @@ export class Editor {
                                     class="form-control border rounded"
                                     rows="4"
                                     onchange="${gvc.event((e) => ((dd.value = $(e).val()), callback(dd)))}"
-                                    placeholder="${dd.placeholder ?? ''}"
-                                >${dd.value ?? ''}</textarea
+                                    placeholder="${(_t = dd.placeholder) !== null && _t !== void 0 ? _t : ''}"
+                                >${(_u = dd.value) !== null && _u !== void 0 ? _u : ''}</textarea
                                 >
                             </div>`;
                                 break;

@@ -21,12 +21,14 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                            `
                         },divCreate:{},
                         onCreate:()=>{
-
+                            // @ts-ignore
+                            AOS.init();
                         }
 
                     })
                 },
                 editor:()=>{
+                    return ``
                     return Editor.arrayItem({
                         originalArray:widget.data.list,
                         gvc: gvc,

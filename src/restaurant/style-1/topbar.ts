@@ -46,7 +46,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                            `
                         },divCreate:{},
                         onCreate:()=>{
-
+                            // @ts-ignore
+                            AOS.init();
                         }
 
                     })

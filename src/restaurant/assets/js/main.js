@@ -83,9 +83,7 @@
    */
   let selectHeader = select("#header");
   let selectTopbar = select("#topbar");
-
   if (selectHeader) {
-
     const headerScrolled = () => {
       if (window.scrollY > 100) {
         selectHeader.classList.add("header-scrolled");
@@ -191,7 +189,6 @@
    * Menu isotope and filter
    */
   window.addEventListener("load", () => {
-    alert("test")
     let menuContainer = select(".menu-container");
     if (menuContainer) {
       let menuIsotope = new Isotope(menuContainer, {
@@ -215,7 +212,6 @@
             filter: this.getAttribute("data-filter"),
           });
           menuIsotope.on("arrangeComplete", function () {
-
             AOS.refresh();
           });
         },

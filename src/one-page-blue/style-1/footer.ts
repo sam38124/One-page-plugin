@@ -22,6 +22,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     return gvc.bindView({
                         bind:id,
                         view:()=>{
+
                             return `
                                 <!-- ======= Footer ======= -->
                                 <footer id="footer">
@@ -106,15 +107,21 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         </div>
                                     </div>
                                 </footer>
-                                <!-- End Footer -->`
+                                <!-- End Footer -->                              
+<!--                                todo here a trouble windows listen not fit here work-->
+                                <a href="#" class="back-to-top d-flex align-items-center justify-content-center active"><i class="bi bi-arrow-up-short"></i></a>\`;
+                                `
+
                         },divCreate:{},
                         onCreate:()=>{
-
+                            // @ts-ignore
+                            AOS.init();
                         }
 
                     })
                 },
                 editor:()=>{
+                    return ``
                     return gvc.map([
                         Editor.toggleExpand({
                             gvc: gvc,

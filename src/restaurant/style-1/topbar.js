@@ -42,6 +42,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                            `;
                         }, divCreate: {},
                         onCreate: () => {
+                            AOS.init();
                         }
                     });
                 },
