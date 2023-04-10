@@ -1,7 +1,7 @@
 import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 
@@ -9,6 +9,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+            ScriptStyle1.initialScript(gvc, widget);
             widget.data.bgSrc = widget.data.bgSrc ?? "https://liondesign-prd.s3.amazonaws.com/file/252530754/1680596876179-pexels-ingrid-north-1851190-3840x2160-25fps.mp4"
             widget.data.title = widget.data.title ?? "支援模組"
             widget.data.list = widget.data.list ?? [

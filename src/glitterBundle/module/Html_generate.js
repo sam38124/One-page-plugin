@@ -1,5 +1,80 @@
 import { Glitter } from '../Glitter.js';
 export class HtmlGenerate {
+    static share = {};
+    static resourceHook = (src) => {
+        return src;
+    };
+    render;
+    exportJson;
+    editor;
+    static saveEvent = () => {
+        alert('save');
+    };
+    static styleEditor(data) {
+        return {
+            editor: (gvc, widget, title) => {
+                const glitter = window.glitter;
+                return `
+<button type="button" class="btn  w-100 mt-2" style="background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);" onclick="${gvc.event(() => {
+                    glitter.openDiaLog("glitterBundle/plugins/dialog-style-editor.js", "dialog-style-editor", {
+                        callback: () => {
+                            if (typeof widget === 'function') {
+                                widget();
+                            }
+                            else {
+                                widget.refreshComponent();
+                            }
+                        },
+                        data: data
+                    });
+                })}">${title ?? "設計樣式"}</button>`;
+            },
+            class: () => {
+                return data.class ?? "";
+            },
+            style: () => {
+                let styleString = [data.style];
+                (data.styleList ?? []).map((dd) => {
+                    Object.keys(dd.data).map((d2) => {
+                        styleString.push([d2, dd.data[d2]].join(":"));
+                    });
+                });
+                return styleString.join(';');
+            }
+        };
+    }
+    static setHome = (obj) => {
+        const glitter = Glitter.glitter;
+        glitter.setHome('glitterBundle/plugins/html-render.js', obj.tag, {
+            page_config: obj.page_config ?? {},
+            config: obj.config,
+            editMode: obj.editMode,
+            data: obj.data
+        }, obj.option ?? {});
+    };
+    static changePage = (obj) => {
+        const glitter = Glitter.glitter;
+        glitter.changePage('glitterBundle/plugins/html-render.js', obj.tag, obj.goBack, {
+            config: obj.config,
+            editMode: obj.editMode,
+            data: obj.data
+        }, obj.option ?? {});
+    };
+    static editeInput(obj) {
+        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+<input class="form-control" placeholder="${obj.placeHolder}" onchange="${obj.gvc.event((e) => {
+            obj.callback(e.value);
+        })}" value="${obj.default ?? ''}">`;
+    }
+    ;
+    static editeText(obj) {
+        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+<textarea class="form-control" placeholder="${obj.placeHolder}" onchange="${obj.gvc.event((e) => {
+            obj.callback(e.value);
+        })}" style="height: 100px;">${obj.default ?? ''}</textarea>`;
+    }
+    ;
+    setting;
     constructor(setting, hover = []) {
         this.setting = setting;
         const editContainer = window.glitter.getUUID();
@@ -359,75 +434,4 @@ ${e.line}
             return JSON.stringify(setting);
         };
     }
-    static styleEditor(data) {
-        return {
-            editor: (gvc, widget, title) => {
-                const glitter = window.glitter;
-                return `
-<button type="button" class="btn  w-100 mt-2" style="background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);" onclick="${gvc.event(() => {
-                    glitter.openDiaLog("glitterBundle/plugins/dialog-style-editor.js", "dialog-style-editor", {
-                        callback: () => {
-                            if (typeof widget === 'function') {
-                                widget();
-                            }
-                            else {
-                                widget.refreshComponent();
-                            }
-                        },
-                        data: data
-                    });
-                })}">${title ?? "設計樣式"}</button>`;
-            },
-            class: () => {
-                return data.class ?? "";
-            },
-            style: () => {
-                let styleString = [data.style];
-                (data.styleList ?? []).map((dd) => {
-                    Object.keys(dd.data).map((d2) => {
-                        styleString.push([d2, dd.data[d2]].join(":"));
-                    });
-                });
-                return styleString.join(';');
-            }
-        };
-    }
-    static editeInput(obj) {
-        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
-<input class="form-control" placeholder="${obj.placeHolder}" onchange="${obj.gvc.event((e) => {
-            obj.callback(e.value);
-        })}" value="${obj.default ?? ''}">`;
-    }
-    ;
-    static editeText(obj) {
-        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
-<textarea class="form-control" placeholder="${obj.placeHolder}" onchange="${obj.gvc.event((e) => {
-            obj.callback(e.value);
-        })}" style="height: 100px;">${obj.default ?? ''}</textarea>`;
-    }
-    ;
 }
-HtmlGenerate.share = {};
-HtmlGenerate.resourceHook = (src) => {
-    return src;
-};
-HtmlGenerate.saveEvent = () => {
-    alert('save');
-};
-HtmlGenerate.setHome = (obj) => {
-    const glitter = Glitter.glitter;
-    glitter.setHome('glitterBundle/plugins/html-render.js', obj.tag, {
-        page_config: obj.page_config ?? {},
-        config: obj.config,
-        editMode: obj.editMode,
-        data: obj.data
-    }, obj.option ?? {});
-};
-HtmlGenerate.changePage = (obj) => {
-    const glitter = Glitter.glitter;
-    glitter.changePage('glitterBundle/plugins/html-render.js', obj.tag, obj.goBack, {
-        config: obj.config,
-        editMode: obj.editMode,
-        data: obj.data
-    }, obj.option ?? {});
-};

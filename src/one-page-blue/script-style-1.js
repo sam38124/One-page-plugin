@@ -1,4 +1,5 @@
 export class ScriptStyle1 {
+    static hi = false;
     static getRout(link) {
         return new URL('./' + link, import.meta.url).href;
     }
@@ -111,4 +112,3 @@ export class ScriptStyle1 {
         arr.splice(index2, 0, data);
     }
 }
-ScriptStyle1.hi = false;

@@ -8,7 +8,11 @@ export class Plugin {
     static createComponent(url, fun) {
         const glitter = window.glitter;
         const val = fun(glitter, window.parent.editerData !== undefined);
-        glitter.share.componentCallback[url](val);
+        try {
+            glitter.share.componentCallback[url](val);
+        }
+        catch (e) { }
+        return val;
     }
     static setComponent(original, url) {
         const glitter = window.glitter;

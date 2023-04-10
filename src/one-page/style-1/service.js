@@ -1,5 +1,5 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
-import { ClickEvent } from "../../glitterBundle/plugins/click-event.js";
+import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
 import { Editor } from "../../editor.js";
 import { ScriptStyle1 } from "../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
@@ -99,7 +99,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                     <a
                                                         class="card card-hover h-100 border-0 shadow-sm text-decoration-none pt-5 px-sm-3 px-md-0 px-lg-3 pb-sm-3 pb-md-0 pb-lg-3 ms-xl-2"
                                                         onclick="${gvc.event(() => {
-                                ClickEvent.trigger({
+                                TriggerEvent.trigger({
                                     gvc, widget, clickEvent: s,
                                 });
                             })}"
@@ -194,7 +194,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                             widget.refreshComponent();
                                         },
                                     }),
-                                    ClickEvent.editer(gvc, widget, dd, {
+                                    TriggerEvent.editer(gvc, widget, dd, {
                                         hover: true,
                                         option: [],
                                         title: "點擊事件"

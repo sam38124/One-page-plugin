@@ -1,4 +1,5 @@
 export class ScriptStyle1 {
+    static hi = false;
     static getRout(link) {
         return new URL('./' + link, import.meta.url).href;
     }
@@ -28,7 +29,8 @@ export class ScriptStyle1 {
             "assets/vendor/swiper/swiper-bundle.min.js",
             "assets/vendor/php-email-form/validate.js",
             'assets/vendor/animate.css/animate.js',
-            'assets/js/main.js'
+            'assets/js/main.js',
+            "assets/vendor/imagesloaded/imagesloaded.js"
         ].map(((dd) => {
             return { src: ScriptStyle1.getRout(dd) };
         })), () => {
@@ -111,4 +113,3 @@ export class ScriptStyle1 {
         arr.splice(index2, 0, data);
     }
 }
-ScriptStyle1.hi = false;

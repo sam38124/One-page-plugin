@@ -2,57 +2,9 @@ import {HtmlJson, Plugin} from '../glitterBundle/plugins/plugin-creater.js';
 import {Glitter} from '../glitterBundle/Glitter.js';
 import {GVC} from '../glitterBundle/GVController.js';
 import {Editor} from '../editor.js';
-import {ClickEvent} from '../glitterBundle/plugins/click-event.js';
+import {TriggerEvent} from '../glitterBundle/plugins/trigger-event.js';
 
 Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
-    function getRout(link: string) {
-        return new URL('./' + link, import.meta.url).href;
-    }
-
-    const $ = glitter.$;
-
-    let hi: boolean = false;
-
-    function initialScript(gvc: any, widget: HtmlJson) {
-        if (hi) {
-            return;
-        }
-        hi = true;
-        (window as any).mode = 'dark';
-        (window as any).root = document.getElementsByTagName('html')[0];
-        (window as any).root.classList.add('dark-mode');
-        gvc.addStyleLink([
-            getRout('assets/vendor/boxicons/css/boxicons.min.css'),
-            getRout('assets/vendor/swiper/swiper-bundle.min.css'),
-            'https://unpkg.com/aos@next/dist/aos.css',
-            getRout('assets/css/theme.min.css'),
-            getRout('app.css'),
-        ]).then();
-        gvc.addMtScript(
-            [
-                {src: 'https://kit.fontawesome.com/02e2dc09e3.js'},
-                {src: getRout(`assets/js/isotope.pkgd.min.js`)},
-                {src: getRout(`assets/js/tgs-player.js`)},
-                {src: getRout(`assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js`)},
-                {src: getRout(`assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js`)},
-                {src: getRout(`assets/vendor/jarallax/dist/jarallax.min.js`)},
-                {src: getRout(`assets/vendor/swiper/swiper-bundle.min.js`)},
-                {src: getRout(`assets/vendor/shufflejs/dist/shuffle.min.js`)},
-                {src: getRout(`assets/vendor/imagesloaded/imagesloaded.pkgd.min.js`)},
-                {src: getRout(`assets/vendor/imagesloaded/imagesloaded.pkgd.min.js`)},
-                {src: getRout(`assets/js/theme.min.js`)},
-                {src: getRout(`assets/js/main.js`)}
-            ],
-            () => {
-                try {
-                    widget.refreshComponent();
-                } catch (e) {
-                }
-            },
-            () => {
-            }
-        );
-    }
 
     return {
         topNav: {

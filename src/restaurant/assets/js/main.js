@@ -191,6 +191,7 @@
    * Menu isotope and filter
    */
   window.addEventListener("load", () => {
+    alert("test")
     let menuContainer = select(".menu-container");
     if (menuContainer) {
       let menuIsotope = new Isotope(menuContainer, {
@@ -214,6 +215,7 @@
             filter: this.getAttribute("data-filter"),
           });
           menuIsotope.on("arrangeComplete", function () {
+
             AOS.refresh();
           });
         },

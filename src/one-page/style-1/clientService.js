@@ -1,5 +1,5 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
-import { ClickEvent } from "../../glitterBundle/plugins/click-event.js";
+import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
 import { Editor } from "../../editor.js";
 import { ScriptStyle1 } from "../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
@@ -48,7 +48,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                         <a
                                             class="btn btn-primary btn-lg ${glitter.htmlGenerate.styleEditor(faq.btn).class()}"
                                             onclick="${gvc.event(() => {
-                        ClickEvent.trigger({
+                        TriggerEvent.trigger({
                             gvc,
                             widget,
                             clickEvent: faq.btn,
@@ -174,7 +174,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                     },
                                 }),
                                 glitter.htmlGenerate.styleEditor(widget.data.btn).editor(gvc, widget, '按鈕設計樣式'),
-                                ClickEvent.editer(gvc, widget, widget.data.btn, {
+                                TriggerEvent.editer(gvc, widget, widget.data.btn, {
                                     hover: true,
                                     option: [],
                                     title: '點擊事件',

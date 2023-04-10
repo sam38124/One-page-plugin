@@ -1,10 +1,13 @@
 import { Glitter } from '../Glitter.js';
 export class DefaultSetting {
+    pageBgColor;
+    pageAnimation;
+    dialogAnimation;
+    pageLoading = () => {
+    };
+    pageLoadingFinish = () => {
+    };
     constructor(obj) {
-        this.pageLoading = () => {
-        };
-        this.pageLoadingFinish = () => {
-        };
         this.pageLoading = obj.pageLoading;
         this.pageLoadingFinish = obj.pageLoadingFinish;
         this.pageBgColor = obj.pageBgColor;
@@ -18,8 +21,21 @@ export var GVCType;
     GVCType[GVCType["Dialog"] = 1] = "Dialog";
 })(GVCType || (GVCType = {}));
 export class PageConfig {
+    id;
+    obj;
+    goBack;
+    src;
+    tag;
+    createResource;
+    deleteResource;
+    type;
+    animation;
+    backGroundColor;
+    scrollTop = 0;
+    getElement() {
+        return Glitter.glitter.$(`#page${this.id}`);
+    }
     constructor(par) {
-        this.scrollTop = 0;
         this.tag = par.tag;
         this.id = par.id;
         this.obj = par.obj;
@@ -30,9 +46,6 @@ export class PageConfig {
         this.type = par.type;
         this.animation = par.animation;
         this.backGroundColor = par.backGroundColor;
-    }
-    getElement() {
-        return Glitter.glitter.$(`#page${this.id}`);
     }
 }
 export class PageManager {
@@ -167,6 +180,8 @@ background: ${config.backGroundColor};display: none;z-index: 999999;overflow: hi
         Glitter.glitter.$('#loadingView').show();
     }
     ;
+    static changeWait = function () {
+    };
     static setAnimation(page) {
         const glitter = Glitter.glitter;
         function closePreviousPage() {
@@ -202,6 +217,15 @@ background: ${config.backGroundColor};display: none;z-index: 999999;overflow: hi
             }, 100);
         });
     }
+    static clock = {
+        start: new Date(),
+        stop: function () {
+            return ((new Date()).getTime() - (this.start).getTime());
+        },
+        zeroing: function () {
+            this.start = new Date();
+        }
+    };
     static changePage(url, tag, goBack, obj, option = {}) {
         const glitter = Glitter.glitter;
         if (glitter.waitChangePage || PageManager.clock.stop() < 300) {
@@ -398,14 +422,3 @@ background: ${config.backGroundColor};display: none;z-index: 999999;overflow: hi
         Glitter.glitter.changePageCallback.push(callback);
     }
 }
-PageManager.changeWait = function () {
-};
-PageManager.clock = {
-    start: new Date(),
-    stop: function () {
-        return ((new Date()).getTime() - (this.start).getTime());
-    },
-    zeroing: function () {
-        this.start = new Date();
-    }
-};

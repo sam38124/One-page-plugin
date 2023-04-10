@@ -1,5 +1,5 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
-import { ClickEvent } from "../../glitterBundle/plugins/click-event.js";
+import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
 import { Editor } from "../../editor.js";
 import { ScriptStyle1 } from "../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
@@ -74,7 +74,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     <button
                       class="btn btn-danger mt-3 w-50 fs-5 kv-btn ${glitter.htmlGenerate.styleEditor(keyVision2.l.btn).class()}"
                       onclick="${gvc.event(() => {
-                                    ClickEvent.trigger({
+                                    TriggerEvent.trigger({
                                         gvc,
                                         widget,
                                         clickEvent: keyVision2.l.btn,
@@ -98,7 +98,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     <button
                       class="btn btn-primary mt-3 w-50 fs-5 kv-btn ${glitter.htmlGenerate.styleEditor(keyVision2.r.btn).class()}"
                       onclick="${gvc.event(() => {
-                                    ClickEvent.trigger({
+                                    TriggerEvent.trigger({
                                         gvc,
                                         widget,
                                         clickEvent: keyVision2.r.btn,
@@ -153,7 +153,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                     return `<button
                             class="btn btn-primary kv-btn ${glitter.htmlGenerate.styleEditor(dd).class()}"
                             onclick="${gvc.event(() => {
-                                        ClickEvent.trigger({
+                                        TriggerEvent.trigger({
                                             gvc,
                                             widget,
                                             clickEvent: dd,
@@ -256,7 +256,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 },
                             })}
                                     ${glitter.htmlGenerate.styleEditor(data.btn).editor(gvc, widget)}
-                                    ${ClickEvent.editer(gvc, widget, data.btn, {
+                                    ${TriggerEvent.editer(gvc, widget, data.btn, {
                                 hover: true,
                                 option: [],
                                 title: '點擊事件',
@@ -330,7 +330,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                     widget.refreshComponent();
                                                 },
                                             }),
-                                            ClickEvent.editer(gvc, widget, data, {
+                                            TriggerEvent.editer(gvc, widget, data, {
                                                 hover: true,
                                                 option: [],
                                                 title: '點擊事件',

@@ -27,8 +27,8 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                             <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
                                                 <h3 style="color:white;white-space:normal;word-wrap:break-word;word-break:break-all;">${about.title}</h3>
                                                 ${(() => {
-                                return gvc.map(about.descArray.map((desc) => {
-                                    return `<p class="py-3" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${desc}</p>`;
+                                return gvc.map(about.block.map((block) => {
+                                    return `<p class="py-3" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${block.text}</p>`;
                                 }));
                             })()}
                                             </div>
@@ -67,7 +67,43 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         }) +
                         `
                         <div class="mt-3"></div>
-                        `;
+                        ` +
+                        Editor.arrayItem({
+                            originalArray: widget.data.about.descObject,
+                            gvc: gvc,
+                            title: '左邊大塊文字',
+                            array: widget.data.about.block.map((block, index) => {
+                                return {
+                                    title: `區塊:${index + 1}`,
+                                    expand: block,
+                                    innerHtml: glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: `第${index + 1}段落文字`,
+                                        default: block.text,
+                                        placeHolder: '請輸入此段落的文字',
+                                        callback: (text) => {
+                                            widget.data.about.descArray[index] = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    minus: gvc.event(() => {
+                                        widget.data.about.block.splice(index, 1);
+                                        widget.refreshComponent();
+                                    }),
+                                };
+                            }),
+                            expand: widget.data.about,
+                            plus: {
+                                title: '添加區塊',
+                                event: gvc.event(() => {
+                                    widget.data.about.block.push({ text: "" });
+                                    widget.refreshComponent();
+                                }),
+                            },
+                            refreshComponent: () => {
+                                widget.refreshComponent();
+                            }
+                        });
                 }
             };
         },

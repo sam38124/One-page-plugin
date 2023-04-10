@@ -1,4 +1,4 @@
-export class ClickEvent {
+export class TriggerEvent {
     static getUrlParameter(url, sParam) {
         try {
             let sPageURL = url.split("?")[1], sURLVariables = sPageURL.split('&'), sParameterName, i;
@@ -35,7 +35,7 @@ export class ClickEvent {
                     });
                 });
             }
-            oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent).event();
+            oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData).event();
         }
         run().then();
     }
@@ -56,13 +56,13 @@ export class ClickEvent {
                         }
                         else {
                             obj.clickEvent = JSON.parse(e.value);
-                            obj.clickEvent.src = ClickEvent.getUrlParameter(obj.clickEvent.src, 'resource') ?? obj.clickEvent.src;
+                            obj.clickEvent.src = TriggerEvent.getUrlParameter(obj.clickEvent.src, 'resource') ?? obj.clickEvent.src;
                         }
-                        widget.refreshAll();
+                        gvc.notifyDataChange(selectID);
                     })}">
                         
                         ${gvc.map(Object.keys(glitter.share?.clickEvent || {}).filter((dd) => {
-                        return ClickEvent.getUrlParameter(dd, "resource") !== undefined;
+                        return TriggerEvent.getUrlParameter(dd, "resource") !== undefined;
                     }).map((key) => {
                         const value = glitter.share.clickEvent[key];
                         return gvc.map(Object.keys(value).map((v2) => {
@@ -73,7 +73,7 @@ export class ClickEvent {
                             }
                             const value2 = value[v2];
                             const selected = JSON.stringify({
-                                src: ClickEvent.getUrlParameter(key, 'resource') ?? obj.clickEvent.src,
+                                src: TriggerEvent.getUrlParameter(key, 'resource') ?? obj.clickEvent.src,
                                 route: v2
                             }) === JSON.stringify(obj.clickEvent);
                             select = selected || select;

@@ -1,73 +1,79 @@
 import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 
-Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
+export const template=Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+            widget.data.tag = widget.data.tag ?? [
+                {className: "*", title: "所有模板"},
+                {className: "onepage", title: "單頁式網頁"},
+                {className: "shop", title: "電商服務"},
+                {className: "social", title: "社群平台"},
+                {className: "event", title: "活動網站"},
+                {className: "dashboard", title: "儀錶板"},
+                {className: "blog", title: "部落格"},
+            ]
+            widget.data.title = widget.data.title ?? "萊恩設計網頁模板"
+            widget.data.desc = widget.data.desc ?? "一頁式網站、多功能前後台、只要您有需求和資料，萊恩設計都能提供相對應的模板，點擊圖片可開啟該模板演示"
+            widget.data.list = widget.data.list ?? [
+                {
+                    img: ScriptStyle1.getRout(`img/template/restaurantly.png`),
+                    tag: ["onepage"],
+                    name: "企業形象單頁式網站 - 活躍藍",
+                    link: `${glitter.webUrl}/restaurantly/home`,
+                },
+                {
+                    img: ScriptStyle1.getRout("img/template/scaffold.png"),
+                    tag: ["onepage"],
+                    name: "企業形象單頁式網站 - 活躍藍",
+                    link: `${glitter.webUrl}/scaffold/home`
+                },
+                {
+                    img: ScriptStyle1.getRout("img/template/maxim.png"),
+                    tag: ["onepage"],
+                    name: "企業形象單頁式網站 - 綠意黑",
+                    link: `${glitter.webUrl}/maxim/home`
+                },
+                {
+                    img: ScriptStyle1.getRout("img/template/herobiz.png"),
+                    tag: ["onepage"],
+                    name: "企業形象單頁式網站 - 靈活青",
+                    link: `${glitter.webUrl}/herobiz2/home`
+                },
+                {
+                    img: ScriptStyle1.getRout("img/template/theday.png"),
+                    tag: ["onepage"],
+                    name: "企業形象單頁式網站 - 紅光黑",
+                    link: `${glitter.webUrl}/theday2/home`
+                },
+            ]
+            widget.data.titleStyle=widget.data.titleStyle??{}
+            widget.data.descStyle = widget.data.descStyle??{}
+            const template = {
+                title: widget.data.title,
+                desc: widget.data.desc,
+                tag: widget.data.tag,
+                list: widget.data.list,
+            }
             return {
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget)
-                    widget.data.tag = widget.data.tag ?? [
-                        {className: "*", title: "所有模板"},
-                        {className: "onepage", title: "單頁式網頁"},
-                        {className: "shop", title: "電商服務"},
-                        {className: "social", title: "社群平台"},
-                        {className: "event", title: "活動網站"},
-                        {className: "dashboard", title: "儀錶板"},
-                        {className: "blog", title: "部落格"},
-                    ]
-                    widget.data.title = widget.data.title ?? "萊恩設計網頁模板"
-                    widget.data.desc = widget.data.desc ?? "一頁式網站、多功能前後台、只要您有需求和資料，萊恩設計都能提供相對應的模板，點擊圖片可開啟該模板演示"
-                    widget.data.list = widget.data.list ?? [
-                        {
-                            img: ScriptStyle1.getRout(`img/template/restaurantly.png`),
-                            tag: ["onepage"],
-                            name: "企業形象單頁式網站 - 活躍藍",
-                            link: `${glitter.webUrl}/restaurantly/home`,
-                        },
-                        {
-                            img: ScriptStyle1.getRout("img/template/scaffold.png"),
-                            tag: ["onepage"],
-                            name: "企業形象單頁式網站 - 活躍藍",
-                            link: `${glitter.webUrl}/scaffold/home`
-                        },
-                        {
-                            img: ScriptStyle1.getRout("img/template/maxim.png"),
-                            tag: ["onepage"],
-                            name: "企業形象單頁式網站 - 綠意黑",
-                            link: `${glitter.webUrl}/maxim/home`
-                        },
-                        {
-                            img: ScriptStyle1.getRout("img/template/herobiz.png"),
-                            tag: ["onepage"],
-                            name: "企業形象單頁式網站 - 靈活青",
-                            link: `${glitter.webUrl}/herobiz2/home`
-                        },
-                        {
-                            img: ScriptStyle1.getRout("img/template/theday.png"),
-                            tag: ["onepage"],
-                            name: "企業形象單頁式網站 - 紅光黑",
-                            link: `${glitter.webUrl}/theday2/home`
-                        },
-                    ]
-                    const template = {
-                        title: widget.data.title,
-                        desc: widget.data.desc,
-                        tag: widget.data.tag,
-                        list: widget.data.list,
-                    }
                     const id = glitter.getUUID()
                     return gvc.bindView(() => {
                         return {
                             bind: id,
                             view: () => {
-                                return ` <h2 class="h1 mb-4 text-center">${template.title}</h2>
-          <p class="fs-lg pb-2 pb-md-3 pb-lg-0 mb-4 mb-lg-5 text-center">${template.desc}</p>
+                                return ` <h2 class="h1 mb-4 text-center ${glitter.htmlGenerate.styleEditor(widget.data.descStyle).class()}"
+ style="${glitter.htmlGenerate.styleEditor(widget.data.descStyle).style()}"
+ >${template.title}</h2>
+          <p class="fs-lg pb-2 pb-md-3 pb-lg-0 mb-4 mb-lg-5 text-center ${glitter.htmlGenerate.styleEditor(widget.data.descStyle).class()}"
+            style="${glitter.htmlGenerate.styleEditor(widget.data.descStyle).style()}"
+            >${template.desc}</p>
           <ul class="nav nav-tabs flex-nowrap justify-content-lg-center overflow-auto pb-2 mb-3 mb-lg-4" role="tablist">
             ${glitter.print(function () {
                                     var tmp = "";
@@ -108,7 +114,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                       <div
                         class="card-img-overlay d-flex flex-column align-items-center justify-content-center rounded-3"
                         onclick="${gvc.event(() => {
-                                            ClickEvent.trigger({
+                                            TriggerEvent.trigger({
                                                 gvc, widget, clickEvent: p,
                                             })
                                         })}"
@@ -143,9 +149,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             onCreate: () => {
                                 try {
                                     const imagesLoaded = (window as any).imagesLoaded
-                                    imagesLoaded(document.querySelector('#' + gvc.id(id)), function (instance: any) {
-                                        ($(".isot") as any).isotope({filter: ':not("*")'}), ($(".isot") as any).isotope({filter: "*"});
-                                    });
+                                    setTimeout((()=>{
+                                        imagesLoaded(document.querySelector('#' + gvc.id(id)), function (instance: any) {
+                                            ($(".isot") as any).isotope({filter: ':not("*")'}), ($(".isot") as any).isotope({filter: "*"});
+                                        });
+                                    }),200)
+
                                 } catch (e) {
                                 }
 
@@ -166,6 +175,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.refreshComponent()
                             }
                         }),
+                        glitter.htmlGenerate.styleEditor(widget.data.titleStyle).editor(gvc,()=>{
+                            widget.refreshComponent()
+                        },'標題樣式'),
                         glitter.htmlGenerate.editeText({
                             gvc: gvc,
                             title: `描述`,
@@ -176,20 +188,19 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.refreshComponent()
                             }
                         }),
+                        glitter.htmlGenerate.styleEditor(widget.data.descStyle).editor(gvc,()=>{
+                            widget.refreshComponent()
+                        },'描述樣式'),
                         `<div class="my-2"></div>`,
-                        Editor.toggleExpand({
+                        Editor.arrayItem({
+                            originalArray:widget.data.tag,
                             gvc: gvc,
-                            title: `標籤設定`,
-                            data: widget.data.tabExpand,
-                            innerText: widget.data.tag.map((data: any, index: number) => {
-                                return Editor.toggleExpand({
-                                    gvc: gvc,
-                                    title: Editor.minusTitle(data.title || "標籤" + (index + 1), gvc.event(() => {
-                                        widget.data.tag.splice(index, 1)
-                                        widget.refreshComponent()
-                                    })),
-                                    data: data,
-                                    innerText: gvc.map([
+                            title: '標籤設定',
+                            array: widget.data.tag.map((data: any, index: number) => {
+                                return {
+                                    title: data.title || "標籤" + (index + 1),
+                                    expand: data,
+                                    innerHtml: gvc.map([
                                         glitter.htmlGenerate.editeInput({
                                             gvc: gvc,
                                             title: '標籤名稱',
@@ -211,21 +222,31 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             }
                                         })
                                     ]),
-                                    color: `#004281`
-                                })
-                            }).join(`<div class="my-2"></div>`) + Editor.plusBtn("新增標籤", gvc.event(() => {
-                                widget.data.tag.push({
-                                    style: `background-color:var(--bs-red);`,
-                                    class: ``,
-                                    title: `網頁設計`
-                                })
+                                    minus:gvc.event(()=>{
+                                        widget.data.tag.splice(index,1)
+                                        widget.refreshComponent()
+                                    })
+                                }
+                            }),
+                            expand: widget.data.tabExpand,
+                            plus: {
+                                title: '添加區塊',
+                                event: gvc.event(() => {
+                                    widget.data.tag.push({
+                                        style: `background-color:var(--bs-red);`,
+                                        class: ``,
+                                        title: `網頁設計`
+                                    })
+                                    widget.refreshComponent()
+                                }),
+                            },
+                            refreshComponent:()=>{
                                 widget.refreshComponent()
-                            })),
-                            color: `#0062c0`
+                            }
                         }),
                         `<div class="alert alert-dark p-2 mt-2">
 ${Editor.h3('項目列表')}
-${
+                            ${
                             (() => {
                                 let dragm = {
                                     start: 0,
@@ -302,7 +323,7 @@ ${
                                                     widget.refreshComponent()
                                                 }
                                             }),
-                                            ClickEvent.editer(gvc, widget, data, {
+                                            TriggerEvent.editer(gvc, widget, data, {
                                                 hover: true,
                                                 option: [],
                                                 title: "點擊事件"

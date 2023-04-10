@@ -1,7 +1,7 @@
 import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 
@@ -30,7 +30,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             <a
                                 class="btn-menu animated fadeInUp scrollto"
                                 onclick="${gvc.event(()=>{
-                                ClickEvent.trigger({
+                                TriggerEvent.trigger({
                                     gvc,
                                     widget,
                                     clickEvent: l.link,
@@ -121,7 +121,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             widget.refreshComponent();
                                         },
                                     })}
-                                 ${ClickEvent.editer(gvc, widget, linkData.link, {
+                                 ${TriggerEvent.editer(gvc, widget, linkData.link, {
                                         hover: true,
                                         option: [],
                                         title: "這個按鍵的事件"

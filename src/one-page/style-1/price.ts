@@ -1,7 +1,7 @@
 import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 
@@ -60,7 +60,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 <div class="text-center">
                   <button class="btn btn-dark mt-3 ${(glitter.htmlGenerate as any).styleEditor(price.main.btn).class()}" 
                   onclick="${gvc.event(() => {
-                        ClickEvent.trigger({
+                        TriggerEvent.trigger({
                             gvc,
                             widget,
                             clickEvent: price.main.btn,
@@ -102,7 +102,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             <div class="text-center">
                <button class="btn btn-dark mt-3 ${(glitter.htmlGenerate as any).styleEditor(price.sub.btn).class()}" 
                   onclick="${gvc.event(() => {
-                        ClickEvent.trigger({
+                        TriggerEvent.trigger({
                             gvc,
                             widget,
                             clickEvent: price.sub.btn,
@@ -160,7 +160,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     widget.refreshComponent();
                                 },
                             })}
-                                    ${ClickEvent.editer(gvc, widget, data.btn, {
+                                    ${TriggerEvent.editer(gvc, widget, data.btn, {
                                 hover: true,
                                 option: [],
                                 title: '點擊事件',

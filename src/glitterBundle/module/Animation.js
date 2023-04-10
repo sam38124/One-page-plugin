@@ -1,33 +1,34 @@
 import { Glitter } from "../Glitter.js";
 export class AnimationConfig {
+    inView;
+    outView;
     constructor(inView, outView) {
         this.inView = inView;
         this.outView = outView;
     }
 }
 export class Animation {
-}
-Animation.none = new AnimationConfig((page, finish) => {
-    finish();
-}, (page, finish) => {
-    finish();
-});
-Animation.fade = new AnimationConfig((page, finish) => {
-    page.getElement().css("opacity", "0.1");
-    page.getElement().animate({ "opacity": "1" }, 300);
-    setTimeout(() => {
+    static none = new AnimationConfig((page, finish) => {
         finish();
-    }, 250);
-}, (page, finish) => {
-    page.getElement().addClass('position-fixed');
-    page.getElement().css("opacity", "1.0");
-    page.getElement().animate({ "opacity": "0.1" }, 300);
-    setTimeout(() => {
+    }, (page, finish) => {
         finish();
-    }, 250);
-});
-Animation.rightToLeft = new AnimationConfig((pageConfig, finish) => {
-    Glitter.glitter.addStyle(`.inRightToLeft{
+    });
+    static fade = new AnimationConfig((page, finish) => {
+        page.getElement().css("opacity", "0.1");
+        page.getElement().animate({ "opacity": "1" }, 300);
+        setTimeout(() => {
+            finish();
+        }, 250);
+    }, (page, finish) => {
+        page.getElement().addClass('position-fixed');
+        page.getElement().css("opacity", "1.0");
+        page.getElement().animate({ "opacity": "0.1" }, 300);
+        setTimeout(() => {
+            finish();
+        }, 250);
+    });
+    static rightToLeft = new AnimationConfig((pageConfig, finish) => {
+        Glitter.glitter.addStyle(`.inRightToLeft{
     animation:RightToLeft 0.3s ; /*IE*/
     -moz-animation:RightToLeft 0.3s; /*FireFox*/
     -webkit-animation:RightToLeft 0.3s ; /*Chrome, Safari*/
@@ -47,7 +48,7 @@ Animation.rightToLeft = new AnimationConfig((pageConfig, finish) => {
     from {left:100%;}
     to {left:0%;}
 }`);
-    Glitter.glitter.addStyle(`.inRightToLeftDismiss{
+        Glitter.glitter.addStyle(`.inRightToLeftDismiss{
     animation:RightToLeftD 0.3s ; /*IE*/
     -moz-animation:RightToLeftD 0.3s; /*FireFox*/
     -webkit-animation:RightToLeftD 0.3s ; /*Chrome, Safari*/
@@ -67,20 +68,20 @@ Animation.rightToLeft = new AnimationConfig((pageConfig, finish) => {
     from {left:0%;}
     to {left:100%;}
 }`);
-    pageConfig.getElement().addClass(`inRightToLeft`);
-    setTimeout(() => {
-        pageConfig.getElement().removeClass('inRightToLeft');
-        finish();
-    }, 300);
-}, (pageConfig, finish) => {
-    pageConfig.getElement().addClass('position-fixed');
-    pageConfig.getElement().addClass(`inRightToLeftDismiss`);
-    setTimeout(() => {
-        finish();
-    }, 250);
-});
-Animation.topToBottom = new AnimationConfig((pageConfig, finish) => {
-    Glitter.glitter.addStyle(`.inTopToBottom{
+        pageConfig.getElement().addClass(`inRightToLeft`);
+        setTimeout(() => {
+            pageConfig.getElement().removeClass('inRightToLeft');
+            finish();
+        }, 300);
+    }, (pageConfig, finish) => {
+        pageConfig.getElement().addClass('position-fixed');
+        pageConfig.getElement().addClass(`inRightToLeftDismiss`);
+        setTimeout(() => {
+            finish();
+        }, 250);
+    });
+    static topToBottom = new AnimationConfig((pageConfig, finish) => {
+        Glitter.glitter.addStyle(`.inTopToBottom{
     animation:TopToBtn 0.3s ; /*IE*/
     -moz-animation:TopToBtn 0.3s; /*FireFox*/
     -webkit-animation:TopToBtn 0.3s ; /*Chrome, Safari*/
@@ -100,7 +101,7 @@ Animation.topToBottom = new AnimationConfig((pageConfig, finish) => {
     from {top:-100%;}
     to {top:0%;}
 }`);
-    Glitter.glitter.addStyle(`.TopToBtnDismiss{
+        Glitter.glitter.addStyle(`.TopToBtnDismiss{
     animation:TopToBtnD 0.3s ; /*IE*/
     -moz-animation:TopToBtnD 0.3s; /*FireFox*/
     -webkit-animation:TopToBtnD 0.3s ; /*Chrome, Safari*/
@@ -120,15 +121,16 @@ Animation.topToBottom = new AnimationConfig((pageConfig, finish) => {
     from {top:0%;}
     to {top:-100%;}
 }`);
-    pageConfig.getElement().addClass(`inTopToBottom`);
-    setTimeout(() => {
-        pageConfig.getElement().removeClass('inTopToBottom');
-        finish();
-    }, 300);
-}, (pageConfig, finish) => {
-    pageConfig.getElement().addClass('position-fixed');
-    pageConfig.getElement().addClass(`TopToBtnDismiss`);
-    setTimeout(() => {
-        finish();
-    }, 250);
-});
+        pageConfig.getElement().addClass(`inTopToBottom`);
+        setTimeout(() => {
+            pageConfig.getElement().removeClass('inTopToBottom');
+            finish();
+        }, 300);
+    }, (pageConfig, finish) => {
+        pageConfig.getElement().addClass('position-fixed');
+        pageConfig.getElement().addClass(`TopToBtnDismiss`);
+        setTimeout(() => {
+            finish();
+        }, 250);
+    });
+}

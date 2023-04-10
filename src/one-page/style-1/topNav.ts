@@ -1,7 +1,7 @@
 import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 
@@ -37,6 +37,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 link: '',
                 visible: true,
             };
+            widget.data.logoClick=widget.data.logoClick??{}
             const nav = {
                 logo: widget.data.nav.logo,
                 title: widget.data.nav.title,
@@ -56,7 +57,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         onclick="${gvc.event(() => {
                                 ($('#navbarNav') as any).offcanvas('hide');
                                 if (r.link) {
-                                    ClickEvent.trigger({gvc, widget, clickEvent: r});
+                                    TriggerEvent.trigger({gvc, widget, clickEvent: r});
                                 }
                             })}"
                                         style="cursor:pointer"
@@ -87,9 +88,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     <a
                                         class="navbar-brand fs-lg pe-0 pe-sm-3"
                                         onclick="${gvc.event(() => {
-                        const url = new URL('./', location.href);
-                        url.searchParams.set('page', 'home');
-                        location.href = url.href;
+                        TriggerEvent.trigger({
+                            gvc, widget, clickEvent: widget.data.logoClick
+                        })
                     })}"
                                         style="cursor:pointer"
                                     >
@@ -103,7 +104,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             ? /*html*/ `<button
                                class="btn  d-md-none kv-btn w-25 position-absolute ${glitter.htmlGenerate.styleEditor(nav.btn).class()}"
                                onclick="${gvc.event(() => {
-                                ClickEvent.trigger({
+                                TriggerEvent.trigger({
                                     gvc,
                                     widget,
                                     clickEvent: nav.btn,
@@ -138,7 +139,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             ? /*html*/ `<a
                                class="btn ${nav.btn.class} w-100 mt-2"
                                onclick="${gvc.event(() => {
-                                ClickEvent.trigger({
+                                TriggerEvent.trigger({
                                     gvc,
                                     widget,
                                     clickEvent: nav.btn,
@@ -160,7 +161,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             ? `  <a
                         class="btn ${nav.btn.class} btn-sm fs-sm rounded d-none d-lg-inline-flex "
                         onclick="${gvc.event(() => {
-                                ClickEvent.trigger({
+                                TriggerEvent.trigger({
                                     gvc,
                                     widget,
                                     clickEvent: nav.btn,
@@ -214,6 +215,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             title: '標題設定',
                             data: widget.data.nav.title,
                             innerText: gvc.map([
+                                TriggerEvent.editer(gvc, widget, widget.data.logoClick, {
+                                    hover: true,
+                                    option: [],
+                                    title: "點擊事件"
+                                }),
                                 glitter.htmlGenerate.editeInput({
                                     gvc: gvc,
                                     title: '電腦版標題',
@@ -265,7 +271,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 glitter.htmlGenerate.styleEditor(widget.data.nav.btn).editor(gvc,()=>{
                                     widget.refreshComponent()
                                 },'按鈕設計樣式'),
-                                ClickEvent.editer(gvc, widget, widget.data.nav.btn, {
+                                TriggerEvent.editer(gvc, widget, widget.data.nav.btn, {
                                     hover: true,
                                     option: [],
                                     title: '點擊事件',
@@ -321,7 +327,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                             if (dd.list && dd.list.length > 0) {
                                                                 return ``;
                                                             } else {
-                                                                return ClickEvent.editer(gvc, widget, dd, {
+                                                                return TriggerEvent.editer(gvc, widget, dd, {
                                                                     hover: true,
                                                                     option: [],
                                                                     title: '點擊事件',
