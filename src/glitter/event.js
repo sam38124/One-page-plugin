@@ -203,7 +203,7 @@ TriggerEvent.create(import.meta.url, {
                         "data": JSON.stringify({
                             "domain": widget.data.createAPP,
                             "appName": widget.data.createAPP,
-                            "copyApp": object.appName
+                            "copyApp": 'glitter'
                         })
                     }).then((d2) => {
                         shareDialog.dataLoading({ visible: false });

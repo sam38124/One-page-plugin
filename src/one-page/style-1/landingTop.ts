@@ -15,6 +15,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 i1:`https://liondesign-prd.s3.amazonaws.com/file/252530754/1680594749017-hero-phone-1.png`,
                 i2:`https://liondesign-prd.s3.amazonaws.com/file/252530754/1680594776332-hero-phone-2.png`
             }
+            widget.data.appImage.style1=widget.data.appImage.style1??{}
+            widget.data.appImage.style2=widget.data.appImage.style2??{}
             widget.data.title=widget.data.title??"低成本打造專屬於您的社群、自媒體與電商應用．"
             widget.data.desc= widget.data.desc??`星澄基地 -
                       提供您企業，社團，電商，教育與自媒體應用的最佳解決方案，免後台串接免程式開發，幾項設定步驟就能為您打造屬於您的專屬應用．`
@@ -87,16 +89,20 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                       <div class="ratio ratio-1x1"></div>
                       <img
                         src="${widget.data.appImage.i1}"
-                        class="rellax position-absolute top-0 start-0 zindex-2"
+                        class="rellax position-absolute top-0 start-0 zindex-2 ${glitter.htmlGenerate.styleEditor(widget.data.appImage.style1).class()}
+                        ${(!widget.data.appImage.i1) ? `d-none`:``}"
                         data-rellax-speed="1.6"
                         data-disable-parallax-down="md"
+                        style="${glitter.htmlGenerate.styleEditor(widget.data.appImage.style1).style()}"
                         alt="Phone"
                       />
                       <img
                         src="${widget.data.appImage.i2}"
-                        class="rellax position-absolute top-0 start-0"
+                        class="rellax position-absolute top-0 start-0 ${glitter.htmlGenerate.styleEditor(widget.data.appImage.style2).class()}
+                        ${(!widget.data.appImage.i2) ? `d-none`:``}"
                         data-rellax-speed="2.8"
                         data-disable-parallax-down="md"
+                          style="${glitter.htmlGenerate.styleEditor(widget.data.appImage.style2).style()}"
                         alt="Phone"
                       />
                     </div>
@@ -125,6 +131,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.refreshComponent()
                             }
                         }),
+                        glitter.htmlGenerate.styleEditor(widget.data.appImage.style1).editor(gvc,()=>{
+                            widget.refreshComponent()
+                        },"圖片樣式一"),
                         Editor.uploadImage({
                             gvc: gvc,
                             title: `手機圖片二`,
@@ -134,6 +143,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.refreshComponent()
                             }
                         }),
+                        glitter.htmlGenerate.styleEditor(widget.data.appImage.style2).editor(gvc,()=>{
+                            widget.refreshComponent()
+                        },"圖片樣式二"),
                         glitter.htmlGenerate.editeText({
                             gvc: gvc,
                             title: '標題',
