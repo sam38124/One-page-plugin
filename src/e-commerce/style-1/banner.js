@@ -1,34 +1,28 @@
-import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
-import {Glitter} from "../../glitterBundle/Glitter.js";
-import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
-import {Editor} from "../../editor.js";
-import {ScriptStyle1} from "../script-style-1.js";
-
-Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
+import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+import { ScriptStyle1 } from "../script-style-1.js";
+Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
-        render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+        render: (gvc, widget, setting, hoverID) => {
             return {
-                view:()=>{
-                    ScriptStyle1.initialScript(gvc,widget)
+                view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     let id = glitter.getUUID();
                     let banner = {
-                        dataList:[{ img: ScriptStyle1.getRout("assets/images/banner-04.jpg"), title: "女裝", subtitle: "年度盛宴", btn: { name: "了解更多", link: ["#"] } },
+                        dataList: [{ img: ScriptStyle1.getRout("assets/images/banner-04.jpg"), title: "女裝", subtitle: "年度盛宴", btn: { name: "了解更多", link: ["#"] } },
                             { img: ScriptStyle1.getRout("assets/images/banner-05.jpg"), title: "男裝", subtitle: "2022 春季新款", btn: { name: "了解更多", link: ["#"] } },
                             { img: ScriptStyle1.getRout("assets/images/banner-06.jpg"), title: "背包", subtitle: "最新款式", btn: { name: "了解更多", link: ["#"] } },]
-                    }
-
+                    };
                     return gvc.bindView({
-                        bind:id,
-                        view:()=>{
+                        bind: id,
+                        view: () => {
                             return `
                             <div class="sec-banner bg0">
                               <div class="flex-w flex-c-m">
                                 ${glitter.print(function () {
                                 var tmp = "";
                                 banner.dataList.map((b) => {
-                                    tmp += /*html*/ `
+                                    tmp += `
                                   <div class="size-202 m-lr-auto respon4">
                                     <div class="block1 wrap-pic-w">
                                       <img src="${b.img}" alt="IMG-BANNER" />
@@ -53,18 +47,16 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             })}
                               </div>
                             </div>
-                          `
-                        },divCreate:{},
-                        onCreate:()=>{
-
+                          `;
+                        }, divCreate: {},
+                        onCreate: () => {
                         }
-
-                    })
+                    });
                 },
-                editor:()=>{
-                    return ``
+                editor: () => {
+                    return ``;
                 }
-            }
+            };
         },
-    }
-})
+    };
+});

@@ -281,7 +281,6 @@ class Coza {
             </div>
           </div>
         </footer>
-
         <!-- Back to top -->
         <div class="btn-back-to-top" id="myBtn">
           <span class="symbol-btn-back-to-top">

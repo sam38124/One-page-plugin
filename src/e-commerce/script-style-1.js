@@ -1,19 +1,16 @@
-import {HtmlJson} from "../glitterBundle/plugins/plugin-creater.js";
-
-export class ScriptStyle1{
-    public static   hi: boolean = false;
-    public static  getRout(link: string) {
+export class ScriptStyle1 {
+    static hi = false;
+    static getRout(link) {
         return new URL('./' + link, import.meta.url).href;
     }
-    public static initialScript(gvc: any, widget: HtmlJson) {
+    static initialScript(gvc, widget) {
         if (ScriptStyle1.hi) {
-            return
+            return;
         }
         ScriptStyle1.hi = true;
-
-        (window as any).mode = 'dark';
-        (window as any).root = document.getElementsByTagName('html')[0];
-        (window as any).root.classList.add('dark-mode');
+        window.mode = 'dark';
+        window.root = document.getElementsByTagName('html')[0];
+        window.root.classList.add('dark-mode');
         gvc.addStyleLink([
             ScriptStyle1.getRout("assets/vendor/bootstrap/css/bootstrap.min.css"),
             ScriptStyle1.getRout("assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"),
@@ -29,16 +26,15 @@ export class ScriptStyle1{
             ScriptStyle1.getRout("assets/vendor/perfect-scrollbar/perfect-scrollbar.css"),
             ScriptStyle1.getRout("assets/css/util.css"),
             ScriptStyle1.getRout("assets/css/main.css")
-        ]).then()
+        ]).then();
         gvc.addMtScript(["//cdn.jsdelivr.net/npm/sweetalert2@11"], () => {
             try {
-                widget.refreshComponent()
-            } catch (e) {
+                widget.refreshComponent();
             }
-
+            catch (e) {
+            }
         }, () => {
-
-        })
+        });
         gvc.addMtScript([
             "../glitterBundle/ControlInstance.js",
             "dataAPI.js",
@@ -58,22 +54,21 @@ export class ScriptStyle1{
             "assets/vendor/isotope/isotope.pkgd.min.js",
             "assets/vendor/sweetalert/sweetalert.min.js",
             "assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js",
-        ].map(((dd)=>{
-            return   {src: ScriptStyle1.getRout(dd)}
+        ].map(((dd) => {
+            return { src: ScriptStyle1.getRout(dd) };
         })), () => {
             try {
-                widget.refreshComponent()
-            } catch (e) {
+                widget.refreshComponent();
             }
-
+            catch (e) {
+            }
         }, () => {
-
-        })
+        });
     }
-    public static recursive(r:any, first?:any) {
+    static recursive(r, first) {
         var h = "";
         if (r.list === undefined) {
-            h += /*html*/ `
+            h += `
               <li>
                 <a
                   class="${first ? "nav-link" : ""} scrollto"
@@ -85,13 +80,14 @@ export class ScriptStyle1{
                 </a>
               </li>
             `;
-        } else {
-            h += /*html*/ ` <li class="dropdown">
+        }
+        else {
+            h += ` <li class="dropdown">
           <a class="">${r.title}<i class="bi bi-chevron-${first ? "down" : "right"}"></i></a>
           <ul class="">
-            ${(()=>{
+            ${(() => {
                 var tmp = "";
-                r.list.map((r2:any) => (tmp += ScriptStyle1.recursive(r2)));
+                r.list.map((r2) => (tmp += ScriptStyle1.recursive(r2)));
                 return tmp;
             })()}
            
@@ -100,47 +96,47 @@ export class ScriptStyle1{
         }
         return h;
     }
-    public static  urlIcon(link:string , size:string){
-        if (link == "#"){
+    static urlIcon(link, size) {
+        if (link == "#") {
             if (size == "bi")
                 return `bi bi-link-45deg`;
             else if (size == "bx")
                 return `bx bx-link-alt`;
             else {
-                return ``
+                return ``;
             }
         }
-        let domains = ""
-        if (link.match("https://")){
+        let domains = "";
+        if (link.match("https://")) {
             domains = link.split("https://")[1];
-        }else {
+        }
+        else {
             domains = link.split("http://")[1];
         }
-
-        let socialDomain = ["instagram" , "twitter" , "facebook"]
-        let returnString = ""
-
-        if (domains.split(".")[0]=="www"){
+        let socialDomain = ["instagram", "twitter", "facebook"];
+        let returnString = "";
+        if (domains.split(".")[0] == "www") {
             returnString = domains.split(".")[1];
-        }else {
+        }
+        else {
             returnString = domains.split(".")[0];
         }
-        // let split = url.split(".");
         const isMatch = socialDomain.some((domain) => domain.toLowerCase() === returnString.toLowerCase());
-        if (isMatch){
+        if (isMatch) {
             return `${size} ${size}-${returnString.toLowerCase()}`;
-        }else {
+        }
+        else {
             if (size == "bi")
                 return `bi bi-link-45deg`;
             else if (size == "bx")
                 return `bx bx-link-alt`;
             else {
-                return `fa fa-link`
+                return `fa fa-link`;
             }
         }
-        return ""
+        return "";
     }
-    public static  swapArr(arr: any, index1: number, index2: number) {
+    static swapArr(arr, index1, index2) {
         const data = arr[index1];
         arr.splice(index1, 1);
         arr.splice(index2, 0, data);

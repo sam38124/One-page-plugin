@@ -1,21 +1,15 @@
-import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
-import {Glitter} from "../../glitterBundle/Glitter.js";
-import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
-import {Editor} from "../../editor.js";
-import {ScriptStyle1} from "../script-style-1.js";
-import * as $ from 'jquery';
-
-Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
+import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+import { ScriptStyle1 } from "../script-style-1.js";
+Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
-        render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+        render: (gvc, widget, setting, hoverID) => {
             return {
-                view:()=>{
-                    ScriptStyle1.initialScript(gvc,widget)
-                    let id = glitter.getUUID()
+                view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
+                    let id = glitter.getUUID();
                     let slider = {
-                        dataList:[
+                        dataList: [
                             {
                                 img: ScriptStyle1.getRout("assets/images/slide-03.jpg"),
                                 subtitle: { text: "Men Collection 2018", show: "fadeInDown" },
@@ -35,20 +29,19 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 btn: { text: "Shop Now", link: ["#"], show: "rotateIn" },
                             },
                         ]
-                    }
-                    let load =false;
-
+                    };
+                    let load = false;
                     return gvc.bindView({
-                        bind:id,
-                        view:()=>{
+                        bind: id,
+                        view: () => {
                             return `
                             <section class="section-slide">
                               <div class="wrap-slick1 rs1-slick1">
                                 <div class="slick1">
                                   ${glitter.print(function () {
-                                    var tmp = "";
-                                    slider.dataList.map((s) => {
-                                        tmp += /*html*/ `
+                                var tmp = "";
+                                slider.dataList.map((s) => {
+                                    tmp += `
                                         <div class="item-slick1" style="background-image: url(${s.img})">
                                           <div class="container h-full">
                                             <div class="flex-col-l-m h-full p-t-100 p-b-30">
@@ -73,44 +66,40 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                           </div>
                                         </div>
                                       `;
-                                        });
-                                        return tmp;
-                                    })}
+                                });
+                                return tmp;
+                            })}
                                 </div>
                               </div>
                             </section>
-                          `
-                        },divCreate:{},
-                        onCreate:()=>{
-                            if (!load){
+                          `;
+                        }, divCreate: {},
+                        onCreate: () => {
+                            if (!load) {
                                 gvc.addStyleLink([
                                     ScriptStyle1.getRout("assets/vendor/slick/slick.css"),
-                                ]).then()
+                                ]).then();
                                 gvc.addMtScript([
                                     "assets/vendor/slick/slick.min.js",
                                     "assets/js/slick-custom.js",
-                                ].map(((dd)=>{
-                                    return   {src: ScriptStyle1.getRout(dd)}
+                                ].map(((dd) => {
+                                    return { src: ScriptStyle1.getRout(dd) };
                                 })), () => {
                                     try {
                                         load = true;
-
-                                    } catch (e) {
                                     }
-
+                                    catch (e) {
+                                    }
                                 }, () => {
-
-                                })
+                                });
                             }
-
                         }
-
-                    })
+                    });
                 },
-                editor:()=>{
-                    return ``
+                editor: () => {
+                    return ``;
                 }
-            }
+            };
         },
-    }
-})
+    };
+});

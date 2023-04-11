@@ -1,22 +1,16 @@
-import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
-import {Glitter} from "../../glitterBundle/Glitter.js";
-import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
-import {Editor} from "../../editor.js";
-import {ScriptStyle1} from "../script-style-1.js";
-
-Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
+import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+import { ScriptStyle1 } from "../script-style-1.js";
+Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
-        render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-
+        render: (gvc, widget, setting, hoverID) => {
             return {
-                view:()=>{
-                    ScriptStyle1.initialScript(gvc,widget)
-                    let id = glitter.getUUID()
+                view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
+                    let id = glitter.getUUID();
                     let nav = {
                         logo: ScriptStyle1.getRout("assets/images/icons/logo-01.png"),
-                        menuList:{
+                        menuList: {
                             menu: [
                                 {
                                     name: "MEN",
@@ -70,17 +64,16 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 { name: "CONTACT", link: "contact" },
                             ]
                         },
-
-                    }
+                    };
                     let sidebarData = {
-                        mapList:{map: [
+                        mapList: { map: [
                                 { name: "首頁", link: ["#"] },
                                 { name: "我的帳戶", link: ["#"] },
                                 { name: "許願清單", link: ["#"] },
                                 { name: "優惠促銷", link: ["#"] },
                                 { name: "門市據點", link: ["#"] },
                                 { name: "常見問題", link: ["#"] },
-                            ],},
+                            ], },
                         gallery: {
                             title: "COZA 商場",
                             list: [
@@ -99,12 +92,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             title: "關於我們",
                             desc: "優良的公司文化，與創新彈性的工作環境，我們的員工喜歡萊恩設計的美式文化管理方針，以及富有創造力與彈性的工作環境，同時在這優良的傳統中，持續將產品優化，是我們共同維護的榮譽",
                         },
-                    }
-                    function hotSpan(boo:any) {
+                    };
+                    function hotSpan(boo) {
                         return boo ? `<span class="badge badge-pill bg-danger ml-1" style="position: relative;bottom: 4px">HOT</span>` : ``;
                     }
-                    function routeMenu(obj:any) {
-                        return /*html*/ ` 
+                    function routeMenu(obj) {
+                        return ` 
                         <a onclick="" style="cursor:pointer">
                           ${obj.name + hotSpan(obj.hot)}
                         </a>`;
@@ -113,13 +106,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         $(".js-show-cart").on("click", function () {
                             $(".js-panel-cart").addClass("show-header-cart");
                         });
-
                         $(".js-hide-cart").on("click", function () {
                             $(".js-panel-cart").removeClass("show-header-cart");
                         });
                     }
                     function sidebar() {
-                        return /*html*/ `
+                        return `
                         <!-- Sidebar -->
                         <aside class="wrap-sidebar js-sidebar">
                           <div class="s-full js-hide-sidebar"></div>
@@ -134,35 +126,35 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             <div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
                               <ul class="sidebar-link w-full">
                                 ${glitter.print(function () {
-                                    var tmp = "";
-                                    sidebarData.mapList.map.map((m) => {
-                                        tmp += /*html*/ `
+                            var tmp = "";
+                            sidebarData.mapList.map.map((m) => {
+                                tmp += `
                                           <li class="p-b-13">
                                             <a class="stext-102 cl2 hov-cl1 trans-04" onclick="" style="cursor:pointer">
                                               ${m.name}
                                             </a>
                                           </li>
                                         `;
-                                    });
-                                    return tmp;
-                                })}
+                            });
+                            return tmp;
+                        })}
                               </ul>
                 
                               <div class="sidebar-gallery w-full p-tb-30">
                                 <span class="mtext-101 cl5"> ${sidebarData.gallery.title} </span>
                                 <div class="flex-w flex-sb p-t-36 gallery-lb">
                                   ${glitter.print(function () {
-                                    var tmp = "";
-                                    sidebarData.gallery.list.map((l) => {
-                                    tmp += /*html*/ `
+                            var tmp = "";
+                            sidebarData.gallery.list.map((l) => {
+                                tmp += `
                                         <!-- item gallery sidebar -->
                                     <div class="wrap-item-gallery m-b-10">
                                       <a class="item-gallery bg-img1" href="${l}" data-lightbox="gallery" style="background-image: url('${l}')"></a>
                                     </div>
                                   `;
-                                        });
-                                        return tmp;
-                                    })}
+                            });
+                            return tmp;
+                        })}
                                 </div>
                               </div>
                 
@@ -175,13 +167,13 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         </aside>
                       `;
                     }
-                    function menuShow(menu:any, dev?:any) {
+                    function menuShow(menu, dev) {
                         var temp = "";
-                        menu.map((m:any) => {
+                        menu.map((m) => {
                             switch (dev) {
                                 case "mobile":
                                     if (m.list !== undefined) {
-                                        temp += /*html*/ `<li>
+                                        temp += `<li>
                                           ${routeMenu(m)}
                                           <ul class="sub-menu-m text-dark">
                                             ${menuShow(m.list)}
@@ -190,21 +182,22 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             <i class="fa fa-angle-right" aria-hidden="true"></i>
                                           </span>
                                         </li>`;
-                                    } else {
-                                        temp += /*html*/ `<li>${routeMenu(m)}</li>`;
+                                    }
+                                    else {
+                                        temp += `<li>${routeMenu(m)}</li>`;
                                     }
                                     break;
-
                                 default:
                                     if (m.list !== undefined) {
-                                        temp += /*html*/ `<li>
+                                        temp += `<li>
                                           ${routeMenu(m)}
                                           <ul class="sub-menu">
                                             ${menuShow(m.list)}
                                           </ul>
                                         </li>`;
-                                    } else {
-                                        temp += /*html*/ `<li>${routeMenu(m)}</li>`;
+                                    }
+                                    else {
+                                        temp += `<li>${routeMenu(m)}</li>`;
                                     }
                                     break;
                             }
@@ -212,8 +205,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         return temp;
                     }
                     function cart() {
-                        // glitter.cartData === undefined && (glitter.cartData = []);
-                        return /*html*/ `
+                        return `
                         <!-- Cart -->
                         <div class="wrap-header-cart js-panel-cart">
                           <div class="s-full js-hide-cart"></div>
@@ -228,30 +220,15 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 
                             <div class="header-cart-content flex-w js-pscroll" id="cartPage">
                               ${gvc.bindView({
-                                bind: "cartPage",
-                                view: function () {
-                                    var total = 0;
-                                    return /*html*/ `
+                            bind: "cartPage",
+                            view: function () {
+                                var total = 0;
+                                return `
                                     <ul class="header-cart-wrapitem w-full">
                                       ${glitter.print(function () {
-                                            var tmp = "";
-                                            
-                                          //           glitter.cartData.map((p) => {
-                                          //               total += p.count * p.price;
-                                          //               tmp += /*html*/ `
-                                          //   <li class="header-cart-item flex-w flex-t m-b-12">
-                                          //     <div class="header-cart-item-img">
-                                          //       <img src="${p.img}" alt="IMG" />
-                                          //     </div>
-                                          //     <div class="header-cart-item-txt p-t-8">
-                                          //       <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04"> ${p.name} </a>
-                                          //       <span class="header-cart-item-info"> ${p.count} x $${funnel.addQuantile(p.price)} </span>
-                                          //     </div>
-                                          //   </li>
-                                          // `;
-                                          //           });
-                                            return tmp;
-                                        })}
+                                    var tmp = "";
+                                    return tmp;
+                                })}
                                     </ul>
                                     <div class="w-full">
                                       <div class="header-cart-total w-full p-tb-40">小記: $${total.toLocaleString()}</div>
@@ -274,17 +251,16 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                       </div>
                                     </div>
                                   `;
-                                    },
-                                })}
+                            },
+                        })}
                             </div>
                           </div>
                         </div>
                       `;
                     }
-
                     return gvc.bindView({
-                        bind:id,
-                        view:()=>{
+                        bind: id,
+                        view: () => {
                             return `
                             <header class="header-v2">
                               <!-- Header desktop -->
@@ -313,10 +289,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     
                                       <div class="flex-c-m h-full p-l-18 p-r-25 bor5" id="cartNoti">
                                         ${gvc.bindView({
-                                            bind: "cartNoti",
-                                            view: function () {
-                                                var html = "";
-                                                html += /*html*/ `
+                                bind: "cartNoti",
+                                view: function () {
+                                    var html = "";
+                                    html += `
                                                       <div
                                                         class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
                                                         data-notify="0"
@@ -324,10 +300,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                         <i class="zmdi zmdi-shopping-cart"></i>
                                                       </div>
                                                     `;
-                                                return html;
-                                            },
-                                            onCreate: () => {showCartJS()}
-                                        })}
+                                    return html;
+                                },
+                                onCreate: () => { showCartJS(); }
+                            })}
                                       </div>
                     
                                       <div class="flex-c-m h-full p-lr-19">
@@ -391,110 +367,87 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                   ${cart()}
                                   ${sidebar()}
                             </header>                          
-                            `
-                        },divCreate:{},
-                        onCreate:()=>{
-                            function FixedHeader(){
-                                /*==================================================================
-                          [ Fixed Header ]*/
+                            `;
+                        }, divCreate: {},
+                        onCreate: () => {
+                            function FixedHeader() {
                                 let headerDesktop = $(".container-menu-desktop");
                                 let wrapMenu = $(".wrap-menu-desktop");
                                 let posWrapHeader = 0;
                                 if ($(".top-bar").length > 0) {
                                     let posWrapHeader = $(".top-bar").height();
                                 }
-
-                                // @ts-ignore
-                                if ($(window)!.scrollTop() > posWrapHeader) {
+                                if ($(window).scrollTop() > posWrapHeader) {
                                     $(headerDesktop).addClass("fix-menu-desktop");
                                     $(wrapMenu).css("top", 0);
-                                } else {
+                                }
+                                else {
                                     $(headerDesktop).removeClass("fix-menu-desktop");
-                                    // @ts-ignore
                                     $(wrapMenu).css("top", posWrapHeader - $(this).scrollTop());
                                 }
-
                                 $(window).on("scroll", function () {
-                                    // @ts-ignore
                                     if ($(this).scrollTop() > posWrapHeader) {
                                         $(headerDesktop).addClass("fix-menu-desktop");
                                         $(wrapMenu).css("top", 0);
-                                    } else {
+                                    }
+                                    else {
                                         $(headerDesktop).removeClass("fix-menu-desktop");
-                                        // @ts-ignore
                                         $(wrapMenu).css("top", posWrapHeader - $(this).scrollTop());
                                     }
                                 });
                             }
-                            function MenuMobile(){
-                                /*==================================================================
-                                  [ Menu mobile ]*/
+                            function MenuMobile() {
                                 $(".btn-show-menu-mobile").on("click", function () {
                                     $(this).toggleClass("is-active");
                                     $(".menu-mobile").slideToggle();
                                 });
-
                                 var arrowMainMenu = $(".arrow-main-menu-m");
-
                                 for (var i = 0; i < arrowMainMenu.length; i++) {
                                     $(arrowMainMenu[i]).on("click", function () {
                                         $(this).parent().find(".sub-menu-m").slideToggle();
                                         $(this).toggleClass("turn-arrow-main-menu-m");
                                     });
                                 }
-
                                 $(window).resize(function () {
-                                    // @ts-ignore
                                     if ($(window).width() >= 992) {
                                         if ($(".menu-mobile").css("display") == "block") {
                                             $(".menu-mobile").css("display", "none");
                                             $(".btn-show-menu-mobile").toggleClass("is-active");
                                         }
-
                                         $(".sub-menu-m").each(function () {
                                             if ($(this).css("display") == "block") {
-
                                                 $(this).css("display", "none");
                                                 $(arrowMainMenu).removeClass("turn-arrow-main-menu-m");
                                             }
                                         });
                                     }
                                 });
-
-                          }
-                            function hideModalSearch(){
-                                /*==================================================================
-                              [ Show / hide modal search ]*/
+                            }
+                            function hideModalSearch() {
                                 $(".js-show-modal-search").on("click", function () {
                                     $(".modal-search-header").addClass("show-modal-search");
                                     $(this).css("opacity", "0");
                                 });
-
                                 $(".js-hide-modal-search").on("click", function () {
                                     $(".modal-search-header").removeClass("show-modal-search");
                                     $(".js-show-modal-search").css("opacity", "1");
                                 });
-
                                 $(".container-search-header").on("click", function (e) {
                                     e.stopPropagation();
                                 });
                             }
-                            function showCart(){
+                            function showCart() {
                                 $(".js-show-cart").on("click", function () {
                                     $(".js-panel-cart").addClass("show-header-cart");
                                 });
-
                                 $(".js-hide-cart").on("click", function () {
                                     $(".js-panel-cart").removeClass("show-header-cart");
                                 });
                             }
-                            function showSlider(){
-                                /*==================================================================
-                                  [ Cart ]*/
+                            function showSlider() {
                                 $(".js-show-sidebar").on("click", function () {
                                     $(".js-sidebar").addClass("show-sidebar");
                                 });
-
                                 $(".js-hide-sidebar").on("click", function () {
                                     $(".js-sidebar").removeClass("show-sidebar");
                                 });
@@ -504,14 +457,13 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             hideModalSearch();
                             showSlider();
                             showCart();
-                      }
-
-                  })
-              },
-              editor:()=>{
-                  return ``
-              }
-          }
-      },
-  }
-})
+                        }
+                    });
+                },
+                editor: () => {
+                    return ``;
+                }
+            };
+        },
+    };
+});

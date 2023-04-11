@@ -1,20 +1,15 @@
-import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
-import {Glitter} from "../../glitterBundle/Glitter.js";
-import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
-import {Editor} from "../../editor.js";
-import {ScriptStyle1} from "../script-style-1.js";
-
-Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
+import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+import { ScriptStyle1 } from "../script-style-1.js";
+Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
-        render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+        render: (gvc, widget, setting, hoverID) => {
             return {
-                view:()=>{
-                    ScriptStyle1.initialScript(gvc,widget)
-                    let id = glitter.getUUID()
+                view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
+                    let id = glitter.getUUID();
                     let footer = {
-                        mapList:{
+                        mapList: {
                             map: [
                                 {
                                     title: "類別",
@@ -45,38 +40,36 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             btn: { name: "確認送出", link: ["#"] },
                         },
                         payment: ["paypal", "visa", "mastercard"],
-                    }
-                    function copyRight(color?:any){
-                        return /*html*/ `Copyright &copy; ${new Date().getFullYear()}
+                    };
+                    function copyRight(color) {
+                        return `Copyright &copy; ${new Date().getFullYear()}
                         <a href="https://squarestudio.tw" target="_blank" rel="noreferrer noopener" style="cursor:pointer;color:${color ? color : `ivory`}"
                           >Lion Design</a
                         >
                         All Rights Reserved.`;
                     }
-
                     return gvc.bindView({
-                        bind:id,
-                        view:()=>{
+                        bind: id,
+                        view: () => {
                             return `
                             <!-- Footer -->
                             <footer class="bg3 p-t-75 p-b-32">
                               <div class="container">
                                 <div class="row">
                                   ${glitter.print(function () {
-                                    var tmp = "";
-                                    Object.keys(footer).map((f) => {
-                                    
-                                        switch (f) {
-                                            case "mapList":
-                                                footer[f]["map"].map((m) => {
-                                                    tmp += /*html*/ `
+                                var tmp = "";
+                                Object.keys(footer).map((f) => {
+                                    switch (f) {
+                                        case "mapList":
+                                            footer[f]["map"].map((m) => {
+                                                tmp += `
                                                       <div class="col-sm-6 col-lg-3 p-b-50">
                                                         <h4 class="stext-301 cl0 p-b-30">${m.title}</h4>
                                                         <ul>
                                                           ${glitter.print(function () {
-                                                            var tmp = "";
-                                                            m.list.map((l) => {
-                                                                tmp += /*html*/ `
+                                                    var tmp = "";
+                                                    m.list.map((l) => {
+                                                        tmp += `
                                                                 <li class="p-b-10">
                                                                   <a
                                                                     class="stext-107 cl7 hov-cl1 trans-04"
@@ -87,30 +80,30 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                                   </a>
                                                                 </li>
                                                               `;
-                                                                });
-                                                            return tmp;
-                                                          })}
+                                                    });
+                                                    return tmp;
+                                                })}
                                                         </ul>
                                                       </div>
                                                     `;
-                                                });
-                                                break;
-                                            case "info":
-                                                tmp += /*html*/ `
+                                            });
+                                            break;
+                                        case "info":
+                                            tmp += `
                                                 <div class="col-sm-6 col-lg-3 p-b-50">
                                                     <h4 class="stext-301 cl0 p-b-30">${footer[f].title}</h4>
                                                     <p class="stext-107 cl7 size-201">${footer[f].desc}</p>
                                                     <div class="p-t-27">
                                                       ${glitter.print(function () {
-                                                        var tmp = "";
-                                                        var iconList = {
-                                                            facebook: "fa fa-facebook",
-                                                            instagram: "fa fa-instagram",
-                                                            pinterest: "fa fa-pinterest-p",
-                                                            link: "fa fa-link",
-                                                        };
-                                                        footer[f].link.map((l) => {
-                                                            tmp += /*html*/ `
+                                                var tmp = "";
+                                                var iconList = {
+                                                    facebook: "fa fa-facebook",
+                                                    instagram: "fa fa-instagram",
+                                                    pinterest: "fa fa-pinterest-p",
+                                                    link: "fa fa-link",
+                                                };
+                                                footer[f].link.map((l) => {
+                                                    tmp += `
                                                             <a
                                                               class="fs-18 cl7 hov-cl1 trans-04 m-r-16 text-white"
                                                               onclick=""
@@ -120,14 +113,14 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                               <i class="${ScriptStyle1.urlIcon(l, 'fa')}"></i>
                                                             </a>
                                                           `;
-                                                        });
-                                                        return tmp;
-                                                    })}
+                                                });
+                                                return tmp;
+                                            })}
                                             </div>
                                           </div>`;
-                                                break;
-                                            case "news":
-                                                tmp += /*html*/ `<div class="col-sm-6 col-lg-3 p-b-50">
+                                            break;
+                                        case "news":
+                                            tmp += `<div class="col-sm-6 col-lg-3 p-b-50">
                                                     <h4 class="stext-301 cl0 p-b-30">${footer[f].title}</h4>
                                                     <form>
                                                       <div class="wrap-input1 w-full p-b-4">
@@ -147,29 +140,29 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                     </form>
                                                   </div>`;
                                             break;
-                                            }
-                                        });
-                                    return tmp;
-                                  })}
+                                    }
+                                });
+                                return tmp;
+                            })}
                                 </div>
                     
                                 <div class="p-t-40">
                                   <div class="flex-c-m flex-w p-b-18">
                                     ${glitter.print(function () {
-                                        return ``
-                                        let tmp = "";
-                                        let piList:any = {
-                                            paypal: ScriptStyle1.getRout("assets/images/icons/icon-pay-01.png"),
-                                            visa: ScriptStyle1.getRout("assets/images/icons/icon-pay-02.png"),
-                                            mastercard: ScriptStyle1.getRout("assets/images/icons/icon-pay-03.png"),
-                                            default: ScriptStyle1.getRout("assets/images/icons/icon-pay-def.png"),
-                                        };
-                                        footer.payment.map((p) => {
-                                            var card = Object.keys(piList).find((y) => y == p) ? piList[p] : piList.default;
-                                            tmp += /*html*/ `<a class="m-all-1"><img src="${card}" alt="ICON-PAY" /></a>`;
-                                        });
-                                        return tmp;
-                                    })}
+                                return ``;
+                                let tmp = "";
+                                let piList = {
+                                    paypal: ScriptStyle1.getRout("assets/images/icons/icon-pay-01.png"),
+                                    visa: ScriptStyle1.getRout("assets/images/icons/icon-pay-02.png"),
+                                    mastercard: ScriptStyle1.getRout("assets/images/icons/icon-pay-03.png"),
+                                    default: ScriptStyle1.getRout("assets/images/icons/icon-pay-def.png"),
+                                };
+                                footer.payment.map((p) => {
+                                    var card = Object.keys(piList).find((y) => y == p) ? piList[p] : piList.default;
+                                    tmp += `<a class="m-all-1"><img src="${card}" alt="ICON-PAY" /></a>`;
+                                });
+                                return tmp;
+                            })}
                                   </div>
                     
                                   <p class="stext-107 cl6 txt-center">${copyRight()}</p>
@@ -177,18 +170,16 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                               </div>
                             </footer>
                             
-                           `
-                        },divCreate:{},
-                        onCreate:()=>{
-
+                           `;
+                        }, divCreate: {},
+                        onCreate: () => {
                         }
-
-                    })
+                    });
                 },
-                editor:()=>{
-                    return ``
+                editor: () => {
+                    return ``;
                 }
-            }
+            };
         },
-    }
-})
+    };
+});

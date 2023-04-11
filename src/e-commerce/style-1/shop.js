@@ -1,20 +1,15 @@
-import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
-import {Glitter} from "../../glitterBundle/Glitter.js";
-import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
-import {Editor} from "../../editor.js";
-import {ScriptStyle1} from "../script-style-1.js";
-
-Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
+import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+import { ScriptStyle1 } from "../script-style-1.js";
+Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
-        render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+        render: (gvc, widget, setting, hoverID) => {
             return {
-                view:()=>{
-                    ScriptStyle1.initialScript(gvc,widget)
-                    let id = glitter.getUUID()
-                    let shop= {
-                        tagList:{
+                view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
+                    let id = glitter.getUUID();
+                    let shop = {
+                        tagList: {
                             tag: [
                                 { name: "外套", tag: "a" },
                                 { name: "襯衫", tag: "b" },
@@ -22,8 +17,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 { name: "飾品", tag: "d" },
                                 { name: "布偶", tag: "e" },
                             ]
-                        }
-                        ,
+                        },
                         filter: {
                             sort: ["lastest", "price_low", "price_high"],
                             color: [
@@ -36,9 +30,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 { name: "藍色", code: "#5278D6" },
                                 { name: "橘色", code: "#F59A17" },
                             ],
-                            // categories: [],
                         },
-                        productList:{
+                        productList: {
                             product: [
                                 {
                                     id: 0,
@@ -509,46 +502,37 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 },
                             ]
                         },
-                    }
-
-                    // Function
+                    };
                     function quickViewJS() {
                         $(".wrap-slick3").each(function () {
-
                             $(this)
                                 .find(".slick3")
-                                // @ts-ignore
                                 .slick({
-                                    slidesToShow: 1,
-                                    slidesToScroll: 1,
-                                    fade: true,
-                                    infinite: true,
-                                    autoplay: false,
-                                    autoplaySpeed: 6000,
-
-                                    arrows: true,
-                                    appendArrows: $(this).find(".wrap-slick3-arrows"),
-                                    prevArrow: '<button class="arrow-slick3 prev-slick3"><i class="fa fa-angle-left" aria-hidden="true"></i></button>',
-                                    nextArrow: '<button class="arrow-slick3 next-slick3"><i class="fa fa-angle-right" aria-hidden="true"></i></button>',
-
-                                    dots: true,
-                                    appendDots: $(this).find(".wrap-slick3-dots"),
-                                    dotsClass: "slick3-dots",
-                                    customPaging: function (slick:any, index:any) {
-                                        var portrait = $(slick.$slides[index]).data("thumb");
-                                        return '<img src=" ' + portrait + ' "/><div class="slick3-dot-overlay"></div>';
-                                    },
-                                });
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                fade: true,
+                                infinite: true,
+                                autoplay: false,
+                                autoplaySpeed: 6000,
+                                arrows: true,
+                                appendArrows: $(this).find(".wrap-slick3-arrows"),
+                                prevArrow: '<button class="arrow-slick3 prev-slick3"><i class="fa fa-angle-left" aria-hidden="true"></i></button>',
+                                nextArrow: '<button class="arrow-slick3 next-slick3"><i class="fa fa-angle-right" aria-hidden="true"></i></button>',
+                                dots: true,
+                                appendDots: $(this).find(".wrap-slick3-dots"),
+                                dotsClass: "slick3-dots",
+                                customPaging: function (slick, index) {
+                                    var portrait = $(slick.$slides[index]).data("thumb");
+                                    return '<img src=" ' + portrait + ' "/><div class="slick3-dot-overlay"></div>';
+                                },
+                            });
                         });
-
                         $(".js-select2").each(function () {
-                            // @ts-ignore
                             $(this).select2({
                                 minimumResultsForSearch: 20,
                                 dropdownParent: $(this).next(".dropDownSelect2"),
                             });
                         });
-
                         $(".btn-num-product-down").on("click", function () {
                             var numProduct = Number($(this).next().val());
                             if (numProduct > 0)
@@ -556,14 +540,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     .next()
                                     .val(numProduct - 1);
                         });
-
                         $(".btn-num-product-up").on("click", function () {
                             var numProduct = Number($(this).prev().val());
                             $(this)
                                 .prev()
                                 .val(numProduct + 1);
                         });
-
                         $(".color-select").on("click", function () {
                             $(".color-select").each(function () {
                                 $(this).removeClass("color-selected bor20");
@@ -571,12 +553,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             $(this).addClass("color-selected bor20");
                         });
                     }
-
                     function addcart() {
                         $(".js-addcart-detail").each(function () {
                             var nameProduct = $(this).parent().parent().parent().parent().find(".js-name-detail").html();
                             $(this).on("click", function () {
-                                // @ts-ignore
                                 swal(nameProduct, "已加入購物車！", "success");
                                 var addProd = {
                                     id: $(".dataID").html(),
@@ -587,16 +567,13 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     count: $(".num-product").val(),
                                     price: $(".price-selected").data("price"),
                                 };
-                                // glitter.cartData.push(addProd);
-                                gvc.notifyDataChange([`cartNoti`,'cartPage']);
-
+                                gvc.notifyDataChange([`cartNoti`, 'cartPage']);
                             });
                         });
                     }
-
                     return gvc.bindView({
-                        bind:id,
-                        view:()=>{
+                        bind: id,
+                        view: () => {
                             return `
                             <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
                               <div class="overlay-modal1 js-hide-modal1"></div>
@@ -609,13 +586,13 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     
                                   <div class="row" id="quickView">
                                     ${gvc.bindView({
-                                        bind: "quickView",
-                                        view: () => (``),
-                                        onCreate: () => {
-                                            quickViewJS() 
-                                            addcart()
-                                        }
-                                    })}
+                                bind: "quickView",
+                                view: () => (``),
+                                onCreate: () => {
+                                    quickViewJS();
+                                    addcart();
+                                }
+                            })}
                                   </div>
                                 </div>
                               </div>
@@ -627,14 +604,14 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                   <div class="flex-w flex-l-m filter-tope-group m-tb-10">
                                     <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">所有商品</button>
                                     ${glitter.print(function () {
-                                        var tmp = "";
-                                        shop.tagList.tag.map((t) => {
-                                            tmp += /*html*/ `<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".${t.tag}">
+                                var tmp = "";
+                                shop.tagList.tag.map((t) => {
+                                    tmp += `<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".${t.tag}">
                                           ${t.name}
                                         </button>`;
-                                            });
-                                            return tmp;
-                                        })}
+                                });
+                                return tmp;
+                            })}
                                   </div>
                     
                                   <!-- Button -->
@@ -670,26 +647,25 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                   <div class="dis-none panel-filter w-full p-t-10">
                                     <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
                                       ${glitter.print(function () {
-                                        var tmp = "";
-                                        var theTitle:any = {
-                                            sort: "排序",
-                                            categories: "類別",
-                                            color: "顏色",
-                                        };
-                                        Object.keys(shop.filter).map((t, i) => {
-                                            tmp += /*html*/ ` <div class="filter-col3 p-r-15 p-b-27">
+                                var tmp = "";
+                                var theTitle = {
+                                    sort: "排序",
+                                    categories: "類別",
+                                    color: "顏色",
+                                };
+                                Object.keys(shop.filter).map((t, i) => {
+                                    tmp += ` <div class="filter-col3 p-r-15 p-b-27">
                                             <div class="mtext-102 cl2 p-b-15">${theTitle[t]}</div>
                                             <ul class="filter-det fil${i}">
                                               ${glitter.print(function () {
-                                                            var tmp = "";
-                                                    
-                                                    return tmp;
-                                                })}
+                                        var tmp = "";
+                                        return tmp;
+                                    })}
                                             </ul>
                                           </div>`;
-                                            });
-                                            return tmp;
-                                        })}
+                                });
+                                return tmp;
+                            })}
                                     </div>
                                   </div>
                                 </div>
@@ -697,25 +673,24 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 <!-- Product grid -->
                                 <div class="row isotope-grid">
                                   ${glitter.print(function () {
-                                    var tmp = "";
-                                    shop.productList.product.map((p) => {
-                                        tmp += /*html*/ `
+                                var tmp = "";
+                                shop.productList.product.map((p) => {
+                                    tmp += `
                                         <div
                                           class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${glitter.print(function () {
-                                                var tmp = "";
-                                                p.tag.map((t) => (tmp += t + ` `)), p.color.map((t) => (tmp += t.replace("#", "") + ` `));
-                                                return tmp;
-                                            })}"
+                                        var tmp = "";
+                                        p.tag.map((t) => (tmp += t + ` `)), p.color.map((t) => (tmp += t.replace("#", "") + ` `));
+                                        return tmp;
+                                    })}"
                                         >
                                           <div class="d-none">
                                             ${glitter.print(function () {
-                                                var tmp = "";
-                                                Object.keys(p).map((k) => {
-                                                    return``
-                                                    // tmp += /*html*/ typeof k === "string" ? `<a class="${k}-item">${p[k]}</a>` : ``;
-                                                });
-                                                return tmp;
-                                            })}
+                                        var tmp = "";
+                                        Object.keys(p).map((k) => {
+                                            return ``;
+                                        });
+                                        return tmp;
+                                    })}
                                           </div>
                                           <!-- Block2 -->
                                           <div class="block2">
@@ -751,9 +726,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                           </div>
                                         </div>
                                       `;
-                                        });
-                                        return tmp;
-                                    })}
+                                });
+                                return tmp;
+                            })}
                                 </div>
                     
                                 <!-- Load more -->
@@ -762,71 +737,53 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 </div>
                               </div>
                             </section>
-                           `
-                        },divCreate:{},
-                        onCreate:()=>{
+                           `;
+                        }, divCreate: {},
+                        onCreate: () => {
                             gvc.addMtScript([
                                 "assets/vendor/isotope/isotope.pkgd.min.js",
                                 "assets/vendor/animsition/js/animsition.min.js",
-                            ].map(((dd)=>{
-                                return   {src: ScriptStyle1.getRout(dd)}
+                            ].map(((dd) => {
+                                return { src: ScriptStyle1.getRout(dd) };
                             })), () => {
                                 try {
                                     (function ($) {
-                                        // USE STRICT
                                         ("use strict");
-
-                                        /*==================================================================
-                                          [ Show / hide modal search ]*/
                                         $(".js-show-modal-search").on("click", function () {
                                             $(".modal-search-header").addClass("show-modal-search");
                                             $(this).css("opacity", "0");
                                         });
-
                                         $(".js-hide-modal-search").on("click", function () {
                                             $(".modal-search-header").removeClass("show-modal-search");
                                             $(".js-show-modal-search").css("opacity", "1");
                                         });
-
                                         $(".container-search-header").on("click", function (e) {
                                             e.stopPropagation();
                                         });
-
-                                        /*==================================================================
-                                          [ Isotope ]*/
                                         var $topeContainer = $(".isotope-grid");
                                         var $filter = $(".filter-tope-group");
                                         var $filter_det = $(".filter-det");
-
-                                        // filter items on button click
                                         $filter.each(function () {
                                             $filter.on("click", "button", function () {
                                                 var filterValue = $(this).attr("data-filter");
-                                                // @ts-ignore
                                                 $topeContainer.isotope({ filter: filterValue });
                                             });
                                         });
-
                                         $filter_det.each(function () {
                                             $filter_det.on("click", "button", function () {
                                                 var fi = $(this).attr("data-filter");
                                                 var sb = $(this).attr("data-sort-by");
                                                 var as = $(this).attr("data-sort-ascend") === "true";
-
                                                 if (fi !== undefined) {
-                                                    // @ts-ignore
                                                     $topeContainer.isotope({ filter: fi });
-                                                } else if (sb !== undefined) {
-                                                    // @ts-ignore
+                                                }
+                                                else if (sb !== undefined) {
                                                     $topeContainer.isotope({ sortBy: sb, sortAscending: as });
                                                 }
                                             });
                                         });
-
-                                        // init Isotope
                                         $(window).on("load", function () {
                                             var $grid = $topeContainer.each(function () {
-                                                // @ts-ignore
                                                 $(this).isotope({
                                                     itemSelector: ".isotope-item",
                                                     layoutMode: "fitRows",
@@ -837,16 +794,14 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                     },
                                                     getSortData: {
                                                         price: ".price-item parseInt",
-                                                        date: function (e:any) {
+                                                        date: function (e) {
                                                             return Date.parse($(e).find(".onAir-item").text());
                                                         },
                                                     },
                                                 });
                                             });
                                         });
-
                                         var isotopeButton = $(".filter-tope-group button");
-
                                         $(isotopeButton).each(function () {
                                             $(this).on("click", function () {
                                                 for (var i = 0; i < isotopeButton.length; i++) {
@@ -856,7 +811,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                 $(this).addClass("how-active1");
                                             });
                                         });
-
                                         $(".filter-det").map((i) => {
                                             var detButton = $(`.fil${i} button`);
                                             $(detButton).each(function () {
@@ -864,51 +818,39 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                     for (var i = 0; i < detButton.length; i++) {
                                                         $(detButton[i]).removeClass("how-active1");
                                                     }
-
                                                     $(this).addClass("how-active1");
                                                 });
                                             });
                                         });
-
-                                        /*==================================================================
-                                          [ Filter / Search product ]*/
                                         $(".js-show-filter").on("click", function () {
                                             $(this).toggleClass("show-filter");
                                             $(".panel-filter").slideToggle(400);
-
                                             if ($(".js-show-search").hasClass("show-search")) {
                                                 $(".js-show-search").removeClass("show-search");
                                                 $(".panel-search").slideUp(400);
                                             }
                                         });
-
                                         $(".js-show-search").on("click", function () {
                                             $(this).toggleClass("show-search");
                                             $(".panel-search").slideToggle(400);
-
                                             if ($(".js-show-filter").hasClass("show-filter")) {
                                                 $(".js-show-filter").removeClass("show-filter");
                                                 $(".panel-filter").slideUp(400);
                                             }
                                         });
-
                                     })(jQuery);
-
-                                } catch (e) {
                                 }
-
+                                catch (e) {
+                                }
                             }, () => {
-
-                            })
-
+                            });
                         }
-
-                    })
+                    });
                 },
-                editor:()=>{
-                    return ``
+                editor: () => {
+                    return ``;
                 }
-            }
+            };
         },
-    }
-})
+    };
+});
