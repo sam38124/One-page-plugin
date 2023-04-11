@@ -22,6 +22,7 @@ export class ScriptStyle1 {
             ScriptStyle1.getRout('assets/css/style.css')
         ]).then();
         gvc.addMtScript([
+            'https://kit.fontawesome.com/02e2dc09e3.js',
             "assets/vendor/aos/aos.js",
             "assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
             "assets/vendor/glightbox/js/glightbox.min.js",
@@ -29,9 +30,11 @@ export class ScriptStyle1 {
             "assets/vendor/swiper/swiper-bundle.min.js",
             "assets/vendor/php-email-form/validate.js",
             'assets/vendor/animate.css/animate.js',
-            'assets/js/main.js',
-            "assets/vendor/imagesloaded/imagesloaded.js"
+            'assets/js/main.js'
         ].map(((dd) => {
+            if (dd.indexOf('http') !== -1) {
+                return { src: dd };
+            }
             return { src: ScriptStyle1.getRout(dd) };
         })), () => {
             try {

@@ -9,18 +9,36 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+            widget.data.keyVision=widget.data.keyVision ?? {
+                title: "關於<span>萊恩設計</span>我們能為您做什麼？",
+                desc: "優質服務範圍包括網路連線諮詢與服務，從電商網站設計、後台管理、產品投放分析、網站架設、金流串接，我們都有經驗能替您完成服務",
+                video: "https://www.youtube.com/watch?v=u6BOC7CDUTQ",
+                img: ScriptStyle1.getRout("assets/img/hero-bg.jpg"),
+                listData: {
+                    list:[
+                        { name: "菜單", link: "#" },
+                        { name: "門市據點", link: "#" },
+                    ]},
+            }
+            widget.data.keyVision.titleStyle=widget.data.keyVision.titleStyle??{}
+            widget.data.keyVision.subTitleStyle=widget.data.keyVision.subTitleStyle??{}
             return {
                 view:()=>{
                     ScriptStyle1.initialScript(gvc,widget)
+
                     const keyVision= widget.data.keyVision
                     return ` 
-                        <section id="hero" class="d-flex align-items-center" style="background: url(${keyVision.img}) top center">
+                        <section id="hero" class="d-flex align-items-center" style="background-image: url(${keyVision.img}) ;
+                        background-position: center;background-repeat: no-repeat;background-size: cover;">
                             <!--         data-aos="zoom-in"不能作動                   -->
                             <div class="container position-relative text-center text-lg-start"  data-aos-delay="100">
                                 <div class="row" style="">
                                     <div class="col-lg-8">
-                                        <h1 class="mb-3" style="">${keyVision.title}</h1>
-                                        <h2 class="mb-5 text-left" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${keyVision.desc}</h2>
+                                        <h1 class="mb-3 ${glitter.htmlGenerate.styleEditor(widget.data.keyVision.titleStyle).class()}" style="${glitter.htmlGenerate.styleEditor(widget.data.keyVision.titleStyle).style()}">${keyVision.title}</h1>
+                                        <h2 class="mb-5 text-left
+                                        ${glitter.htmlGenerate.styleEditor(widget.data.keyVision.subTitleStyle).class()}
+                                        " style="white-space:normal;word-wrap:break-word;word-break:break-all;
+                                          ${glitter.htmlGenerate.styleEditor(widget.data.keyVision.subTitleStyle).style()}">${keyVision.desc}</h2>
                 
                                         <div class="btns">
                                             ${glitter.print(function () {
@@ -57,29 +75,19 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
 
                 },
                 editor:()=>{
+                    widget.data.keyVision.titleStyleEx=widget.data.keyVision.titleStyleEx??{}
+                    widget.data.keyVision.titleStylesEx=widget.data.keyVision.titleStylesEx??{}
                     return `
-                        ${glitter.htmlGenerate.editeText({
-                            gvc: gvc,
-                            title: '大標題',
-                            default: widget.data.keyVision.title,
-                            placeHolder: '請輸入大標題所顯示的文字，也能用簡單的html敘述',
-                            callback: (text) => {
-                                widget.data.keyVision.title = text;
-                                widget.refreshComponent();
-                            },
-                        })}
-                        `+`
                         ${Editor.uploadImage({
                             gvc: gvc,
-                            title: `圖片`,
+                            title: `背景圖片`,
                             def: widget.data.keyVision.img,
                             callback: (e) => {
                                 widget.data.keyVision.img = e;
                                 widget.refreshComponent();
                             },
                         })}
-                        `+`
-                        ${Editor.uploadVideo({
+                        `+Editor.uploadVideo({
                             gvc: gvc,
                             title: `播放影片連結`,
                             def: widget.data.keyVision.video,
@@ -87,20 +95,47 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.data.keyVision.video = e;
                                 widget.refreshComponent();
                             },
-                        })}
-                        `+`
-                        ${glitter.htmlGenerate.editeText({
-                            gvc: gvc,
-                            title: '副標題',
-                            default: widget.data.keyVision.desc,
-                            placeHolder: '請輸入副標題所要顯示的文字',
-                            callback: (text) => {
-                                widget.data.keyVision.desc = text;
-                                widget.refreshComponent();
-                            },
-                        })}`+
-                        `
-                        <div class="mt-3"></div>
+                        })+`<div class="mt-3" style="line-height: 20px;"></div>`+ Editor.toggleExpand({
+                            gvc:gvc,
+                            title:'大標題',
+                            data:widget.data.keyVision.titleStyleEx,
+                            innerText:gvc.map([
+                                glitter.htmlGenerate.styleEditor(widget.data.keyVision.titleStyle).editor(gvc,()=>{
+                                    widget.refreshComponent()
+                                },'大標題樣式'),
+                                glitter.htmlGenerate.editeText({
+                                    gvc: gvc,
+                                    title: '大標題',
+                                    default: widget.data.keyVision.title,
+                                    placeHolder: '請輸入大標題所顯示的文字，也能用簡單的html敘述',
+                                    callback: (text) => {
+                                        widget.data.keyVision.title = text;
+                                        widget.refreshComponent();
+                                    },
+                                })
+                            ])
+                        })+`<div class="mt-3"></div>`+
+                        Editor.toggleExpand({
+                            gvc:gvc,
+                            title:'副標題',
+                            data:widget.data.keyVision.titleStylesEx,
+                            innerText:gvc.map([
+                                glitter.htmlGenerate.styleEditor(widget.data.keyVision.subTitleStyle).editor(gvc,()=>{
+                                    widget.refreshComponent()
+                                },'副標題樣式'),
+                                glitter.htmlGenerate.editeText({
+                                    gvc: gvc,
+                                    title: '副標題',
+                                    default: widget.data.keyVision.desc,
+                                    placeHolder: '請輸入副標題所要顯示的文字',
+                                    callback: (text) => {
+                                        widget.data.keyVision.desc = text;
+                                        widget.refreshComponent();
+                                    },
+                                })
+                            ])
+                        })+
+                        `<div class="mt-3"></div>
                         `+
                         Editor.arrayItem({
                             originalArray:widget.data.keyVision.listData,

@@ -30,7 +30,6 @@ export class ScriptStyle1{
                 {src: ScriptStyle1.getRout(`assets/vendor/swiper/swiper-bundle.min.js`)},
                 {src: ScriptStyle1.getRout(`assets/vendor/shufflejs/dist/shuffle.min.js`)},
                 {src: ScriptStyle1.getRout(`assets/vendor/imagesloaded/imagesloaded.pkgd.min.js`)},
-                {src: ScriptStyle1.getRout(`assets/vendor/imagesloaded/imagesloaded.pkgd.min.js`)},
                 {src: ScriptStyle1.getRout(`assets/js/theme.min.js`)},
                 {src: ScriptStyle1.getRout(`assets/js/main.js`)}
             ],

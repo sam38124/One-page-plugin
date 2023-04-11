@@ -10,6 +10,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
             ScriptStyle1.initialScript(gvc, widget);
+            widget.data.logoStyle=widget.data.logoStyle??{}
             widget.data.outro = widget.data.outro ?? {
                 img: ScriptStyle1.getRout(`img/index/logoFull.svg`),
                 title: '萊恩設計',
@@ -67,8 +68,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 <div class="container pt-lg-4">
                                     <div class="row pb-0">
                                         <div class="col-sm-4">
-                                            <div class="navbar-brand text-dark fs-4 p-0 me-0 mb-2 mb-lg-4 mt-2 mt-sm-0">
-                                                <img src="${footer.outro.img}" width="50" alt="Lion Design" style="margin-right: 10px;" />
+                                            <div class="navbar-brand text-dark fs-4 p-0 me-0 mb-2 mb-lg-4 mt-2 mt-sm-0" style="">
+                                                <img src="${footer.outro.img}" class="${glitter.htmlGenerate.styleEditor(widget.data.logoStyle).class()}" width="50" alt="Lion Design"
+                                                 style="margin-right: 10px;${glitter.htmlGenerate.styleEditor(widget.data.logoStyle).style()}" />
                                                 ${footer.outro.title}
                                             </div>
                                             <p class="text-light opacity-70 pb-lg-3 mb-2">${footer.outro.desc}</p>
@@ -120,7 +122,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             </a>`;
                 },
                 editor: () => {
+
                     return gvc.map([
+                        glitter.htmlGenerate.styleEditor(widget.data.logoStyle).editor(gvc,()=>{
+                            widget.refreshComponent()
+                        },'Logo設計樣式'),
                         Editor.uploadImage({
                             gvc: gvc,
                             title: `Logo圖標`,

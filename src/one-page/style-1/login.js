@@ -231,15 +231,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 widget.data.bgImage = data;
                                 widget.refreshComponent();
                             }
-                        }), glitter.htmlGenerate.editeText({
-                            gvc: gvc,
-                            title: '標題',
-                            default: widget.data.title,
-                            placeHolder: "輸入標題",
-                            callback: (text) => {
-                                widget.data.title = text;
-                                widget.refreshComponent();
-                            }
                         }),
                         glitter.htmlGenerate.editeText({
                             gvc: gvc,

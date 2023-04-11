@@ -103,9 +103,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
  <button class="btn btn-warning   " style="color:black;width: calc(50% - 5px);" onclick="${gvc.event(() => {
                                         glitter.openNewTab(location.href = `${location.origin}/${dd.appName}/`);
                                     })}">前往預覽應用</button>
-  <button class="btn btn-primary  " onclick="${gvc.event(() => {
-                                        glitter.openNewTab(location.href = `${location.origin}/${dd.appName}/?type=editor`);
-                                    })}" style="width: calc(50% - 5px);">前往後台系統</button>
+  <a class="btn btn-primary  " href="${location.origin}/${dd.appName}/?type=editor" target="_blank" style="width: calc(50% - 5px);">前往後台系統</a>
 </div>
 
               </div>

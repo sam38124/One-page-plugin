@@ -70,29 +70,13 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
         topbar: {
             title: "導覽列上方的資訊",
             subContent: "用來顯示聯絡資訊",
-            defaultData: {
-                INF: [
-                    {
-                        title: "",
-                        value: "",
-                        img: ""
-                    },
-                    {
-                        title: "",
-                        value: "",
-                        img: ""
-                    }
-                ]
-            },
+            defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/topbar.js', import.meta.url))
         },
         nav: {
             title: "導覽列",
             subContent: "用來快速抵達頁面各處的nav",
-            defaultData: {
-                bar: [],
-                moreLink: [],
-            },
+            defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/nav.js', import.meta.url))
         },
         footer: {
@@ -134,41 +118,13 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
         banner: {
             title: "橫幅",
             subContent: "簡單介紹",
-            defaultData: {
-                keyVision: {
-                    title: "關於<span>萊恩設計</span>我們能為您做什麼？",
-                    desc: "優質服務範圍包括網路連線諮詢與服務，從電商網站設計、後台管理、產品投放分析、網站架設、金流串接，我們都有經驗能替您完成服務",
-                    video: "https://www.youtube.com/watch?v=u6BOC7CDUTQ",
-                    img: ScriptStyle1.getRout("assets/img/hero-bg.jpg"),
-                    listData: {
-                        list: [
-                            { name: "菜單", link: "#" },
-                            { name: "門市據點", link: "#" },
-                        ]
-                    },
-                }
-            },
+            defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/banner.js', import.meta.url))
         },
         about: {
             title: "關於我們",
             subContent: "用來介紹這網站的用途",
-            defaultData: {
-                about: {
-                    background: ScriptStyle1.getRout("assets/img/about-bg.jpg"),
-                    img: ScriptStyle1.getRout("assets/img/about.jpg"),
-                    title: "《人類大未來：下一個五十年》",
-                    block: [
-                        {
-                            text: "若說我們可從中得出以下關乎人類未來的啟示，應不至於有爭議：每個人的身分不再像過去那般單一且固定，將變得比我們想像的更多元。我們在不同的情況下使用不同的身分；這些身分互有重疊而且日益難分，卻又能清楚地以不同的方式劃定個人的觀點和選擇。特別是傳統用來界定身分的社會標準（例如年齡和國籍）都將不再那麼重要，公私身分的界線也變得越來越模糊。以社會階級、族群歸屬、政治立場為本的身分定義，將讓位給新的劃分標準，例如出身城鄉或教育程度的高低。"
-                        },
-                        {
-                            text: "如果個人身分的傳統特質變得支離破碎，可以想見未來社群的向心力將會更為疏遠，社會階層的流動性降低或是邊緣化，讓種族隔離或極端主義有機可趁。但換個角度來看，科技及網路帶來人際關係的「超連結」（hyperconnectivity），將有機會強化正向群體認同，賦予營造社群的新契機。未來，無論是生活或身分，人與人都會逐漸變得密不可分。這究竟是好事還是壞事？我認為有好也有壞，而且不論何者的影響都會越來越大。"
-                        }
-                    ],
-                    extend: {}
-                }
-            },
+            defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/about.js', import.meta.url))
         },
         whyUs: {

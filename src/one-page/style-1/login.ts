@@ -196,8 +196,7 @@ gvc.notifyDataChange('SignInPlace')
   background-repeat: no-repeat;background-position: center center;background-size: cover;"></div>
   <div class="position-absolute w-100 h-100" style="background: rgba(0,0,0,0.6);"></div>
   <div class="d-flex align-items-center justify-content-center " style="height:100vh;">
-      ${gvc.bindView(
-                        function () {
+      ${gvc.bindView(function () {
                           
                             return {
                                 bind: `SignInPlace`,
@@ -240,15 +239,6 @@ gvc.notifyDataChange('SignInPlace')
                             def: widget.data.bgImage,
                             callback: (data) => {
                                 widget.data.bgImage = data
-                                widget.refreshComponent()
-                            }
-                        }), glitter.htmlGenerate.editeText({
-                            gvc: gvc,
-                            title: '標題',
-                            default: widget.data.title,
-                            placeHolder: "輸入標題",
-                            callback: (text) => {
-                                widget.data.title = text
                                 widget.refreshComponent()
                             }
                         }),
