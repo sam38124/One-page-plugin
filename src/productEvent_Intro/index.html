@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+
+    <!-- Giltter & Funnel -->
+    <script src="../../../glitterBundle/ControlInstance.js"></script>
+    <script src="../../../glitterBundle/funnel.js"></script>
+    <script src="dataAPI.js"></script>
+    <script src="miapp.js"></script>
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/ionicons.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/owl.carousel.css" />
+    <link rel="stylesheet" type="text/css" href="css/magnific-popup.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body>
+    <script>
+      lifeCycle.onCreate = function () {
+        addMtScript(
+          [
+            "js/jquery.min.js",
+            "js/jquery.fitvids.js",
+            "js/owl.carousel.min.js",
+            "js/jquery.magnific-popup.min.js",
+            "js/validator.min.js",
+            "js/script.js",
+          ],
+          () => setTimeout(() => $("body").addClass("loaded"), 500),
+          () => {}
+        );
+      };
+
+      lifeCycle.onCreateView = () => {
+        if (gBundle && gBundle.page && gBundle.data) {
+          return new Miapp(gBundle.page, gBundle.data, gBundle.pick).frame();
+        } else {
+          var page = [
+            "intro",
+            "features",
+            "features_2",
+            "features_3",
+            "features_4",
+            "screenshots",
+            "video",
+            "price",
+            "subs",
+            "team",
+            "client",
+            "faq",
+            "download",
+            "contact",
+          ];
+          return new Miapp(page, glitter.api.getData(page)).frame();
+        }
+      };
+    </script>
+  </body>
+</html>

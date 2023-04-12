@@ -2,27 +2,99 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d2a386f-8e3e-4556-a9f5-2c2ad3fd90b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml2.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/boxicons_iconjar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/boxicons_iconjar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/css/bootstrap-theme.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/css/bootstrap-theme.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/css/bootstrap-theme.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/css/bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/fonts/glyphicons-halflings-regular.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/fonts/glyphicons-halflings-regular.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/fonts/glyphicons-halflings-regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/fonts/glyphicons-halflings-regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/fonts/glyphicons-halflings-regular.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/js/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/bootstrap/js/npm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/css/ionicons.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/css/magnific-popup.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/css/owl.carousel.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/dataAPI.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/fonts/ionicons.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/fonts/ionicons.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/fonts/ionicons.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/fonts/ionicons.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/appstore.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/bg1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/googleplay.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/loader.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/logo1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/logo2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/logo3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/logo4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/logo5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/logo6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/people1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/people2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/people3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/people4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/people5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/people6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/phone-black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/phone-white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/phone1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/phone2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/phone3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/screens/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/screens/2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/screens/3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/screens/4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/screens/5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/screens/6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/screens/7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/screens/8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/screens/9.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/team (1).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/team (2).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/team (3).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/team (4).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/team (5).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/team (6).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/team (7).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/img/tree.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/js/jquery.fitvids.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/js/jquery.magnific-popup.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/js/jquery.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/js/owl.carousel.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/js/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/js/validator.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/miapp.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/original/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/script-style-1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/client.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/contact.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/download.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/empty.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/faq.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature2.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature3.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature4.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/footer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/intro.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/nav.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/price.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/screenshots.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/sub.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/team.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/topbar.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style-1/video.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/productEvent_Intro/style1.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/e-commerce/coza.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/coza.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/e-commerce/script-style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/script-style-1.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/e-commerce/style-1/shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/style-1/shop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/e-commerce/style-1/shop.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/style-1/shop.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/GVController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/GVController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/funnel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/funnel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/empty/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/style1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/empty/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/style1.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,12 +125,20 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/User/Documents/GitHub/One-page-plugin/src/productEvent_Intro/style-1",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "ts.external.directory.path": "C:\\Users\\User\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\productEvent_Intro\style-1" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\productEvent_Intro" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src" />
+    </key>
+  </component>
   <component name="RunManager" selected="npm.start">
     <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
@@ -95,7 +175,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681270678793</updated>
-      <workItem from="1681270680148" duration="6501000" />
+      <workItem from="1681270680148" duration="19048000" />
     </task>
     <servers />
   </component>
@@ -234,6 +314,26 @@
         <option value="$PROJECT_DIR$/src/restaurant/style-1/about.js" />
         <option value="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml.js" />
         <option value="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml2.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style1.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/intro.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature2.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature3.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature4.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/screenshots.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/video.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/sub.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/team.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/client.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/faq.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/download.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/contact.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/footer.js" />
       </list>
     </option>
   </component>
