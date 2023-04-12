@@ -1,342 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2c38387-0fd8-4bea-9d0c-2eb4f00bedee" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/css/util.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-BlackItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-ExtraBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-LightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-MediumItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/Montserrat-ThinItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Montserrat/OFL.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/PlayfairDisplay/OFL.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/PlayfairDisplay/PlayfairDisplay-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/PlayfairDisplay/PlayfairDisplay-BlackItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/PlayfairDisplay/PlayfairDisplay-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/PlayfairDisplay/PlayfairDisplay-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/PlayfairDisplay/PlayfairDisplay-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-BlackItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-ExtraBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-ExtraLightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-LightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-MediumItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-SemiBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/Poppins/Poppins-ThinItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/HELP-US-OUT.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/css/font-awesome.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/fonts/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/animated.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/bordered-pulled.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/core.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/fixed-width.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/font-awesome.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/icons.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/larger.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/list.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/mixins.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/path.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/rotated-flipped.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/screen-reader.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/stacked.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/less/variables.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_animated.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_bordered-pulled.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_core.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_fixed-width.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_icons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_larger.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_list.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_path.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_rotated-flipped.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_screen-reader.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_stacked.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/_variables.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/font-awesome-4.7.0/scss/font-awesome.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/iconic/css/material-design-iconic-font.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/iconic/css/material-design-iconic-font.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/iconic/fonts/Material-Design-Iconic-Font.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/iconic/fonts/Material-Design-Iconic-Font.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/iconic/fonts/Material-Design-Iconic-Font.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/iconic/fonts/Material-Design-Iconic-Font.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/iconic/fonts/Material-Design-Iconic-Font.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/linearicons-v1.0.0/WebFont/Linearicons-Free.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/linearicons-v1.0.0/WebFont/Linearicons-Free.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/linearicons-v1.0.0/WebFont/Linearicons-Free.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/linearicons-v1.0.0/WebFont/Linearicons-Free.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/linearicons-v1.0.0/WebFont/Linearicons-Free.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/fonts/linearicons-v1.0.0/icon-font.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/about-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/about-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/avatar-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/banner-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/banner-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/banner-03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/banner-04.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/banner-05.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/banner-06.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/banner-07.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/banner-08.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/banner-09.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/bg-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/bg-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/blog-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/blog-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/blog-03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/blog-04.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/blog-05.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/blog-06.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/gallery-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/gallery-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/gallery-03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/gallery-04.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/gallery-05.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/gallery-06.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/gallery-07.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/gallery-08.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/gallery-09.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-close.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-close2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-email.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-heart-01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-heart-02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-next.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-pay-01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-pay-02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-pay-03.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-pay-04.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-pay-05.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-pay-def.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/icon-prev.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/logo-01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/logo-02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/icons/pin.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/item-cart-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/item-cart-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/item-cart-03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/item-cart-04.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/item-cart-05.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-04.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-05.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-06.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-07.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-08.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-09.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-10.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-11.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-12.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-13.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-14.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-15.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-16.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-detail-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-detail-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-detail-03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-min-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-min-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/product-min-03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/slide-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/slide-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/slide-03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/slide-04.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/slide-05.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/slide-06.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/slide-07.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/thumb-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/thumb-02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/images/thumb-03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/funnel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/homeTemp.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/map-custom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/slick-custom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/original/home-02.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/original/home-03.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/original/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/original/product-detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/original/shoping-cart.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/MagnificPopup/jquery.magnific-popup.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/MagnificPopup/jquery.magnific-popup.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/MagnificPopup/magnific-popup.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/animate/animate.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/animsition/css/animsition.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/animsition/css/animsition.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/animsition/js/animsition.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/animsition/js/animsition.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap-grid.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap-grid.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap-grid.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap-grid.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap-reboot.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap-reboot.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap-reboot.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap-reboot.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/js/popper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/js/popper.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/bootstrap/js/tooltip.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/countdowntime/countdowntime.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/css-hamburgers/hamburgers.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/css-hamburgers/hamburgers.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/daterangepicker/daterangepicker.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/daterangepicker/daterangepicker.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/daterangepicker/moment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/daterangepicker/moment.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/isotope/isotope.pkgd.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jquery/jquery-3.2.1.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/external/jquery/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/images/ui-icons_444444_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/images/ui-icons_555555_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/images/ui-icons_777620_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/images/ui-icons_777777_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/images/ui-icons_cc0000_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/images/ui-icons_ffffff_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/jquery-ui.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/jquery-ui.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/jquery-ui.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/jquery-ui.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/jquery-ui.structure.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/jquery-ui.structure.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/jquery-ui.theme.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/jqueryui/jquery-ui.theme.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/css/lightbox.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/css/lightbox.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/images/close.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/images/loading.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/images/next.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/images/prev.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/js/lightbox-plus-jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/js/lightbox-plus-jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/js/lightbox-plus-jquery.min.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/js/lightbox.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/js/lightbox.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/lightbox2/js/lightbox.min.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/parallax100/parallax100.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/perfect-scrollbar/perfect-scrollbar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/select2/select2.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/select2/select2.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/select2/select2.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/select2/select2.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/ajax-loader.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/config.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/fonts/slick.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/fonts/slick.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/fonts/slick.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/fonts/slick.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/slick-theme.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/slick-theme.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/slick-theme.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/slick.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/slick.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/slick.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/slick.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/slick/slick.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/vendor/sweetalert/sweetalert.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/coza.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/dataAPI.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/original/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/script-style-1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/style-1/banner.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/style-1/empty.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/style-1/footer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/style-1/nav.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/style-1/shop.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/style-1/slider.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/e-commerce/style1.ts" afterDir="false" />
+    <list default="true" id="0d2a386f-8e3e-4556-a9f5-2c2ad3fd90b1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml2.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/boxicons_iconjar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/boxicons_iconjar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/about-bg.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/about-bg.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/about.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/about.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/apple-touch-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/apple-touch-icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/chefs/chefs-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/chefs/chefs-1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/chefs/chefs-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/chefs/chefs-2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/chefs/chefs-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/chefs/chefs-3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/event-birthday.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/event-birthday.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/event-custom.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/event-custom.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/event-private.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/event-private.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/events-bg.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/events-bg.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/favicon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/favicon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-4.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-5.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-6.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-6.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-7.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-7.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-8.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/gallery/gallery-8.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/hero-bg.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/hero-bg.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/menu/bread-barrel.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/menu/bread-barrel.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/menu/caesar.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/menu/caesar.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/menu/cake.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/menu/cake.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/menu/greek-salad.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/menu/greek-salad.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/menu/lobster-bisque.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/menu/lobster-bisque.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/menu/lobster-roll.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/menu/lobster-roll.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/menu/mozzarella.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/menu/mozzarella.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/menu/spinach-salad.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/menu/spinach-salad.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/menu/tuscan-grilled.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/menu/tuscan-grilled.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/specials-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/specials-1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/specials-2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/specials-2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/specials-3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/specials-3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/specials-4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/specials-4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/specials-5.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/specials-5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-4.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/img/testimonials/testimonials-5.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/vendor/bootstrap-icons/fonts/bootstrap-icons.woff" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/vendor/bootstrap-icons/fonts/bootstrap-icons.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/vendor/bootstrap-icons/fonts/bootstrap-icons.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/vendor/bootstrap-icons/fonts/bootstrap-icons.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/vendor/boxicons/fonts/boxicons.eot" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/vendor/boxicons/fonts/boxicons.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/vendor/boxicons/fonts/boxicons.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/vendor/boxicons/fonts/boxicons.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/vendor/boxicons/fonts/boxicons.woff" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/vendor/boxicons/fonts/boxicons.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/empty/assets/vendor/boxicons/fonts/boxicons.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/src/empty/assets/vendor/boxicons/fonts/boxicons.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/e-commerce/coza.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/coza.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/e-commerce/script-style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/script-style-1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/e-commerce/style-1/shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/style-1/shop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/e-commerce/style-1/shop.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/e-commerce/style-1/shop.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/GVController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/GVController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/funnel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/funnel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -357,44 +43,23 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2NrQSFbV0p4kPBgdu93R4HcdjC8" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2OJFG2PS3HAopbNflrA0pdxhcqJ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/GlitterTS-main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.TypeScript&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\User\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Users\\User\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\e-commerce\style-1" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\e-commerce\assets\js" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\coza" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\coza\assets" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\coza\assets" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\one-page-blue\assets" />
-    </key>
-  </component>
-  <component name="RunManager" selected="npm.build:tscAuto">
+}]]></component>
+  <component name="RunManager" selected="npm.start">
     <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -425,16 +90,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f2c38387-0fd8-4bea-9d0c-2eb4f00bedee" name="Changes" comment="" />
-      <created>1680419718642</created>
+      <changelist id="0d2a386f-8e3e-4556-a9f5-2c2ad3fd90b1" name="Changes" comment="" />
+      <created>1681270678793</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1680419718642</updated>
-      <workItem from="1680419720246" duration="59258000" />
-      <workItem from="1680753552912" duration="18760000" />
-      <workItem from="1681092481555" duration="4182000" />
-      <workItem from="1681104658687" duration="16465000" />
-      <workItem from="1681183637232" duration="25563000" />
+      <updated>1681270678793</updated>
+      <workItem from="1681270680148" duration="6501000" />
     </task>
     <servers />
   </component>
@@ -442,117 +103,137 @@
     <option name="version" value="3" />
     <option name="exactExcludedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" />
-        <option value="$PROJECT_DIR$/src/one-page/assets/vendor/nouislider/src/nouislider.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style1.js" />
+        <option value="$PROJECT_DIR$/src/official.js" />
+        <option value="$PROJECT_DIR$/src/Entry.js" />
+        <option value="$PROJECT_DIR$/src/editor.js" />
+        <option value="$PROJECT_DIR$/src/event.js" />
+        <option value="$PROJECT_DIR$/src/api/base.js" />
+        <option value="$PROJECT_DIR$/src/home/template.js" />
+        <option value="$PROJECT_DIR$/src/home/index.js" />
+        <option value="$PROJECT_DIR$/src/dialog/ShareDialog.js" />
+        <option value="$PROJECT_DIR$/src/jspage/helloworld.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-2.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/GVController.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" />
         <option value="$PROJECT_DIR$/src/glitterBundle/Glitter.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/funnel.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.d.ts" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.d.ts" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.d.ts" />
         <option value="$PROJECT_DIR$/backend_default/index.js" />
         <option value="$PROJECT_DIR$/backend_default/index.js.map" />
         <option value="$PROJECT_DIR$/backend_default/index.d.ts" />
-        <option value="$PROJECT_DIR$/src/event.js" />
-        <option value="$PROJECT_DIR$/src/Entry.js" />
-        <option value="$PROJECT_DIR$/src/home/template.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" />
-        <option value="$PROJECT_DIR$/src/home/index.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-2.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style1.js" />
-        <option value="$PROJECT_DIR$/src/jspage/helloworld.js" />
-        <option value="$PROJECT_DIR$/src/api/base.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/GVController.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" />
-        <option value="$PROJECT_DIR$/src/official.js" />
-        <option value="$PROJECT_DIR$/src/dialog/ShareDialog.js" />
-        <option value="$PROJECT_DIR$/src/editor.js" />
+        <option value="$PROJECT_DIR$/src/one-page/assets/vendor/nouislider/src/nouislider.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/shop.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/banner.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/slider.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/contact.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/FAQ.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/client.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/team.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/testimonial.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/cta.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/portfolio.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/service.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/feature.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/about.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/hero.js" />
         <option value="$PROJECT_DIR$/src/one-page/tool.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/funnel.js" />
-        <option value="$PROJECT_DIR$/src/one-page/glitter.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/test.js" />
         <option value="$PROJECT_DIR$/src/one-page/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/topNav.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/topBanner.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/price.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/client.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/service.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/project.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/clientService.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/aboutUS.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/one-page/glitter.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-1/serviceDetail.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/otherService.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/topNav.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/client.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-1/contactUS.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/project.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-1/template.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/price2.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/landingTop.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/footer.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-1/supportWidget.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/landingTop.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/service.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/test.js" />
         <option value="$PROJECT_DIR$/src/one-page/style-1/login.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/price2.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/clientService.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/otherService.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/topBanner.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/aboutUS.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/initial-event.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/slider.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/testimonials.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/special.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/menu.js" />
+        <option value="$PROJECT_DIR$/src/one-page/glitter/appManager.js" />
+        <option value="$PROJECT_DIR$/src/glitter/model/User.js" />
+        <option value="$PROJECT_DIR$/src/glitter/api/base.js" />
+        <option value="$PROJECT_DIR$/src/glitter/initial.js" />
+        <option value="$PROJECT_DIR$/src/glitter/event.js" />
+        <option value="$PROJECT_DIR$/src/erp/api/base.js" />
+        <option value="$PROJECT_DIR$/src/erp/event.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style1.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style1.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/empty/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/empty/style1.js" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/empty.js" />
         <option value="$PROJECT_DIR$/src/restaurant/style-1/whyUs.js" />
         <option value="$PROJECT_DIR$/src/restaurant/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/topbar.js" />
         <option value="$PROJECT_DIR$/src/restaurant/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/topbar.js" />
         <option value="$PROJECT_DIR$/src/restaurant/style-1/nav.js" />
         <option value="$PROJECT_DIR$/src/restaurant/style-1/footer.js" />
         <option value="$PROJECT_DIR$/src/restaurant/style-1/banner.js" />
         <option value="$PROJECT_DIR$/src/restaurant/style-1/about.js" />
-        <option value="$PROJECT_DIR$/src/empty/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/empty/style1.js" />
-        <option value="$PROJECT_DIR$/src/empty/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/empty/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/empty/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/empty/style-1/topbar.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style1.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/hero.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/about.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/feature.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/service.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/portfolio.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/cta.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/testimonial.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/team.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/client.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/price.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/FAQ.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/contact.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/cta.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/FAQ.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/hero.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/team.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/about.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/price.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/client.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/contact.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/feature.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/service.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/portfolio.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/testimonial.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/coza/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/coza/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/coza/style1.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/slider.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/banner.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/shop.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml2.js" />
       </list>
     </option>
   </component>

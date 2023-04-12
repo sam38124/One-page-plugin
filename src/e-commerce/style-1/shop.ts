@@ -5,6 +5,8 @@ import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 
+import {CozaHTML} from '../assets/js/cozahtml2.js'
+
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
         defaultData: {},
@@ -13,7 +15,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 view:()=>{
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID()
-                    let shop= {
+                    let shop:any= {
                         tagList:{
                             tag: [
                                 { name: "外套", tag: "a" },
@@ -628,7 +630,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">所有商品</button>
                                     ${glitter.print(function () {
                                         var tmp = "";
-                                        shop.tagList.tag.map((t) => {
+                                        shop.tagList.tag.map((t:any) => {
                                             tmp += /*html*/ `<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".${t.tag}">
                                           ${t.name}
                                         </button>`;
@@ -670,22 +672,24 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                   <div class="dis-none panel-filter w-full p-t-10">
                                     <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
                                       ${glitter.print(function () {
-                                        var tmp = "";
-                                        var theTitle:any = {
-                                            sort: "排序",
-                                            categories: "類別",
-                                            color: "顏色",
-                                        };
-                                        Object.keys(shop.filter).map((t, i) => {
-                                            tmp += /*html*/ ` <div class="filter-col3 p-r-15 p-b-27">
-                                            <div class="mtext-102 cl2 p-b-15">${theTitle[t]}</div>
-                                            <ul class="filter-det fil${i}">
-                                              ${glitter.print(function () {
-                                                            var tmp = "";
-                                                    
-                                                    return tmp;
-                                                })}
-                                            </ul>
+                                            let tmp = "";
+                                            let theTitle:any = {
+                                                sort: "排序",
+                                                categories: "類別",
+                                                color: "顏色",
+                                            };
+                                            Object.keys(shop.filter).map((t, i) => {
+                                                tmp += /*html*/ ` <div class="filter-col3 p-r-15 p-b-27">
+                                                <div class="mtext-102 cl2 p-b-15">${theTitle[t]}</div>
+                                                <ul class="filter-det fil${i}">
+                                                  ${glitter.print(function () {
+                                                        let tmp = "";
+                                                        let cozaHTML:any = new CozaHTML();
+                                                       
+                                                        shop.filter[t].map((a:any) => (tmp += cozaHTML[t](a)));
+                                                        return tmp;
+                                                  })}
+                                                </ul>
                                           </div>`;
                                             });
                                             return tmp;
@@ -698,12 +702,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 <div class="row isotope-grid">
                                   ${glitter.print(function () {
                                     var tmp = "";
-                                    shop.productList.product.map((p) => {
+                                    shop.productList.product.map((p:any) => {
                                         tmp += /*html*/ `
                                         <div
                                           class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${glitter.print(function () {
                                                 var tmp = "";
-                                                p.tag.map((t) => (tmp += t + ` `)), p.color.map((t) => (tmp += t.replace("#", "") + ` `));
+                                                p.tag.map((t:any) => (tmp += t + ` `)), p.color.map((t:any) => (tmp += t.replace("#", "") + ` `));
                                                 return tmp;
                                             })}"
                                         >

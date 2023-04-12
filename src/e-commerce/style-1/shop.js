@@ -1,5 +1,6 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
 import { ScriptStyle1 } from "../script-style-1.js";
+import { CozaHTML } from '../assets/js/cozahtml2.js';
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
@@ -647,21 +648,23 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                   <div class="dis-none panel-filter w-full p-t-10">
                                     <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
                                       ${glitter.print(function () {
-                                var tmp = "";
-                                var theTitle = {
+                                let tmp = "";
+                                let theTitle = {
                                     sort: "排序",
                                     categories: "類別",
                                     color: "顏色",
                                 };
                                 Object.keys(shop.filter).map((t, i) => {
                                     tmp += ` <div class="filter-col3 p-r-15 p-b-27">
-                                            <div class="mtext-102 cl2 p-b-15">${theTitle[t]}</div>
-                                            <ul class="filter-det fil${i}">
-                                              ${glitter.print(function () {
-                                        var tmp = "";
+                                                <div class="mtext-102 cl2 p-b-15">${theTitle[t]}</div>
+                                                <ul class="filter-det fil${i}">
+                                                  ${glitter.print(function () {
+                                        let tmp = "";
+                                        let cozaHTML = new CozaHTML();
+                                        shop.filter[t].map((a) => (tmp += cozaHTML[t](a)));
                                         return tmp;
                                     })}
-                                            </ul>
+                                                </ul>
                                           </div>`;
                                 });
                                 return tmp;

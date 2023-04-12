@@ -1,4 +1,4 @@
-class CozaHTML {
+export class CozaHTML {
     constructor() {
         this.sort = function (data) {
             var list = {
@@ -125,7 +125,7 @@ class CozaHTML {
                   </div>
 
                   <button class="flex-c-m mt-2 stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                    ${glitter.share.language.addToCart}
+                    ${加入購物車}
                   </button>
                 </div>
               </div>

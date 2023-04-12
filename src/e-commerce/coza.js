@@ -1,4 +1,4 @@
-class Coza {
+export class Coza {
   constructor(p, d) {
     var event = window.event;
     var prod = undefined;

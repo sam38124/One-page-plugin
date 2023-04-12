@@ -1,8 +1,8 @@
 import {HtmlJson} from "../glitterBundle/plugins/plugin-creater.js";
 
 export class ScriptStyle1{
-    public static   hi: boolean = false;
-    public static  getRout(link: string) {
+    public static hi: boolean = false;
+    public static getRout(link: string) {
         return new URL('./' + link, import.meta.url).href;
     }
     public static initialScript(gvc: any, widget: HtmlJson) {

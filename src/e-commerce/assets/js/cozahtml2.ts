@@ -1,7 +1,11 @@
-class CozaHTML {
+export class CozaHTML {
+    private sort: (data:any) => string;
+    private color: (data:any) => string;
+    private quickView: (data:any) => string;
+
     constructor() {
-        this.sort = function (data) {
-            var list = {
+        this.sort = function (data:string) {
+            let list:any = {
                 lastest: { sort: "date", asc: false, text: "最新上架" },
                 price_low: { sort: "price", asc: true, text: "價格低 → 高" },
                 price_high: { sort: "price", asc: false, text: "價格高 → 低" },
@@ -35,23 +39,24 @@ class CozaHTML {
               <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
               <div class="d-none img-selected" data-img="${data.img}"></div>
               <div class="slick3 gallery-lb">
-                ${glitter.print(function () {
-                var tmp = "";
-                var slickimg = data.img_detail && data.img_detail.length !== 0 ? data.img_detail : [data.img];
-                slickimg.map((g) => {
-                    tmp += `
-                      <div class="item-slick3" data-thumb="${g}">
-                        <div class="wrap-pic-w pos-relative">
-                          <img src="${g}" alt="IMG-PRODUCT" />
-                          <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="${g}">
-                            <i class="fa fa-expand"></i>
-                          </a>
-                        </div>
-                      </div>
-                    `;
-                });
-                return tmp;
-            })}
+                ${(()=>{
+                    let tmp = "";
+                    let slickimg = data.img_detail && data.img_detail.length !== 0 ? data.img_detail : [data.img];
+                    slickimg.map((g:any) => {
+                        tmp += `
+                          <div class="item-slick3" data-thumb="${g}">
+                            <div class="wrap-pic-w pos-relative">
+                              <img src="${g}" alt="IMG-PRODUCT" />
+                              <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="${g}">
+                                <i class="fa fa-expand"></i>
+                              </a>
+                            </div>
+                          </div>
+                        `;
+                    });
+                    return tmp;
+                })()}
+                
               </div>
             </div>
           </div>
@@ -59,10 +64,9 @@ class CozaHTML {
 
         <div class="col-md-6 col-lg-5 p-b-30">
           <div class="p-r-50 p-t-5 p-lr-0-lg">
-
             <a class="dataID d-none">${data.id}</a>
             <h4 class="mtext-105 cl2 js-name-detail p-b-14">${data.name}</h4>
-            <span class="mtext-106 cl2 price-selected" data-price="${data.price}"> $${funnel.addQuantile(data.price)}</a></span>
+            <span class="mtext-106 cl2 price-selected" data-price="${data.price}"> $${(data.price as number).toLocaleString()}</a></span>
             <p class="stext-102 cl3 p-t-23">${data.desc ?? ``}</p>
 
             <div class="p-t-33">
@@ -73,13 +77,14 @@ class CozaHTML {
                       <div class="size-204 respon6-next">
                         <div class="rs1-select2 bor8 bg0">
                           <select class="js-select2" name="time">
-                            ${glitter.print(function () {
-                    var tmp = "";
-                    data.size.map((si, i) => {
-                        tmp += `<option value="${si}" ${i == 0 ? `selected` : ``}>${si}</option>`;
-                    });
-                    return tmp;
-                })}
+                            ${(()=>{
+                                let tmp = "";
+                                data.size.map((si:any, i:number) => {
+                                    tmp += `<option value="${si}" ${i == 0 ? `selected` : ``}>${si}</option>`;
+                                });
+                                return tmp;
+                            })()}
+                        
                           </select>
                           <div class="dropDownSelect2"></div>
                         </div>
@@ -93,18 +98,19 @@ class CozaHTML {
 
                       <div class="size-204 respon6-next">
                         <div class="d-inline-flex pt-3 rs1-select2 bg0">
-                          ${glitter.print(function () {
-                    var tmp = "";
-                    data.color.map((c, i) => {
-                        tmp += ` <a
-                                class="size-304 m-r-8 m-b-10 color-select bor2 tooltip100 ${i == 0 ? `color-selected bor20` : ``}"
-                                style="cursor:pointer;background-color:${c}"
-                                data-tooltip="${c}"
-                              >
-                              </a>`;
-                    });
-                    return tmp;
-                })}
+                            ${(()=>{
+                                let tmp = "";
+                                data.color.map((c:any, i:number) => {
+                                    tmp += ` <a
+                                            class="size-304 m-r-8 m-b-10 color-select bor2 tooltip100 ${i == 0 ? `color-selected bor20` : ``}"
+                                            style="cursor:pointer;background-color:${c}"
+                                            data-tooltip="${c}"
+                                          >
+                                          </a>`;
+                                });
+                                return tmp;
+                            })()}
+                          
                         </div>
                       </div>
                     </div>`
@@ -125,7 +131,7 @@ class CozaHTML {
                   </div>
 
                   <button class="flex-c-m mt-2 stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                    ${glitter.share.language.addToCart}
+                      加入購物車
                   </button>
                 </div>
               </div>
