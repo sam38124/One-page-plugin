@@ -244,35 +244,37 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                             gvc: gvc,
                                             title: `標籤設定`,
                                             data: list.expand,
-                                            innerText: list.tag.map((d2, index) => {
-                                                return Editor.searchInput({
-                                                    gvc: gvc,
-                                                    title: Editor.minusTitle((widget.data.tagObject.tags.find((dd) => {
-                                                        return dd.className === `.${d2}`;
-                                                    }) ?? {}).title || `標籤:${index + 1}`, gvc.event(() => {
-                                                        list.tag.splice(index, 1);
-                                                        widget.refreshComponent();
-                                                    })),
-                                                    def: (widget.data.tagObject.tags.find((dd) => {
-                                                        return dd.className === `.${d2}`;
-                                                    }) ?? {}).title ?? "",
-                                                    placeHolder: "標籤",
-                                                    callback: (text) => {
-                                                        list.tag[index] = widget.data.tagObject.tags.find((dd) => {
-                                                            return dd.title === text;
-                                                        }).className;
-                                                        widget.refreshComponent();
-                                                    },
-                                                    array: widget.data.tagObject.tags.map((dd) => {
-                                                        return dd.title;
-                                                    })
-                                                });
-                                            }).join(`<div class="my-2"></div>`) + Editor.plusBtn("添加標籤", gvc.event(() => {
-                                                list.tag.push('*');
-                                                console.log("----------list--------");
-                                                console.log(list);
-                                                widget.refreshComponent();
-                                            })),
+                                            innerText: () => {
+                                                return list.tag.map((d2, index) => {
+                                                    return Editor.searchInput({
+                                                        gvc: gvc,
+                                                        title: Editor.minusTitle((widget.data.tagObject.tags.find((dd) => {
+                                                            return dd.className === `.${d2}`;
+                                                        }) ?? {}).title || `標籤:${index + 1}`, gvc.event(() => {
+                                                            list.tag.splice(index, 1);
+                                                            widget.refreshComponent();
+                                                        })),
+                                                        def: (widget.data.tagObject.tags.find((dd) => {
+                                                            return dd.className === `.${d2}`;
+                                                        }) ?? {}).title ?? "",
+                                                        placeHolder: "標籤",
+                                                        callback: (text) => {
+                                                            list.tag[index] = widget.data.tagObject.tags.find((dd) => {
+                                                                return dd.title === text;
+                                                            }).className;
+                                                            widget.refreshComponent();
+                                                        },
+                                                        array: widget.data.tagObject.tags.map((dd) => {
+                                                            return dd.title;
+                                                        })
+                                                    });
+                                                }).join(`<div class="my-2"></div>`) + Editor.plusBtn("添加標籤", gvc.event(() => {
+                                                    list.tag.push('*');
+                                                    console.log("----------list--------");
+                                                    console.log(list);
+                                                    widget.refreshComponent();
+                                                }));
+                                            },
                                             color: `#0062c0`
                                         }),
                                     ]),

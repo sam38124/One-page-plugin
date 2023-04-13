@@ -4,7 +4,6 @@ import {TriggerEvent} from "../glitterBundle/plugins/trigger-event.js";
 import {User} from "./model/User.js";
 
 InitialEvent.execute(import.meta.url, (callback)=>{
-
     const glitter=(window as any).glitter
     const saasConfig: {
         config: any;

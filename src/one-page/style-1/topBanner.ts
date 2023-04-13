@@ -281,112 +281,122 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             gvc: gvc,
                             title: '手機版',
                             data: widget.data.mobile.m,
-                            innerText: gvc.map([
-                                glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '標題[HTML]',
-                                    default: widget.data.mobile.m.title,
-                                    placeHolder: '標題',
-                                    callback: (text) => {
-                                        widget.data.mobile.m.title = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '子標題[HTML]',
-                                    default: widget.data.mobile.m.desc,
-                                    placeHolder: '子標題',
-                                    callback: (text) => {
-                                        widget.data.mobile.m.desc = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                Editor.uploadLottie({
-                                    gvc: gvc,
-                                    title: `圖片或Lottie動畫區塊`,
-                                    def: widget.data.mobile.m.lottie,
-                                    callback: (data) => {
-                                        widget.data.mobile.m.lottie = data;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                Editor.uploadImage({
-                                    gvc: gvc,
-                                    title: `背景圖`,
-                                    def: widget.data.mobile.m.img,
-                                    callback: (data) => {
-                                        widget.data.mobile.m.img = data;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                Editor.toggleExpand({
-                                    gvc: gvc,
-                                    title: '按鈕集',
-                                    data: widget.data.mobile.m.btnExpand,
-                                    innerText:
-                                        widget.data.mobile.m.btn
-                                            .map((data: any, index: number) => {
-                                                return gvc.map([
-                                                    Editor.minusTitle(
-                                                        '按鈕:' + (index + 1),
-                                                        gvc.event(() => {
-                                                            widget.data.mobile.m.btn.splice(index, 1), widget.refreshComponent();
-                                                        })
-                                                    ),
-                                                    (glitter.htmlGenerate as any).styleEditor(data).editor(gvc, widget),
-                                                    glitter.htmlGenerate.editeText({
-                                                        gvc: gvc,
-                                                        title: '按鈕名稱[HTML]',
-                                                        default: data.title,
-                                                        placeHolder: '輸入按鈕名稱',
-                                                        callback: (text) => {
-                                                            data.title = text;
-                                                            widget.refreshComponent();
-                                                        },
-                                                    }),
-                                                    TriggerEvent.editer(gvc, widget, data, {
-                                                        hover: true,
-                                                        option: [],
-                                                        title: '點擊事件',
-                                                    }),
-                                                ]);
-                                            })
-                                            .join('') +
-                                        Editor.plusBtn(
-                                            '添家按鈕',
-                                            gvc.event(() => {
-                                                widget.data.mobile.m.btn.push({
-                                                    title: ``,
-                                                });
-                                                widget.refreshComponent();
-                                            })
-                                        ),
-                                    color: `#0062c0`,
-                                }),
-                            ]),
+                            innerText: ()=>{
+                                return gvc.map([
+                                    glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: '標題[HTML]',
+                                        default: widget.data.mobile.m.title,
+                                        placeHolder: '標題',
+                                        callback: (text) => {
+                                            widget.data.mobile.m.title = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: '子標題[HTML]',
+                                        default: widget.data.mobile.m.desc,
+                                        placeHolder: '子標題',
+                                        callback: (text) => {
+                                            widget.data.mobile.m.desc = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    Editor.uploadLottie({
+                                        gvc: gvc,
+                                        title: `圖片或Lottie動畫區塊`,
+                                        def: widget.data.mobile.m.lottie,
+                                        callback: (data) => {
+                                            widget.data.mobile.m.lottie = data;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    Editor.uploadImage({
+                                        gvc: gvc,
+                                        title: `背景圖`,
+                                        def: widget.data.mobile.m.img,
+                                        callback: (data) => {
+                                            widget.data.mobile.m.img = data;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    Editor.toggleExpand({
+                                        gvc: gvc,
+                                        title: '按鈕集',
+                                        data: widget.data.mobile.m.btnExpand,
+                                        innerText:
+                                            ()=>{
+                                            return widget.data.mobile.m.btn
+                                                    .map((data: any, index: number) => {
+                                                        return gvc.map([
+                                                            Editor.minusTitle(
+                                                                '按鈕:' + (index + 1),
+                                                                gvc.event(() => {
+                                                                    widget.data.mobile.m.btn.splice(index, 1), widget.refreshComponent();
+                                                                })
+                                                            ),
+                                                            (glitter.htmlGenerate as any).styleEditor(data).editor(gvc, widget),
+                                                            glitter.htmlGenerate.editeText({
+                                                                gvc: gvc,
+                                                                title: '按鈕名稱[HTML]',
+                                                                default: data.title,
+                                                                placeHolder: '輸入按鈕名稱',
+                                                                callback: (text) => {
+                                                                    data.title = text;
+                                                                    widget.refreshComponent();
+                                                                },
+                                                            }),
+                                                            TriggerEvent.editer(gvc, widget, data, {
+                                                                hover: true,
+                                                                option: [],
+                                                                title: '點擊事件',
+                                                            }),
+                                                        ]);
+                                                    })
+                                                    .join('') +
+                                                Editor.plusBtn(
+                                                    '添家按鈕',
+                                                    gvc.event(() => {
+                                                        widget.data.mobile.m.btn.push({
+                                                            title: ``,
+                                                        });
+                                                        widget.refreshComponent();
+                                                    })
+                                                )
+                                            },
+                                        color: `#0062c0`,
+                                    }),
+                                ])
+                            },
                         }),
                         /*html*/ `<div class="mt-2" style="color: #272993;"></div>`,
                         Editor.toggleExpand({
                             gvc: gvc,
                             title: '電腦版',
                             data: widget.data.desktop,
-                            innerText: [
-                                Editor.toggleExpand({
-                                    gvc: gvc,
-                                    title: '左側區塊',
-                                    data: widget.data.desktop.l,
-                                    innerText: gvc.map(getDBlock(widget.data.desktop.l)),
-                                    color: `#272993FF`,
-                                }),
-                                Editor.toggleExpand({
-                                    gvc: gvc,
-                                    title: '右側區塊',
-                                    data: widget.data.desktop.r,
-                                    innerText: gvc.map(getDBlock(widget.data.desktop.r)),
-                                    color: `#272993FF`,
-                                }),
-                            ].join(/*html*/ `<div class="my-2"></div>`),
+                            innerText:()=>{
+                                return  [
+                                    Editor.toggleExpand({
+                                        gvc: gvc,
+                                        title: '左側區塊',
+                                        data: widget.data.desktop.l,
+                                        innerText: ()=>{
+                                            return gvc.map(getDBlock(widget.data.desktop.l))
+                                        },
+                                        color: `#272993FF`,
+                                    }),
+                                    Editor.toggleExpand({
+                                        gvc: gvc,
+                                        title: '右側區塊',
+                                        data: widget.data.desktop.r,
+                                        innerText: ()=>{
+                                            return gvc.map(getDBlock(widget.data.desktop.r))
+                                        },
+                                        color: `#272993FF`,
+                                    }),
+                                ].join(/*html*/ `<div class="my-2"></div>`)
+                            },
                         }),
                     ]);
                 },

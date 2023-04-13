@@ -86,43 +86,39 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
 // })
 
 // Editor.arrayItem({
-//                                 gvc:gvc,
-//                                 title:"介紹區塊",
-//                                 array:widget.data.list.map((dd:any,index:number)=>{
-//                                     return {
-//                                         title:dd.name || `區塊:${index+1}`,
-//                                         expand:dd,
-//                                         innerHtml:
-//                                         glitter.htmlGenerate.editeInput({
-//                                             gvc: gvc,
-//                                             title: `標題`,
-//                                             default: dd.name,
-//                                             placeHolder: "輸入標題名稱",
-//                                             callback: (text) => {
-//                                                 dd.name = text
-//                                                 widget.refreshComponent()
-//                                             }
-//                                         }),
-//                                         minus:gvc.event(()=>{
-//                                             widget.data.list.splice(index,1)
-//                                             widget.refreshComponent()
-//                                         })
-//                                     }
-//                                 }),
-//                                 expand:widget.data,
-//                                 plus:{
-//                                     title:"添加區塊",
-//                                     event:gvc.event(()=>{
-//                                         widget.data.list.push({
-//                                             name: "王建智",
-//                                             title: "萊恩設計<br />CEO",
-//                                             img: getRout("img/index/wang.jpg"),
-//                                             desc: `
-//       曾於上市櫃公司擔任軟體專案的技術領導者與架構規劃師，也熱衷於軟體技術開源協作，在 Github 已有超過 15+ 開源框架，並且取得貢獻者徽章，有著十分熱忱的技術追求，目前在業界已累積開發超過 20 樣以上的產品。<br /><br />
-//       因為想追求更多未知的技術，而創立了萊恩設計，希望能在為客戶解決問題的同時，增長自身的技術水平。
-//       `,
-//                                         })
-//                                         widget.refreshComponent()
-//                                     })
-//                                 }
-//                             })
+//                                                             gvc:gvc,
+//                                                             title:"介紹區塊",
+//                                                             originalArray:dd.selectList,
+//                                                             array:dd.selectList.map((dd:any,index:number)=>{
+//                                                                 return {
+//                                                                     title:dd.name || `區塊:${index+1}`,
+//                                                                     expand:dd,
+//                                                                     innerHtml:
+//                                                                         glitter.htmlGenerate.editeInput({
+//                                                                             gvc: gvc,
+//                                                                             title: `標題`,
+//                                                                             default: dd.name,
+//                                                                             placeHolder: "輸入標題名稱",
+//                                                                             callback: (text) => {
+//                                                                                 dd.name = text
+//                                                                                 widget.refreshComponent()
+//                                                                             }
+//                                                                         }),
+//                                                                     minus:gvc.event(()=>{
+//                                                                         dd.selectList.splice(index,1)
+//                                                                         widget.refreshComponent()
+//                                                                     })
+//                                                                 }
+//                                                             }),
+//                                                             expand:widget.data,
+//                                                             plus:{
+//                                                                 title:"添加區塊",
+//                                                                 event:gvc.event(()=>{
+//
+//                                                                     widget.refreshComponent()
+//                                                                 })
+//                                                             },
+//                                                             refreshComponent:()=>{
+//                                                                 widget.refreshComponent()
+//                                                             }
+//                                                         })

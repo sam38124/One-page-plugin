@@ -162,27 +162,29 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 gvc: gvc,
                                 title: '列表項目',
                                 data: data,
-                                innerText: data.list
-                                    .map((data2, index) => {
-                                    return glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: `${Editor.minusTitle(`項目-${index + 1}`, gvc.event(() => {
-                                            data.list.splice(index, 1);
+                                innerText: () => {
+                                    return data.list
+                                        .map((data2, index) => {
+                                        return glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: `${Editor.minusTitle(`項目-${index + 1}`, gvc.event(() => {
+                                                data.list.splice(index, 1);
+                                                widget.refreshComponent();
+                                            }))}`,
+                                            default: data2,
+                                            placeHolder: '輸入項目名稱',
+                                            callback: (text) => {
+                                                data.list[index] = text;
+                                                widget.refreshComponent();
+                                            },
+                                        });
+                                    })
+                                        .join('') +
+                                        Editor.plusBtn('新增項目', gvc.event(() => {
+                                            data.list.push('新增項目');
                                             widget.refreshComponent();
-                                        }))}`,
-                                        default: data2,
-                                        placeHolder: '輸入項目名稱',
-                                        callback: (text) => {
-                                            data.list[index] = text;
-                                            widget.refreshComponent();
-                                        },
-                                    });
-                                })
-                                    .join('') +
-                                    Editor.plusBtn('新增項目', gvc.event(() => {
-                                        data.list.push('新增項目');
-                                        widget.refreshComponent();
-                                    })),
+                                        }));
+                                },
                                 color: '#0062c0',
                             }),
                         ].join('');
@@ -202,21 +204,25 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             gvc: gvc,
                             title: '左側區塊',
                             data: widget.data.main,
-                            innerText: Editor.uploadLottie({
-                                gvc: gvc,
-                                title: `圖片或Lottie動畫區塊`,
-                                def: widget.data.main.lottie,
-                                callback: (data) => {
-                                    widget.data.main.lottie = data;
-                                    widget.refreshComponent();
-                                },
-                            }) + getData(widget.data.main),
+                            innerText: () => {
+                                return Editor.uploadLottie({
+                                    gvc: gvc,
+                                    title: `圖片或Lottie動畫區塊`,
+                                    def: widget.data.main.lottie,
+                                    callback: (data) => {
+                                        widget.data.main.lottie = data;
+                                        widget.refreshComponent();
+                                    },
+                                }) + getData(widget.data.main);
+                            },
                         }),
                         Editor.toggleExpand({
                             gvc: gvc,
                             title: '右側區塊',
                             data: widget.data.sub,
-                            innerText: getData(widget.data.sub),
+                            innerText: () => {
+                                return getData(widget.data.sub);
+                            },
                         }),
                     ].join('<div class="my-2"></div>');
                 },

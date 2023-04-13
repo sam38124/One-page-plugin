@@ -269,66 +269,70 @@ ${Editor.h3('項目列表')}
                                             widget.refreshComponent()
                                         }))}</div>`,
                                         data: data,
-                                        innerText: gvc.map([
-                                            glitter.htmlGenerate.editeInput({
-                                                gvc: gvc,
-                                                title: '標題',
-                                                default: data.name ?? "",
-                                                placeHolder: "輸入標題",
-                                                callback: (text) => {
-                                                    data.name = text
-                                                    widget.refreshComponent()
-                                                }
-                                            }),
-                                            `<div class="mb-2"></div>`,
-                                            Editor.toggleExpand({
-                                                gvc: gvc,
-                                                title: `標籤設定`,
-                                                data: data.tabExpand,
-                                                innerText: data.tag.map((d2: any, index: number) => {
-                                                    return Editor.searchInput({
-                                                        gvc: gvc,
-                                                        title: Editor.minusTitle((widget.data.tag.find((dd: any) => {
-                                                            return dd.className === d2
-                                                        }) ?? {}).title || `標籤:${index + 1}`, gvc.event(() => {
-                                                            data.tag.splice(index, 1)
+                                        innerText: ()=>{
+                                            return gvc.map([
+                                                glitter.htmlGenerate.editeInput({
+                                                    gvc: gvc,
+                                                    title: '標題',
+                                                    default: data.name ?? "",
+                                                    placeHolder: "輸入標題",
+                                                    callback: (text) => {
+                                                        data.name = text
+                                                        widget.refreshComponent()
+                                                    }
+                                                }),
+                                                `<div class="mb-2"></div>`,
+                                                Editor.toggleExpand({
+                                                    gvc: gvc,
+                                                    title: `標籤設定`,
+                                                    data: data.tabExpand,
+                                                    innerText: ()=>{
+                                                        return data.tag.map((d2: any, index: number) => {
+                                                            return Editor.searchInput({
+                                                                gvc: gvc,
+                                                                title: Editor.minusTitle((widget.data.tag.find((dd: any) => {
+                                                                    return dd.className === d2
+                                                                }) ?? {}).title || `標籤:${index + 1}`, gvc.event(() => {
+                                                                    data.tag.splice(index, 1)
+                                                                    widget.refreshComponent()
+                                                                })),
+                                                                def: (widget.data.tag.find((dd: any) => {
+                                                                    return dd.className === d2
+                                                                }) ?? {}).title ?? "",
+                                                                placeHolder: "標籤",
+                                                                callback: (text) => {
+                                                                    data.tag[index] = widget.data.tag.find((dd: any) => {
+                                                                        return dd.title === text
+                                                                    }).className
+                                                                    widget.refreshComponent()
+                                                                },
+                                                                array: widget.data.tag.map((dd: any) => {
+                                                                    return dd.title
+                                                                })
+                                                            })
+                                                        }).join(`<div class="my-2"></div>`) + Editor.plusBtn("添加標籤", gvc.event(() => {
+                                                            data.tag.push('')
                                                             widget.refreshComponent()
-                                                        })),
-                                                        def: (widget.data.tag.find((dd: any) => {
-                                                            return dd.className === d2
-                                                        }) ?? {}).title ?? "",
-                                                        placeHolder: "標籤",
-                                                        callback: (text) => {
-                                                            data.tag[index] = widget.data.tag.find((dd: any) => {
-                                                                return dd.title === text
-                                                            }).className
-                                                            widget.refreshComponent()
-                                                        },
-                                                        array: widget.data.tag.map((dd: any) => {
-                                                            return dd.title
-                                                        })
-                                                    })
-                                                }).join(`<div class="my-2"></div>`) + Editor.plusBtn("添加標籤", gvc.event(() => {
-                                                    data.tag.push('')
-                                                    widget.refreshComponent()
-                                                })),
-                                                color: `#0062c0`
-                                            }),
-                                            Editor.uploadImage({
-                                                gvc: gvc,
-                                                title: '圖片',
-                                                def: data.img,
-                                                callback: (text) => {
-                                                    data.img = text
-                                                    widget.refreshComponent()
-                                                }
-                                            }),
-                                            TriggerEvent.editer(gvc, widget, data, {
-                                                hover: true,
-                                                option: [],
-                                                title: "點擊事件"
-                                            })
-                                        ])
+                                                        }))
+                                                    },
+                                                    color: `#0062c0`
+                                                }),
+                                                Editor.uploadImage({
+                                                    gvc: gvc,
+                                                    title: '圖片',
+                                                    def: data.img,
+                                                    callback: (text) => {
+                                                        data.img = text
+                                                        widget.refreshComponent()
+                                                    }
+                                                }),
+                                                TriggerEvent.editer(gvc, widget, data, {
+                                                    hover: true,
+                                                    option: [],
+                                                    title: "點擊事件"
+                                                })
+                                            ])
+                                        }
                                     })
                                 }).join(`<div class="my-2"></div>`)
                             })()

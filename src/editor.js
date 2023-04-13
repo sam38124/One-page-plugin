@@ -266,6 +266,7 @@ export class Editor {
                 bind: id,
                 view: () => {
                     if (obj.data.expand) {
+                        console.log(`type-->` + typeof obj.innerText);
                         return `<div class="w-100  rounded p-2 " style="background: ${color};">
                             <div
                                 class="d-flex p-0 align-items-center mb-2 w-100"
@@ -279,7 +280,7 @@ export class Editor {
                                 <div class="flex-fill"></div>
                                 <div style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-white"></i></div>
                             </div>
-                            ${obj.innerText}
+                            ${(typeof obj.innerText === 'string') ? obj.innerText : obj.innerText()}
                         </div>`;
                     }
                     return `<div class="w-100  rounded p-2 " style="background-color: ${color};">
@@ -416,25 +417,27 @@ export class Editor {
                 gvc: obj.gvc,
                 title: obj.title,
                 data: obj.expand,
-                innerText: obj.array
-                    .map((dd, index) => {
-                    return Editor.toggleExpand({
-                        gvc: obj.gvc,
-                        title: `<div    draggable="true"  ondragenter="${obj.gvc.event((e, event) => {
-                            dragm.end = index;
-                        })}" ondragstart="${obj.gvc.event(() => {
-                            dragm.start = index;
-                            dragm.end = index;
-                        })}"   ondragend="${obj.gvc.event(() => {
-                            ScriptStyle1.swapArr(obj.originalArray, dragm.start, dragm.end);
-                            obj.refreshComponent();
-                        })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
-                        data: dd.expand,
-                        innerText: dd.innerHtml,
-                        color: `#2b115d`,
-                    });
-                })
-                    .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event),
+                innerText: () => {
+                    return obj.array
+                        .map((dd, index) => {
+                        return Editor.toggleExpand({
+                            gvc: obj.gvc,
+                            title: `<div    draggable="true"  ondragenter="${obj.gvc.event((e, event) => {
+                                dragm.end = index;
+                            })}" ondragstart="${obj.gvc.event(() => {
+                                dragm.start = index;
+                                dragm.end = index;
+                            })}"   ondragend="${obj.gvc.event(() => {
+                                ScriptStyle1.swapArr(obj.originalArray, dragm.start, dragm.end);
+                                obj.refreshComponent();
+                            })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
+                            data: dd.expand,
+                            innerText: dd.innerHtml,
+                            color: `#2b115d`,
+                        });
+                    })
+                        .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event);
+                },
                 color: `#3333a2`,
             }));
     }

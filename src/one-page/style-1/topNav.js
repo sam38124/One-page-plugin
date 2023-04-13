@@ -200,69 +200,73 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             gvc: gvc,
                             title: '標題設定',
                             data: widget.data.nav.title,
-                            innerText: gvc.map([
-                                TriggerEvent.editer(gvc, widget, widget.data.logoClick, {
-                                    hover: true,
-                                    option: [],
-                                    title: "點擊事件"
-                                }),
-                                glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '電腦版標題',
-                                    default: widget.data.nav.title.pc,
-                                    placeHolder: '輸入電腦版標題',
-                                    callback: (text) => {
-                                        widget.data.nav.title.pc = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '手機版標題',
-                                    default: widget.data.nav.title.phone,
-                                    placeHolder: '輸入電腦版標題',
-                                    callback: (text) => {
-                                        widget.data.nav.title.phone = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                            ]),
+                            innerText: () => {
+                                return gvc.map([
+                                    TriggerEvent.editer(gvc, widget, widget.data.logoClick, {
+                                        hover: true,
+                                        option: [],
+                                        title: "點擊事件"
+                                    }),
+                                    glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: '電腦版標題',
+                                        default: widget.data.nav.title.pc,
+                                        placeHolder: '輸入電腦版標題',
+                                        callback: (text) => {
+                                            widget.data.nav.title.pc = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: '手機版標題',
+                                        default: widget.data.nav.title.phone,
+                                        placeHolder: '輸入電腦版標題',
+                                        callback: (text) => {
+                                            widget.data.nav.title.phone = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                ]);
+                            },
                         }),
                         `<div class="my-2" style="background: #2F3296FF"></div>`,
                         Editor.toggleExpand({
                             gvc: gvc,
                             title: '重點按鈕',
                             data: widget.data.nav.btnExpand,
-                            innerText: gvc.map([
-                                `
+                            innerText: () => {
+                                return gvc.map([
+                                    `
                                     ${Editor.h3('是否可見')}
                                     <select  class="form-control form-select" onchange="${gvc.event((e) => {
-                                    widget.data.nav.btn.visible = e.value === 'yes';
-                                    widget.refreshComponent();
-                                })}">
+                                        widget.data.nav.btn.visible = e.value === 'yes';
+                                        widget.refreshComponent();
+                                    })}">
                                     <option value="yes" ${!widget.data.nav.btn.visible || 'selected'} >是</option>
                                     <option value="no" ${widget.data.nav.btn.visible || 'selected'}>否</option>
 </select>
                                     `,
-                                glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '按鈕名稱[HTML]',
-                                    default: widget.data.nav.btn.name,
-                                    placeHolder: '輸入按鈕名稱',
-                                    callback: (text) => {
-                                        widget.data.nav.btn.name = text;
+                                    glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: '按鈕名稱[HTML]',
+                                        default: widget.data.nav.btn.name,
+                                        placeHolder: '輸入按鈕名稱',
+                                        callback: (text) => {
+                                            widget.data.nav.btn.name = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    glitter.htmlGenerate.styleEditor(widget.data.nav.btn).editor(gvc, () => {
                                         widget.refreshComponent();
-                                    },
-                                }),
-                                glitter.htmlGenerate.styleEditor(widget.data.nav.btn).editor(gvc, () => {
-                                    widget.refreshComponent();
-                                }, '按鈕設計樣式'),
-                                TriggerEvent.editer(gvc, widget, widget.data.nav.btn, {
-                                    hover: true,
-                                    option: [],
-                                    title: '點擊事件',
-                                }),
-                            ]),
+                                    }, '按鈕設計樣式'),
+                                    TriggerEvent.editer(gvc, widget, widget.data.nav.btn, {
+                                        hover: true,
+                                        option: [],
+                                        title: '點擊事件',
+                                    }),
+                                ]);
+                            },
                         }),
                         `<div class="my-2"></div>`,
                         Editor.toggleExpand({
@@ -294,31 +298,33 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                             ${dd.name || `連結:${index + 1}`}
                                                         </div>`,
                                             data: dd,
-                                            innerText: gvc.map([
-                                                glitter.htmlGenerate.editeInput({
-                                                    gvc: gvc,
-                                                    title: '連結標題',
-                                                    default: dd.name,
-                                                    placeHolder: '請輸入連結標題',
-                                                    callback: (text) => {
-                                                        dd.name = text;
-                                                        widget.refreshComponent();
-                                                    },
-                                                }),
-                                                (() => {
-                                                    if (dd.list && dd.list.length > 0) {
-                                                        return ``;
-                                                    }
-                                                    else {
-                                                        return TriggerEvent.editer(gvc, widget, dd, {
-                                                            hover: true,
-                                                            option: [],
-                                                            title: '點擊事件',
-                                                        });
-                                                    }
-                                                })(),
-                                                recursion(dd, false),
-                                            ]),
+                                            innerText: () => {
+                                                return gvc.map([
+                                                    glitter.htmlGenerate.editeInput({
+                                                        gvc: gvc,
+                                                        title: '連結標題',
+                                                        default: dd.name,
+                                                        placeHolder: '請輸入連結標題',
+                                                        callback: (text) => {
+                                                            dd.name = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                    }),
+                                                    (() => {
+                                                        if (dd.list && dd.list.length > 0) {
+                                                            return ``;
+                                                        }
+                                                        else {
+                                                            return TriggerEvent.editer(gvc, widget, dd, {
+                                                                hover: true,
+                                                                option: [],
+                                                                title: '點擊事件',
+                                                            });
+                                                        }
+                                                    })(),
+                                                    recursion(dd, false),
+                                                ]);
+                                            },
                                             color: first ? `#004081` : `#0062c0`,
                                         });
                                     })
@@ -335,7 +341,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                             gvc: gvc,
                                             title: '子連結',
                                             data: data.children,
-                                            innerText: innerHtml,
+                                            innerText: () => {
+                                                return innerHtml;
+                                            },
                                             color: `#004081`,
                                         })}</div>
                                             `;
@@ -345,7 +353,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                     }
                                 }
                                 return recursion(nav.bar, true);
-                            })(),
+                            }),
                             color: `#0062c0`,
                         }),
                     ]);

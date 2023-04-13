@@ -169,26 +169,28 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         `<div class="my-2"></div>`,
                         ['btn1','btn2'].map((key,index)=>{
                             return Editor.toggleExpand({
-                                gvc: gvc, title: "按鈕:"+(index+1), data: widget.data[key], innerText: gvc.map([
-                                    glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: '按鈕標題',
-                                        default: widget.data[key].title,
-                                        placeHolder: "按鈕標題",
-                                        callback: (text) => {
-                                            widget.data[key].title = text
+                                gvc: gvc, title: "按鈕:"+(index+1), data: widget.data[key], innerText: ()=>{
+                                    return gvc.map([
+                                        glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: '按鈕標題',
+                                            default: widget.data[key].title,
+                                            placeHolder: "按鈕標題",
+                                            callback: (text) => {
+                                                widget.data[key].title = text
+                                                widget.refreshComponent()
+                                            }
+                                        }),
+                                        glitter.htmlGenerate.styleEditor(widget.data[key]).editor(gvc,()=>{
                                             widget.refreshComponent()
-                                        }
-                                    }),
-                                    glitter.htmlGenerate.styleEditor(widget.data[key]).editor(gvc,()=>{
-                                        widget.refreshComponent()
-                                    },'按鈕設計樣式'),
-                                    TriggerEvent.editer(gvc, widget, widget.data[key], {
-                                        hover: true,
-                                        option: [],
-                                        title: "點擊事件"
-                                    })
-                                ])
+                                        },'按鈕設計樣式'),
+                                        TriggerEvent.editer(gvc, widget, widget.data[key], {
+                                            hover: true,
+                                            option: [],
+                                            title: "點擊事件"
+                                        })
+                                    ])
+                                }
                             })
                         }).join('<div class="my-2"></div>')
                     ]);

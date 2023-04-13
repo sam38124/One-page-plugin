@@ -143,7 +143,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     return gvc.map([
                         `<div class="mt-2"></div>`,
                         Editor.toggleExpand({
-                            gvc:gvc,title:"模板設定",data:widget.data,innerText:(template.render(gvc,widget,setting,hoverID).editor() as string)
+                            gvc:gvc,title:"模板設定",data:widget.data,innerText:()=>{
+                                return (template.render(gvc,widget,setting,hoverID).editor() as string)
+                            }
                         })
                     ]);
                 },

@@ -162,24 +162,26 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             gvc: gvc,
                             title: '按鈕',
                             data: widget.data.btn,
-                            innerText: gvc.map([
-                                glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: `按鈕名稱`,
-                                    default: widget.data.btn.name,
-                                    placeHolder: '輸入按鈕名稱',
-                                    callback: (text) => {
-                                        widget.data.btn.name = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                glitter.htmlGenerate.styleEditor(widget.data.btn).editor(gvc, widget, '按鈕設計樣式'),
-                                TriggerEvent.editer(gvc, widget, widget.data.btn, {
-                                    hover: true,
-                                    option: [],
-                                    title: '點擊事件',
-                                }),
-                            ]),
+                            innerText: () => {
+                                return gvc.map([
+                                    glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: `按鈕名稱`,
+                                        default: widget.data.btn.name,
+                                        placeHolder: '輸入按鈕名稱',
+                                        callback: (text) => {
+                                            widget.data.btn.name = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    glitter.htmlGenerate.styleEditor(widget.data.btn).editor(gvc, widget, '按鈕設計樣式'),
+                                    TriggerEvent.editer(gvc, widget, widget.data.btn, {
+                                        hover: true,
+                                        option: [],
+                                        title: '點擊事件',
+                                    }),
+                                ]);
+                            },
                         }),
                     ]);
                 },

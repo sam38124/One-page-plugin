@@ -140,7 +140,7 @@ ${obj.gvc.bindView({
 
     public setting: HtmlJson[];
 
-    constructor(setting: HtmlJson[], hover: string[] = []) {
+    constructor(setting: HtmlJson[], hover: string[] = [],subData?:any) {
         this.setting = setting;
         HtmlGenerate.share.false=HtmlGenerate.share.false ?? {}
         const editContainer = (window as any).glitter.getUUID();
@@ -229,7 +229,7 @@ ${obj.gvc.bindView({
                                         data=gvc.glitter.share.htmlExtension[gvc.glitter.htmlGenerate.resourceHook(dd.js)][
                                             dd.type
                                             ]
-                                            .render(gvc, dd, setting, hover)
+                                            .render(gvc, dd, setting, hover,subData)
                                             .view()
                                     } catch (e: any) {
                                         HtmlGenerate.share.false[dd.js]=(HtmlGenerate.share.false[dd.js] ?? 0)+1
@@ -478,7 +478,7 @@ ${gvc.bindView(()=>{
                                                 data=gvc.glitter.share.htmlExtension[gvc.glitter.htmlGenerate.resourceHook(dd.js)][
                                                     dd.type
                                                     ]
-                                                    .render(gvc, dd, setting, hover)
+                                                    .render(gvc, dd, setting, hover,subData)
                                                     .editor()
                                             } catch (e: any) {
                                                 HtmlGenerate.share.false[dd.js]=(HtmlGenerate.share.false[dd.js] ?? 0)+1

@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="boxicons.iconjar1">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/backend_default/node_modules/ts-glitter/glitterdoc/src/assets/vendor/boxicons/iconjar/boxicons.iconjar.zip!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
