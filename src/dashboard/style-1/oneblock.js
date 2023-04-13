@@ -640,11 +640,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                   <div class="row">
                                     ${glitter.print(function () {
                                 let HTML = "";
-                                let index = 2;
+                                let index = 3;
                                 console.log(sourceData.data[index]);
-                                HTML += db["table_barChart"](sourceData.data[index], index);
-                                sourceData.data.map((d, i) => {
-                                });
+                                HTML += db["radar"](sourceData.data[index], index);
                                 return HTML;
                             })}
                                   </div>

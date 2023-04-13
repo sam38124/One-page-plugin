@@ -13,6 +13,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/oneblock.js', import.meta.url))
         },
+        colCard: {
+            title: "卡片",
+            subContent: "",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/colCard.js', import.meta.url))
+        },
         empty: {
             title: "",
             subContent: "",

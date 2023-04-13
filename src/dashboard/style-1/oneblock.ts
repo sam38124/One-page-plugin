@@ -667,13 +667,13 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                   <div class="row">
                                     ${glitter.print(function () {
                                         let HTML = "";
-                                        let index = 2
+                                        let index = 3
                                         console.log(sourceData.data[index])
-                                        HTML += db["table_barChart"](sourceData.data[index] , index)
+                                        HTML += db["radar"](sourceData.data[index] , index)
                                
-                                        sourceData.data.map((d, i)=>{
-                                            // console.log(d)
-                                        })
+                                        // sourceData.data.map((d, i)=>{
+                                        //     // console.log(d)
+                                        // })
                                         // sourceData.data.map((d, i) => (
                                         //     HTML += db[d.mode](d, i))
                                         //    
