@@ -348,7 +348,6 @@ export function init(fun, gt) {
             }
         });
     }
-    console.log(JSON.stringify(glitter.modelJsList));
     const lifeCycle = new LifeCycle();
     lifeCycle.onResume = pageData.onResume ?? lifeCycle.onResume;
     lifeCycle.onPause = pageData.onPause ?? lifeCycle.onPause;
