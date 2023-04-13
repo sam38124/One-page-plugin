@@ -48,7 +48,8 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                             bind:id,
                             view:()=>{
                                 if(data){
-                                    return new glitter.htmlGenerate(data.config, [],subData).render(gvc);
+
+                                    return new glitter.htmlGenerate(data.config, [],subData ?? {}).render(gvc);
                                 }else{
                                     return  ``
                                 }

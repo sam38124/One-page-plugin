@@ -1,7 +1,261 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PropertiesComponent">
-    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
-    <property name="settings.editor.selected.configurable" value="preferences.language.Kotlin" />
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e0691564-d9ba-406b-affb-510b90ca5545" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/official/component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/official/component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/official/component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/official/component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2OMYUeF9TRrM6VBzjjVZ1IaUR63" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="npm.start">
+    <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build:tscAuto" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/backend_default/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.build:tscAuto" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e0691564-d9ba-406b-affb-510b90ca5545" name="Changes" comment="" />
+      <created>1681371934907</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681371934907</updated>
+      <workItem from="1681371936872" duration="4299000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/faq.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/video.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/intro.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/test.js" />
+        <option value="$PROJECT_DIR$/src/hyper/style1.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/sub.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/team.js" />
+        <option value="$PROJECT_DIR$/src/one-page/glitter.js" />
+        <option value="$PROJECT_DIR$/src/one-page/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/client.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml2.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/client.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/service.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/topNav.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/screenshots.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/feature.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/login.js" />
+        <option value="$PROJECT_DIR$/src/glitter/model/User.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature4.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/FAQ.js" />
+        <option value="$PROJECT_DIR$/src/official/component.js" />
+        <option value="$PROJECT_DIR$/src/hyper/style-1/form.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/hero.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.d.ts" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/menu.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/contactUS.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/banner.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/erp/erp-config.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/about.js" />
+        <option value="$PROJECT_DIR$/src/hyper/style-1/backend-manager.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/clientService.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/initial-event.js" />
+        <option value="$PROJECT_DIR$/src/jspage/helloworld.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/seo-manager.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/seo-manager.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/seo-manager.d.ts" />
+        <option value="$PROJECT_DIR$/src/hyper/style-1/member-manager.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/glitter/initial.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/serviceDetail.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/aboutUS.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature3.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style1.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/testimonial.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/GVController.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/price2.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/banner.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.d.ts" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature2.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/editor.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/cta.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style1.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/hyper/assets/vendor/nouislider/src/nouislider.js" />
+        <option value="$PROJECT_DIR$/src/one-page/tool.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/download.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/team.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/contact.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/supportWidget.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature.js" />
+        <option value="$PROJECT_DIR$/src/glitter/api/base.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/dialog/ShareDialog.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/client.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/funnel.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style1.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.d.ts" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.d.ts" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/erp/event.js" />
+        <option value="$PROJECT_DIR$/src/one-page/assets/vendor/nouislider/src/nouislider.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.d.ts" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.d.ts" />
+        <option value="$PROJECT_DIR$/src/empty/style1.js" />
+        <option value="$PROJECT_DIR$/src/empty/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/Glitter.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.d.ts" />
+        <option value="$PROJECT_DIR$/src/hyper/style-1/sample.js" />
+        <option value="$PROJECT_DIR$/backend_default/index.js" />
+        <option value="$PROJECT_DIR$/backend_default/index.js.map" />
+        <option value="$PROJECT_DIR$/backend_default/index.d.ts" />
+        <option value="$PROJECT_DIR$/src/event.js" />
+        <option value="$PROJECT_DIR$/src/Entry.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/home/template.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.d.ts" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/contact.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/otherService.js" />
+        <option value="$PROJECT_DIR$/src/home/index.js" />
+        <option value="$PROJECT_DIR$/src/erp/api/base.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/shop.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/slider.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/portfolio.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-2.js" />
+        <option value="$PROJECT_DIR$/src/glitter/event.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/whyUs.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style1.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/slider.js" />
+        <option value="$PROJECT_DIR$/src/api/base.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/project.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/testimonials.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.d.ts" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/special.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/about.js" />
+        <option value="$PROJECT_DIR$/src/dialog/ShareDialog.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/landingTop.js" />
+        <option value="$PROJECT_DIR$/src/official.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/topBanner.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/one-page/glitter/appManager.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/dialog/dialog.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style1.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/service.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/hyper/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.d.ts" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/template.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.js" />
+      </list>
+    </option>
   </component>
 </project>

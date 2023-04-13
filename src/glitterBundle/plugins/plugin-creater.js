@@ -8,10 +8,27 @@ export class Plugin {
     static createComponent(url, fun) {
         const glitter = window.glitter;
         const val = fun(glitter, window.parent.editerData !== undefined);
-        try {
-            glitter.share.componentCallback[url](val);
+        let fal = 0;
+        function tryLoop() {
+            try {
+                let delete2 = 0;
+                glitter.share.componentCallback[url].map((dd, index) => {
+                    dd(val);
+                    delete2 = index;
+                });
+                glitter.share.componentCallback[url].splice(0, delete2);
+            }
+            catch (e) {
+                if (fal < 10) {
+                    setTimeout(() => {
+                        tryLoop();
+                    }, 100);
+                }
+                fal += 1;
+                console.log('error' + url);
+            }
         }
-        catch (e) { }
+        tryLoop();
         return val;
     }
     static setComponent(original, url) {
@@ -21,16 +38,20 @@ export class Plugin {
             glitter.share.componentData = glitter.share.componentData ?? {};
             let val = glitter.share.componentData[url.href];
             glitter.share.componentCallback = glitter.share.componentCallback ?? {};
-            glitter.share.componentCallback[url.href] = (dd) => {
+            glitter.share.componentCallback[url.href] = glitter.share.componentCallback[url.href] ?? [];
+            glitter.share.componentCallback[url.href].push((dd) => {
                 glitter.share.componentData[url.href] = dd;
                 widget.refreshComponent();
-            };
+            });
             gvc.glitter.addMtScript([
                 {
                     src: url,
                     type: 'module'
                 }
-            ], () => { }, () => { });
+            ], () => {
+                val = glitter.share.componentData[url.href];
+                console.log('setComponent-->' + url);
+            }, () => { });
             return {
                 view: () => {
                     if (!val) {
