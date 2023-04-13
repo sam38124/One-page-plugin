@@ -25,7 +25,6 @@ export class Plugin {
                     }, 100);
                 }
                 fal += 1;
-                console.log('error' + url);
             }
         }
         tryLoop();
