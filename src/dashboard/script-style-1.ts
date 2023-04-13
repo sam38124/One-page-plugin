@@ -15,24 +15,20 @@ export class ScriptStyle1{
         (window as any).root = document.getElementsByTagName('html')[0];
         (window as any).root.classList.add('dark-mode');
         gvc.addStyleLink([
-            ScriptStyle1.getRout('assets/vendor/animate.css/animate.min.css'),
-            ScriptStyle1.getRout('assets/vendor/aos/aos.css'),
-            ScriptStyle1.getRout('assets/vendor/bootstrap/css/bootstrap.min.css'),
-            ScriptStyle1.getRout('assets/vendor/bootstrap-icons/bootstrap-icons.css'),
-            ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.min.css'),
-            ScriptStyle1.getRout('assets/vendor/glightbox/css/glightbox.min.css'),
-            ScriptStyle1.getRout('assets/vendor/swiper/swiper-bundle.min.css'),
-            ScriptStyle1.getRout('assets/css/style.css')
+            ScriptStyle1.getRout('assets/images/favicon.ico'),
+            ScriptStyle1.getRout('assets/css/vendor/jquery-jvectormap-1.2.2.css'),
+            ScriptStyle1.getRout('assets/css/icons.min.css'),
+            ScriptStyle1.getRout('assets/css/app.min.css'),
+            ScriptStyle1.getRout('assets/css/app-dark.min.css'),
         ]).then()
         gvc.addMtScript([
-            "assets/vendor/aos/aos.js",
-            "assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
-            "assets/vendor/glightbox/js/glightbox.min.js",
-            "assets/vendor/isotope-layout/isotope.pkgd.min.js",
-            "assets/vendor/swiper/swiper-bundle.min.js",
-            "assets/vendor/php-email-form/validate.js",
-            'assets/vendor/animate.css/animate.js',
-            'assets/js/main.js'
+            "assets/js/vendor/apexcharts.min.js",
+            "assets/js/vendor.min.js",
+            "assets/js/app.min.js",
+            "assets/js/vendor/Chart.bundle.min.js",
+            "assets/js/vendor/jquery-jvectormap-1.2.2.min.js",
+            "assets/js/vendor/jquery-jvectormap-world-mill-en.js",
+            "dashboard.js"
         ].map(((dd)=>{
             return   {src: ScriptStyle1.getRout(dd)}
         })), () => {

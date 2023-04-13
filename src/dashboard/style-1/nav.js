@@ -10,6 +10,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget);
                     let id = glitter.getUUID();
+                    setTimeout(() => $("#dash-daterange").daterangepicker({ singleDatePicker: !0 }), 500);
                     return gvc.bindView({
                         bind: id,
                         view: () => {
