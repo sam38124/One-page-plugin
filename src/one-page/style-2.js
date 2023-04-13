@@ -221,38 +221,40 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                 gvc: gvc,
                                 title: x.text,
                                 data: widget.data[x.key],
-                                innerText: gvc.map([
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `電腦版 - ${x.text}`,
-                                        default: widget.data[x.key].web.text,
-                                        placeHolder: `輸入${x.text}`,
-                                        callback: (text) => {
-                                            widget.data[x.key].web.text = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    `<div class="alert-dark alert p-2 mt-2">
+                                innerText: () => {
+                                    return gvc.map([
+                                        glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: `電腦版 - ${x.text}`,
+                                            default: widget.data[x.key].web.text,
+                                            placeHolder: `輸入${x.text}`,
+                                            callback: (text) => {
+                                                widget.data[x.key].web.text = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        `<div class="alert-dark alert p-2 mt-2">
                                         ${glitter.htmlGenerate
-                                        .styleEditor(widget.data[x.key].web)
-                                        .editor(gvc, widget, '設計樣式')}
+                                            .styleEditor(widget.data[x.key].web)
+                                            .editor(gvc, widget, '設計樣式')}
                                     </div>`,
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `手機板 - 標題`,
-                                        default: widget.data[x.key].mobile.text,
-                                        placeHolder: `輸入${x.text}`,
-                                        callback: (text) => {
-                                            widget.data[x.key].mobile.text = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    `<div class="alert-dark alert p-2 mt-2">
+                                        glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: `手機板 - 標題`,
+                                            default: widget.data[x.key].mobile.text,
+                                            placeHolder: `輸入${x.text}`,
+                                            callback: (text) => {
+                                                widget.data[x.key].mobile.text = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        `<div class="alert-dark alert p-2 mt-2">
                                         ${glitter.htmlGenerate
-                                        .styleEditor(widget.data[x.key].mobile)
-                                        .editor(gvc, widget, '設計樣式')}
+                                            .styleEditor(widget.data[x.key].mobile)
+                                            .editor(gvc, widget, '設計樣式')}
                                     </div>`,
-                                ]),
+                                    ]);
+                                },
                             })}</div>`;
                         });
                         return gvc.map([
@@ -261,26 +263,28 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                 gvc: gvc,
                                 title: '圖片/動畫',
                                 data: widget.data.lottie,
-                                innerText: gvc.map([
-                                    Editor.uploadLottie({
-                                        gvc: gvc,
-                                        title: `圖片或Lottie動畫 1`,
-                                        def: widget.data.lottie[0].json,
-                                        callback: (text) => {
-                                            widget.data.lottie[0].json = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    Editor.uploadLottie({
-                                        gvc: gvc,
-                                        title: `圖片或Lottie動畫 2`,
-                                        def: widget.data.lottie[1].json,
-                                        callback: (text) => {
-                                            widget.data.lottie[1].json = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                ]),
+                                innerText: () => {
+                                    return gvc.map([
+                                        Editor.uploadLottie({
+                                            gvc: gvc,
+                                            title: `圖片或Lottie動畫 1`,
+                                            def: widget.data.lottie[0].json,
+                                            callback: (text) => {
+                                                widget.data.lottie[0].json = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        Editor.uploadLottie({
+                                            gvc: gvc,
+                                            title: `圖片或Lottie動畫 2`,
+                                            def: widget.data.lottie[1].json,
+                                            callback: (text) => {
+                                                widget.data.lottie[1].json = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                    ]);
+                                },
                             })}</div>`,
                         ]);
                     },
@@ -522,68 +526,72 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                         widget.refreshComponent();
                                     })),
                                     data: data,
-                                    innerText: gvc.map([
-                                        glitter.htmlGenerate.editeInput({
-                                            gvc: gvc,
-                                            title: '標題',
-                                            default: data.title ?? '',
-                                            placeHolder: '輸入標題',
-                                            callback: (text) => {
-                                                data.title = text;
-                                                widget.refreshComponent();
-                                            },
-                                        }),
-                                        glitter.htmlGenerate.editeText({
-                                            gvc: gvc,
-                                            title: '子標題',
-                                            default: data.sub ?? '',
-                                            placeHolder: '輸入子標題',
-                                            callback: (text) => {
-                                                data.sub = text;
-                                                widget.refreshComponent();
-                                            },
-                                        }),
-                                        `<div class="mb-2"></div>`,
-                                        Editor.toggleExpand({
-                                            gvc: gvc,
-                                            title: `標籤設定`,
-                                            data: data.tabExpand,
-                                            innerText: data.tag
-                                                .map((d2, index) => {
-                                                return Editor.searchInput({
-                                                    gvc: gvc,
-                                                    title: Editor.minusTitle(d2 || `標籤:${index + 1}`, gvc.event(() => {
-                                                        data.tag.splice(index, 1);
-                                                        widget.refreshComponent();
-                                                    })),
-                                                    def: d2,
-                                                    placeHolder: '標籤',
-                                                    callback: (text) => {
-                                                        data.tag[index] = text;
-                                                        widget.refreshComponent();
-                                                    },
-                                                    array: widget.data.tag.map((dd) => {
-                                                        return dd.title;
-                                                    }),
-                                                });
-                                            })
-                                                .join(`<div class="my-2"></div>`) +
-                                                Editor.plusBtn('添加標籤', gvc.event(() => {
-                                                    data.tag.push('');
+                                    innerText: () => {
+                                        return gvc.map([
+                                            glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: '標題',
+                                                default: data.title ?? '',
+                                                placeHolder: '輸入標題',
+                                                callback: (text) => {
+                                                    data.title = text;
                                                     widget.refreshComponent();
-                                                })),
-                                            color: `#0062c0`,
-                                        }),
-                                        Editor.uploadImage({
-                                            gvc: gvc,
-                                            title: '圖片',
-                                            def: data.img,
-                                            callback: (text) => {
-                                                data.img = text;
-                                                widget.refreshComponent();
-                                            },
-                                        }),
-                                    ]),
+                                                },
+                                            }),
+                                            glitter.htmlGenerate.editeText({
+                                                gvc: gvc,
+                                                title: '子標題',
+                                                default: data.sub ?? '',
+                                                placeHolder: '輸入子標題',
+                                                callback: (text) => {
+                                                    data.sub = text;
+                                                    widget.refreshComponent();
+                                                },
+                                            }),
+                                            `<div class="mb-2"></div>`,
+                                            Editor.toggleExpand({
+                                                gvc: gvc,
+                                                title: `標籤設定`,
+                                                data: data.tabExpand,
+                                                innerText: () => {
+                                                    return data.tag
+                                                        .map((d2, index) => {
+                                                        return Editor.searchInput({
+                                                            gvc: gvc,
+                                                            title: Editor.minusTitle(d2 || `標籤:${index + 1}`, gvc.event(() => {
+                                                                data.tag.splice(index, 1);
+                                                                widget.refreshComponent();
+                                                            })),
+                                                            def: d2,
+                                                            placeHolder: '標籤',
+                                                            callback: (text) => {
+                                                                data.tag[index] = text;
+                                                                widget.refreshComponent();
+                                                            },
+                                                            array: widget.data.tag.map((dd) => {
+                                                                return dd.title;
+                                                            }),
+                                                        });
+                                                    })
+                                                        .join(`<div class="my-2"></div>`) +
+                                                        Editor.plusBtn('添加標籤', gvc.event(() => {
+                                                            data.tag.push('');
+                                                            widget.refreshComponent();
+                                                        }));
+                                                },
+                                                color: `#0062c0`,
+                                            }),
+                                            Editor.uploadImage({
+                                                gvc: gvc,
+                                                title: '圖片',
+                                                def: data.img,
+                                                callback: (text) => {
+                                                    data.img = text;
+                                                    widget.refreshComponent();
+                                                },
+                                            }),
+                                        ]);
+                                    },
                                 });
                             })
                                 .join(`<div class="my-2"></div>`)}

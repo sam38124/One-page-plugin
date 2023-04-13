@@ -228,7 +228,7 @@ export class Editor {
                 ${title}
             </div>`;
     }
-    public static fontawesome(obj: { title: string; gvc: any; def: string; callback: (text: string) => void }) {
+        public static fontawesome(obj: { title: string; gvc: any; def: string; callback: (text: string) => void }) {
         const glitter = (window as any).glitter;
         return (
             /*html*/ `
@@ -265,15 +265,17 @@ export class Editor {
             })
         );
     }
-    public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: string; color?: string }) {
+    public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: ()=>string; color?: string }) {
         const color = obj.color ?? `#1d1d64;`;
         const glitter = (window as any).glitter;
         return /*html*/ `${obj.gvc.bindView(() => {
             const id = glitter.getUUID();
+         
             return {
                 bind: id,
                 view: () => {
                     if (obj.data.expand) {
+                        console.log(`type-->`+typeof obj.innerText)
                         return /*html*/ `<div class="w-100  rounded p-2 " style="background: ${color};">
                             <div
                                 class="d-flex p-0 align-items-center mb-2 w-100"
@@ -287,7 +289,7 @@ export class Editor {
                                 <div class="flex-fill"></div>
                                 <div style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-white"></i></div>
                             </div>
-                            ${obj.innerText}
+                            ${(typeof obj.innerText === 'string') ? obj.innerText:obj.innerText()}
                         </div>`;
                     }
                     return /*html*/ `<div class="w-100  rounded p-2 " style="background-color: ${color};">
@@ -432,7 +434,7 @@ export class Editor {
     public static arrayItem(obj: {
         gvc: any;
         title: string;
-        array: { title: string; innerHtml: string; expand: any; minus: string }[];
+        array: { title: string; innerHtml: ()=>string; expand: any; minus: string }[];
         originalArray:any,
         expand: any;
         plus: {
@@ -453,7 +455,7 @@ export class Editor {
                 title: obj.title,
                 data: obj.expand,
                 innerText:
-                    obj.array
+                    ()=>{return obj.array
                         .map((dd,index) => {
 
                             return Editor.toggleExpand({
@@ -472,7 +474,7 @@ export class Editor {
                                 color: `#2b115d`,
                             });
                         })
-                        .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event),
+                        .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event)},
                 color: `#3333a2`,
             })
         );

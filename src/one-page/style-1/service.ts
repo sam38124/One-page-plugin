@@ -168,42 +168,44 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         gvc: gvc,
                                         title: dd.name || `項目:${index + 1}`,
                                         data: dd,
-                                        innerText: gvc.map([
-                                            Editor.fontawesome({
-                                                gvc: gvc,
-                                                title: '圖示',
-                                                def: dd.icon,
-                                                callback: (text: string) => {
-                                                    dd.icon = text;
-                                                    widget.refreshComponent();
-                                                },
-                                            }),
-                                            glitter.htmlGenerate.editeInput({
-                                                gvc: gvc,
-                                                title: '項目標題',
-                                                default: dd.name,
-                                                placeHolder: '項目標題',
-                                                callback: (text) => {
-                                                    dd.name = text;
-                                                    widget.refreshComponent();
-                                                },
-                                            }),
-                                            glitter.htmlGenerate.editeText({
-                                                gvc: gvc,
-                                                title: '項目描述',
-                                                default: dd.desc,
-                                                placeHolder: '項目描述',
-                                                callback: (text) => {
-                                                    dd.desc = text;
-                                                    widget.refreshComponent();
-                                                },
-                                            }),
-                                            TriggerEvent.editer(gvc, widget, dd, {
-                                                hover: true,
-                                                option: [],
-                                                title: "點擊事件"
-                                            })
-                                        ]),
+                                        innerText: ()=>{
+                                            return gvc.map([
+                                                Editor.fontawesome({
+                                                    gvc: gvc,
+                                                    title: '圖示',
+                                                    def: dd.icon,
+                                                    callback: (text: string) => {
+                                                        dd.icon = text;
+                                                        widget.refreshComponent();
+                                                    },
+                                                }),
+                                                glitter.htmlGenerate.editeInput({
+                                                    gvc: gvc,
+                                                    title: '項目標題',
+                                                    default: dd.name,
+                                                    placeHolder: '項目標題',
+                                                    callback: (text) => {
+                                                        dd.name = text;
+                                                        widget.refreshComponent();
+                                                    },
+                                                }),
+                                                glitter.htmlGenerate.editeText({
+                                                    gvc: gvc,
+                                                    title: '項目描述',
+                                                    default: dd.desc,
+                                                    placeHolder: '項目描述',
+                                                    callback: (text) => {
+                                                        dd.desc = text;
+                                                        widget.refreshComponent();
+                                                    },
+                                                }),
+                                                TriggerEvent.editer(gvc, widget, dd, {
+                                                    hover: true,
+                                                    option: [],
+                                                    title: "點擊事件"
+                                                })
+                                            ])
+                                        },
                                     });
                                 })
                                 .join('<div class="my-2"></div>') +

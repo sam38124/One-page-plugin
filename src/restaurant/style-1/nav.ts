@@ -86,33 +86,35 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             gvc:gvc,
                             title:"Logo區塊",
                             data:widget.data.logoExpand,
-                            innerText:gvc.map([
-                                Editor.uploadImage({
-                                    gvc: gvc,
-                                    title: `圖片`,
-                                    def: widget.data.logo,
-                                    callback: (e) => {
-                                        widget.data.logo = e;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                glitter.htmlGenerate.styleEditor(widget.data.logoStyle).editor(gvc,()=>{
-                                    widget.refreshComponent()
-                                },"圖片設計樣式"),
-                                glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '標題',
-                                    default: widget.data.title ?? '',
-                                    placeHolder: '請輸入標題',
-                                    callback: (text) => {
-                                        widget.data.title = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                glitter.htmlGenerate.styleEditor(widget.data.logoTitleStyle).editor(gvc,()=>{
-                                    widget.refreshComponent()
-                                },"標題設計樣式")
-                            ])
+                            innerText:()=>{
+                                return gvc.map([
+                                    Editor.uploadImage({
+                                        gvc: gvc,
+                                        title: `圖片`,
+                                        def: widget.data.logo,
+                                        callback: (e) => {
+                                            widget.data.logo = e;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    glitter.htmlGenerate.styleEditor(widget.data.logoStyle).editor(gvc,()=>{
+                                        widget.refreshComponent()
+                                    },"圖片設計樣式"),
+                                    glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: '標題',
+                                        default: widget.data.title ?? '',
+                                        placeHolder: '請輸入標題',
+                                        callback: (text) => {
+                                            widget.data.title = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    glitter.htmlGenerate.styleEditor(widget.data.logoTitleStyle).editor(gvc,()=>{
+                                        widget.refreshComponent()
+                                    },"標題設計樣式")
+                                ])
+                            }
                         }),
                         Editor.arrayItem({
                             originalArray:widget.data.bar,

@@ -99,41 +99,45 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             gvc:gvc,
                             title:'大標題',
                             data:widget.data.keyVision.titleStyleEx,
-                            innerText:gvc.map([
-                                glitter.htmlGenerate.styleEditor(widget.data.keyVision.titleStyle).editor(gvc,()=>{
-                                    widget.refreshComponent()
-                                },'大標題樣式'),
-                                glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '大標題',
-                                    default: widget.data.keyVision.title,
-                                    placeHolder: '請輸入大標題所顯示的文字，也能用簡單的html敘述',
-                                    callback: (text) => {
-                                        widget.data.keyVision.title = text;
-                                        widget.refreshComponent();
-                                    },
-                                })
-                            ])
+                            innerText:()=>{
+                                return gvc.map([
+                                    glitter.htmlGenerate.styleEditor(widget.data.keyVision.titleStyle).editor(gvc,()=>{
+                                        widget.refreshComponent()
+                                    },'大標題樣式'),
+                                    glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: '大標題',
+                                        default: widget.data.keyVision.title,
+                                        placeHolder: '請輸入大標題所顯示的文字，也能用簡單的html敘述',
+                                        callback: (text) => {
+                                            widget.data.keyVision.title = text;
+                                            widget.refreshComponent();
+                                        },
+                                    })
+                                ])
+                            }
                         })+`<div class="mt-3"></div>`+
                         Editor.toggleExpand({
                             gvc:gvc,
                             title:'副標題',
                             data:widget.data.keyVision.titleStylesEx,
-                            innerText:gvc.map([
-                                glitter.htmlGenerate.styleEditor(widget.data.keyVision.subTitleStyle).editor(gvc,()=>{
-                                    widget.refreshComponent()
-                                },'副標題樣式'),
-                                glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '副標題',
-                                    default: widget.data.keyVision.desc,
-                                    placeHolder: '請輸入副標題所要顯示的文字',
-                                    callback: (text) => {
-                                        widget.data.keyVision.desc = text;
-                                        widget.refreshComponent();
-                                    },
-                                })
-                            ])
+                            innerText:()=>{
+                                return gvc.map([
+                                    glitter.htmlGenerate.styleEditor(widget.data.keyVision.subTitleStyle).editor(gvc,()=>{
+                                        widget.refreshComponent()
+                                    },'副標題樣式'),
+                                    glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: '副標題',
+                                        default: widget.data.keyVision.desc,
+                                        placeHolder: '請輸入副標題所要顯示的文字',
+                                        callback: (text) => {
+                                            widget.data.keyVision.desc = text;
+                                            widget.refreshComponent();
+                                        },
+                                    })
+                                ])
+                            }
                         })+
                         `<div class="mt-3"></div>
                         `+

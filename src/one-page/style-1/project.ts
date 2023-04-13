@@ -332,46 +332,50 @@ ${gvc.bindView(() => {
                             title: `標籤設定`,
                             data: widget.data.tabExpand,
                             innerText:
-                                widget.data.tag
-                                    .map((data: any, index: number) => {
-                                        return Editor.toggleExpand({
-                                            gvc: gvc,
-                                            title: Editor.minusTitle(
-                                                data.title || '標籤' + (index + 1),
-                                                gvc.event(() => {
-                                                    widget.data.tag.splice(index, 1);
-                                                    widget.refreshComponent();
-                                                })
-                                            ),
-                                            data: data,
-                                            innerText: gvc.map([
-                                                glitter.htmlGenerate.editeInput({
-                                                    gvc: gvc,
-                                                    title: '標籤名稱',
-                                                    default: data.title,
-                                                    placeHolder: '標籤',
-                                                    callback: (text) => {
-                                                        data.title = text;
+                                ()=>{
+                                return widget.data.tag
+                                        .map((data: any, index: number) => {
+                                            return Editor.toggleExpand({
+                                                gvc: gvc,
+                                                title: Editor.minusTitle(
+                                                    data.title || '標籤' + (index + 1),
+                                                    gvc.event(() => {
+                                                        widget.data.tag.splice(index, 1);
                                                         widget.refreshComponent();
-                                                    },
-                                                }),
-                                                glitter.htmlGenerate.styleEditor(data).editor(gvc, data, '標籤設計樣式'),
-                                            ]),
-                                            color: `#004281`,
-                                        });
-                                    })
-                                    .join(/*html*/ `<div class="my-2"></div>`) +
-                                Editor.plusBtn(
-                                    '新增標籤',
-                                    gvc.event(() => {
-                                        widget.data.tag.push({
-                                            style: `background-color:var(--bs-red);`,
-                                            class: ``,
-                                            title: `網頁設計`,
-                                        });
-                                        widget.refreshComponent();
-                                    })
-                                ),
+                                                    })
+                                                ),
+                                                data: data,
+                                                innerText: ()=>{
+                                                    return gvc.map([
+                                                        glitter.htmlGenerate.editeInput({
+                                                            gvc: gvc,
+                                                            title: '標籤名稱',
+                                                            default: data.title,
+                                                            placeHolder: '標籤',
+                                                            callback: (text) => {
+                                                                data.title = text;
+                                                                widget.refreshComponent();
+                                                            },
+                                                        }),
+                                                        glitter.htmlGenerate.styleEditor(data).editor(gvc, data, '標籤設計樣式'),
+                                                    ])
+                                                },
+                                                color: `#004281`,
+                                            });
+                                        })
+                                        .join(/*html*/ `<div class="my-2"></div>`) +
+                                    Editor.plusBtn(
+                                        '新增標籤',
+                                        gvc.event(() => {
+                                            widget.data.tag.push({
+                                                style: `background-color:var(--bs-red);`,
+                                                class: ``,
+                                                title: `網頁設計`,
+                                            });
+                                            widget.refreshComponent();
+                                        })
+                                    )
+                                },
                             color: `#0062c0`,
                         }),
                         /*html*/ `<div class="alert alert-dark p-2 mt-2">
@@ -403,91 +407,95 @@ ${gvc.bindView(() => {
                                             })
                                         )}</div>`,
                                         data: data,
-                                        innerText: gvc.map([
-                                            glitter.htmlGenerate.editeInput({
-                                                gvc: gvc,
-                                                title: '標題',
-                                                default: data.title ?? '',
-                                                placeHolder: '輸入標題',
-                                                callback: (text) => {
-                                                    data.title = text;
-                                                    widget.refreshComponent();
-                                                },
-                                            }),
-                                            glitter.htmlGenerate.editeText({
-                                                gvc: gvc,
-                                                title: '子標題',
-                                                default: data.sub ?? '',
-                                                placeHolder: '輸入子標題',
-                                                callback: (text) => {
-                                                    data.sub = text;
-                                                    widget.refreshComponent();
-                                                },
-                                            }),
-                                            /*html*/ `<div class="mb-2"></div>`,
-                                            Editor.toggleExpand({
-                                                gvc: gvc,
-                                                title: `標籤設定`,
-                                                data: data.tabExpand,
-                                                innerText:
-                                                    data.tag
-                                                        .map((d2: any, index: number) => {
-                                                            return Editor.searchInput({
-                                                                gvc: gvc,
-                                                                title: Editor.minusTitle(
-                                                                    d2 || `標籤:${index + 1}`,
-                                                                    gvc.event(() => {
-                                                                        data.tag.splice(index, 1);
-                                                                        widget.refreshComponent();
-                                                                    })
-                                                                ),
-                                                                def: d2,
-                                                                placeHolder: '標籤',
-                                                                callback: (text) => {
-                                                                    data.tag[index] = text;
+                                        innerText: ()=>{
+                                            return gvc.map([
+                                                glitter.htmlGenerate.editeInput({
+                                                    gvc: gvc,
+                                                    title: '標題',
+                                                    default: data.title ?? '',
+                                                    placeHolder: '輸入標題',
+                                                    callback: (text) => {
+                                                        data.title = text;
+                                                        widget.refreshComponent();
+                                                    },
+                                                }),
+                                                glitter.htmlGenerate.editeText({
+                                                    gvc: gvc,
+                                                    title: '子標題',
+                                                    default: data.sub ?? '',
+                                                    placeHolder: '輸入子標題',
+                                                    callback: (text) => {
+                                                        data.sub = text;
+                                                        widget.refreshComponent();
+                                                    },
+                                                }),
+                                                /*html*/ `<div class="mb-2"></div>`,
+                                                Editor.toggleExpand({
+                                                    gvc: gvc,
+                                                    title: `標籤設定`,
+                                                    data: data.tabExpand,
+                                                    innerText:
+                                                        ()=>{
+                                                        return  data.tag
+                                                                .map((d2: any, index: number) => {
+                                                                    return Editor.searchInput({
+                                                                        gvc: gvc,
+                                                                        title: Editor.minusTitle(
+                                                                            d2 || `標籤:${index + 1}`,
+                                                                            gvc.event(() => {
+                                                                                data.tag.splice(index, 1);
+                                                                                widget.refreshComponent();
+                                                                            })
+                                                                        ),
+                                                                        def: d2,
+                                                                        placeHolder: '標籤',
+                                                                        callback: (text) => {
+                                                                            data.tag[index] = text;
+                                                                            widget.refreshComponent();
+                                                                        },
+                                                                        array: widget.data.tag.map((dd: any) => {
+                                                                            return dd.title;
+                                                                        }),
+                                                                    });
+                                                                })
+                                                                .join(/*html*/ `<div class="my-2"></div>`) +
+                                                            Editor.plusBtn(
+                                                                '添加標籤',
+                                                                gvc.event(() => {
+                                                                    data.tag.push('');
                                                                     widget.refreshComponent();
-                                                                },
-                                                                array: widget.data.tag.map((dd: any) => {
-                                                                    return dd.title;
-                                                                }),
-                                                            });
-                                                        })
-                                                        .join(/*html*/ `<div class="my-2"></div>`) +
-                                                    Editor.plusBtn(
-                                                        '添加標籤',
-                                                        gvc.event(() => {
-                                                            data.tag.push('');
-                                                            widget.refreshComponent();
-                                                        })
-                                                    ),
-                                                color: `#0062c0`,
-                                            }),
-                                            Editor.uploadImage({
-                                                gvc: gvc,
-                                                title: '圖片',
-                                                def: data.img,
-                                                callback: (text) => {
-                                                    data.img = text;
-                                                    widget.refreshComponent();
-                                                },
-                                            }),
-                                            glitter.htmlGenerate.editeInput({
-                                                gvc: gvc,
-                                                title: '按鈕標題',
-                                                default: data.btn.title,
-                                                placeHolder: '輸入標題',
-                                                callback: (text) => {
-                                                    data.btn.title = text;
-                                                    widget.refreshComponent();
-                                                },
-                                            }),
-                                            glitter.htmlGenerate.styleEditor(data.btn).editor(gvc, widget as any, '按鈕設計樣式'),
-                                            TriggerEvent.editer(gvc, widget, data.btn, {
-                                                hover: true,
-                                                option: [],
-                                                title: '點擊事件',
-                                            }),
-                                        ]),
+                                                                })
+                                                            )
+                                                        },
+                                                    color: `#0062c0`,
+                                                }),
+                                                Editor.uploadImage({
+                                                    gvc: gvc,
+                                                    title: '圖片',
+                                                    def: data.img,
+                                                    callback: (text) => {
+                                                        data.img = text;
+                                                        widget.refreshComponent();
+                                                    },
+                                                }),
+                                                glitter.htmlGenerate.editeInput({
+                                                    gvc: gvc,
+                                                    title: '按鈕標題',
+                                                    default: data.btn.title,
+                                                    placeHolder: '輸入標題',
+                                                    callback: (text) => {
+                                                        data.btn.title = text;
+                                                        widget.refreshComponent();
+                                                    },
+                                                }),
+                                                glitter.htmlGenerate.styleEditor(data.btn).editor(gvc, widget as any, '按鈕設計樣式'),
+                                                TriggerEvent.editer(gvc, widget, data.btn, {
+                                                    hover: true,
+                                                    option: [],
+                                                    title: '點擊事件',
+                                                }),
+                                            ])
+                                        },
                                     })
                                 })
                                 .join(/*html*/ `<div class="my-2"></div>`)

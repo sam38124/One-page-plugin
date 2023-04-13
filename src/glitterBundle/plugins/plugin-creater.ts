@@ -25,7 +25,7 @@ export class Plugin {
     public static create(url: string, fun: (
         glitter: Glitter, editMode: boolean) => {
         [name: string]: {
-            defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+            defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[],subData?:any) => {
                 view: () => (Promise<string> | string),
                 editor: () => Promise<string> | string
             })
@@ -38,7 +38,7 @@ export class Plugin {
 
     public static createComponent(url: string, fun: (
         glitter: Glitter, editMode: boolean) => {
-        defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+        defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[],subData?:any) => {
             view: () => (Promise<string> | string),
             editor: () => Promise<string> | string
         })
@@ -51,13 +51,13 @@ export class Plugin {
         return val;
     }
 
-    public static setComponent(original:string,url: URL):(gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+    public static setComponent(original:string,url: URL):(gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[],subData?:any) => {
         view: () => (Promise<string> | string),
         editor: () => Promise<string> | string
     } {
         const glitter = (window as any).glitter
         url.searchParams.set("original",original)
-        return (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+        return (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[],subData?:any) => {
             glitter.share.componentData=glitter.share.componentData??{}
             let val:any=glitter.share.componentData[url.href]
             glitter.share.componentCallback=glitter.share.componentCallback??{}
@@ -76,14 +76,14 @@ export class Plugin {
                     if(!val){
                         return ``
                     }
-                    return val.render(gvc, widget, setting, hoverID)
+                    return val.render(gvc, widget, setting, hoverID,subData)
                         .view();
                 },
                 editor: () => {
                     if(!val){
                         return ``
                     }
-                    return val.render(gvc, widget, setting, hoverID)
+                    return val.render(gvc, widget, setting, hoverID,subData)
                         .editor();
                 }
             }

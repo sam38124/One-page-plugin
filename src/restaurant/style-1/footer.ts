@@ -119,66 +119,68 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             gvc: gvc,
                             title: '基本資訊',
                             data: widget.data.outro,
-                            innerText: `${glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '左大標題',
-                                    default: widget.data.outro.title,
-                                    placeHolder: '請輸入左大標題',
-                                    callback: (text) => {
-                                        widget.data.outro.title = text;
-                                        widget.refreshComponent();
-                                    },
-                                })}`+
-                                `
+                            innerText: ()=>{
+                                return `${glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: '左大標題',
+                                        default: widget.data.outro.title,
+                                        placeHolder: '請輸入左大標題',
+                                        callback: (text) => {
+                                            widget.data.outro.title = text;
+                                            widget.refreshComponent();
+                                        },
+                                    })}`+
+                                    `
                                 ${glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '左大標敘文',
-                                    default: widget.data.outro.desc,
-                                    placeHolder: '請輸入左大標下方的描述文',
-                                    callback: (text) => {
-                                        widget.data.outro.desc = text;
-                                        widget.refreshComponent();
-                                    },
-                                })}
+                                        gvc: gvc,
+                                        title: '左大標敘文',
+                                        default: widget.data.outro.desc,
+                                        placeHolder: '請輸入左大標下方的描述文',
+                                        callback: (text) => {
+                                            widget.data.outro.desc = text;
+                                            widget.refreshComponent();
+                                        },
+                                    })}
                                 `+
-                                Editor.arrayItem({
-                                    originalArray:widget.data.outro,
-                                    gvc: gvc,
-                                    title: '行內資訊',
-                                    array: widget.data.outro.socialData.link.map((socialData: any, index: number) => {
-                                        return {
-                                            title: `第${index+1}個社群資訊`,
-                                            expand: widget.data.outro.socialData,
-                                            innerHtml:glitter.htmlGenerate.editeInput({
-                                                gvc : gvc,
-                                                title : '社群網址',
-                                                default : "",
-                                                placeHolder : `請輸入社群網站的網址`,
-                                                callback:(text)=>{
-                                                    socialData = text;
-                                                    widget.refreshComponent();
-                                                }
-                                            })
+                                    Editor.arrayItem({
+                                        originalArray:widget.data.outro,
+                                        gvc: gvc,
+                                        title: '行內資訊',
+                                        array: widget.data.outro.socialData.link.map((socialData: any, index: number) => {
+                                            return {
+                                                title: `第${index+1}個社群資訊`,
+                                                expand: widget.data.outro.socialData,
+                                                innerHtml:glitter.htmlGenerate.editeInput({
+                                                    gvc : gvc,
+                                                    title : '社群網址',
+                                                    default : "",
+                                                    placeHolder : `請輸入社群網站的網址`,
+                                                    callback:(text)=>{
+                                                        socialData = text;
+                                                        widget.refreshComponent();
+                                                    }
+                                                })
 
-                                            ,
-                                            minus: gvc.event(() => {
-                                                widget.data.outro.socialData.link.splice(index, 1);
+                                                ,
+                                                minus: gvc.event(() => {
+                                                    widget.data.outro.socialData.link.splice(index, 1);
+                                                    widget.refreshComponent();
+                                                }),
+                                            };
+                                        }),
+                                        expand: widget.data.outro.socialData,
+                                        plus: {
+                                            title: '添加區塊',
+                                            event: gvc.event(() => {
+                                                widget.data.outro.socialData.link.push("");
                                                 widget.refreshComponent();
                                             }),
-                                        };
-                                    }),
-                                    expand: widget.data.outro.socialData,
-                                    plus: {
-                                        title: '添加區塊',
-                                        event: gvc.event(() => {
-                                            widget.data.outro.socialData.link.push("");
-                                            widget.refreshComponent();
-                                        }),
-                                    },
-                                    refreshComponent:()=>{
-                                        widget.refreshComponent()
-                                    }
-                                })
+                                        },
+                                        refreshComponent:()=>{
+                                            widget.refreshComponent()
+                                        }
+                                    })
+                            }
 
                         }),
                         `<div class="mt-2"></div>`,
@@ -274,28 +276,30 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             gvc: gvc,
                             title: '右端資訊',
                             data: widget.data.subs,
-                            innerText: `${glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '訂閱資訊',
-                                    default: widget.data.subs.desc,
-                                    placeHolder: '請輸入訂閱的介紹文',
-                                    callback: (text) => {
-                                        widget.data.subs.desc = text;
-                                        widget.refreshComponent();
-                                    },
-                                })}`+
-                                `
+                            innerText: ()=>{
+                                return `${glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: '訂閱資訊',
+                                        default: widget.data.subs.desc,
+                                        placeHolder: '請輸入訂閱的介紹文',
+                                        callback: (text) => {
+                                            widget.data.subs.desc = text;
+                                            widget.refreshComponent();
+                                        },
+                                    })}`+
+                                    `
                                     ${glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '送出的目的地',
-                                    default: widget.data.subs.link,
-                                    placeHolder: '請輸入左大標下方的描述文',
-                                    callback: (text) => {
-                                        widget.data.subs.link = text;
-                                        widget.refreshComponent();
-                                    },
-                                })}
+                                        gvc: gvc,
+                                        title: '送出的目的地',
+                                        default: widget.data.subs.link,
+                                        placeHolder: '請輸入左大標下方的描述文',
+                                        callback: (text) => {
+                                            widget.data.subs.link = text;
+                                            widget.refreshComponent();
+                                        },
+                                    })}
                                 `
+                            }
                         })
                     ])
 

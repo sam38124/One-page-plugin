@@ -1,5 +1,7 @@
 import { TriggerEvent } from './glitterBundle/plugins/trigger-event.js';
 import { Editor } from './editor.js';
+import {template} from "./one-page/style-1/template.js";
+import {component} from "./official/component.js";
 class GlobalData {
     public static data = {
         pageList: [],
@@ -29,7 +31,7 @@ class GlobalData {
 }
 TriggerEvent.create(import.meta.url, {
     link: {
-        title: '連結跳轉',
+        title: 'Glitter-連結跳轉',
         fun: (gvc, widget, object) => {
             return {
                 editor: () => {
@@ -81,7 +83,7 @@ TriggerEvent.create(import.meta.url, {
                                             ${GlobalData.data.pageList.map((dd: any) => {
                                                 object.link = object.link ?? dd.tag;
                                                 return /*html*/ `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
-                                                    ${dd.name}
+                                                    ${dd.group}-${dd.name}
                                                 </option>`;
                                             })}
                                         </select>`;
@@ -133,8 +135,88 @@ TriggerEvent.create(import.meta.url, {
             };
         },
     },
+    dialog:{
+      title:'Glitter-彈出頁面區塊',
+      fun:(gvc, widget, object, subData)=>{
+          return {
+              editor:()=>{
+                  const id=gvc.glitter.getUUID()
+                  const glitter=gvc.glitter
+                  function recursive() {
+                      if (GlobalData.data.pageList.length === 0) {
+                          GlobalData.data.run();
+                          setTimeout(() => {
+                              recursive();
+                          }, 200);
+                      } else {
+                          gvc.notifyDataChange(id);
+                      }
+                  }
+                  recursive();
+                  return  gvc.bindView(()=>{
+                      return {
+                          bind:id,
+                          view:()=>{
+                              return  `<select
+                                            class="form-select form-control mt-2"
+                                            onchange="${gvc.event((e) => {
+                                  object.link = (window as any).$(e).val();
+                              })}"
+                                        >
+                                            ${GlobalData.data.pageList.map((dd: any) => {
+                                  object.link = object.link ?? dd.tag;
+                                  return /*html*/ `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
+                                                    ${dd.group}-${dd.name}
+                                                </option>`;
+                              })}
+                                        </select>`+
+                                  glitter.htmlGenerate.editeInput(
+                                      {
+                                          gvc:gvc,
+                                          title:'標題',
+                                          default:object.title ?? "",
+                                          placeHolder:"",
+                                          callback:(text)=>{
+                                              object.title=text
+                                          }
+                                      }
+                                  )
+                          },
+                          divCreate:{}
+                      }
+                  })
+              },
+              event:()=>{
+                  const id=gvc.glitter.getUUID()
+                  if (document.getElementById(id)) {
+                      $(`#${id}`).remove()
+                  }
+                  $('body').append(`
+<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-hidden="true" style="">
+<div class="modal-dialog modal-dialog-centered modal-lg" style="">
+     <div class="modal-content">
+            <div class="modal-header ">
+            <h4 class="modal-title" id="myCenterModalLabel">${object.title}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+</div>
+<section class="position-relative  pt-0" >
+       ${component.render(gvc,({
+                      data:{
+                          tag:object.link
+                      } 
+                  } as any),([] as any),[],subData).view()}
+      </section>
+            </div>
+</div>
+</div>
+`);
+                  ($(`#${id}`) as any).modal('show')
+              }
+          }
+      }
+    },
     test: {
-        title: '點擊測試',
+        title: 'Glitter-點擊測試',
         fun: (gvc, widget, object) => {
             return {
                 editor: () => {
@@ -147,7 +229,7 @@ TriggerEvent.create(import.meta.url, {
         },
     },
     code:{
-        title:'程式碼區塊',
+        title:'Glitter-程式碼區塊',
         fun:(gvc, widget, object)=>{
             const glitter=(window as any).glitter
             return {

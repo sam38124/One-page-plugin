@@ -20,7 +20,7 @@
     "emitDecoratorMetadata": true
   },
   "include": ["src"],
-  "exclude": ["node_modules","src/one-page/assets"],
+  "exclude": ["node_modules","src/one-page/assets","src/hyper/assets"],
   "ts-node": { "files": true }
 }
 

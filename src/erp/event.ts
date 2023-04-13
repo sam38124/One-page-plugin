@@ -2,7 +2,8 @@ import {TriggerEvent} from "../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../editor.js";
 import {BaseApi} from "./api/base.js";
 import {ShareDialog} from "../dialog/ShareDialog.js";
-
+import {ErpConfig} from "./erp-config.js";
+import {User} from "../glitter/model/User.js";
 
 
 class GlobalData {
@@ -33,9 +34,6 @@ class GlobalData {
     };
 }
 
-/*Config配置
-* glitter.share.erp.url
-* */
 TriggerEvent.create(import.meta.url, {
     login: {
         title: 'ERP-登入按鈕',
@@ -54,7 +52,7 @@ TriggerEvent.create(import.meta.url, {
                     const shareDialog = new ShareDialog(gvc.glitter)
                     shareDialog.dataLoading({visible: true})
                     BaseApi.create({
-                        "url": glitter.share.erp.url + `/api/v1/user/login`,
+                        "url": ErpConfig.api + `/api/v1/user/login`,
                         "type": "POST",
                         "timeout": 0,
                         "headers": {
@@ -70,6 +68,7 @@ TriggerEvent.create(import.meta.url, {
                     }).then((d2) => {
                         shareDialog.dataLoading({visible: false})
                         if (d2.result) {
+                            ErpConfig.setToken(d2.response.userData.token)
                             TriggerEvent.trigger({
                                 gvc, widget, clickEvent: widget.data.loginSuccess
                             })
@@ -98,7 +97,7 @@ TriggerEvent.create(import.meta.url, {
                     const shareDialog = new ShareDialog(glitter)
                     let userData: any = {}
                     Object.keys(subData).map((dd) => {
-                        if (['account', 'pwd', 'company','confirmPwd'].indexOf(dd) === -1) {
+                        if (['account', 'pwd', 'company', 'confirmPwd'].indexOf(dd) === -1) {
                             userData[dd] = subData[dd]
                         }
                     })
@@ -108,15 +107,15 @@ TriggerEvent.create(import.meta.url, {
                         "company": subData.company,
                         "userData": userData
                     }
-                    if(subData.pwd!==subData.confirmPwd){
+                    if (subData.pwd !== subData.confirmPwd) {
                         shareDialog.errorMessage({
-                            text:"請再次確認密碼"
+                            text: "請再次確認密碼"
                         })
                         return;
                     }
                     shareDialog.dataLoading({visible: true})
                     BaseApi.create({
-                        "url": glitter.share.erp.url + `/api/v1/user/register`,
+                        "url": ErpConfig.api + `/api/v1/user/register`,
                         "type": "POST",
                         "timeout": 0,
                         "headers": {
@@ -136,5 +135,167 @@ TriggerEvent.create(import.meta.url, {
                 },
             };
         },
+    },
+    setting: {
+        title: 'ERP-初始設定',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    object.childAccount=object.childAccount??[]
+                    return gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: `後端路徑`,
+                            default: object.api ?? "",
+                            placeHolder: "輸入後端路徑",
+                            callback: (text: string) => {
+                                object.api = text
+                                widget.refreshComponent()
+                            }
+                        }),
+                        Editor.arrayItem({
+                            gvc:gvc,
+                            title:"子帳號管理",
+                            originalArray:object.childAccount,
+                            array:object.childAccount.map((dd:any,index:number)=>{
+                                return {
+                                    title:dd.name || `區塊:${index+1}`,
+                                    expand:dd,
+                                    innerHtml:
+                                        gvc.map([
+                                            glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: `角色名稱`,
+                                                default: dd.name,
+                                                placeHolder: "輸入角色名稱",
+                                                callback: (text:string) => {
+                                                    dd.name = text
+                                                    widget.refreshComponent()
+                                                }
+                                            }),
+                                            glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: `代號`,
+                                                default: dd.code,
+                                                placeHolder: "輸入角色代號",
+                                                callback: (text:string) => {
+                                                    dd.code = text
+                                                    widget.refreshComponent()
+                                                }
+                                            })
+                                        ]),
+                                    minus:gvc.event(()=>{
+                                        object.childAccount.splice(index,1)
+                                        widget.refreshComponent()
+                                    })
+                                }
+                            }),
+                            expand:object,
+                            plus:{
+                                title:"添加區塊",
+                                event:gvc.event(()=>{
+                                    object.childAccount.push({name:'預設',code:'default'})
+                                    widget.refreshComponent()
+                                })
+                            },
+                            refreshComponent:()=>{
+                                widget.refreshComponent()
+                            }
+                        })
+                    ])
+                },
+                event: () => {
+                    ErpConfig.roleList=object.childAccount
+                    ErpConfig.api = object.api
+                },
+            };
+        },
+    },
+    getMember: {
+        title: 'ERP-取得用戶資料',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter)
+                    // shareDialog.dataLoading({visible: true})
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/user/getMember`,
+                        "type": "GET",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                    }).then((d2) => {
+                        if (d2.result) {
+                            subData.data=d2.response.result.map((dd:any)=>{
+                                dd.userData.account=dd.account
+                                dd.userData.userID=dd.userID
+                                return dd
+                            });
+                            subData.callback()
+                        } else {
+                            shareDialog.errorMessage({text: "認證失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
+    setMember: {
+        title: 'ERP-設定用戶',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    object.role=object.role??ErpConfig.roleList[0].code
+                    return [
+                       Editor.select({
+                           title:"設定至用戶群組",
+                           gvc:gvc,
+                           def:object.role,
+                           array:ErpConfig.roleList.map((dd)=>{
+                               return {
+                                   title:dd.name,value:dd.code
+                               }
+                           }),
+                           callback:(text)=>{
+                               object.role=text
+                           }
+                       })
+                    ].join('')
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter)
+                    shareDialog.dataLoading({visible: true})
+                    subData.role=object.role
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/user/updateChild`,
+                        "type": "PUT",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                        data:JSON.stringify({
+                            userData:subData
+                        })
+                    }).then((d2) => {
+                        shareDialog.dataLoading({visible: false})
+                        if (d2.result) {
+                            shareDialog.successMessage({text:"設定成功"})
+                            subData.callback()
+                        } else {
+                            shareDialog.errorMessage({text: "設定失敗"})
+                        }
+                    })
+                }
+            }
+        }
     }
 })

@@ -165,165 +165,169 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             gvc: gvc,
                             title: `表單區塊`,
                             data: widget.data.form,
-                            innerText: [
-                                glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '標題',
-                                    default: widget.data.form.title,
-                                    placeHolder: '標題',
-                                    callback: (text) => {
-                                        widget.data.form.title = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '副標題[HTML]',
-                                    default: widget.data.form.desc,
-                                    placeHolder: '副標題',
-                                    callback: (text) => {
-                                        widget.data.form.form = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                Editor.arrayItem({
-                                    originalArray:widget.data.form.data,
-                                    gvc: gvc,
-                                    title: '聯絡條目',
-                                    array: widget.data.form.data.map((dd: any, index: number) => {
-                                        return {
-                                            title: `條目:${index + 1}`,
-                                            expand: dd,
-                                            innerHtml: gvc.map([
-                                                glitter.htmlGenerate.editeInput({
-                                                    gvc: gvc,
-                                                    title: `問題`,
-                                                    default: dd.name,
-                                                    placeHolder: '輸入問題',
-                                                    callback: (text) => {
-                                                        dd.name = text;
-                                                        widget.refreshComponent();
-                                                    },
+                            innerText: ()=>{
+                                return [
+                                    glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: '標題',
+                                        default: widget.data.form.title,
+                                        placeHolder: '標題',
+                                        callback: (text) => {
+                                            widget.data.form.title = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: '副標題[HTML]',
+                                        default: widget.data.form.desc,
+                                        placeHolder: '副標題',
+                                        callback: (text) => {
+                                            widget.data.form.form = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    Editor.arrayItem({
+                                        originalArray:widget.data.form.data,
+                                        gvc: gvc,
+                                        title: '聯絡條目',
+                                        array: widget.data.form.data.map((dd: any, index: number) => {
+                                            return {
+                                                title: `條目:${index + 1}`,
+                                                expand: dd,
+                                                innerHtml: gvc.map([
+                                                    glitter.htmlGenerate.editeInput({
+                                                        gvc: gvc,
+                                                        title: `問題`,
+                                                        default: dd.name,
+                                                        placeHolder: '輸入問題',
+                                                        callback: (text) => {
+                                                            dd.name = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                    }),
+                                                    Editor.select({
+                                                        title: '輸入類型',
+                                                        gvc: gvc,
+                                                        def: dd.type,
+                                                        callback: (text: string) => {
+                                                            dd.type = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                        array: ['text', 'number', 'email', 'textArea'],
+                                                    }),
+                                                    Editor.select({
+                                                        title: '必填',
+                                                        gvc: gvc,
+                                                        def: dd.need ? `true` : `false`,
+                                                        callback: (text: string) => {
+                                                            dd.need = text === 'true';
+                                                            widget.refreshComponent();
+                                                        },
+                                                        array: ['true', 'false'],
+                                                    }),
+                                                ]),
+                                                minus: gvc.event(() => {
+                                                    widget.data.infoList.splice(index, 1);
+                                                    widget.refreshComponent();
                                                 }),
-                                                Editor.select({
-                                                    title: '輸入類型',
-                                                    gvc: gvc,
-                                                    def: dd.type,
-                                                    callback: (text: string) => {
-                                                        dd.type = text;
-                                                        widget.refreshComponent();
-                                                    },
-                                                    array: ['text', 'number', 'email', 'textArea'],
-                                                }),
-                                                Editor.select({
-                                                    title: '必填',
-                                                    gvc: gvc,
-                                                    def: dd.need ? `true` : `false`,
-                                                    callback: (text: string) => {
-                                                        dd.need = text === 'true';
-                                                        widget.refreshComponent();
-                                                    },
-                                                    array: ['true', 'false'],
-                                                }),
-                                            ]),
-                                            minus: gvc.event(() => {
-                                                widget.data.infoList.splice(index, 1);
+                                            };
+                                        }),
+                                        expand: widget.data,
+                                        plus: {
+                                            title: '添加區塊',
+                                            event: gvc.event(() => {
+                                                widget.data.infoList.push({
+                                                    icon: 'bx bx-map',
+                                                    title: '台中市北屯區後庄北路18號',
+                                                });
                                                 widget.refreshComponent();
                                             }),
-                                        };
+                                        },
+                                        refreshComponent:()=>{
+                                            widget.refreshComponent()
+                                        }
                                     }),
-                                    expand: widget.data,
-                                    plus: {
-                                        title: '添加區塊',
-                                        event: gvc.event(() => {
-                                            widget.data.infoList.push({
-                                                icon: 'bx bx-map',
-                                                title: '台中市北屯區後庄北路18號',
-                                            });
-                                            widget.refreshComponent();
-                                        }),
-                                    },
-                                    refreshComponent:()=>{
-                                        widget.refreshComponent()
-                                    }
-                                }),
-                            ].join(''),
+                                ].join('')
+                            },
                         }),
                         /*html*/ `<div class="my-2"></div>`,
                         Editor.toggleExpand({
                             gvc: gvc,
                             title: `右側區塊`,
                             data: widget.data.info,
-                            innerText: [
-                                glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: '標題',
-                                    default: widget.data.info.title,
-                                    placeHolder: '標題',
-                                    callback: (text) => {
-                                        widget.data.info.title = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: 'Google嵌入地址',
-                                    default: widget.data.info.map,
-                                    placeHolder: 'Google嵌入地址',
-                                    callback: (text) => {
-                                        widget.data.info.map = text;
-                                        widget.refreshComponent();
-                                    },
-                                }),
-                                Editor.arrayItem({
-                                    gvc: gvc,
-                                    originalArray:widget.data.infoList,
-                                    title: '聯絡條目',
-                                    array: widget.data.infoList.map((dd: any, index: number) => {
-                                        return {
-                                            title: `條目:${index + 1}`,
-                                            expand: dd,
-                                            innerHtml:
-                                                Editor.fontawesome({
-                                                    title: 'icon',
-                                                    gvc: gvc,
-                                                    def: dd.icon,
-                                                    callback: (text: string) => {
-                                                        dd.icon = text;
-                                                    },
-                                                }) +
-                                                glitter.htmlGenerate.editeText({
-                                                    gvc: gvc,
-                                                    title: `標題`,
-                                                    default: dd.title,
-                                                    placeHolder: '輸入標題',
-                                                    callback: (text) => {
-                                                        dd.title = text;
-                                                        widget.refreshComponent();
-                                                    },
+                            innerText:()=>{
+                                return  [
+                                    glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: '標題',
+                                        default: widget.data.info.title,
+                                        placeHolder: '標題',
+                                        callback: (text) => {
+                                            widget.data.info.title = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    glitter.htmlGenerate.editeInput({
+                                        gvc: gvc,
+                                        title: 'Google嵌入地址',
+                                        default: widget.data.info.map,
+                                        placeHolder: 'Google嵌入地址',
+                                        callback: (text) => {
+                                            widget.data.info.map = text;
+                                            widget.refreshComponent();
+                                        },
+                                    }),
+                                    Editor.arrayItem({
+                                        gvc: gvc,
+                                        originalArray:widget.data.infoList,
+                                        title: '聯絡條目',
+                                        array: widget.data.infoList.map((dd: any, index: number) => {
+                                            return {
+                                                title: `條目:${index + 1}`,
+                                                expand: dd,
+                                                innerHtml:
+                                                    Editor.fontawesome({
+                                                        title: 'icon',
+                                                        gvc: gvc,
+                                                        def: dd.icon,
+                                                        callback: (text: string) => {
+                                                            dd.icon = text;
+                                                        },
+                                                    }) +
+                                                    glitter.htmlGenerate.editeText({
+                                                        gvc: gvc,
+                                                        title: `標題`,
+                                                        default: dd.title,
+                                                        placeHolder: '輸入標題',
+                                                        callback: (text) => {
+                                                            dd.title = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                    }),
+                                                minus: gvc.event(() => {
+                                                    widget.data.infoList.splice(index, 1);
+                                                    widget.refreshComponent();
                                                 }),
-                                            minus: gvc.event(() => {
-                                                widget.data.infoList.splice(index, 1);
+                                            };
+                                        }),
+                                        expand: widget.data,
+                                        plus: {
+                                            title: '添加區塊',
+                                            event: gvc.event(() => {
+                                                widget.data.infoList.push({
+                                                    icon: 'bx bx-map',
+                                                    title: '台中市北屯區後庄北路18號',
+                                                });
                                                 widget.refreshComponent();
                                             }),
-                                        };
+                                        },
+                                        refreshComponent:()=>{
+                                            widget.refreshComponent()
+                                        }
                                     }),
-                                    expand: widget.data,
-                                    plus: {
-                                        title: '添加區塊',
-                                        event: gvc.event(() => {
-                                            widget.data.infoList.push({
-                                                icon: 'bx bx-map',
-                                                title: '台中市北屯區後庄北路18號',
-                                            });
-                                            widget.refreshComponent();
-                                        }),
-                                    },
-                                    refreshComponent:()=>{
-                                        widget.refreshComponent()
-                                    }
-                                }),
-                            ].join(''),
+                                ].join('')
+                            },
                         }),
                     ]);
                 },

@@ -244,215 +244,219 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         }),
                         `<div class="my-2"></div>`,
                         Editor.toggleExpand({
-                            gvc: gvc, title: "登入區塊", data: widget.data.signExpand, innerText: gvc.map([
-                                glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: '標題',
-                                    default: widget.data.title,
-                                    placeHolder: "輸入標題",
-                                    callback: (text) => {
-                                        widget.data.title = text;
-                                        widget.refreshComponent();
-                                    }
-                                }),
-                                Editor.arrayItem({
-                                    originalArray: widget.data.loginForm,
-                                    gvc: gvc,
-                                    title: '登入表單',
-                                    array: widget.data.loginForm.map((dd, index) => {
-                                        return {
-                                            title: dd.label || `區塊:${index + 1}`,
-                                            expand: dd,
-                                            innerHtml: gvc.map([
-                                                glitter.htmlGenerate.editeInput({
-                                                    gvc: gvc,
-                                                    title: '標題',
-                                                    default: dd.label || '',
-                                                    placeHolder: "標題",
-                                                    callback: (text) => {
-                                                        dd.label = text;
-                                                        widget.refreshComponent();
-                                                    }
-                                                }),
-                                                glitter.htmlGenerate.editeInput({
-                                                    gvc: gvc,
-                                                    title: 'Key值',
-                                                    default: dd.key || '',
-                                                    placeHolder: "Key值",
-                                                    callback: (text) => {
-                                                        dd.key = text;
-                                                        widget.refreshComponent();
-                                                    }
-                                                }),
-                                                Editor.select({
-                                                    title: `輸入類型`,
-                                                    gvc: gvc,
-                                                    def: dd.type,
-                                                    array: [
-                                                        {
-                                                            title: '文字',
-                                                            value: `text`,
-                                                        },
-                                                        {
-                                                            title: '信箱',
-                                                            value: `email`,
-                                                        },
-                                                        {
-                                                            title: '密碼',
-                                                            value: `password`,
-                                                        },
-                                                        {
-                                                            title: '電話',
-                                                            value: `phone`,
-                                                        },
-                                                        {
-                                                            title: '地址',
-                                                            value: `address`,
-                                                        },
-                                                        {
-                                                            title: '公司',
-                                                            value: `company`,
+                            gvc: gvc, title: "登入區塊", data: widget.data.signExpand, innerText: () => {
+                                return gvc.map([
+                                    glitter.htmlGenerate.editeText({
+                                        gvc: gvc,
+                                        title: '標題',
+                                        default: widget.data.title,
+                                        placeHolder: "輸入標題",
+                                        callback: (text) => {
+                                            widget.data.title = text;
+                                            widget.refreshComponent();
+                                        }
+                                    }),
+                                    Editor.arrayItem({
+                                        originalArray: widget.data.loginForm,
+                                        gvc: gvc,
+                                        title: '登入表單',
+                                        array: widget.data.loginForm.map((dd, index) => {
+                                            return {
+                                                title: dd.label || `區塊:${index + 1}`,
+                                                expand: dd,
+                                                innerHtml: gvc.map([
+                                                    glitter.htmlGenerate.editeInput({
+                                                        gvc: gvc,
+                                                        title: '標題',
+                                                        default: dd.label || '',
+                                                        placeHolder: "標題",
+                                                        callback: (text) => {
+                                                            dd.label = text;
+                                                            widget.refreshComponent();
                                                         }
-                                                    ],
-                                                    callback: (text) => {
-                                                        dd.type = text;
-                                                        widget.refreshComponent();
-                                                    },
-                                                })
-                                            ]),
-                                            minus: gvc.event(() => {
-                                                widget.data.loginForm.splice(index, 1);
+                                                    }),
+                                                    glitter.htmlGenerate.editeInput({
+                                                        gvc: gvc,
+                                                        title: 'Key值',
+                                                        default: dd.key || '',
+                                                        placeHolder: "Key值",
+                                                        callback: (text) => {
+                                                            dd.key = text;
+                                                            widget.refreshComponent();
+                                                        }
+                                                    }),
+                                                    Editor.select({
+                                                        title: `輸入類型`,
+                                                        gvc: gvc,
+                                                        def: dd.type,
+                                                        array: [
+                                                            {
+                                                                title: '文字',
+                                                                value: `text`,
+                                                            },
+                                                            {
+                                                                title: '信箱',
+                                                                value: `email`,
+                                                            },
+                                                            {
+                                                                title: '密碼',
+                                                                value: `password`,
+                                                            },
+                                                            {
+                                                                title: '電話',
+                                                                value: `phone`,
+                                                            },
+                                                            {
+                                                                title: '地址',
+                                                                value: `address`,
+                                                            },
+                                                            {
+                                                                title: '公司',
+                                                                value: `company`,
+                                                            }
+                                                        ],
+                                                        callback: (text) => {
+                                                            dd.type = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                    })
+                                                ]),
+                                                minus: gvc.event(() => {
+                                                    widget.data.loginForm.splice(index, 1);
+                                                    widget.refreshComponent();
+                                                }),
+                                            };
+                                        }),
+                                        expand: widget.data,
+                                        plus: {
+                                            title: '添加區塊',
+                                            event: gvc.event(() => {
+                                                widget.data.loginForm.push({
+                                                    type: 'text', key: 'block', label: "表單區塊"
+                                                });
                                                 widget.refreshComponent();
                                             }),
-                                        };
-                                    }),
-                                    expand: widget.data,
-                                    plus: {
-                                        title: '添加區塊',
-                                        event: gvc.event(() => {
-                                            widget.data.loginForm.push({
-                                                type: 'text', key: 'block', label: "表單區塊"
-                                            });
+                                        },
+                                        refreshComponent: () => {
                                             widget.refreshComponent();
-                                        }),
-                                    },
-                                    refreshComponent: () => {
-                                        widget.refreshComponent();
-                                    }
-                                }),
-                                TriggerEvent.editer(gvc, widget, widget.data.loginEvent, {
-                                    hover: true,
-                                    option: [],
-                                    title: "登入按鈕"
-                                })
-                            ])
+                                        }
+                                    }),
+                                    TriggerEvent.editer(gvc, widget, widget.data.loginEvent, {
+                                        hover: true,
+                                        option: [],
+                                        title: "登入按鈕"
+                                    })
+                                ]);
+                            }
                         }),
                         `<div class="my-2"></div>`,
                         Editor.toggleExpand({
-                            gvc: gvc, title: "註冊區塊", data: widget.data.registerExpand, innerText: gvc.map([
-                                Editor.arrayItem({
-                                    originalArray: widget.data.registerForm,
-                                    gvc: gvc,
-                                    title: '註冊表單',
-                                    array: widget.data.registerForm.map((dd, index) => {
-                                        return {
-                                            title: dd.label || `區塊:${index + 1}`,
-                                            expand: dd,
-                                            innerHtml: gvc.map([
-                                                glitter.htmlGenerate.editeInput({
-                                                    gvc: gvc,
-                                                    title: '標題',
-                                                    default: dd.label || '',
-                                                    placeHolder: "標題",
-                                                    callback: (text) => {
-                                                        dd.label = text;
-                                                        widget.refreshComponent();
-                                                    }
-                                                }),
-                                                glitter.htmlGenerate.editeInput({
-                                                    gvc: gvc,
-                                                    title: 'Key值',
-                                                    default: dd.key || '',
-                                                    placeHolder: "Key值",
-                                                    callback: (text) => {
-                                                        dd.key = text;
-                                                        widget.refreshComponent();
-                                                    }
-                                                }),
-                                                Editor.select({
-                                                    title: `輸入類型`,
-                                                    gvc: gvc,
-                                                    def: dd.type,
-                                                    array: [
-                                                        {
-                                                            title: '文字',
-                                                            value: `text`,
-                                                        },
-                                                        {
-                                                            title: '信箱',
-                                                            value: `email`,
-                                                        },
-                                                        {
-                                                            title: '密碼',
-                                                            value: `password`,
-                                                        },
-                                                        {
-                                                            title: '電話',
-                                                            value: `phone`,
-                                                        },
-                                                        {
-                                                            title: '地址',
-                                                            value: `address`,
-                                                        },
-                                                        {
-                                                            title: '公司',
-                                                            value: `company`,
+                            gvc: gvc, title: "註冊區塊", data: widget.data.registerExpand, innerText: () => {
+                                return gvc.map([
+                                    Editor.arrayItem({
+                                        originalArray: widget.data.registerForm,
+                                        gvc: gvc,
+                                        title: '註冊表單',
+                                        array: widget.data.registerForm.map((dd, index) => {
+                                            return {
+                                                title: dd.label || `區塊:${index + 1}`,
+                                                expand: dd,
+                                                innerHtml: gvc.map([
+                                                    glitter.htmlGenerate.editeInput({
+                                                        gvc: gvc,
+                                                        title: '標題',
+                                                        default: dd.label || '',
+                                                        placeHolder: "標題",
+                                                        callback: (text) => {
+                                                            dd.label = text;
+                                                            widget.refreshComponent();
                                                         }
-                                                    ],
-                                                    callback: (text) => {
-                                                        dd.type = text;
-                                                        widget.refreshComponent();
-                                                    },
-                                                }),
-                                                Editor.select({
-                                                    title: `寬度`,
-                                                    gvc: gvc,
-                                                    def: dd.col,
-                                                    array: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((data) => {
-                                                        return `${data}`;
                                                     }),
-                                                    callback: (text) => {
-                                                        dd.col = text;
-                                                        widget.refreshComponent();
-                                                    },
-                                                })
-                                            ]),
-                                            minus: gvc.event(() => {
-                                                widget.data.registerForm.splice(index, 1);
+                                                    glitter.htmlGenerate.editeInput({
+                                                        gvc: gvc,
+                                                        title: 'Key值',
+                                                        default: dd.key || '',
+                                                        placeHolder: "Key值",
+                                                        callback: (text) => {
+                                                            dd.key = text;
+                                                            widget.refreshComponent();
+                                                        }
+                                                    }),
+                                                    Editor.select({
+                                                        title: `輸入類型`,
+                                                        gvc: gvc,
+                                                        def: dd.type,
+                                                        array: [
+                                                            {
+                                                                title: '文字',
+                                                                value: `text`,
+                                                            },
+                                                            {
+                                                                title: '信箱',
+                                                                value: `email`,
+                                                            },
+                                                            {
+                                                                title: '密碼',
+                                                                value: `password`,
+                                                            },
+                                                            {
+                                                                title: '電話',
+                                                                value: `phone`,
+                                                            },
+                                                            {
+                                                                title: '地址',
+                                                                value: `address`,
+                                                            },
+                                                            {
+                                                                title: '公司',
+                                                                value: `company`,
+                                                            }
+                                                        ],
+                                                        callback: (text) => {
+                                                            dd.type = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                    }),
+                                                    Editor.select({
+                                                        title: `寬度`,
+                                                        gvc: gvc,
+                                                        def: dd.col,
+                                                        array: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((data) => {
+                                                            return `${data}`;
+                                                        }),
+                                                        callback: (text) => {
+                                                            dd.col = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                    })
+                                                ]),
+                                                minus: gvc.event(() => {
+                                                    widget.data.registerForm.splice(index, 1);
+                                                    widget.refreshComponent();
+                                                }),
+                                            };
+                                        }),
+                                        expand: widget.data,
+                                        plus: {
+                                            title: '添加區塊',
+                                            event: gvc.event(() => {
+                                                widget.data.registerForm.push({
+                                                    type: 'text', key: 'block', label: "表單區塊", col: "12"
+                                                });
                                                 widget.refreshComponent();
                                             }),
-                                        };
-                                    }),
-                                    expand: widget.data,
-                                    plus: {
-                                        title: '添加區塊',
-                                        event: gvc.event(() => {
-                                            widget.data.registerForm.push({
-                                                type: 'text', key: 'block', label: "表單區塊", col: "12"
-                                            });
+                                        },
+                                        refreshComponent: () => {
                                             widget.refreshComponent();
-                                        }),
-                                    },
-                                    refreshComponent: () => {
-                                        widget.refreshComponent();
-                                    }
-                                }),
-                                TriggerEvent.editer(gvc, widget, widget.data.registerEvent, {
-                                    hover: true,
-                                    option: [],
-                                    title: "註冊按鈕"
-                                })
-                            ])
+                                        }
+                                    }),
+                                    TriggerEvent.editer(gvc, widget, widget.data.registerEvent, {
+                                        hover: true,
+                                        option: [],
+                                        title: "註冊按鈕"
+                                    })
+                                ]);
+                            }
                         })
                     ]);
                 },
