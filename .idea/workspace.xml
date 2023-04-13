@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0691564-d9ba-406b-affb-510b90ca5545" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/official/component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/official/component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/official/component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/official/component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +70,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681371934907</updated>
-      <workItem from="1681371936872" duration="4299000" />
+      <workItem from="1681371936872" duration="5080000" />
     </task>
     <servers />
   </component>
