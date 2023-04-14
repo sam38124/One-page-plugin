@@ -17,22 +17,26 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     let db = new Dashboard();
                     let sourceData = {
                         data:{
-                            mode: "colCard",
-                            col: { pc: 3, tab: 4 },
-                            card: [
-                                { icon: "uil uil-laughing", title: "活躍使用者", value: 308, up: "5.27%", desc: "自上週以來" },
-                                { icon: "dripicons-checkmark", title: "登入總人數", value: 560, down: "1.08%", desc: "自上週以來" },
-                                { icon: "uil uil-cloud-computing", title: "會員總數", value: 13094, up: "3.44%", desc: "自去年以來" },
+                            mode: "table",
+                            col: { pc: 4, tab: 6 },
+                            title: "社群平台每日使用者(萬)",
+                            table: [
+                                { 平台: "Facebook", 使用者: 5228, 滯留時間: { td_catalog: "processBar", color: "#82E0AA", percent: 27 }, 運作: 1 },
+                                { 平台: "Line", 使用者: 2536, 滯留時間: { td_catalog: "processBar", color: "#3498DB", percent: 82 }, 運作: 1 },
+                                { 平台: "Instagram", 使用者: 1425, 滯留時間: { td_catalog: "processBar", color: "#3498DB", percent: 46 }, 運作: 1 },
+                                { 平台: "Twitter", 使用者: 560, 滯留時間: { td_catalog: "processBar", color: "#3498DB", percent: 65 }, 運作: 1 },
+                                { 平台: "LinkedIn", 使用者: 205, 滯留時間: { td_catalog: "processBar", color: "#3498DB", percent: 36 }, 運作: 1 },
                             ],
                         }
                     }
+
                     return gvc.bindView({
                         bind:id,
                         view:()=>{
                             return `
-                                <div class="row">
-                                    ${db[sourceData.data.mode](sourceData.data , 0)}
-                                </div>
+                            <div class="row">
+                                ${db[sourceData.data.mode](sourceData.data , 0)}
+                            </div>
                            `
                         },divCreate:{},
                         onCreate:()=>{
@@ -42,7 +46,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     })
                 },
                 editor:()=>{
-                    return ``
+                    return``
                 }
             }
         },

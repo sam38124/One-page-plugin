@@ -11,12 +11,14 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     let db = new Dashboard();
                     let sourceData = {
                         data: {
-                            mode: "colCard",
-                            col: { pc: 3, tab: 4 },
-                            card: [
-                                { icon: "uil uil-laughing", title: "活躍使用者", value: 308, up: "5.27%", desc: "自上週以來" },
-                                { icon: "dripicons-checkmark", title: "登入總人數", value: 560, down: "1.08%", desc: "自上週以來" },
-                                { icon: "uil uil-cloud-computing", title: "會員總數", value: 13094, up: "3.44%", desc: "自去年以來" },
+                            mode: "table",
+                            col: { pc: 4, tab: 6 },
+                            title: "中山路汽機車通勤速度",
+                            table: [
+                                { "時速 (公里)": "0-30", 車輛總數: 2250, 違規數: 177 },
+                                { "時速 (公里)": "31-60", 車輛總數: 11501, 違規數: 924 },
+                                { "時速 (公里)": "61-120", 車輛總數: 758, 違規數: 57 },
+                                { "時速 (公里)": "121-240", 車輛總數: 12, 違規數: 0 },
                             ],
                         }
                     };
@@ -24,9 +26,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         bind: id,
                         view: () => {
                             return `
-                                <div class="row">
-                                    ${db[sourceData.data.mode](sourceData.data, 0)}
-                                </div>
+                            <div class="row">
+                                ${db[sourceData.data.mode](sourceData.data, 0)}
+                            </div>
                            `;
                         }, divCreate: {},
                         onCreate: () => {

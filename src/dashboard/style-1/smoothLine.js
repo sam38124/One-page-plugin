@@ -11,22 +11,21 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     let db = new Dashboard();
                     let sourceData = {
                         data: {
-                            mode: "colCard",
-                            col: { pc: 3, tab: 4 },
-                            card: [
-                                { icon: "uil uil-laughing", title: "活躍使用者", value: 308, up: "5.27%", desc: "自上週以來" },
-                                { icon: "dripicons-checkmark", title: "登入總人數", value: 560, down: "1.08%", desc: "自上週以來" },
-                                { icon: "uil uil-cloud-computing", title: "會員總數", value: 13094, up: "3.44%", desc: "自去年以來" },
-                            ],
+                            mode: "smooth_Line",
+                            col: { pc: 9, tab: 8 },
+                            title: "全球科技股市即時線圖",
+                            data: {
+                                series: db.stockLine(4, 10),
+                            }
                         }
                     };
                     return gvc.bindView({
                         bind: id,
                         view: () => {
                             return `
-                                <div class="row">
-                                    ${db[sourceData.data.mode](sourceData.data, 0)}
-                                </div>
+                            <div class="row">
+                                ${db[sourceData.data.mode](sourceData.data, 0)}
+                            </div>
                            `;
                         }, divCreate: {},
                         onCreate: () => {

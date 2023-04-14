@@ -11,12 +11,19 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     let db = new Dashboard();
                     let sourceData = {
                         data: {
-                            mode: "colCard",
-                            col: { pc: 3, tab: 4 },
-                            card: [
-                                { icon: "uil uil-laughing", title: "活躍使用者", value: 308, up: "5.27%", desc: "自上週以來" },
-                                { icon: "dripicons-checkmark", title: "登入總人數", value: 560, down: "1.08%", desc: "自上週以來" },
-                                { icon: "uil uil-cloud-computing", title: "會員總數", value: 13094, up: "3.44%", desc: "自去年以來" },
+                            mode: "table_barChart",
+                            col: { pc: 4, tab: 12 },
+                            title: "台灣專輯排行榜",
+                            data: {
+                                series: [{ name: "專輯總數", data: db.numberObjList(9) }],
+                                color: "#0acf97",
+                            },
+                            table: [
+                                { 專輯: "GOLDEN 太子 BRO", 年度: 2022, 排名: 6 },
+                                { 專輯: "我要我們在一起", 年度: 2000, 排名: 1 },
+                                { 專輯: "順著河流走", 年度: 2017, 排名: 28 },
+                                { 專輯: "為了愛夢一生", 年度: 1991, 排名: 4 },
+                                { 專輯: "Ugly Beauty", 年度: 2019, 排名: 2 },
                             ],
                         }
                     };
@@ -24,9 +31,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         bind: id,
                         view: () => {
                             return `
-                                <div class="row">
-                                    ${db[sourceData.data.mode](sourceData.data, 0)}
-                                </div>
+                            <div class="row">
+                                ${db[sourceData.data.mode](sourceData.data, 0)}
+                            </div>
                            `;
                         }, divCreate: {},
                         onCreate: () => {
