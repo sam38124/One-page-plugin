@@ -1,3 +1,4 @@
+
 class Dashboard {
   constructor() {
     // ---------------Public---------------
@@ -322,9 +323,9 @@ class Dashboard {
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                               <!-- item-->
-                              <a href="javascript:void(0);" class="dropdown-item">${glitter.share.language.settings}</a>
+                              <a href="javascript:void(0);" class="dropdown-item">設定</a>
                               <!-- item-->
-                              <a href="javascript:void(0);" class="dropdown-item">${glitter.share.language.viewEvent}</a>
+                              <a href="javascript:void(0);" class="dropdown-item">查看活動</a>
                             </div>
                           </div>
                         </td>`;
@@ -571,6 +572,7 @@ class Dashboard {
         `;
     };
     this.revenue_detail = function (d, i) {
+
       var options = {
         chart: { height: 364, type: "line", dropShadow: { enabled: !0, opacity: 0.2, blur: 7, left: -7, top: 7 }, toolbar: !1 },
         dataLabels: { enabled: !1 },
@@ -1012,6 +1014,7 @@ class Dashboard {
     };
     this.todoList = function (d, i) {
       d.list.map((t) => (t.id = i + "_" + t.id));
+      //todo this
       addMtScript(
         ["assets/js/ui/component.todo.js"],
         () => setTimeout(() => todo(d.list, i), 200),

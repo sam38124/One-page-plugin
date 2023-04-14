@@ -61,6 +61,24 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/table3.js', import.meta.url))
         },
+        table4: {
+            title: "table4",
+            subContent: "n列三欄，自帶小標的數字表格",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/table4.js', import.meta.url))
+        },
+        table5: {
+            title: "table5",
+            subContent: "一筆資料兩列三行 各自呈現標頭",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/table5.js', import.meta.url))
+        },
+        table6: {
+            title: "table6",
+            subContent: "一筆資料兩列 同時帶圖 時間 和設定",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/table6.js', import.meta.url))
+        },
         dataCard: {
             title: "dataCard",
             subContent: "各式呈現數字變化的卡片",
@@ -78,6 +96,72 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             subContent: "用折線圖或是區塊圖比較兩筆資料",
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/revenue.js', import.meta.url))
+        },
+        stateList: {
+            title: "stateList",
+            subContent: "人員情報和狀態欄",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/stateList.js', import.meta.url))
+        },
+        todoList: {
+            title: "todoList",
+            subContent: "備忘錄 這個套件在dashboard.js的addMtScript有狀況",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/todoList.js', import.meta.url))
+        },
+        revenue_detail: {
+            title: "revenue_detail",
+            subContent: "用詳細的折線圖或是區塊圖比較兩筆資料",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/revenue_detail.js', import.meta.url))
+        },
+        doubleBarChart: {
+            title: "doubleBarChart",
+            subContent: "兩樣資料相互比較的累積長條圖",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/doubleBarChart.js', import.meta.url))
+        },
+        donutChart: {
+            title: "donutChart",
+            subContent: "百分比式環圈圖",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/donutChart.js', import.meta.url))
+        },
+        timeline: {
+            title: "timeline",
+            subContent: "帶有時間順序的通知列表",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/timeline.js', import.meta.url))
+        },
+        rowCard: {
+            title: "rowCard",
+            subContent: "一列 卡片式呈現資料數字和圖式",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/rowCard.js', import.meta.url))
+        },
+        donutTrend: {
+            title: "donutTrend",
+            subContent: "多筆資料數字式環圈圖",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/donutTrend.js', import.meta.url))
+        },
+        taskList: {
+            title: "taskList",
+            subContent: "任務表 同時記錄/修改任務狀況",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/taskList.js', import.meta.url))
+        },
+        barArea: {
+            title: "barArea",
+            subContent: "任務進度直條圖總覽",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/barArea.js', import.meta.url))
+        },
+        calendarList: {
+            title: "calendarList",
+            subContent: "行事曆 但日曆跑不出來",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/calendarList.js', import.meta.url))
         },
         empty: {
             title: "",

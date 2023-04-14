@@ -19,7 +19,6 @@ export class ScriptStyle1 {
             ScriptStyle1.getRout('assets/css/app-dark.min.css'),
         ]).then();
         gvc.addMtScript([
-            "../glitterBundle/funnel.js",
             "assets/js/vendor/apexcharts.min.js",
             "assets/js/vendor.min.js",
             "assets/js/app.min.js",
