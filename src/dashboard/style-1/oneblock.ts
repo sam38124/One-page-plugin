@@ -315,20 +315,20 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     },
                                 ],
                             },
-                            {
-                                mode: "todoList",
-                                title: "待辦事項",
-                                col: { pc: 4, tab: 6 },
-                                list: [
-                                    { id: "1", text: "設計頁面 & 切版", done: !0 },
-                                    { id: "2", text: "規劃渲染順序", done: !0 },
-                                    { id: "3", text: "模組開發", done: !1 },
-                                    { id: "4", text: "第三方測試", done: !0 },
-                                    { id: "5", text: "後台系統串接", done: !0 },
-                                    { id: "6", text: "公布產品資訊", done: !1 },
-                                    { id: "7", text: "驗收文件格式 & 管道", done: !1 },
-                                ],
-                            },
+                            // {
+                            //     mode: "todoList",
+                            //     title: "待辦事項",
+                            //     col: { pc: 4, tab: 6 },
+                            //     list: [
+                            //         { id: "1", text: "設計頁面 & 切版", done: !0 },
+                            //         { id: "2", text: "規劃渲染順序", done: !0 },
+                            //         { id: "3", text: "模組開發", done: !1 },
+                            //         { id: "4", text: "第三方測試", done: !0 },
+                            //         { id: "5", text: "後台系統串接", done: !0 },
+                            //         { id: "6", text: "公布產品資訊", done: !1 },
+                            //         { id: "7", text: "驗收文件格式 & 管道", done: !1 },
+                            //     ],
+                            // },
                             {
                                 mode: "dataCard",
                                 col: { pc: 5, tab: 6 },
@@ -667,17 +667,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                   <div class="row">
                                     ${glitter.print(function () {
                                         let HTML = "";
-                                        let index = 3
-                                        console.log(sourceData.data[index])
-                                        HTML += db["radar"](sourceData.data[index] , index)
-                               
-                                        // sourceData.data.map((d, i)=>{
-                                        //     // console.log(d)
-                                        // })
-                                        // sourceData.data.map((d, i) => (
-                                        //     HTML += db[d.mode](d, i))
-                                        //    
-                                        // );
+                                        
+                                        sourceData.data.map((d, i) => (
+                                            HTML += db[d.mode](d, i))
+                                        );
                                         return HTML;
                                     })}
                                   </div>
