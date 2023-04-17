@@ -19,21 +19,36 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                     name: "陳志賢",
                                     pro: "執行長",
                                     desc: "企業中負責日常營運的最高行政人員。其專業與領導能力，讓公司的股東可以信任該公司的決策與產品",
-                                    link: ["https://www.facebook.com/", "https://www.instagram.com/"],
+                                    linkList: {
+                                        link: [
+                                            { src: "https://www.facebook.com/" },
+                                            { src: "https://www.instagram.com/" },
+                                        ]
+                                    }
                                 },
                                 {
                                     img: ScriptStyle1.getRout("assets/img/team/team-3.jpg"),
                                     name: "黃國玟",
                                     pro: "UI／UX設計師",
                                     desc: "在使用者體驗和互動的指導下對電腦、電器、機器、移動通訊裝置、軟體或應用以及網站進行的設計",
-                                    link: ["https://www.instagram.com/", "https://squarestudio.tw"],
+                                    linkList: {
+                                        link: [
+                                            { src: "https://www.instagram.com/" },
+                                            { src: "https://squarestudio.tw" },
+                                        ],
+                                    }
                                 },
                                 {
                                     img: ScriptStyle1.getRout("assets/img/team/team-2.jpg"),
                                     name: "陳佳玲",
                                     pro: "系統規劃師",
                                     desc: "評估並分析現行運作系統，確定其需求，據此發展系統架構以改良使用環境及產作業效率",
-                                    link: ["https://squarestudio.tw", "#"],
+                                    linkList: {
+                                        link: [
+                                            { src: "https://squarestudio.tw" },
+                                            { src: "#" },
+                                        ]
+                                    }
                                 },
                             ]
                         },
@@ -68,9 +83,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                           <div class="social">
                                           ${glitter.print(function () {
                                         let tmp = "";
-                                        t.link.map((l) => {
-                                            tmp += ` <a href="${l}"  style="cursor:pointer">
-                                                      <i class="${ScriptStyle1.urlIcon(l, "bi")}"></i>
+                                        t.linkList.link.map((l) => {
+                                            tmp += ` <a href="${l.src}"  style="cursor:pointer">
+                                                      <i class="${ScriptStyle1.urlIcon(l.src, "bi")}"></i>
                                                     </a> `;
                                         });
                                         return tmp;
@@ -97,7 +112,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     return gvc.map([
                         glitter.htmlGenerate.editeInput({
                             gvc: gvc,
-                            title: `索引`,
+                            title: `標題`,
                             default: widget.data.title,
                             placeHolder: '輸入標題名稱',
                             callback: (text) => {
@@ -163,6 +178,43 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                 widget.refreshComponent();
                                             }
                                         })
+                                            +
+                                                Editor.arrayItem({
+                                                    originalArray: dd.linkList,
+                                                    gvc: gvc,
+                                                    title: '社群資訊',
+                                                    array: dd.linkList.link.map((data, index) => {
+                                                        return {
+                                                            title: `第${index + 1}個社群資訊`,
+                                                            expand: data,
+                                                            innerHtml: glitter.htmlGenerate.editeInput({
+                                                                gvc: gvc,
+                                                                title: '社群網址',
+                                                                default: data.src,
+                                                                placeHolder: `請輸入個人的社群網址首頁`,
+                                                                callback: (text) => {
+                                                                    data.src = text;
+                                                                    widget.refreshComponent();
+                                                                }
+                                                            }),
+                                                            minus: gvc.event(() => {
+                                                                dd.linkList.link.splice(index, 1);
+                                                                widget.refreshComponent();
+                                                            }),
+                                                        };
+                                                    }),
+                                                    expand: dd.linkList,
+                                                    plus: {
+                                                        title: '添加區塊',
+                                                        event: gvc.event(() => {
+                                                            dd.linkList.link.push({ src: "" });
+                                                            widget.refreshComponent();
+                                                        }),
+                                                    },
+                                                    refreshComponent: () => {
+                                                        widget.refreshComponent();
+                                                    }
+                                                })
                                     ]),
                                     minus: gvc.event(() => {
                                         widget.data.list.splice(index, 1);
