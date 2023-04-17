@@ -9,13 +9,47 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+            widget.data.outro=widget.data.outro ??{
+                title: "萊恩設計",
+                desc: "提供直覺的操作，讓您在電腦、平板、手機都能隨心所欲地瀏覽您的網站",
+                socialData:{
+                    link:[
+                        {src:"https://www.facebook.com/",icon:`bx bxl-facebook`},
+                        {src:"https://twitter.com/",icon:`bx bxl-twitter`} ,
+                        {src:"https://twitter.com/",icon:`bx bxl-instagram`},
+                        {src:"https://twitter.com/",icon:`bx bx-link-alt`}]
+                }
+            }
+            widget.data.map=widget.data.map ?? [
+                {
+                    title: "網站導覽",
+                    listData: {
+                        list:[{ name: "菜單", link: "#menu" },
+                            { name: "產品介紹", link: "#feature" },
+                            { name: "定價方案", link: "#slider" },
+                            { name: "技術領域", link: "#banner" },
+                            { name: "公司團隊", link: "#team" }]
+                    },
+                },
+                {
+                    title: "推薦網站",
+                    listData: {
+                        list: [
+                            { name: "Google", link: "https://www.google.com.tw/" },
+                            { name: "Yahoo", link: "https://tw.yahoo.com/" },
+                        ]
+                    },
+
+                },
+            ]
+            widget.data.subs=widget.data.subs?? { desc: "想收到與萊恩設計有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。", link: "#" }
             return {
                 view:()=>{
 
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID()
                     const footer = {
-                        subs: { desc: "想收到與萊恩設計有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。", link: "#" },
+                        subs: widget.data.subs,
                         outro: widget.data.outro,
                         map:widget.data.map,
                     }
@@ -39,8 +73,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                                 footer.outro.socialData.link.map((r:any) => {
                                                                     //todo
                                                                     tmp += /*html*/ `
-                                                                    <a class="text-white" onclick="" style="cursor:pointer">
-                                                                        <i class="${ScriptStyle1.urlIcon(r , "bx")}"></i>
+                                                                    <a class="text-white" href="${r.src}" style="cursor:pointer">
+                                                                        <i class="${r.icon}"></i>
                                                                     </a>
                                                                     `;
                                                                 });
@@ -66,7 +100,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                                                     <i class="bx bx-chevron-right"></i>
                                                                                     <a
                                                                                       class="scrollto"
-                                                                                      onclick=""
+                                                                                      onclick="${gvc.event(()=>{
+                                                                                TriggerEvent.trigger({
+                                                                                    gvc:gvc,widget:widget,clickEvent:l
+                                                                                })
+                                                                            })}"
                                                                                       style="cursor:pointer"
                                                                                       data-hash=${l.link}
                                                                                       >${l.name}</a
@@ -81,27 +119,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                     });
                                                     return tmp;
                                                 })()}                                                                                                       
-                                                <div class="col-lg-4 col-md-6 footer-newsletter">
-                                                    <h4>訂閱</h4>
-                                                    <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">想收到與${footer.outro.title}有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。</p>
-                                                    <form><input type="email" name="email" /><input type="submit" value="送出" onclick="${gvc.event(()=>{
-                                                        event!.preventDefault();
-                                                        return ""
-                                                    })}"/></form>
-                                                </div>
+                                              
                                             </div>
-                                        </div>
-                                    </div>
-                            
-                                    <div class="container">
-<!--                                    todo funnel.copyRight("#cda45e")-->
-                                        <div class="copyright"></div>
-                                        <div class="credits">
-                                          <!-- All the links in the footer should remain intact. -->
-                                          <!-- You can delete the links only if you purchased the pro version. -->
-                                          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
-                                          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
                                         </div>
                                     </div>
                                 </footer>
@@ -115,6 +134,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 },
                 editor:()=>{
                     return gvc.map([
+                        `<div class="mt-2"></div>`,
                         Editor.toggleExpand({
                             gvc: gvc,
                             title: '基本資訊',
@@ -153,12 +173,20 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                 innerHtml:glitter.htmlGenerate.editeInput({
                                                     gvc : gvc,
                                                     title : '社群網址',
-                                                    default : "",
+                                                    default : socialData.src,
                                                     placeHolder : `請輸入社群網站的網址`,
                                                     callback:(text)=>{
-                                                        socialData = text;
+                                                        socialData.src = text;
                                                         widget.refreshComponent();
                                                     }
+                                                })+Editor.fontawesome({
+                                                    gvc: gvc,
+                                                    title: '圖示',
+                                                    def: socialData.icon,
+                                                    callback: (text: string) => {
+                                                        socialData.icon = text;
+                                                        widget.refreshComponent();
+                                                    },
                                                 })
 
                                                 ,
@@ -204,7 +232,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             },
                                         }),
                                         Editor.arrayItem({
-                                            originalArray:lineData,
+                                            originalArray:lineData.listData.list,
                                             gvc: gvc,
                                             title: '行內資訊',
                                             array: lineData.listData.list.map((rowData: any, rowIndex: number) => {
@@ -212,10 +240,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                     title: `第${rowIndex+1}列資訊`,
                                                     expand: rowData,
                                                     innerHtml: gvc.map([
-                                                    `
-                                                    <div class="ps-2 pt-2 mb-3 border" style="">
-                                                        <h5>第${rowIndex + 1}列</h5>
-                                                    `,
                                                     glitter.htmlGenerate.editeInput({
                                                         gvc: gvc,
                                                         title: '連結名稱',
@@ -226,10 +250,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                             widget.refreshComponent();
                                                         },
                                                     }),
-                                                    TriggerEvent.editer(gvc, widget, rowData.link, {
+                                                    TriggerEvent.editer(gvc, widget, rowData, {
                                                         hover: true,
                                                         option: [],
-                                                        title: "這個連結做的事情"
+                                                        title: "點擊事件"
                                                     })
 
                                                     ]),
@@ -254,16 +278,16 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
 
                                     ]),
                                     minus: gvc.event(() => {
-                                        lineData.listData.list.splice(index, 1);
+                                        widget.data.map.splice(index, 1);
                                         widget.refreshComponent();
                                     }),
                                 };
                             }),
-                            expand: widget.data.map,
+                            expand: widget.data,
                             plus: {
                                 title: '添加行數',
                                 event: gvc.event(() => {
-                                    widget.data.map.push({title: '', listData:{list:[]}});
+                                    widget.data.map.push({title: '內容', listData:{list:[]},expand:true});
                                     widget.refreshComponent();
                                 }),
                             },
@@ -271,36 +295,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.refreshComponent()
                             }
                         }),
-                        `<div class="mt-2"></div>`,
-                        Editor.toggleExpand({
-                            gvc: gvc,
-                            title: '右端資訊',
-                            data: widget.data.subs,
-                            innerText: ()=>{
-                                return `${glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: '訂閱資訊',
-                                        default: widget.data.subs.desc,
-                                        placeHolder: '請輸入訂閱的介紹文',
-                                        callback: (text) => {
-                                            widget.data.subs.desc = text;
-                                            widget.refreshComponent();
-                                        },
-                                    })}`+
-                                    `
-                                    ${glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: '送出的目的地',
-                                        default: widget.data.subs.link,
-                                        placeHolder: '請輸入左大標下方的描述文',
-                                        callback: (text) => {
-                                            widget.data.subs.link = text;
-                                            widget.refreshComponent();
-                                        },
-                                    })}
-                                `
-                            }
-                        })
+                        `<div class="mt-2"></div>`
                     ])
 
                 }

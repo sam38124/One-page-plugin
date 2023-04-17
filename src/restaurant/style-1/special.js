@@ -93,7 +93,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                                     <div class="row">
                                                                         <div class="col-lg-8 details order-2 order-lg-1">
                                                                             <h3>${l.title}</h3>
-                                                                            <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">${l.desc}</p>
+                                                                            <p style="white-space:normal;word-wrap:break-word;word-break:break-all;">${l.desc.replace(/\n/g, '<br>')}</p>
                                                                         </div>
                                                                         <div class="col-lg-4 text-center order-1 order-lg-2">
                                                                             <img src="${l.img}" alt="" class="img-fluid" />

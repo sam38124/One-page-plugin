@@ -31,8 +31,6 @@ export class ScriptStyle1{
             "assets/vendor/glightbox/js/glightbox.min.js",
             "assets/vendor/isotope-layout/isotope.pkgd.min.js",
             "assets/vendor/swiper/swiper-bundle.min.js",
-            "assets/vendor/php-email-form/validate.js",
-            'assets/vendor/animate.css/animate.js',
             'assets/js/main.js'
         ].map(((dd)=>{
             if(dd.indexOf('http')!==-1){

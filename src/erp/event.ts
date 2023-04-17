@@ -216,15 +216,32 @@ TriggerEvent.create(import.meta.url, {
         title: 'ERP-取得用戶資料',
         fun: (gvc, widget, object, subData) => {
             const glitter = (window as any).glitter
+            if(!object.comeFrom){
+                ErpConfig.roleList.map((dd)=>{
+                    object.comeFrom=dd.code
+                    return {title:dd.name,value:dd.code}
+                })
+            }
             return {
                 editor: () => {
-                    return ``
+                    return Editor.select({
+                        title:"設定用戶來源",
+                        gvc:gvc,
+                        def:object.comeFrom,
+                        array:ErpConfig.roleList.map((dd)=>{
+                            return {title:dd.name,value:dd.code}
+                        }),
+                        callback:(text)=>{
+                            object.comeFrom=text
+                            widget.refreshComponent()
+                        }
+                    })
                 },
                 event: () => {
                     const shareDialog = new ShareDialog(gvc.glitter)
                     // shareDialog.dataLoading({visible: true})
                     BaseApi.create({
-                        "url": ErpConfig.api + `/api/v1/user/getMember`,
+                        "url": ErpConfig.api + `/api/v1/user/getMember?role=${object.comeFrom}`,
                         "type": "GET",
                         "timeout": 0,
                         "headers": {
@@ -237,6 +254,60 @@ TriggerEvent.create(import.meta.url, {
                                 dd.userData.account=dd.account
                                 dd.userData.userID=dd.userID
                                 return dd
+                            });
+                            subData.callback()
+                        } else {
+                            shareDialog.errorMessage({text: "認證失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
+    selectMember: {
+        title: 'ERP-選擇用戶',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            if(!object.comeFrom){
+                ErpConfig.roleList.map((dd)=>{
+                    object.comeFrom=dd.code
+                    return {title:dd.name,value:dd.code}
+                })
+            }
+            return {
+                editor: () => {
+                    return Editor.select({
+                        title:"設定用戶來源",
+                        gvc:gvc,
+                        def:object.comeFrom,
+                        array:ErpConfig.roleList.map((dd)=>{
+                            return {title:dd.name,value:dd.code}
+                        }),
+                        callback:(text)=>{
+                            object.comeFrom=text
+                            widget.refreshComponent()
+                        }
+                    })
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter)
+                    // shareDialog.dataLoading({visible: true})
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/user/getMember?role=${object.comeFrom}`,
+                        "type": "GET",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                    }).then((d2) => {
+                        if (d2.result) {
+                            subData.data=d2.response.result.map((dd:any)=>{
+                                dd.userData.account=dd.account
+                                dd.userData.userID=dd.userID
+                                return {
+                                    key:dd.userData.name,value:dd.userID
+                                }
                             });
                             subData.callback()
                         } else {
@@ -290,6 +361,7 @@ TriggerEvent.create(import.meta.url, {
                         if (d2.result) {
                             shareDialog.successMessage({text:"設定成功"})
                             subData.callback()
+                            location.reload()
                         } else {
                             shareDialog.errorMessage({text: "設定失敗"})
                         }
@@ -297,5 +369,103 @@ TriggerEvent.create(import.meta.url, {
                 }
             }
         }
-    }
+    },
+    getSKU: {
+        title: 'ERP-取得SKU商品資料',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            if(!object.comeFrom){
+                ErpConfig.roleList.map((dd)=>{
+                    object.comeFrom=dd.code
+                    return {title:dd.name,value:dd.code}
+                })
+            }
+            object.limit=object.limit??50;
+            return {
+                editor: () => {
+
+                    return glitter.htmlGenerate.editeInput({
+                        gvc: gvc,
+                        title: '每頁筆數',
+                        default: object.limit,
+                        placeHolder: '請輸入每頁筆數',
+                        callback: (text:string) => {
+                            object.limit=(text);
+                            widget.refreshComponent()
+                        },
+                    })
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter)
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/product?sku=${object.sku ?? ''}&page=${subData.page}&limit=${object.limit}`,
+                        "type": "GET",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                    }).then((d2) => {
+                        if (d2.result) {
+                            subData.data=d2.response.data.map((dd:any)=>{
+                                return [{
+                                    key:'●',value:'<input type="checkbox" class="form-check-input batchDel" id="bat-461">'
+                                },{key:'商品名稱',value:dd.config.productName ?? '未命名'},{key:'sku代號',value:dd.sku},
+                                    {key:'庫存數量',value:dd.config.inventory ?? '0'},
+                                    {key:'成本價',value:dd.config.price},
+                                    {key:'供應商代號',value:dd.vendor}]
+                            })
+                            subData.editData=d2.response.data.map((dd:any)=>{
+                                dd.config.id=dd.id
+                                return dd.config
+                            })
+                            subData.pageSize=Math.floor(d2.response.total / object.limit)
+                            subData.callback()
+                        } else {
+                            shareDialog.errorMessage({text: "認證失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
+    setSKU: {
+        title: 'ERP-設定SKU',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    return [].join('')
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter)
+                    shareDialog.dataLoading({visible: true})
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/product`,
+                        "type": subData.id ? "PUT":"POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                        data:JSON.stringify({
+                            id:subData.id,
+                            config:subData,
+                            sku:subData.sku,
+                            vendor:subData.vendor,
+                        })
+                    }).then((d2) => {
+                        shareDialog.dataLoading({visible: false})
+                        if (d2.result) {
+                            shareDialog.successMessage({text:"設定成功"})
+                            subData.callback()
+                            location.reload()
+                        } else {
+                            shareDialog.errorMessage({text: "SKU已遭使用"})
+                        }
+                    })
+                }
+            }
+        }
+    },
 })

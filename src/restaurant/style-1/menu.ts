@@ -9,6 +9,34 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
+            widget.data.dataList=widget.data.dataList??{
+                list: [
+                    {
+                        img: ScriptStyle1.getRout("assets/img/menu/lobster-bisque.jpg"),
+                        title: "蝦滋圈",
+                        desc: "金黃色又澎又厚的圈圈，選用鮮美飽滿的100%純蝦泥，搭配梅子醬或灑上鹹蛋黃，鹹甜鹹甜的獨特口感，沾點辣粉更開胃，一朵圈圈多重滋味！",
+                        price: `$ 2390`,
+                        tag: ["starters"],
+                        expand:{}
+                    },
+                    {
+                        img: ScriptStyle1.getRout("assets/img/menu/bread-barrel.jpg"),
+                        title: "芋香黑糯米 (冰/熱)",
+                        desc: "享用糯米的獨特Q感，搭配芋頭的香鬆軟，熱熱吃更加香濃迷人~",
+                        price: `$ 2390`,
+                        tag: ["specialty"],
+                        expand:{}
+                    },
+                    {
+                        img: ScriptStyle1.getRout("assets/img/menu/cake.jpg"),
+                        title: "泰式春捲",
+                        desc: "有冬粉、木耳、豬肉、竹筍、高麗菜的豐富內餡，外皮香酥，一口咬下、雙重滿足。",
+                        price: `$ 2390`,
+                        tag: ["starters"],
+                        expand:{}
+                    },
+                ]
+            }
 
             return {
                 view:()=>{
@@ -17,6 +45,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     return gvc.bindView({
                         bind:id,
                         view:()=>{
+
                             const menu = {
                                 title: widget.data.title??"菜單",
                                 desc: widget.data.desc??"由米其林四星主廚坐鎮，給你最佳美食饗宴與餐廳服務",
@@ -28,36 +57,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         { className: "salads", title: "副食" , expand:{}  },
                                         { className: "specialty", title: "甜點" , expand:{}  },
                                     ]
-                                },
-                                dataList : widget.data.dataList??{
-                                    list: [
-                                        {
-                                            img: ScriptStyle1.getRout("assets/img/menu/lobster-bisque.jpg"),
-                                            title: "蝦滋圈",
-                                            desc: "金黃色又澎又厚的圈圈，選用鮮美飽滿的100%純蝦泥，搭配梅子醬或灑上鹹蛋黃，鹹甜鹹甜的獨特口感，沾點辣粉更開胃，一朵圈圈多重滋味！",
-                                            price: `$ 2390`,
-                                            tag: ["starters"],
-                                            expand:{}
-                                        },
-                                        {
-                                            img: ScriptStyle1.getRout("assets/img/menu/bread-barrel.jpg"),
-                                            title: "芋香黑糯米 (冰/熱)",
-                                            desc: "享用糯米的獨特Q感，搭配芋頭的香鬆軟，熱熱吃更加香濃迷人~",
-                                            price: `$ 2390`,
-                                            tag: ["specialty"],
-                                            expand:{}
-                                        },
-                                        {
-                                            img: ScriptStyle1.getRout("assets/img/menu/cake.jpg"),
-                                            title: "泰式春捲",
-                                            desc: "有冬粉、木耳、豬肉、竹筍、高麗菜的豐富內餡，外皮香酥，一口咬下、雙重滿足。",
-                                            price: `$ 2390`,
-                                            tag: ["starters"],
-                                            expand:{}
-                                        },
-                                    ]
                                 }
                             }
+
                             if (!widget.data.title){
                                 widget.data = menu;
                             }
@@ -103,12 +105,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         <div class="row menu-container isot" data-aos="fade-up" data-aos-delay="200">
                                             ${(()=>{
                                                 let tmp = "";
-                                                menu.dataList.list.map((l:any) => {
+                                widget.data.dataList.list.map((l:any) => {
                                                     let tagClass = "";
                                                     l.tag.map((m:any) => (tagClass += `${m} `));
                                                     tmp += /*html*/ `
                                                         <div class="col-lg-6 menu-item ${tagClass}">
-                                                          <img src="${l.img}" class="menu-img" alt="" />
+                                                          <img src="${l.img}" style="width:70px;height:70px;" class="menu-img" alt="" />
                                                           <div class="menu-content " style="" ><a href="#">${l.title}</a><span>${l.price.toLocaleString()}</span></div>
                                                           <div class="menu-ingredients" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${l.desc}</div>
                                                         </div>
@@ -132,7 +134,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     })
                 },
                 editor:()=>{
-
                     return gvc.map([
                         glitter.htmlGenerate.editeInput({
                             gvc: gvc,
@@ -155,7 +156,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             },
                         }),
                         Editor.arrayItem({
-                            originalArray:widget.data,
+                            originalArray: widget.data.tagObject.tags,
                             gvc: gvc,
                             title: '標籤設定',
                             array: widget.data.tagObject.tags.map((tag: any, index: number) => {
@@ -190,11 +191,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     }),
                                 };
                             }),
-                            expand: widget.data,
+                            expand: widget.data.tagObject,
                             plus: {
                                 title: '添加區塊',
                                 event: gvc.event(() => {
-                                    widget.data.tagObject.tags.push({ className: "*", title: "新標籤" });
+                                    widget.data.tagObject.tags.push({ className: "*", title: "新標籤",expand:true });
                                     widget.refreshComponent();
                                 }),
                             },
@@ -203,12 +204,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             }
                         }),
                         Editor.arrayItem({
-                        originalArray:widget.data.dataList,
+                        originalArray:widget.data.dataList.list,
                         gvc: gvc,
                         title: '行列內容',
                         array: widget.data.dataList.list.map((list: any, index: number) => {
                             return {
-                                title: `第${index + 1}列資訊`,
+                                title: list.title || `第${index + 1}列資訊`,
                                 expand: list,
                                 innerHtml: gvc.map([
                                     glitter.htmlGenerate.editeInput({
@@ -253,21 +254,19 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     Editor.toggleExpand({
                                         gvc: gvc,
                                         title: `標籤設定`,
-                                        data: list.expand,
+                                        data: list,
                                         innerText:()=>{
                                             return  list.tag.map((d2: any, index: number) => {
-
-                                                // return ``
                                                 return Editor.searchInput({
                                                     gvc: gvc,
                                                     title: Editor.minusTitle((widget.data.tagObject.tags.find((dd: any) => {
-                                                        return dd.className === `.${d2}`
+                                                        return dd.className === `${d2}`
                                                     }) ?? {}).title || `標籤:${index + 1}`, gvc.event(() => {
                                                         list.tag.splice(index, 1)
                                                         widget.refreshComponent()
                                                     })),
                                                     def: (widget.data.tagObject.tags.find((dd: any) => {
-                                                        return dd.className === `.${d2}`
+                                                        return dd.className === `${d2}`
                                                     }) ?? {}).title ?? "",
                                                     placeHolder: "標籤",
                                                     callback: (text) => {
@@ -306,7 +305,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     title: "新標題",
                                     desc: "新敘述",
                                     price: 0,
-                                    tag: [] });
+                                    tag: [] ,expand:true});
                                 widget.refreshComponent();
                             }),
                         },

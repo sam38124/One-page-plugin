@@ -18,6 +18,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             subContent: '編輯用表單，可用來編輯內容',
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/form.js', import.meta.url)),
+        },
+        table: {
+            title: '表格顯示區塊',
+            subContent: '用來顯示表格的區塊內容',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/table.js', import.meta.url)),
         }
     };
 });

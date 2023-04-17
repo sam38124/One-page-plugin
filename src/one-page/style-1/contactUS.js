@@ -215,7 +215,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                     }),
                                                 ]),
                                                 minus: gvc.event(() => {
-                                                    widget.data.infoList.splice(index, 1);
+                                                    widget.data.form.data.splice(index, 1);
                                                     widget.refreshComponent();
                                                 }),
                                             };
@@ -224,10 +224,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                         plus: {
                                             title: '添加區塊',
                                             event: gvc.event(() => {
-                                                widget.data.infoList.push({
-                                                    icon: 'bx bx-map',
-                                                    title: '台中市北屯區後庄北路18號',
-                                                });
+                                                widget.data.form.data.push({ title: 'projectName', name: '專案名稱', type: 'text', elem: 'input', need: true });
                                                 widget.refreshComponent();
                                             }),
                                         },

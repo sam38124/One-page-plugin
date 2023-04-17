@@ -4,54 +4,70 @@ export class Editor {
     static uploadImage(obj) {
         const glitter = window.glitter;
         const $ = glitter.$;
-        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
-            <div class="d-flex align-items-center mb-3">
-                <input
+        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2 ${(obj.title) ? `` : `d-none`}">${obj.title}</h3>
+             ${obj.gvc.bindView(() => {
+            const id = glitter.getUUID();
+            return {
+                bind: id,
+                view: () => {
+                    return `<input
                     class="flex-fill form-control "
                     placeholder="請輸入圖片連結"
                     value="${obj.def}"
                     onchange="${obj.gvc.event((e) => {
-            obj.callback(e.value);
-        })}"
+                        obj.callback(e.value);
+                        obj.def = e.value;
+                        obj.gvc.notifyDataChange(id);
+                    })}"
                 />
-                <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
+                <div class="ms-1" style="width: 1px;height: 25px;background-color: white;"></div>
+                <i class="fa-sharp fa-solid fa-eye text-white ms-2" onclick="${obj.gvc.event(() => {
+                        glitter.openDiaLog(new URL('./dialog/image-preview.js', import.meta.url), 'preview', obj.def);
+                    })}"></i>
                 <i
                     class="fa-regular fa-upload text-white ms-2"
                     style="cursor: pointer;"
                     onclick="${obj.gvc.event(() => {
-            glitter.ut.chooseMediaCallback({
-                single: true,
-                accept: 'json,image/*',
-                callback(data) {
-                    const saasConfig = window.saasConfig;
-                    const dialog = new ShareDialog(obj.gvc.glitter);
-                    dialog.dataLoading({ visible: true });
-                    const file = data[0].file;
-                    saasConfig.api.uploadFile(file.name).then((data) => {
-                        dialog.dataLoading({ visible: false });
-                        const data1 = data.response;
-                        dialog.dataLoading({ visible: true });
-                        $.ajax({
-                            url: data1.url,
-                            type: 'put',
-                            data: file,
-                            processData: false,
-                            crossDomain: true,
-                            success: () => {
-                                dialog.dataLoading({ visible: false });
-                                obj.callback(data1.fullUrl);
-                            },
-                            error: () => {
-                                dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: '上傳失敗' });
+                        glitter.ut.chooseMediaCallback({
+                            single: true,
+                            accept: 'json,image/*',
+                            callback(data) {
+                                const saasConfig = window.saasConfig;
+                                const dialog = new ShareDialog(obj.gvc.glitter);
+                                dialog.dataLoading({ visible: true });
+                                const file = data[0].file;
+                                saasConfig.api.uploadFile(file.name).then((data) => {
+                                    dialog.dataLoading({ visible: false });
+                                    const data1 = data.response;
+                                    dialog.dataLoading({ visible: true });
+                                    $.ajax({
+                                        url: data1.url,
+                                        type: 'put',
+                                        data: file,
+                                        processData: false,
+                                        crossDomain: true,
+                                        success: () => {
+                                            dialog.dataLoading({ visible: false });
+                                            obj.callback(data1.fullUrl);
+                                            obj.def = data1.fullUrl;
+                                            obj.gvc.notifyDataChange(id);
+                                        },
+                                        error: () => {
+                                            dialog.dataLoading({ visible: false });
+                                            dialog.errorMessage({ text: '上傳失敗' });
+                                        },
+                                    });
+                                });
                             },
                         });
-                    });
+                    })}"
+                ></i>`;
                 },
-            });
-        })}"
-                ></i>
-            </div>`;
+                divCreate: {
+                    class: `d-flex align-items-center mb-3`
+                }
+            };
+        })}`;
     }
     static uploadFile(obj) {
         const glitter = window.glitter;
@@ -260,6 +276,7 @@ export class Editor {
     static toggleExpand(obj) {
         const color = obj.color ?? `#1d1d64;`;
         const glitter = window.glitter;
+        obj.data.expand = obj.data.expand ?? false;
         return `${obj.gvc.bindView(() => {
             const id = glitter.getUUID();
             return {
@@ -433,12 +450,12 @@ export class Editor {
                             })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
                             data: dd.expand,
                             innerText: dd.innerHtml,
-                            color: `#2b115d`,
+                            color: obj.color1 ?? `#2b115d`,
                         });
                     })
                         .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event);
                 },
-                color: `#3333a2`,
+                color: obj.color2 ?? `#3333a2`,
             }));
     }
 }

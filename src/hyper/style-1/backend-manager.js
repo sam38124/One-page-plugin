@@ -331,16 +331,22 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
 });
 function menuFactory(gvc, obj, icon) {
     var html = '';
-    obj.map((d2) => {
+    obj.map((d2, index) => {
         switch (d2.type) {
             case 'label':
                 html += `<li class="side-nav-title side-nav-item fs-5 fw-light font-15" style="">${d2.name}</li>`;
                 break;
             case 'button':
                 if (icon) {
+                    const id = gvc.glitter.getUUID();
+                    if (d2.value.name === window.glitter.getUrlParameter('select')) {
+                        setTimeout(() => {
+                            $('#' + id).click();
+                        }, 500);
+                    }
                     html += `
                                 <li>
-                                    <a
+                                    <a id="${id}"
                                         onclick="${gvc.event((e) => {
                         $('#container-fluid').html(component.render(gvc, d2.page, {}, []).view());
                         $('.active').removeClass('active');
@@ -348,6 +354,7 @@ function menuFactory(gvc, obj, icon) {
                         $('.menuitem-active').removeClass('menuitem-active');
                         $(e).parent().addClass('menuitem-active');
                         $('.sidebar-enable').removeClass('sidebar-enable hide-menu');
+                        window.glitter.setUrlParameter('select', d2.value.name);
                     })}"
                                         style="cursor:pointer; font-size:15px"
                                         >${d2.value.name}</a
@@ -356,16 +363,23 @@ function menuFactory(gvc, obj, icon) {
                             `;
                 }
                 else {
+                    const id = gvc.glitter.getUUID();
+                    if (d2.value.name === window.glitter.getUrlParameter('select')) {
+                        setTimeout(() => {
+                            $('#' + id).click();
+                        }, 500);
+                    }
                     html += `
                                 <li class="side-nav-item">
                                     <a
-                                        class="side-nav-link font-15"
+                                        class="side-nav-link font-15" id="${id}"
                                         onclick="${gvc.event((e) => {
                         $('#container-fluid').html(component.render(gvc, d2.page, {}, []).view());
                         $('.active').removeClass('active');
                         $('.menuitem-active').removeClass('menuitem-active');
                         $('.sidebar-enable').removeClass('sidebar-enable hide-menu');
                         $(e).parent().addClass('menuitem-active');
+                        window.glitter.setUrlParameter('select', d2.value.name);
                     })}"
                                     >
                                         <i class="${d2.value.icon}"></i>
@@ -381,10 +395,11 @@ function menuFactory(gvc, obj, icon) {
                             <li class="side-nav-item">
                                 <a
                                     data-bs-toggle="collapse"
-                                    href="#sidebar${n}"
                                     aria-expanded="false"
-                                    aria-controls="sidebar${n}"
                                     class="side-nav-link font-15${d2.class ? ` ${d2.class}` : ``}"
+                                    onclick="${gvc.event(() => {
+                    $(`#sidebar${n}`).toggleClass('show');
+                })}"
                                 >
                                     ${icon ? `` : `<i class="me-1 ${d2.value.icon}"></i>`}
                                     <span> ${d2.value.name} </span>

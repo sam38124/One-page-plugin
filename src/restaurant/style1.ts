@@ -88,39 +88,7 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
         footer:{
             title: "頁腳",
             subContent: "放在最下方的資訊，以及對網站所有地方的導引",
-            defaultData:{
-                outro: {
-                    title: "萊恩設計",
-                    desc: "提供直覺的操作，讓您在電腦、平板、手機都能隨心所欲地瀏覽您的網站",
-                    socialData:{
-                        link:["https://www.facebook.com/", "https://twitter.com/", "https://www.instagram.com/", "https://squarestudio.tw/"]
-                    }
-
-                },
-                map: [
-                    {
-                        title: "網站導覽",
-                        listData: {
-                            list:[{ name: "菜單", link: "#menu" },
-                            { name: "產品介紹", link: "#feature" },
-                            { name: "定價方案", link: "#slider" },
-                            { name: "技術領域", link: "#banner" },
-                            { name: "公司團隊", link: "#team" }]
-                        },
-                    },
-                    {
-                        title: "推薦網站",
-                        listData: {
-                            list: [
-                                { name: "Google", link: "https://www.google.com.tw/" },
-                                { name: "Yahoo", link: "https://tw.yahoo.com/" },
-                            ]
-                        },
-
-                    },
-                ],
-                subs: { desc: "想收到與萊恩設計有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。", link: "#" },
-            },
+            defaultData:{},
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/footer.js',import.meta.url))
         },
         banner:{
@@ -174,69 +142,7 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
             title: "畫廊",
             subContent: "方格式展覽作品",
             defaultData:{},
-            render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-                return {
-                    view:()=>{
-                        ScriptStyle1.initialScript(gvc,widget)
-                        const gallery= {
-                            title: "實際餐廳畫面",
-                            desc: "餐廳空間設計與實際用餐的感覺",
-                            list: [
-                                "assets/img/gallery/gallery-1.jpg",
-                                "assets/img/gallery/gallery-2.jpg",
-                                "assets/img/gallery/gallery-3.jpg",
-                                "assets/img/gallery/gallery-4.jpg",
-                                "assets/img/gallery/gallery-5.jpg",
-                                "assets/img/gallery/gallery-6.jpg",
-                                "assets/img/gallery/gallery-7.jpg",
-                                "assets/img/gallery/gallery-8.jpg",
-                            ],
-                        }
-                        return gvc.bindView({
-                            bind:glitter.getUUID(),
-                            view:()=>{
-                                return `
-                                <!-- ======= Gallery Section ======= -->
-                                <section id="gallery" class="gallery">
-                                    <div class="container" data-aos="fade-up">
-                                        <div class="section-title">
-                                            <h2>${gallery.title}</h2>
-                                            <p>${gallery.desc}</p>
-                                        </div>
-                                    </div>
-                        
-                                    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
-                                        <div class="row g-0">
-                                            ${glitter.print(function () {
-                                                let tmp = "";
-                                                gallery.list.map((l:any) => {
-                                                    tmp += /*html*/ `
-                                                        <div class="col-lg-3 col-md-4">
-                                                            <div class="gallery-item">
-                                                                <a href="${ScriptStyle1.getRout(l)}" class="gallery-lightbox" data-gall="gallery-item">
-                                                                    <img src="${ScriptStyle1.getRout(l)}" alt="" class="img-fluid" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                      `;
-                                                });
-                                                return tmp;
-                                            })}
-                                        </div>
-                                    </div>
-                                </section>
-                                <!-- End Gallery Section -->
-                                `
-                            },divCreate:{},
-                            onCreate:()=>{}
-                        })
-
-                    },
-                    editor:()=>{
-                        return ``
-                    }
-                }
-            }
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/gallery.js',import.meta.url))
         },
         team:{
             title: "人員介紹",
@@ -249,7 +155,7 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
                         const team= {
                             title: "我們的主廚團隊",
                             desc: "優良的傳統中，持續將餐點優化，是我們共同維護的榮譽",
-                            list: [
+                            list:   [
                                 {
                                     img: "assets/img/chefs/chefs-1.jpg",
                                     name: "陳志賢",
@@ -333,113 +239,12 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
             title: "聯絡我們",
             subContent: "公司聯絡資訊和聯絡表單",
             defaultData:{},
-            render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-                return {
-                    view:()=>{
-                        ScriptStyle1.initialScript(gvc,widget)
-                        const contact = {
-                            title: "想傳達您的訊息給萊恩設計嗎？",
-                            desc: "若想要了解我們的服務，填妥表單，萊恩設計將儘速回應您。",
-                            map: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621",
-                            info: [
-                                { icon: "bx bx-map", title: "地址", text: "台中市臺灣大道二段<br>285號20樓" },
-                                { icon: "bx bx-phone", title: "電話", text: "(886) 0978-028-730" },
-                                { icon: "bx bx-time-five", title: "營業時間", text: "週一至週五<br>09:00 AM – 19:00 PM" },
-                                { icon: "bx bx-envelope", title: "信箱", text: "jianzhi.wang@ncdesign.info" },
-                            ],
-                            form: [
-                                { title: "姓名", id: "name", need: true },
-                                { title: "信箱", id: "email", need: true },
-                                { title: "電話 / 手機", id: "phone", need: true },
-                                { title: "主旨", id: "subject", need: true },
-                                { title: "想說的內容", id: "message", need: true },
-                            ],
-                        }
-                        const id = glitter.getUUID();
-                        return gvc.bindView({
-                            bind : id,
-                            view:()=>{
-                                return `
-                                    <!-- ======= Contact Section ======= -->
-                                    <section id="contact" class="contact">
-                                        <div class="container" data-aos="fade-up">
-                                            <div class="section-title">
-                                                <h2>${contact.title}</h2>
-                                                <p>${contact.desc}</p>
-                                            </div>
-                                        </div>
-                            
-                                        <div data-aos="fade-up">
-                                            <iframe style="border: 0; width: 100%; height: 350px" src="${contact.map}" frameborder="0" allowfullscreen></iframe>
-                                        </div>
-                            
-                                        <div class="container" data-aos="fade-up">
-                                            <div class="row mt-5">
-                                                <div class="col-lg-4">
-                                                    <div class="info">
-                                                    ${glitter.print(function () {
-                                                        let tmp = "";
-                                                        contact.info.map((f) => {
-                                                            tmp += /*html*/ `
-                                                            <div class="mb-5">
-                                                                <i class="${f.icon}"></i>
-                                                                <h4>${f.title}</h4>
-                                                                <p>${f.text}</p>
-                                                            </div>
-                                                        `;
-                                                        });
-                                                        return tmp;
-                                                    })}
-                                                    </div>
-                                                </div>
-                                
-                                                <div class="col-lg-8 mt-5 mt-lg-0">
-                                                    <div class="php-email-form">          
-                                                        <div class="form-group mb-3">
-                                                            <input class="form-control" name="name" id="name" type="text" placeholder="請輸入你的姓名" onblur="clickMap['12'].fun(this,event);" data-gs-event-12="event">
-                                                        </div>                                                              
-                                                        <div class="form-group mb-3">
-                                                            <input class="form-control" name="email" id="email" type="email" placeholder="請輸入你的電子郵件" onblur="clickMap['13'].fun(this,event);" data-gs-event-13="event">
-                                                        </div>                                                              
-                                                        <div class="form-group mb-3">
-                                                            <input class="form-control" name="phone" id="phone" type="number" placeholder="請輸入你的電話 / 手機" onblur="clickMap['14'].fun(this,event);" data-gs-event-14="event">
-                                                        </div>                                                              
-                                                        <div class="form-group mb-3">
-                                                            <input class="form-control" name="subject" id="subject" type="text" placeholder="請輸入主旨" onblur="clickMap['15'].fun(this,event);" data-gs-event-15="event">
-                                                        </div>
-                                                        <div class="form-group mb-3">
-                                                            <textarea class="form-control" name="message" id="message" cols="30" rows="5" placeholder="請輸入想說的訊息" onblur="clickMap['16'].fun(this,event);" data-gs-event-16="event"></textarea>
-                                                        </div>
-                                            
-                                                        <div class="text-center text-md-right mt-3">
-                                                            <button type="submit" onclick="" data-gs-event-17="event">傳送訊息</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <!-- End Contact Section -->
-                                `
-                            },divCreate:{},
-                            onCreate:()=>{
-
-                            }
-
-                        })
-
-
-                    },
-                    editor:()=>{
-                        return ``
-                    }
-                }
-            }
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/contact-us.js',import.meta.url))
         },
         empty:{
             title: "",
-                subContent: "",
-                defaultData:{},
+            subContent: "",
+            defaultData:{},
             render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
                 return {
                     view:()=>{
