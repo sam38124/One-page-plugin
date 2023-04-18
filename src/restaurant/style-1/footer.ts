@@ -69,8 +69,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                         <div class="social-links mt-3">
                                                             ${(()=>{
                                                                 let tmp = "";
-                                
+                                                                
                                                                 footer.outro.socialData.link.map((r:any) => {
+                                                                    
                                                                     //todo
                                                                     tmp += /*html*/ `
                                                                     <a class="text-white" href="${r.src}" style="cursor:pointer">

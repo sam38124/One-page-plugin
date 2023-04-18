@@ -14,28 +14,29 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID()
                     let test= {
-                        title: "給客戶滿意的網站設計，是我們致力奉獻的服務",
-                            desc: "可以看看我們的客戶與業主給我們什麼樣的回饋！",
-                            dataList:{
-                                list: [
-                                    {
-                                        name: "陳志賢",
-                                        pro: "平面設計師",
-                                        img: ScriptStyle1.getRout("assets/img/testimonials/testimonials-1.jpg"),
-                                        text: "我覺得萊恩設計的想法很棒、很出色！下次會再次詢問相關知識",
-                                    },
-                                    { name: "陳佳玲", pro: "寵物店 店長", img: ScriptStyle1.getRout("assets/img/testimonials/testimonials-2.jpg"), text: "萊恩設計公司的服務與溝通方式很友善" },
-                                    { name: "韓俊榮", pro: "XX拉麵 廚師兼店長", img: ScriptStyle1.getRout("assets/img/testimonials/testimonials-3.jpg"), text: "合作得很愉快，很喜歡萊恩設計" },
-                                    {
-                                        name: "黃國玟",
-                                        pro: "OO診所 護理師",
-                                        img: ScriptStyle1.getRout("assets/img/testimonials/testimonials-4.jpg"),
-                                        text: "達成客戶的需求，替客戶早一步想到問題點很棒",
-                                    },
-                                ],
-                            },
+                        title: widget.data.title??"給客戶滿意的網站設計，是我們致力奉獻的服務",
+                        desc: widget.data.desc??"可以看看我們的客戶與業主給我們什麼樣的回饋！",
+                        dataList:widget.data.dataList??{
+                            list: [
+                                {
+                                    name: "陳志賢",
+                                    pro: "平面設計師",
+                                    img: ScriptStyle1.getRout("assets/img/testimonials/testimonials-1.jpg"),
+                                    text: "我覺得萊恩設計的想法很棒、很出色！下次會再次詢問相關知識",
+                                },
+                                { name: "陳佳玲", pro: "寵物店 店長", img: ScriptStyle1.getRout("assets/img/testimonials/testimonials-2.jpg"), text: "萊恩設計公司的服務與溝通方式很友善" },
+                                { name: "韓俊榮", pro: "XX拉麵 廚師兼店長", img: ScriptStyle1.getRout("assets/img/testimonials/testimonials-3.jpg"), text: "合作得很愉快，很喜歡萊恩設計" },
+                                {
+                                    name: "黃國玟",
+                                    pro: "OO診所 護理師",
+                                    img: ScriptStyle1.getRout("assets/img/testimonials/testimonials-4.jpg"),
+                                    text: "達成客戶的需求，替客戶早一步想到問題點很棒",
+                                },
+                            ],
+                        },
 
                     }
+                    widget.data = test
 
                     return gvc.bindView({
                         bind:id,
@@ -54,7 +55,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                   <div class="swiper-wrapper">
                                   ${glitter.print(function () {
                                         var tmp = "";
-                                        test.dataList.list.map((l) => {
+                                        test.dataList.list.map((l:any) => {
                                             tmp += /*html*/ `
                                             <div class="swiper-slide">
                                               <div class="testimonial-item">
@@ -118,73 +119,100 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     })
                 },
                 editor:()=>{
-                    return ``
-                    return Editor.arrayItem({
-                        originalArray:widget.data.list,
-                        gvc: gvc,
-                        title: '區塊內容',
-                        array: widget.data.list.map((dd: any, index: number) => {
-                            return {
-                                title: dd.title || `區塊:${index + 1}`,
-                                expand: dd,
-                                innerHtml: gvc.map([
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `索引`,
-                                        default: dd.number,
-                                        placeHolder: '輸入標題名稱',
-                                        callback: (text) => {
-                                            dd.number = text;
-                                            widget.refreshComponent();
-                                        },
+                    return gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: '標題',
+                            default: widget.data.title,
+                            placeHolder: '這段的大標',
+                            callback: (text) => {
+                                widget.data.title = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: '副標題',
+                            default: widget.data.desc,
+                            placeHolder: '給一段適合的副標題',
+                            callback: (text) => {
+                                widget.data.desc = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        Editor.arrayItem({
+                            originalArray:widget.data.dataList,
+                            gvc: gvc,
+                            title: '客戶回饋資訊卡',
+                            array: widget.data.dataList.list.map((dd: any, index: number) => {
+                                return {
+                                    title: `資訊:${index + 1}`,
+                                    expand: dd,
+                                    innerHtml: gvc.map([
+                                        glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: `客戶名稱`,
+                                            default: dd.name,
+                                            placeHolder: '輸入客戶名稱',
+                                            callback: (text) => {
+                                                dd.name = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: `客戶職業`,
+                                            default: dd.pro,
+                                            placeHolder: '輸入客戶職業',
+                                            callback: (text) => {
+                                                dd.pro = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: `客戶回饋`,
+                                            default: dd.text,
+                                            placeHolder: '輸入客戶回饋',
+                                            callback: (text) => {
+                                                dd.text = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        Editor.uploadImage({
+                                            gvc: gvc,
+                                            title: '圖片',
+                                            def:dd.img,
+                                            callback:(data)=>{
+                                                dd.img=data
+                                                widget.refreshComponent()
+                                            }
+                                        })
+                                    ]),
+                                    minus: gvc.event(() => {
+                                        widget.data.dataList.list.splice(index, 1);
+                                        widget.refreshComponent();
                                     }),
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `標題`,
-                                        default: dd.title,
-                                        placeHolder: '輸入標題名稱',
-                                        callback: (text) => {
-                                            dd.title = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    glitter.htmlGenerate.styleEditor(dd).editor(gvc,()=>{
-                                        widget.refreshComponent()
-                                    },'標題設計樣式'),
-                                    glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: `描述`,
-                                        default: dd.desc,
-                                        placeHolder: '輸入描述',
-                                        callback: (text) => {
-                                            dd.desc = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    ClickEvent.editer(gvc, widget, dd, {
-                                        hover: true,
-                                        option: [],
-                                        title: "點擊事件"
-                                    })
-                                ]),
-                                minus: gvc.event(() => {
-                                    widget.data.list.splice(index, 1);
+                                };
+                            }),
+                            expand: widget.data.dataList,
+                            plus: {
+                                title: '添加區塊',
+                                event: gvc.event(() => {
+                                    widget.data.dataList.list.push({
+                                        name: "陳志賢",
+                                        pro: "平面設計師",
+                                        img: ScriptStyle1.getRout("assets/img/testimonials/testimonials-1.jpg"),
+                                        text: "我覺得萊恩設計的想法很棒、很出色！下次會再次詢問相關知識",
+                                    });
                                     widget.refreshComponent();
                                 }),
-                            };
-                        }),
-                        expand: widget.data,
-                        plus: {
-                            title: '添加區塊',
-                            event: gvc.event(() => {
-                                widget.data.list.push({ number: "03", title: "客製化設定", desc: "設計預算有限也不影響製作品質，打造專屬頁面" });
-                                widget.refreshComponent();
-                            }),
-                        },
-                        refreshComponent:()=>{
-                            widget.refreshComponent()
-                        }
-                    })
+                            },
+                            refreshComponent:()=>{
+                                widget.refreshComponent()
+                            }
+                        })
+                    ])
                 }
             }
         },

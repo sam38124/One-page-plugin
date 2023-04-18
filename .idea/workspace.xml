@@ -3,19 +3,30 @@
   <component name="ChangeListManager">
     <list default="true" id="a5589240-3875-49d1-b7b0-64ff1285d06a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/contact-us.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/contact-us.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/script-style-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/script-style-1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/script-style-1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/script-style-1.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/style-1/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style-1/client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/style-1/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style-1/client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/style-1/contact.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style-1/contact.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/style-1/contact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style-1/contact.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/style-1/ourTeam.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style-1/ourTeam.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/style-1/price.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style-1/price.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/style-1/price.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style-1/price.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/style-1/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style-1/service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theDay/style-1/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style-1/service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/FAQ.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/FAQ.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/FAQ.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/FAQ.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/contact.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/contact.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/contact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/contact.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/cta.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/cta.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/cta.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/cta.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/footer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/footer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/hero.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/hero.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/hero.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/hero.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/portfolio.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/portfolio.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/portfolio.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/portfolio.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/price.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/price.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/price.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/price.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/team.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/team.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/team.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/team.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/testimonial.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/testimonial.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page-blue/style-1/testimonial.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page-blue/style-1/testimonial.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/footer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/footer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,10 +52,10 @@
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\User\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib"
+    "ts.external.directory.path": "C:\\Users\\Admin\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib"
   }
 }]]></component>
-  <component name="RunManager" selected="npm.start">
+  <component name="RunManager" selected="npm.build:tscAuto">
     <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -67,8 +78,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start" />
         <item itemvalue="npm.build:tscAuto" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>

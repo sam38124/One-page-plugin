@@ -49,7 +49,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     });
                 },
                 editor: () => {
-                    console.log(widget.data);
                     return gvc.map([
                         glitter.htmlGenerate.editeInput({
                             gvc: gvc,

@@ -21,37 +21,6 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
             title: "頁腳",
             subContent: "放在最下方的資訊，以及對網站所有地方的導引",
             defaultData:{
-                outro: {
-                    title: "萊恩設計",
-                    desc: "提供直覺的操作，讓您在電腦、平板、手機都能隨心所欲地瀏覽您的網站",
-                    socialData:{
-                        link:["https://www.facebook.com/", "https://twitter.com/", "https://www.instagram.com/", "https://squarestudio.tw/"]
-                    }
-
-                },
-                map: [
-                    {
-                        title: "網站導覽",
-                        listData: {
-                            list:[{ name: "菜單", link: "#menu" },
-                            { name: "產品介紹", link: "#feature" },
-                            { name: "定價方案", link: "#slider" },
-                            { name: "技術領域", link: "#banner" },
-                            { name: "公司團隊", link: "#team" }]
-                        },
-                    },
-                    {
-                        title: "推薦網站",
-                        listData: {
-                            list: [
-                                { name: "Google", link: "https://www.google.com.tw/" },
-                                { name: "Yahoo", link: "https://tw.yahoo.com/" },
-                            ]
-                        },
-
-                    },
-                ],
-                subs: { desc: "想收到與萊恩設計有關的最新消息，請立即訂閱我們的電子報，我們會將資訊送至你的信箱。", link: "#" },
             },
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/footer.js',import.meta.url))
         },

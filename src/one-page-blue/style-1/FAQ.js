@@ -1,5 +1,4 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
-import { ClickEvent } from "../../glitterBundle/plugins/click-event.js";
 import { Editor } from "../../editor.js";
 import { ScriptStyle1 } from "../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
@@ -11,8 +10,8 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     ScriptStyle1.initialScript(gvc, widget);
                     let id = glitter.getUUID();
                     let faq = {
-                        title: "沒有那麼多的預算？常見問題為您解答",
-                        dataList: {
+                        title: widget.data.title ?? "沒有那麼多的預算？常見問題為您解答",
+                        dataList: widget.data.dataList ?? {
                             list: [
                                 {
                                     q: "星澄基地是什麼？",
@@ -27,6 +26,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             ]
                         },
                     };
+                    widget.data = faq;
                     return gvc.bindView({
                         bind: id,
                         view: () => {
@@ -67,73 +67,69 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     });
                 },
                 editor: () => {
-                    return ``;
-                    return Editor.arrayItem({
-                        originalArray: widget.data.list,
-                        gvc: gvc,
-                        title: '區塊內容',
-                        array: widget.data.list.map((dd, index) => {
-                            return {
-                                title: dd.title || `區塊:${index + 1}`,
-                                expand: dd,
-                                innerHtml: gvc.map([
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `索引`,
-                                        default: dd.number,
-                                        placeHolder: '輸入標題名稱',
-                                        callback: (text) => {
-                                            dd.number = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `標題`,
-                                        default: dd.title,
-                                        placeHolder: '輸入標題名稱',
-                                        callback: (text) => {
-                                            dd.title = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    glitter.htmlGenerate.styleEditor(dd).editor(gvc, () => {
+                    return gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: `標題`,
+                            default: widget.data.title,
+                            placeHolder: '輸入標題名稱',
+                            callback: (text) => {
+                                widget.data.title = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        Editor.arrayItem({
+                            originalArray: widget.data.dataList,
+                            gvc: gvc,
+                            title: '區塊內容',
+                            array: widget.data.dataList.list.map((dd, index) => {
+                                return {
+                                    title: `問題${index + 1}`,
+                                    expand: dd,
+                                    innerHtml: gvc.map([
+                                        glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: `問題`,
+                                            default: dd.q,
+                                            placeHolder: '請描述問題',
+                                            callback: (text) => {
+                                                dd.q = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: `回答`,
+                                            default: dd.a,
+                                            placeHolder: '請輸入此問題回答',
+                                            callback: (text) => {
+                                                dd.a = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                    ]),
+                                    minus: gvc.event(() => {
+                                        widget.data.dataList.list.splice(index, 1);
                                         widget.refreshComponent();
-                                    }, '標題設計樣式'),
-                                    glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: `描述`,
-                                        default: dd.desc,
-                                        placeHolder: '輸入描述',
-                                        callback: (text) => {
-                                            dd.desc = text;
-                                            widget.refreshComponent();
-                                        },
                                     }),
-                                    ClickEvent.editer(gvc, widget, dd, {
-                                        hover: true,
-                                        option: [],
-                                        title: "點擊事件"
-                                    })
-                                ]),
-                                minus: gvc.event(() => {
-                                    widget.data.list.splice(index, 1);
+                                };
+                            }),
+                            expand: widget.data.dataList,
+                            plus: {
+                                title: '添加問題',
+                                event: gvc.event(() => {
+                                    widget.data.dataList.list.push({
+                                        q: "星澄基地是什麼？",
+                                        a: "星澄基地是萊恩設計所開發的套版應用平台，集結了我們所有的開發案例，讓您能用最低的成本打造您的應用",
+                                    });
                                     widget.refreshComponent();
                                 }),
-                            };
-                        }),
-                        expand: widget.data,
-                        plus: {
-                            title: '添加區塊',
-                            event: gvc.event(() => {
-                                widget.data.list.push({ number: "03", title: "客製化設定", desc: "設計預算有限也不影響製作品質，打造專屬頁面" });
+                            },
+                            refreshComponent: () => {
                                 widget.refreshComponent();
-                            }),
-                        },
-                        refreshComponent: () => {
-                            widget.refreshComponent();
-                        }
-                    });
+                            }
+                        })
+                    ]);
                 }
             };
         },
