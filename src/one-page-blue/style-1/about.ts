@@ -23,7 +23,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         如果個人身分的傳統特質變得支離破碎，可以想見未來社群的向心力將會更為疏遠，社會階層的流動性降低或是邊緣化，讓種族隔離或極端主義有機可趁。但換個角度來看，科技及網路帶來人際關係的「超連結」（hyperconnectivity），將有機會強化正向群體認同，賦予營造社群的新契機。未來，無論是生活或身分，人與人都會逐漸變得密不可分。這究竟是好事還是壞事？我認為有好也有壞，而且不論何者的影響都會越來越大。
                         </p>`,
                     }
-                    let id = glitter.getUUID()
+                    let id = glitter.getUUID();
+                    if (!widget.data.title){
+                        widget.data = about;
+                    }
 
                     return gvc.bindView({
                         bind:id,
@@ -56,7 +59,37 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     })
                 },
                 editor:()=>{
-                    return ``
+                    return gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: `標題`,
+                            default: widget.data.title,
+                            placeHolder: '輸入標題名稱',
+                            callback: (text) => {
+                                widget.data.title = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        glitter.htmlGenerate.editeText({
+                            gvc: gvc,
+                            title: `標題`,
+                            default: widget.data.desc,
+                            placeHolder: '輸入標題名稱',
+                            callback: (text) => {
+                                widget.data.desc = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        Editor.uploadImage({
+                            gvc: gvc,
+                            title: '右方圖片',
+                            def:widget.data.img,
+                            callback:(data)=>{
+                                widget.data.img=data
+                                widget.refreshComponent()
+                            }
+                        })
+                    ])
                     return Editor.arrayItem({
                         originalArray:widget.data.list,
                         gvc: gvc,

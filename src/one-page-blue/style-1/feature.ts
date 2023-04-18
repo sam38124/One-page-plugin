@@ -12,6 +12,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             return {
                 view:()=>{
                     ScriptStyle1.initialScript(gvc,widget)
+
                     let feature = {
                         dataList: widget.data.dataList??[
                             {
@@ -52,7 +53,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             },
                         ]
                     }
-
+                    widget.data = feature;
                     let id = glitter.getUUID()
 
                     return gvc.bindView({
@@ -120,73 +121,83 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     })
                 },
                 editor:()=>{
-                    return ``
-                    return Editor.arrayItem({
-                        originalArray:widget.data.list,
-                        gvc: gvc,
-                        title: '區塊內容',
-                        array: widget.data.list.map((dd: any, index: number) => {
-                            return {
-                                title: dd.title || `區塊:${index + 1}`,
-                                expand: dd,
-                                innerHtml: gvc.map([
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `索引`,
-                                        default: dd.number,
-                                        placeHolder: '輸入標題名稱',
-                                        callback: (text) => {
-                                            dd.number = text;
+                    return gvc.map([
+                        Editor.arrayItem({
+                            originalArray:widget.data.dataList,
+                            gvc: gvc,
+                            title: '項次詳細',
+                            array: widget.data.dataList.map((linkData: any, index: number) => {
+                                return {
+                                    title: `項次:${index + 1}`,
+                                    expand: linkData,
+                                    innerHtml: gvc.map([
+                                        glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: '標題',
+                                            default: linkData.tab,
+                                            placeHolder: '請輸入項次標題',
+                                            callback: (text) => {
+                                                linkData.tab = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: '概述',
+                                            default: linkData.title,
+                                            placeHolder: '請輸入項次概述',
+                                            callback: (text) => {
+                                                linkData.title = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        Editor.uploadImage({
+                                            gvc: gvc,
+                                            title: '預覽圖片1',
+                                            def: linkData.img,
+                                            callback:(data)=>{
+                                                linkData.img=data
+                                                widget.refreshComponent()
+                                            }
+                                        }),
+                                        Editor.fontawesome({
+                                            title: 'icon',
+                                            gvc: gvc,
+                                            def: linkData.icon.name,
+                                            callback: (text: string) => {
+                                                linkData.icon.name = text;
+                                            },
+                                        }),
+                                        `<h3>修改顏色</h3>
+                                         <input type="color" value="${linkData.icon.color}" onchange="${gvc.event((e:HTMLInputElement)=>{
+                                            linkData.icon.color = e.value;
                                             widget.refreshComponent();
-                                        },
+                                        })}">
+                                        `
+
+                                    ]),
+                                    minus: gvc.event(() => {
+                                        widget.data.dataList.splice(index, 1);
+                                        widget.refreshComponent();
                                     }),
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `標題`,
-                                        default: dd.title,
-                                        placeHolder: '輸入標題名稱',
-                                        callback: (text) => {
-                                            dd.title = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    glitter.htmlGenerate.styleEditor(dd).editor(gvc,()=>{
-                                        widget.refreshComponent()
-                                    },'標題設計樣式'),
-                                    glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: `描述`,
-                                        default: dd.desc,
-                                        placeHolder: '輸入描述',
-                                        callback: (text) => {
-                                            dd.desc = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    ClickEvent.editer(gvc, widget, dd, {
-                                        hover: true,
-                                        option: [],
-                                        title: "點擊事件"
-                                    })
-                                ]),
-                                minus: gvc.event(() => {
-                                    widget.data.list.splice(index, 1);
+                                };
+                            }),
+                            expand: widget.data,
+                            plus: {
+                                title: '添加區塊',
+                                event: gvc.event(() => {
+                                    widget.data.dataList.push({ icon: { name: "bi bi-binoculars", color: "#F9BA2B" },
+                                        tab: "文教",
+                                        title: "田地在走，科技要有",
+                                        img: ScriptStyle1.getRout("assets/img/features-1.png"), });
                                     widget.refreshComponent();
                                 }),
-                            };
+                            },
+                            refreshComponent:()=>{
+                                widget.refreshComponent()
+                            }
                         }),
-                        expand: widget.data,
-                        plus: {
-                            title: '添加區塊',
-                            event: gvc.event(() => {
-                                widget.data.list.push({ number: "03", title: "客製化設定", desc: "設計預算有限也不影響製作品質，打造專屬頁面" });
-                                widget.refreshComponent();
-                            }),
-                        },
-                        refreshComponent:()=>{
-                            widget.refreshComponent()
-                        }
-                    })
+                    ])
                 }
             }
         },

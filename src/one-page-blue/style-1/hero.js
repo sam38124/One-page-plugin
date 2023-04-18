@@ -1,7 +1,7 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
-import { ClickEvent } from "../../glitterBundle/plugins/click-event.js";
 import { Editor } from "../../editor.js";
 import { ScriptStyle1 } from "../script-style-1.js";
+import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
@@ -9,11 +9,12 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             return {
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget);
+                    widget.data.btn = widget.data.btn ?? { name: "了解更多", link: "#" };
                     let keyVision = {
                         title: widget.data.title ?? "關於萊恩設計<br/>我們能為您做什麼？",
                         desc: widget.data.desc ?? "優質服務範圍包括網路連線諮詢與服務，從電商網站設計、後台管理、產品投放分析、網站架設、金流串接，我們都有經驗能替您完成服務",
                         img: widget.data.img ?? ScriptStyle1.getRout("assets/img/hero-img.png"),
-                        btn: widget.data.btn ?? { name: "了解更多", link: "#" },
+                        btn: widget.data.btn,
                     };
                     let id = glitter.getUUID();
                     return gvc.bindView({
@@ -28,7 +29,11 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                 <h1>${keyVision.title}</h1>
                                                 <h2>${keyVision.desc}</h2>
                                                 <a class="btn-get-started scrollto" 
-                                                onclick="${gvc.event(() => { keyVision.btn.link; })}" style="cursor:pointer">${keyVision.btn.name}</a>
+                                                onclick="${gvc.event(() => {
+                                TriggerEvent.trigger({
+                                    gvc, widget, clickEvent: keyVision.btn.link,
+                                });
+                            })}" style="cursor:pointer">${keyVision.btn.name}</a>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left">
@@ -44,73 +49,53 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     });
                 },
                 editor: () => {
-                    return ``;
-                    return Editor.arrayItem({
-                        originalArray: widget.data.list,
-                        gvc: gvc,
-                        title: '區塊內容',
-                        array: widget.data.list.map((dd, index) => {
-                            return {
-                                title: dd.title || `區塊:${index + 1}`,
-                                expand: dd,
-                                innerHtml: gvc.map([
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `索引`,
-                                        default: dd.number,
-                                        placeHolder: '輸入標題名稱',
-                                        callback: (text) => {
-                                            dd.number = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: `標題`,
-                                        default: dd.title,
-                                        placeHolder: '輸入標題名稱',
-                                        callback: (text) => {
-                                            dd.title = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    glitter.htmlGenerate.styleEditor(dd).editor(gvc, () => {
-                                        widget.refreshComponent();
-                                    }, '標題設計樣式'),
-                                    glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: `描述`,
-                                        default: dd.desc,
-                                        placeHolder: '輸入描述',
-                                        callback: (text) => {
-                                            dd.desc = text;
-                                            widget.refreshComponent();
-                                        },
-                                    }),
-                                    ClickEvent.editer(gvc, widget, dd, {
-                                        hover: true,
-                                        option: [],
-                                        title: "點擊事件"
-                                    })
-                                ]),
-                                minus: gvc.event(() => {
-                                    widget.data.list.splice(index, 1);
-                                    widget.refreshComponent();
-                                }),
-                            };
-                        }),
-                        expand: widget.data,
-                        plus: {
-                            title: '添加區塊',
-                            event: gvc.event(() => {
-                                widget.data.list.push({ number: "03", title: "客製化設定", desc: "設計預算有限也不影響製作品質，打造專屬頁面" });
+                    console.log(widget.data);
+                    return gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: '大標題',
+                            default: widget.data.title,
+                            placeHolder: '請輸入大標題',
+                            callback: (text) => {
+                                widget.data.title = text;
                                 widget.refreshComponent();
-                            }),
-                        },
-                        refreshComponent: () => {
-                            widget.refreshComponent();
-                        }
-                    });
+                            },
+                        }),
+                        glitter.htmlGenerate.editeText({
+                            gvc: gvc,
+                            title: '敘述',
+                            default: widget.data.desc,
+                            placeHolder: '請輸入副標題和敘述',
+                            callback: (text) => {
+                                widget.data.desc = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        Editor.uploadImage({
+                            gvc: gvc,
+                            title: '右方圖片',
+                            def: widget.data.img,
+                            callback: (data) => {
+                                widget.data.img = data;
+                                widget.refreshComponent();
+                            }
+                        }),
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: '按鍵名稱',
+                            default: widget.data.btn.name,
+                            placeHolder: '請輸入按鍵要顯示的名稱',
+                            callback: (text) => {
+                                widget.data.btn.name = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        TriggerEvent.editer(gvc, widget, widget.data.btn.link, {
+                            hover: true,
+                            option: [],
+                            title: "點擊事件"
+                        })
+                    ]);
                 }
             };
         },

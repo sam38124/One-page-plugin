@@ -55,9 +55,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         `
                     <div class="mt-3"></div>
                     ` +
-                        `
-                    <div class="mt-3"></div>
-                    ` +
                         Editor.uploadImage({
                             gvc: gvc,
                             title: `右方圖片`,

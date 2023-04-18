@@ -21,6 +21,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         </p>`,
                     };
                     let id = glitter.getUUID();
+                    if (!widget.data.title) {
+                        widget.data = about;
+                    }
                     return gvc.bindView({
                         bind: id,
                         view: () => {
@@ -50,7 +53,37 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     });
                 },
                 editor: () => {
-                    return ``;
+                    return gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: `標題`,
+                            default: widget.data.title,
+                            placeHolder: '輸入標題名稱',
+                            callback: (text) => {
+                                widget.data.title = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        glitter.htmlGenerate.editeText({
+                            gvc: gvc,
+                            title: `標題`,
+                            default: widget.data.desc,
+                            placeHolder: '輸入標題名稱',
+                            callback: (text) => {
+                                widget.data.desc = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        Editor.uploadImage({
+                            gvc: gvc,
+                            title: '右方圖片',
+                            def: widget.data.img,
+                            callback: (data) => {
+                                widget.data.img = data;
+                                widget.refreshComponent();
+                            }
+                        })
+                    ]);
                     return Editor.arrayItem({
                         originalArray: widget.data.list,
                         gvc: gvc,
