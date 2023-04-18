@@ -1,4 +1,5 @@
 import {HtmlJson} from "../glitterBundle/plugins/plugin-creater.js";
+import {GVC} from "../glitterBundle/GVController.js";
 
 export class ScriptStyle1{
     public static   hi: boolean = false;
@@ -46,36 +47,6 @@ export class ScriptStyle1{
         }, () => {
 
         })
-    }
-    public static recursive(r:any, first?:any) {
-        var h = "";
-        if (r.list === undefined) {
-            h += /*html*/ `
-              <li>
-                <a
-                  class="${first ? "nav-link" : ""} scrollto"
-                  onclick=""
-                  style="cursor:pointer"
-                  data-hash=${r.link}
-                >
-                  ${r.title}
-                </a>
-              </li>
-            `;
-        } else {
-            h += /*html*/ ` <li class="dropdown">
-          <a class="">${r.title}<i class="bi bi-chevron-${first ? "down" : "right"}"></i></a>
-          <ul class="">
-            ${(()=>{
-                var tmp = "";
-                r.list.map((r2:any) => (tmp += ScriptStyle1.recursive(r2)));
-                return tmp;
-            })()}
-           
-          </ul>
-        </li>`;
-        }
-        return h;
     }
     public static  urlIcon(link:string , size:string){
 

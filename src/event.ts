@@ -64,6 +64,7 @@ TriggerEvent.create(import.meta.url, {
                                         ${[
                                             { title: '內部連結', value: 'inlink' },
                                             { title: '外部連結', value: 'outlink' },
+                                            { title: 'HashTag', value: 'hashTag' },
                                         ]
                                             .map((dd) => {
                                                 return /*html*/ `<option value="${dd.value}" ${dd.value == object.type ? `selected` : ``}>
@@ -99,7 +100,16 @@ TriggerEvent.create(import.meta.url, {
                                                 },
                                             });
                                         } else {
-                                            return ``;
+                                            return gvc.glitter.htmlGenerate.editeInput({
+                                                gvc: gvc,
+                                                title: '',
+                                                default: object.link,
+                                                placeHolder: '輸入跳轉的HashTag',
+                                                callback: (text: string) => {
+                                                    object.link = text;
+                                                    widget.refreshAll();
+                                                },
+                                            });
                                         }
                                     })()}`;
                             },
@@ -116,7 +126,12 @@ TriggerEvent.create(import.meta.url, {
                         url.searchParams.set('page', object.link);
                         location.href = url.href;
                         // location.href=
-                    } else {
+                    } else if(object.type === 'hashTag'){
+                        const yOffset = $("header").length > 0 ? - ($("header") as any).height() : 0;
+                        const element:any = document.getElementsByClassName(`glitterTag${object.link}`)[0];
+                        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                    }else{
                         gvc.glitter.runJsInterFace(
                             'openWeb',
                             {

@@ -43,37 +43,6 @@ export class ScriptStyle1 {
         }, () => {
         });
     }
-    static recursive(r, first) {
-        var h = "";
-        if (r.list === undefined) {
-            h += `
-              <li>
-                <a
-                  class="${first ? "nav-link" : ""} scrollto"
-                  onclick=""
-                  style="cursor:pointer"
-                  data-hash=${r.link}
-                >
-                  ${r.title}
-                </a>
-              </li>
-            `;
-        }
-        else {
-            h += ` <li class="dropdown">
-          <a class="">${r.title}<i class="bi bi-chevron-${first ? "down" : "right"}"></i></a>
-          <ul class="">
-            ${(() => {
-                var tmp = "";
-                r.list.map((r2) => (tmp += ScriptStyle1.recursive(r2)));
-                return tmp;
-            })()}
-           
-          </ul>
-        </li>`;
-        }
-        return h;
-    }
     static urlIcon(link, size) {
         if (link == "#") {
             if (size == "bi")

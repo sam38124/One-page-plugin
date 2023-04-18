@@ -3,6 +3,7 @@ export class ErpConfig {
     public static api=''
 
     public static roleList:{code:string,name:string}[]=[]
+
     public static setToken(token?:string){
         const glitter=(window as any).glitter
         if(token){
@@ -16,4 +17,6 @@ export class ErpConfig {
         const glitter=(window as any).glitter
         return glitter.getCookieByName(ErpConfig.tokenKey)
     }
+
+
 }

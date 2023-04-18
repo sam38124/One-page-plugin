@@ -6,6 +6,48 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
+            function recursive(r, first) {
+                var h = "";
+                if (r.list === undefined) {
+                    h += `
+              <li>
+                <a
+                  class="${first ? "nav-link" : ""} scrollto"
+                  onclick="${gvc.event(() => {
+                        TriggerEvent.trigger({
+                            gvc: gvc, widget: widget, clickEvent: r
+                        });
+                        glitter.ut.frSize({
+                            sm: ``
+                        }, () => {
+                            $("#navbar").toggleClass("navbar-mobile");
+                            $('.mobile-nav-toggle').toggleClass("bi-list");
+                            $('.mobile-nav-toggle').toggleClass("bi-x");
+                        })();
+                    })}"
+                  style="cursor:pointer"
+                  data-hash=${r.link}
+                >
+                  ${r.title}
+                </a>
+              </li>
+            `;
+                }
+                else {
+                    h += ` <li class="dropdown">
+          <a class="">${r.title}<i class="bi bi-chevron-${first ? "down" : "right"}"></i></a>
+          <ul class="">
+            ${(() => {
+                        var tmp = "";
+                        r.list.map((r2) => (tmp += recursive(r2)));
+                        return tmp;
+                    })()}
+           
+          </ul>
+        </li>`;
+                }
+                return h;
+            }
             return {
                 view: () => {
                     widget.data.bar = widget.data.bar ?? [];
@@ -52,13 +94,17 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                   <ul>
                                     ${(() => {
                                 var tmp = "";
-                                nav.bar.map((b) => (tmp += ScriptStyle1.recursive(b, true)));
+                                nav.bar.map((b) => (tmp += recursive(b, true)));
                                 return tmp;
                             })()}
                                    
                                   </ul>
 <!--                                  todo 這顆漢堡不會作動-->
-                                  <i class="bi bi-list mobile-nav-toggle"></i>
+                                  <i class="bi bi-list mobile-nav-toggle" onclick="${gvc.event((e) => {
+                                $("#navbar").toggleClass("navbar-mobile");
+                                $(e).toggleClass("bi-list");
+                                $(e).toggleClass("bi-x");
+                            })}"></i>
                                 </nav>
                               </div>
                             </header>

@@ -19,7 +19,6 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
             return {
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget)
-                    subData = subData ?? {}
 
                     function generateForm(formList: any, formData: any) {
                         return formList.map((data: any) => {
@@ -31,7 +30,7 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
 
                             return `
                   <div class="col-sm-${data.col} col-${data.colm}">
-                  <div class="position-relative ${(data.type === 'arrayItem') ? ``:`mb-2`}">
+                  <div class="position-relative ${(data.type === 'arrayItem') ? ``:`mb-2`}" >
                     <label for="email" class="form-label fs-base ${(data.type === 'arrayItem') ? `d-none`:``}"  >${data.label}</label>
                     ${(() => {
                                 switch (data.type) {
@@ -70,6 +69,9 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                                             value: gvc.event((e) => {
                                                                 formData[data.key] = e.value
                                                             })
+                                                        },{
+                                                            key:(data.states === '1') ? `disabled`:``,
+                                                            value:''
                                                         }]
                                                     }
                                                 }
@@ -92,7 +94,7 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                     case 'textArea':
                                         return `<textArea class="form-control" style="height:100px;" onchange="${gvc.event((e) => {
                                             formData[data.key] = e.value
-                                        })}">${formData[data.key] ?? ""}</textArea>`
+                                        })}" ${(data.states === '1') ? `readonly`:``}>${formData[data.key] ?? ""}</textArea>`
                                     case 'imageUpload':
                                         return Editor.uploadImage({
                                             gvc: gvc,
@@ -110,9 +112,9 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                             title: data.label,
                                             array: formData[data.key].map((dd: any, index: number) => {
                                                 return {
-                                                    title: `${dd.index ?? '項目'}:${index + 1}`,
+                                                    title: `${data.index ?? '項目'}:${index + 1}`,
                                                     expand: dd,
-                                                    innerHtml: ``,
+                                                    innerHtml: `<div class="row" >${generateForm(JSON.parse(JSON.stringify(data.elemList)), dd)}</div>`,
                                                     minus: gvc.event(() => {
                                                         formData[data.key].splice(index, 1);
                                                         widget.refreshComponent();
@@ -130,15 +132,14 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                             refreshComponent: () => {
                                                 widget.refreshComponent()
                                             },
-                                           color1:'#131022',
+                                           color1:'#2c2c2c',
                                            color2:"#404954"
                                         })+`<div class="my-2"></div>`
-                                        return generateForm(data.elemList, formData[data.key])
                                     default:
                                         return `  <input type="${data.type}" id="${data.key}"
    value="${formData[data.key] ?? ""}" class="form-control form-control-lg" style="font-size:15px;" onchange="${gvc.event((e) => {
                                             formData[data.key] = e.value
-                                        })}">`;
+                                        })}" ${(data.states === '1') ? `readonly`:``}>`;
                                 }
                             })()}
                   </div>
@@ -207,6 +208,29 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                                 ])
                                             }
                                         }),
+                                        Editor.select({
+                                            title: `狀態`,
+                                            gvc: gvc,
+                                            def: dd.states,
+                                            array: [
+                                                {
+                                                    title: '可讀可寫',
+                                                    value: `0`,
+                                                },
+                                                {
+                                                    title: '可讀',
+                                                    value: `1`,
+                                                },
+                                                {
+                                                    title: '隱藏',
+                                                    value: `2`,
+                                                }
+                                            ],
+                                            callback: (text) => {
+                                                dd.states = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
                                         glitter.htmlGenerate.editeInput({
                                             gvc: gvc,
                                             title: '標題',
@@ -251,6 +275,10 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                                 {
                                                     title: '地址',
                                                     value: `address`,
+                                                },
+                                                {
+                                                    title: '日期',
+                                                    value: `date`,
                                                 },
                                                 {
                                                     title: '公司',
@@ -368,9 +396,9 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                                 dd.elemList = dd.elemList ?? []
                                                 return  glitter.htmlGenerate.editeInput({
                                                     gvc: gvc,
-                                                    title: '添加按鈕標題',
+                                                    title: '索引標題',
                                                     default: dd.index,
-                                                    placeHolder: '請輸入添加按鈕標題',
+                                                    placeHolder: '請輸入索引標題',
                                                     callback: (text) => {
                                                         dd.index = text
                                                         widget.refreshComponent()
