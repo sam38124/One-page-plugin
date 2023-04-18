@@ -12,7 +12,6 @@ export class ScriptStyle1 {
         window.root = document.getElementsByTagName('html')[0];
         window.root.classList.add('dark-mode');
         gvc.addStyleLink([
-            ScriptStyle1.getRout('assets/vendor/animate.css/animate.min.css'),
             ScriptStyle1.getRout('assets/vendor/aos/aos.css'),
             ScriptStyle1.getRout('assets/vendor/bootstrap/css/bootstrap.min.css'),
             ScriptStyle1.getRout('assets/vendor/bootstrap-icons/bootstrap-icons.css'),

@@ -141,7 +141,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         Editor.arrayItem({
                             originalArray:widget.data.dataList,
                             gvc: gvc,
-                            title: '區塊內容',
+                            title: '成員內容',
                             array: widget.data.dataList.list.map((dd: any, index: number) => {
                                 return {
                                     title: dd.name || `人員:${index + 1}`,
@@ -227,22 +227,27 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         })
                                     ]),
                                     minus: gvc.event(() => {
-                                        widget.data.list.splice(index, 1);
+                                        widget.data.dataList.list.splice(index, 1);
                                         widget.refreshComponent();
                                     }),
                                 };
                             }),
                             expand: widget.data.dataList,
                             plus: {
-                                title: '添加區塊',
+                                title: '添加成員',
                                 event: gvc.event(() => {
                                     widget.data.dataList.list.push({
                                         img: ScriptStyle1.getRout("assets/img/team/team-1.jpg"),
                                         name: "陳志賢",
                                         pro: "執行長",
                                         desc: "企業中負責日常營運的最高行政人員。其專業與領導能力，讓公司的股東可以信任該公司的決策與產品",
-                                        link: ["https://www.facebook.com/", "https://www.instagram.com/"],
-                                    },);
+                                        linkList:{
+                                            link : [
+                                                {src:"https://www.facebook.com/"},
+                                                {src:"https://www.instagram.com/"},
+                                            ]
+                                        }
+                                    });
                                     widget.refreshComponent();
                                 }),
                             },

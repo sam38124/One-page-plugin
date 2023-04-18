@@ -19,7 +19,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         map: widget.data.map??"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621",
                         infoList:widget.data.infoList??{
                             info: [
-                                { icon: "bx bx-map", title: "地址", text: "台中市臺灣大道二段285號20樓" },
+                                { icon: "bx bx-map", title: "地址", text: "台中市北屯區後庄北路18號" },
                                 { icon: "bx bx-phone", title: "電話", text: "(886) 0978-028-730" },
                                 { icon: "bx bx-time-five", title: "營業時間", text: "週一至週五 09:00 AM – 19:00 PM" },
                                 { icon: "bx bx-envelope", title: "信箱", text: "jianzhi.wang@ncdesign.info" },
@@ -27,11 +27,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         },
                         formList:widget.data.formList??{
                             form: [
-                                { title: "姓名", id: "name", need: true },
-                                { title: "信箱", id: "email", need: true },
-                                { title: "電話 / 手機", id: "phone", need: true },
-                                { title: "主旨", id: "subject", need: true },
-                                { title: "想說的內容", id: "message", need: true },
+                                { title: "姓名", type: "name", need: true },
+                                { title: "信箱", type: "email", need: true },
+                                { title: "電話 / 手機", type: "number", need: true },
+                                { title: "主旨", type: "text", need: true },
+                                { title: "想說的內容", type: "textArea", need: true },
                             ],
                         }
 
@@ -47,8 +47,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             let tmp = "";
 
                             obj.map((l: any) => {
-                                switch (l.id) {
-                                    case "message":
+                                switch (l.type) {
+                                    case "textarea":
                                         tmp += /*html*/ ` <div class="form-group mb-3">
                                                         <textarea
                                                           ${attr.textarea ?? ``}
@@ -63,17 +63,17 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         break;
                                     default:
                                         tmp += /*html*/ `
-                                                        <div class="form-group mb-3">
-                                                          <input
-                                                            ${attr.input}
-                                                            name="${l.id}"
-                                                            id="${l.id}"
-                                                            type="${type[l.id] ?? "text"}"
-                                                            placeholder="${l.title}"
-                                                            onblur=""
-                                                          />
-                                                        </div>
-                                                      `;
+                                            <div class="form-group mb-3">
+                                              <input
+                                                ${attr.input}
+                                                name="${l.type}"
+                                                id="${l.title}"
+                                                type="${l.type}"
+                                                placeholder="${l.title}"
+                                                onblur=""
+                                              />
+                                            </div>
+                                          `;
                                         break;
                                 }
                             });
@@ -89,7 +89,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     }
 
                     if (!widget.data.infoList){
-
+                        widget.data.infoList=contact.infoList;
+                    }
+                    if (!widget.data.formList){
+                        widget.data.formList = contact.formList
                     }
 
                     return gvc.bindView({
@@ -159,63 +162,142 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     return gvc.map([
                         glitter.htmlGenerate.editeInput({
                             gvc: gvc,
-                            title: `標題`,
-                            default: widget.data.title,
-                            placeHolder: '輸入標題名稱',
-                            callback: (text) => {
-                                widget.data.title = text;
-                                widget.refreshComponent();
+                            title: '標題',
+                            default: widget.data.title ?? '',
+                            placeHolder: '請輸入標題',
+                            callback: (text: string) => {
+                                widget.data.title=text
+                                widget.refreshComponent()
                             },
                         }),
                         glitter.htmlGenerate.editeInput({
                             gvc: gvc,
-                            title: `副標題`,
-                            default: widget.data.desc,
-                            placeHolder: '副標題',
-                            callback: (text) => {
-                                widget.data.desc = text;
-                                widget.refreshComponent();
+                            title: '地圖',
+                            default: widget.data.map ?? '',
+                            placeHolder: '請輸入地圖位址',
+                            callback: (text: string) => {
+                                widget.data.map=text
+                                widget.refreshComponent()
+                            },
+                        }),
+                        glitter.htmlGenerate.editeText({
+                            gvc: gvc,
+                            title: '子標題',
+                            default: widget.data.desc ?? '',
+                            placeHolder: '請輸入子標題',
+                            callback: (text: string) => {
+                                widget.data.desc=text
+                                widget.refreshComponent()
                             },
                         }),
                         Editor.arrayItem({
-                            originalArray:widget.data.outro,
                             gvc: gvc,
-                            title: '行內資訊',
-                            array: widget.data.contactInf.inf.map((data: any, index: number) => {
+                            originalArray:widget.data.infoList,
+                            title: '聯絡條目',
+                            array: widget.data.infoList.info.map((dd: any, index: number) => {
                                 return {
-                                    title: `第${index+1}個聯絡資訊`,
-                                    expand: widget.data.contactInf,
-                                    innerHtml:glitter.htmlGenerate.editeInput({
-                                        gvc : gvc,
-                                        title : '聯絡資訊',
-                                        default : data.title,
-                                        placeHolder : `請輸入聯絡資訊`,
-                                        callback:(text)=>{
-                                            data.title = text;
-                                            widget.refreshComponent();
-                                        }
-                                    })+Editor.fontawesome({
-                                        gvc: gvc,
-                                        title: '圖示',
-                                        def: data.icon,
-                                        callback: (text: string) => {
-                                            data.icon = text;
-                                            widget.refreshComponent();
-                                        },
-                                    })
-
-                                    ,
+                                    title: dd.title || `條目:${index + 1}`,
+                                    expand: dd,
+                                    innerHtml:
+                                        Editor.fontawesome({
+                                            title: 'icon',
+                                            gvc: gvc,
+                                            def: dd.icon,
+                                            callback: (text: string) => {
+                                                dd.icon = text;
+                                            },
+                                        }) +
+                                        glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: `標題`,
+                                            default: dd.title,
+                                            placeHolder: '輸入標題',
+                                            callback: (text) => {
+                                                dd.title = text;
+                                                widget.refreshComponent();
+                                            },
+                                        })+ glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: `描述`,
+                                            default: dd.text,
+                                            placeHolder: '輸入描述',
+                                            callback: (text) => {
+                                                dd.text = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
                                     minus: gvc.event(() => {
-                                        widget.data.contactInf.inf.splice(index, 1);
+                                        widget.data.infoList.info.splice(index, 1);
                                         widget.refreshComponent();
                                     }),
                                 };
                             }),
-                            expand: widget.data.outro.socialData,
+                            expand: widget.data.infoList,
                             plus: {
                                 title: '添加區塊',
                                 event: gvc.event(() => {
-                                    widget.data.contactInf.inf.push({title:"jianzhi.wang@ncdesign.info" , icon:"bx bx-envelope fs-5 m-2"});
+                                    widget.data.infoList.info.push({
+                                        icon: 'bx bx-map',
+                                        title: '地址',
+                                    });
+                                    widget.refreshComponent();
+                                }),
+                            },
+                            refreshComponent:()=>{
+                                widget.refreshComponent()
+                            }
+                        }),
+                        Editor.arrayItem({
+                            originalArray:widget.data.formList,
+                            gvc: gvc,
+                            title: '表單項目',
+                            array: widget.data.formList.form.map((dd: any, index: number) => {
+                                return {
+                                    title: `條目:${index + 1}`,
+                                    expand: dd,
+                                    innerHtml: gvc.map([
+                                        glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: `問題`,
+                                            default: dd.title,
+                                            placeHolder: '輸入問題',
+                                            callback: (text) => {
+                                                dd.title = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        Editor.select({
+                                            title: '輸入類型',
+                                            gvc: gvc,
+                                            def: dd.type,
+                                            callback: (text: string) => {
+                                                dd.type = text;
+                                                widget.refreshComponent();
+                                            },
+                                            array: ['text', 'number', 'email', 'textArea'],
+                                        }),
+                                        Editor.select({
+                                            title: '必填',
+                                            gvc: gvc,
+                                            def: dd.need ? `true` : `false`,
+                                            callback: (text: string) => {
+                                                dd.need = text === 'true';
+                                                widget.refreshComponent();
+                                            },
+                                            array: ['true', 'false'],
+                                        }),
+                                    ]),
+                                    minus: gvc.event(() => {
+                                        widget.data.formList.form.splice(index, 1);
+                                        widget.refreshComponent();
+                                    }),
+                                };
+                            }),
+                            expand: widget.data.formList,
+                            plus: {
+                                title: '添加區塊',
+                                event: gvc.event(() => {
+                                    widget.data.formList.form.push(  {title: "姓名", type: "text", need: true });
                                     widget.refreshComponent();
                                 }),
                             },

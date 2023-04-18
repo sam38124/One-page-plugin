@@ -262,6 +262,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             gvc: gvc,
                                             def: dd.type,
                                             callback: (text: string) => {
+
                                                 dd.type = text;
                                                 widget.refreshComponent();
                                             },

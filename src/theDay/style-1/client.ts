@@ -94,7 +94,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             plus: {
                                 title: '添加區塊',
                                 event: gvc.event(() => {
-                                    widget.data.client.clientLogo.push("");
+                                    widget.data.client.clientLogo.push({img:""});
                                     widget.refreshComponent();
                                 }),
                             },

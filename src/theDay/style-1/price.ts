@@ -17,7 +17,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     let price = {
                         title: widget.data.title??"客製專案價格",
                         desc: widget.data.desc??"社群平台、電商網站、個人部落格、企業管理、線上課程、資料視覺化等…功能網站",
-                        dataList:{
+                        dataList:widget.data.dataList??{
                             list: [
                                 {
                                     title: "A方案",
@@ -25,6 +25,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     detail: [{ text: "功能 A" }, { text: "功能 B", not: true }, { text: "功能 C", not: true }],
                                     price: { num: 249, unit: "月" },
                                     btn: { name: "選擇方案", link: {} },
+                                    expand:{}
                                 },
                                 {
                                     title: "B方案",
@@ -33,6 +34,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     detail: [{ text: "功能 A" }, { text: "功能 B", not: true }, { text: "功能 C" }],
                                     price: { num: 399, unit: "月" },
                                     btn: { name: "選擇方案", link: {} },
+                                    expand:{}
                                 },
                                 {
                                     title: "C方案",
@@ -40,6 +42,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     detail: [{ text: "功能 A" }, { text: "功能 B" }, { text: "功能 C" }],
                                     price: { num: 799, unit: "月" },
                                     btn: { name: "選擇方案", link: {} },
+                                    expand:{}
                                 },
                             ]
                         },
@@ -65,7 +68,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 <div class="row">
                                 ${glitter.print(function () {
                                 var tmp = "";
-                                price.dataList.list.map((l) => {
+                                price.dataList.list.map((l:any) => {
                                     tmp += /*html*/ `
                                       <div class="col-lg-4 col-md-6" data-aos="zoom-in">
                                         <div class="box ${l.highlight ? `featured` : ``}">
@@ -74,7 +77,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                           <ul>
                                             ${glitter.print(function () {
                                                 var tmp = "";
-                                                l.detail.map((t) => {
+                                                l.detail.map((t:any) => {
                                                     tmp += /*html*/ `<li ${t.not ? `class="na"` : ``}>${t.text}</li>`;
                                                 });
                                                 return tmp;
@@ -134,7 +137,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             title: '區塊內容',
                             array: widget.data.dataList.list.map((dd: any, index: number) => {
                                 return {
-                                    title: `功能${index + 1}`,
+                                    title: `方案${index + 1}`,
                                     expand: dd,
                                     innerHtml: gvc.map([
                                         glitter.htmlGenerate.editeInput({
@@ -191,8 +194,57 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             hover: true,
                                             option: [],
                                             title: "點擊事件"
-                                        })
+                                        }),
                                     //    todo A方案B方案C方案的篩選
+                                        Editor.arrayItem({
+                                            originalArray:dd.detail,
+                                            gvc: gvc,
+                                            title: '功能列表',
+                                            array: dd.detail.map((fun: any, index: number) => {
+                                                return {
+                                                    title: `功能:${index + 1}`,
+                                                    expand: fun,
+                                                    innerHtml: gvc.map([
+                                                        glitter.htmlGenerate.editeInput({
+                                                            gvc: gvc,
+                                                            title: `方案`,
+                                                            default: fun.text,
+                                                            placeHolder: '輸入方案名稱',
+                                                            callback: (text) => {
+                                                                fun.text = text;
+                                                                widget.refreshComponent();
+                                                            },
+                                                        }),
+                                                        Editor.select({
+                                                            title: '畫線',
+                                                            gvc: gvc,
+                                                            def: fun.not ? `true` : `false`,
+                                                            callback: (text: string) => {
+                                                                fun.not = text === 'true';
+                                                                widget.refreshComponent();
+                                                            },
+                                                            array: ['true', 'false'],
+                                                        }),
+                                                    ]),
+                                                    minus: gvc.event(() => {
+
+                                                        dd.detail.splice(index, 1);
+                                                        widget.refreshComponent();
+                                                    }),
+                                                };
+                                            }),
+                                            expand: dd.expand,
+                                            plus: {
+                                                title: '添加功能',
+                                                event: gvc.event(() => {
+                                                    dd.detail.push({ text: "功能 B", not: true });
+                                                    widget.refreshComponent();
+                                                }),
+                                            },
+                                            refreshComponent:()=>{
+                                                widget.refreshComponent()
+                                            }
+                                        })
 
                                     ]),
                                     minus: gvc.event(() => {
@@ -201,7 +253,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     }),
                                 };
                             }),
-                            expand: widget.data.dataList,
+                            expand: widget.data,
                             plus: {
                                 title: '添加區塊',
                                 event: gvc.event(() => {
@@ -210,7 +262,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         desc: "基本方案，最基本的開發環境",
                                         detail: [{ text: "功能 A" }, { text: "功能 B", not: true }, { text: "功能 C", not: true }],
                                         price: { num: 249, unit: "月" },
-                                        btn: { name: "選擇方案", link: {} }, });
+                                        btn: { name: "選擇方案", link: {} },
+                                        expand:{}});
                                     widget.refreshComponent();
                                 }),
                             },

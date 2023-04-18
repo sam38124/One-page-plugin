@@ -128,7 +128,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                             })
                                     ]),
                                     minus: gvc.event(() => {
-                                        widget.data.list.splice(index, 1);
+                                        widget.data.dataList.list.splice(index, 1);
                                         widget.refreshComponent();
                                     }),
                                 };
