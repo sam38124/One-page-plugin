@@ -7,3 +7,4 @@
 ./backend_default/node_modules/
 ./tsconfig.tsbuildinfo
 /.idea/
+.idea/workspace.xml
