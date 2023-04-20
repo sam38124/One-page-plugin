@@ -2,257 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a5589240-3875-49d1-b7b0-64ff1285d06a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/homee/category/script-style-1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/category/style-1/banner.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/category/style-1/category12.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/category/style-1/empty.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/category/style-1/nav.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/category/style1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/commenPage/shareView.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/dialog/ShareDialog.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/dialog/dialog-helper.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/dialog/dialog-mobile.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/dialog/dialog.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/empty/script-style-1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/empty/style-1/empty.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/empty/style1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/img/bell.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/img/category.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/img/home_logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/img/searchBlack.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/script-style-1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style-1/banner.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style-1/empty.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style-1/footer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style-1/image.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style-1/label.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style-1/nav.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style-1/navigationBar.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style-1/productItem.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style-1/rankingBlock.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/style1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/1v1service.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/Tick Square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/account.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/angle-right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/big-notify.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/bigLogo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/InfSqure.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/angle-right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/card1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/card2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/card3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img_5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img_6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img_7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img_8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/category/img_9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/customer_service.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/discount.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/edit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/footer/home.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/footer/homeBlack.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/footer/idea.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/footer/myspace.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/footer/shoopingCart.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/footer/shoopingCartRed.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/footer/user.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/footer/userRed.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/kanban.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/left-arrow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/left-arrow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/BG.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/F.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/FB.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/FET.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/L.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/TicketStar.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/addUser.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/apple.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/calender.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/login_page.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/message.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/password.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/profile.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/shield.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/login/userPic.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/minusCircle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/mysapce/leadingGuide.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/notification.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/notification.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/ourServiceBanner.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/plusCircle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/right-arrow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/scan.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/scan.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/search-gray.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/search-gray.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/searchBlack.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/send.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/service.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/service2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/service2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/setting.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/shoppingCart.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/shoppingCart/deleteCircle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/shoppingCart/downArrow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/shoppingCart/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/shoppingCart/select.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/shoppingCart/unselect.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/ticket.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/component/voucher/cardIcon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/coupon1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/coupon2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/customerService.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/discount.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/fbSignIn.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/footer.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/friendSelected.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/friendUnSelected.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/goBack.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/guide-back.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/guideBG.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/homeeExtension/firstRank.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/homeeExtension/secondRank.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/homeeExtension/testChair.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/homeeExtension/thirdRank.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/indexBG.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/information.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/inviteLOGO.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/kanban.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/loading.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/more.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/more_vertical.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/myidea.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/myspace.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/noSpace.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/notify-white.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/notify.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/plus.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/question.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/report.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/INFORMATION/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/INFORMATION/img_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/INFORMATION/img_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/INFORMATION/img_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/INFORMATION/img_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/INFORMATION/img_5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/NEWS/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img_5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img_6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img_7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img_8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/bookcase/img_9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/hotProduct/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/hotProduct/img_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/hotProduct/img_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/hotProduct/img_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/left-arrow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/mainLeft.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/mainRight1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/mainRight2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/sort.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/sortHigher.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/category/sortSmaller.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/dialog/union.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/addImg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/addSpace.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/boardChat.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/chat.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/cross.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/delete.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/edit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/janniyi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/kevinlu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/left-arrow-white.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/left-arrow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/like.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/message.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/notify.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/pen.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/posterPhoto.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/posterPhoto2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/postimg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/postimg_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/postimg_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/postimg_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/send.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/unlike.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/userPhoto.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/victorchang.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/李政澐.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/idea/林庭儒.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/BG.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/F.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/FB.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/FET.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/L.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/apple.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/calender.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/login_page.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/message.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/password.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/profile.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/shield.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/login/userPic.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/main/edit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/product/customerService.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/product/customerService.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/product/send.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img_5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img_6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img_7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img_8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/sample/weeklyPro/img_9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/scan-black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/scan.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/search-black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/search-gray.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/search-mark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/service.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/serviceBanner.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/setting.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/share.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/shareDown.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/shareTo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/shareUP.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/shield.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/slogan.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/test.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/upload.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/voucherEnter.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/img/whiteLOGO.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/product/script-style-1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/product/style-1/allPage.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/product/style-1/empty.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/product/style1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/script-style-1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/style1.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/account/script-style-1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/account/style-1/empty.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/account/style-1/login.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/account/style1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/script-style-1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/empty.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/funPuzzle.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/funRow.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/information.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/nav.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/ourService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/style1.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/home/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/home/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/home/template.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/home/template.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -276,20 +38,20 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/User/Documents/GitHub/One-page-plugin/src/homee",
+    "last_opened_file_path": "C:/Users/Admin/Documents/GitHub/One-page-plugin/src/homee/account/style-1",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\User\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib"
+    "ts.external.directory.path": "C:\\Users\\Admin\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Documents\GitHub\One-page-plugin\src\homee\account\style-1" />
+      <recent name="C:\Users\Admin\Documents\GitHub\One-page-plugin\src\homee" />
+      <recent name="C:\Users\Admin\Documents\GitHub\One-page-plugin\src\homee\user\style-1" />
       <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee" />
       <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\product\style-1" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\homee\style-1" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\category\style-1" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\homee" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\img" />
@@ -318,8 +80,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build:tscAuto" />
         <item itemvalue="npm.start" />
+        <item itemvalue="npm.build:tscAuto" />
       </list>
     </recent_temporary>
   </component>
@@ -333,6 +95,7 @@
       <updated>1681790444054</updated>
       <workItem from="1681790445966" duration="5838000" />
       <workItem from="1681876724686" duration="20904000" />
+      <workItem from="1681961214911" duration="10224000" />
     </task>
     <servers />
   </component>
@@ -340,254 +103,253 @@
     <option name="version" value="3" />
     <option name="exactExcludedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/hyper/assets/vendor/nouislider/src/nouislider.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style1.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/topbar.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style1.js" />
-        <option value="$PROJECT_DIR$/src/official.js" />
-        <option value="$PROJECT_DIR$/src/Entry.js" />
-        <option value="$PROJECT_DIR$/src/editor.js" />
-        <option value="$PROJECT_DIR$/src/event.js" />
-        <option value="$PROJECT_DIR$/src/api/base.js" />
-        <option value="$PROJECT_DIR$/src/home/template.js" />
-        <option value="$PROJECT_DIR$/src/home/index.js" />
-        <option value="$PROJECT_DIR$/src/dialog/ShareDialog.js" />
-        <option value="$PROJECT_DIR$/src/jspage/helloworld.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-2.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/GVController.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/Glitter.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/funnel.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.d.ts" />
-        <option value="$PROJECT_DIR$/backend_default/index.js" />
-        <option value="$PROJECT_DIR$/backend_default/index.js.map" />
-        <option value="$PROJECT_DIR$/backend_default/index.d.ts" />
-        <option value="$PROJECT_DIR$/src/one-page/assets/vendor/nouislider/src/nouislider.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/shop.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/banner.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/slider.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/contact.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/download.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/faq.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/client.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/team.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/sub.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/price.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/video.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/screenshots.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature4.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature3.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature2.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/intro.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/contact.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/FAQ.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/price.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/client.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/team.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/testimonial.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/cta.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/portfolio.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/service.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/feature.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/about.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/hero.js" />
-        <option value="$PROJECT_DIR$/src/one-page/tool.js" />
-        <option value="$PROJECT_DIR$/src/one-page/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/one-page/glitter.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/serviceDetail.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/topNav.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/client.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/contactUS.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/project.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/template.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/supportWidget.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/landingTop.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/service.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/test.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/login.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/price2.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/clientService.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/otherService.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/price.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/topBanner.js" />
-        <option value="$PROJECT_DIR$/src/one-page/style-1/aboutUS.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/initial-event.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/slider.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/testimonials.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/special.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/menu.js" />
-        <option value="$PROJECT_DIR$/src/one-page/glitter/appManager.js" />
-        <option value="$PROJECT_DIR$/src/glitter/model/User.js" />
-        <option value="$PROJECT_DIR$/src/glitter/api/base.js" />
-        <option value="$PROJECT_DIR$/src/glitter/initial.js" />
-        <option value="$PROJECT_DIR$/src/glitter/event.js" />
-        <option value="$PROJECT_DIR$/src/erp/api/base.js" />
-        <option value="$PROJECT_DIR$/src/erp/event.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style1.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style1.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/empty/style-1/topbar.js" />
-        <option value="$PROJECT_DIR$/src/empty/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/empty/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/empty/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/empty/style1.js" />
-        <option value="$PROJECT_DIR$/src/empty/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style1.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/topbar.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/whyUs.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/topbar.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/banner.js" />
-        <option value="$PROJECT_DIR$/src/restaurant/style-1/about.js" />
-        <option value="$PROJECT_DIR$/src/hyper/style-1/sample.js" />
-        <option value="$PROJECT_DIR$/src/hyper/style-1/member-manager.js" />
-        <option value="$PROJECT_DIR$/src/hyper/style-1/form.js" />
-        <option value="$PROJECT_DIR$/src/hyper/style-1/backend-manager.js" />
-        <option value="$PROJECT_DIR$/src/hyper/style1.js" />
-        <option value="$PROJECT_DIR$/src/hyper/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml2.js" />
-        <option value="$PROJECT_DIR$/src/official/component.js" />
-        <option value="$PROJECT_DIR$/src/erp/erp-config.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/table3.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/timeline.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/multiRadial.js" />
         <option value="$PROJECT_DIR$/src/dashboard/style-1/dataCard.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/rowCard.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/table4.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/colCard.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/donutTrend.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/revenue.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/table.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/calendarList.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/table5.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/todoList.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/doubleBarChart.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/donutChart.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/radar.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/stateList.js" />
         <option value="$PROJECT_DIR$/src/dashboard/style-1/radial.js" />
         <option value="$PROJECT_DIR$/src/dashboard/style-1/table2.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/barArea.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/taskList.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/revenue_detail.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/smoothLine.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/table_barChart.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/table6.js" />
-        <option value="$PROJECT_DIR$/src/dashboard/style-1/oneblock.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/contact.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/ourTeam.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/price.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/project.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/cta.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/service.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/client.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/whyUs.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/about.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/banner.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/topbar.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/theDay/style1.js" />
-        <option value="$PROJECT_DIR$/src/theDay/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/homee/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/homee/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/homee/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/homee/style-1/topbar.js" />
-        <option value="$PROJECT_DIR$/src/homee/style1.js" />
-        <option value="$PROJECT_DIR$/src/homee/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/table3.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/style-1/information.js" />
+        <option value="$PROJECT_DIR$/src/hyper/style1.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/style1.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/table.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/hyper/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/homee/category/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/style-1/banner.js" />
+        <option value="$PROJECT_DIR$/src/homee/product/style-1/allPage.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/homee/category/style1.js" />
         <option value="$PROJECT_DIR$/src/homee/homee/style1.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/homee/product/style1.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/multiRadial.js" />
+        <option value="$PROJECT_DIR$/src/official/component.js" />
+        <option value="$PROJECT_DIR$/src/homee/product/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/table_barChart.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/radar.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/oneblock.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/colCard.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/smoothLine.js" />
+        <option value="$PROJECT_DIR$/src/erp/erp-config.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" />
+        <option value="$PROJECT_DIR$/src/Entry.js" />
+        <option value="$PROJECT_DIR$/src/official.js" />
+        <option value="$PROJECT_DIR$/src/editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/GVController.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/funnel.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" />
+        <option value="$PROJECT_DIR$/src/dialog/ShareDialog.js" />
+        <option value="$PROJECT_DIR$/backend_default/index.js" />
+        <option value="$PROJECT_DIR$/backend_default/index.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/Glitter.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" />
+        <option value="$PROJECT_DIR$/src/api/base.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-2.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js" />
+        <option value="$PROJECT_DIR$/src/one-page/assets/vendor/nouislider/src/nouislider.js" />
+        <option value="$PROJECT_DIR$/src/jspage/helloworld.js" />
+        <option value="$PROJECT_DIR$/backend_default/index.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js" />
+        <option value="$PROJECT_DIR$/src/event.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/slider.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style1.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/client.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/about.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/feature.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/cta.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style1.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/team.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/contact.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/shop.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/FAQ.js" />
+        <option value="$PROJECT_DIR$/src/empty/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/homee/dialog/dialog-mobile.js" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/portfolio.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/hero.js" />
+        <option value="$PROJECT_DIR$/src/empty/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/banner.js" />
+        <option value="$PROJECT_DIR$/src/empty/style1.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/testimonial.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/one-page-blue/style-1/service.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style1.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/homee/category/style-1/category12.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/homee/dialog/dialog.js" />
+        <option value="$PROJECT_DIR$/src/homee/category/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/homee/category/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/style-1/productItem.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/style-1/image.js" />
+        <option value="$PROJECT_DIR$/src/homee/style1.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/style-1/label.js" />
+        <option value="$PROJECT_DIR$/src/homee/product/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/homee/empty/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/homee/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/style-1/rankingBlock.js" />
         <option value="$PROJECT_DIR$/src/homee/homee/script-style-1.js" />
         <option value="$PROJECT_DIR$/src/homee/empty/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/homee/empty/style1.js" />
-        <option value="$PROJECT_DIR$/src/homee/empty/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/homee/commenPage/shareView.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/style-1/banner.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/api/language.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/api/homee-api.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/api/editer-api.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/style-1/image.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/style-1/rankingBlock.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/style-1/label.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/style-1/productItem.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/style-1/footer.js" />
-        <option value="$PROJECT_DIR$/src/homee/category/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/homee/category/style1.js" />
-        <option value="$PROJECT_DIR$/src/homee/category/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/homee/empty/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/homee/empty/style1.js" />
-        <option value="$PROJECT_DIR$/src/homee/empty/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/homee/category/style-1/nav.js" />
-        <option value="$PROJECT_DIR$/src/homee/category/style-1/banner.js" />
-        <option value="$PROJECT_DIR$/src/homee/category/style-1/category12.js" />
-        <option value="$PROJECT_DIR$/src/homee/homee/style-1/navigationBar.js" />
-        <option value="$PROJECT_DIR$/src/homee/product/style-1/empty.js" />
-        <option value="$PROJECT_DIR$/src/homee/product/style1.js" />
-        <option value="$PROJECT_DIR$/src/homee/product/script-style-1.js" />
-        <option value="$PROJECT_DIR$/src/homee/product/style-1/allPage.js" />
-        <option value="$PROJECT_DIR$/src/homee/dialog/dialog.js" />
         <option value="$PROJECT_DIR$/src/homee/dialog/ShareDialog.js" />
+        <option value="$PROJECT_DIR$/src/homee/commenPage/shareView.js" />
+        <option value="$PROJECT_DIR$/src/homee/empty/style1.js" />
+        <option value="$PROJECT_DIR$/src/homee/category/style-1/banner.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/style-1/navigationBar.js" />
         <option value="$PROJECT_DIR$/src/homee/dialog/dialog-helper.js" />
-        <option value="$PROJECT_DIR$/src/homee/dialog/dialog-mobile.js" />
+        <option value="$PROJECT_DIR$/src/hyper/assets/vendor/nouislider/src/nouislider.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/testimonials.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/special.js" />
+        <option value="$PROJECT_DIR$/src/erp/api/base.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/slider.js" />
+        <option value="$PROJECT_DIR$/src/erp/event.js" />
+        <option value="$PROJECT_DIR$/src/glitter/initial.js" />
+        <option value="$PROJECT_DIR$/src/glitter/event.js" />
+        <option value="$PROJECT_DIR$/src/glitter/api/base.js" />
+        <option value="$PROJECT_DIR$/src/one-page/glitter/appManager.js" />
+        <option value="$PROJECT_DIR$/src/glitter/model/User.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/menu.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Enum.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/PageManager.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/module/Animation.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.d.ts" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/initial-event.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js.map" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.d.ts" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/whyUs.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/plugin-creater.d.ts" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/project.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.d.ts" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/service.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js.map" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/banner.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/ourTeam.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/project.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/one-page/tool.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js.map" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js.map" />
+        <option value="$PROJECT_DIR$/src/one-page/glitter.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/editor.d.ts" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/whyUs.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.d.ts" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/serviceDetail.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js.map" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/landingTop.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/e-commerce/assets/js/cozahtml2.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/cta.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/price2.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.d.ts" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/otherService.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/client.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/client.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/service.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/clientService.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/contact.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/one-page/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/about.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/download.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/topNav.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/contact.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/test.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style-1/banner.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/client.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/aboutUS.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature3.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature2.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/supportWidget.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/faq.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/login.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/template.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/nav.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/intro.js" />
+        <option value="$PROJECT_DIR$/src/theDay/style1.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/footer.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/about.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/feature4.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/topBanner.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/team.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/sub.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/screenshots.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/contactUS.js" />
+        <option value="$PROJECT_DIR$/src/theDay/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/one-page/style-1/price.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/calendarList.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style1.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/video.js" />
+        <option value="$PROJECT_DIR$/src/productEvent_Intro/style-1/topbar.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/barArea.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/table6.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/donutTrend.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/taskList.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/timeline.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/rowCard.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/table5.js" />
+        <option value="$PROJECT_DIR$/src/hyper/style-1/sample.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/donutChart.js" />
+        <option value="$PROJECT_DIR$/src/hyper/style-1/member-manager.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/revenue_detail.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/doubleBarChart.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/stateList.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/todoList.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/revenue.js" />
+        <option value="$PROJECT_DIR$/src/hyper/style-1/form.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/style-1/funRow.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style1.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/table4.js" />
+        <option value="$PROJECT_DIR$/src/hyper/style-1/backend-manager.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/style-1/ourService.js" />
+        <option value="$PROJECT_DIR$/src/homee/account/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/homee/account/style1.js" />
+        <option value="$PROJECT_DIR$/src/homee/account/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/homee/account/style-1/login.js" />
       </list>
     </option>
   </component>
