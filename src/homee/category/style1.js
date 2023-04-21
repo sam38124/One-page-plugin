@@ -19,6 +19,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/category12.js', import.meta.url))
         },
+        subCategory: {
+            title: "subCategory",
+            subContent: "",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/subCategory.js', import.meta.url))
+        },
         footer: {
             title: "footer",
             subContent: "",

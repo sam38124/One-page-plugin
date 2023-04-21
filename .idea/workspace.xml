@@ -2,19 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a5589240-3875-49d1-b7b0-64ff1285d06a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/homee/account/script-style-1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/account/style-1/empty.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/account/style-1/login.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/account/style1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/script-style-1.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/empty.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/funPuzzle.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/funRow.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/information.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/nav.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/ourService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/style1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/account/style-1/forgotPW.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/account/style-1/register.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/api/category.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/category/style-1/subCategory.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/homee/api/homee-api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/edit.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/viewModel/viewModel.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/account/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/account/style1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/account/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/account/style1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/category/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/category/style1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/category/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/category/style1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/user/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/user/style1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/user/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/user/style1.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,22 +40,23 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Admin/Documents/GitHub/One-page-plugin/src/homee/account/style-1",
+    "last_opened_file_path": "C:/Users/User/Documents/GitHub/One-page-plugin/src/homee/homee/api",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\Admin\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib"
+    "ts.external.directory.path": "C:\\Users\\User\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Admin\Documents\GitHub\One-page-plugin\src\homee\account\style-1" />
-      <recent name="C:\Users\Admin\Documents\GitHub\One-page-plugin\src\homee" />
-      <recent name="C:\Users\Admin\Documents\GitHub\One-page-plugin\src\homee\user\style-1" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\product\style-1" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\homee\api" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\api" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\category\style-1" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\user\style-1" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\api" />
       <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\img" />
     </key>
   </component>
@@ -350,6 +353,13 @@
         <option value="$PROJECT_DIR$/src/homee/account/style1.js" />
         <option value="$PROJECT_DIR$/src/homee/account/script-style-1.js" />
         <option value="$PROJECT_DIR$/src/homee/account/style-1/login.js" />
+        <option value="$PROJECT_DIR$/src/homee/account/style-1/register.js" />
+        <option value="$PROJECT_DIR$/src/homee/account/style-1/forgotPW.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/style-1/edit.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/viewModel/viewModel.js" />
+        <option value="$PROJECT_DIR$/src/homee/category/style-1/subCategory.js" />
+        <option value="$PROJECT_DIR$/src/config.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/api/homee-api.js" />
       </list>
     </option>
   </component>

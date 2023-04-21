@@ -41,6 +41,12 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
             defaultData:{},
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/ourService.js',import.meta.url))
         },
+        edit:{
+            title: "edit",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/edit.js',import.meta.url))
+        },
 
         footer:{
             title: "footer",
