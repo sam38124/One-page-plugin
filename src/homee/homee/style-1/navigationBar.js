@@ -1,4 +1,5 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
+import { TriggerEvent } from "../../../glitterBundle/plugins/trigger-event.js";
 import { ScriptStyle1 } from "../script-style-1.js";
 import { SharedView } from "../../commenPage/shareView.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
@@ -54,6 +55,9 @@ ${(() => {
                                             badge = count;
                                             gvc.notifyDataChange(id);
                                         };
+                                        TriggerEvent.trigger({
+                                            gvc, widget, clickEvent: dd.badge
+                                        });
                                         return {
                                             bind: id,
                                             view: () => {

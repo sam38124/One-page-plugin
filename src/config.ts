@@ -1,5 +1,5 @@
 import {Plugin} from "./glitterBundle/plugins/plugin-creater.js";
-import {Api} from "homee/homee/api/homee-api.js";
+import {Api} from "./homee/homee/api/homee-api.js";
 import {GVC} from "./glitterBundle/GVController.js";
 import {Dialog} from "./homee/dialog/dialog-mobile.js";
 

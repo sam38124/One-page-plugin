@@ -1,4 +1,5 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
+import { TriggerEvent } from "../../../glitterBundle/plugins/trigger-event.js";
 import { ScriptStyle1 } from "../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
@@ -28,7 +29,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                 route: "toProductDetail"
             };
             let images = widget.data.data.images ?? widget.data.data.preview_image;
-            console.log(images);
             gvc.addStyleLink(`https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css`);
             gvc.addStyle(`
                     .swiper-pagination-bullet {
@@ -109,7 +109,12 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     `;
                 },
                 editor: () => {
-                    return ``;
+                    return gvc.map([
+                        TriggerEvent.editer(gvc, widget, widget.data, {
+                            option: ['toProductDetail'],
+                            hover: true
+                        })
+                    ]);
                 }
             };
         },

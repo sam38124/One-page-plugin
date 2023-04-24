@@ -1,5 +1,5 @@
 import { Plugin } from "./glitterBundle/plugins/plugin-creater.js";
-import { Api } from "homee/homee/api/homee-api.js";
+import { Api } from "./homee/homee/api/homee-api.js";
 import { Dialog } from "./homee/dialog/dialog-mobile.js";
 export function appConfig() {
     return Plugin.getAppConfig("HOMEEAppConfig", {

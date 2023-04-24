@@ -61,9 +61,9 @@ ${(()=>{
                                             badge=count
                                             gvc.notifyDataChange(id)
                                         }
-                                        // TriggerEvent.trigger({
-                                        //     gvc, widget, clickEvent: dd.badge
-                                        // })
+                                        TriggerEvent.trigger({
+                                            gvc, widget, clickEvent: dd.badge
+                                        })
                                         return {
                                             bind:id,
                                             view:()=>{

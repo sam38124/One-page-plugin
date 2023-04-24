@@ -5,6 +5,8 @@ import {ClickEvent} from "../../../glitterBundle/plugins/click-event.js";
 import {Editor} from "../../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 import {Dialog} from "../../dialog/dialog-mobile.js";
+import {User} from "../../api/user.js";
+import {appConfig} from "../../../config.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -170,47 +172,47 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         }
                     })
                     const dialog = new Dialog(gvc)
-                    // function login(){
-                    //     User.login({
-                    //         third:vm.fet ? {type:'fet',uid:vm.fet} : undefined,
-                    //         pwd: widget.data.accountData.password,
-                    //         account: widget.data.accountData.account,
-                    //         callback(data: { user_id: number; last_name: string; first_name: string; name: string; photo: string; AUTH: string } | boolean): void {
-                    //             dialog.dataLoading(false)
-                    //             if (!data) {
-                    //                 dialog.showInfo('密碼輸入錯誤或是查無此帳號')
-                    //             } else {
-                    //                 dialog.showInfo('登入成功!')
-                    //                 appConfig().setHome(gvc, 'user_setting', {})
-                    //
-                    //             }
-                    //         },
-                    //     })
-                    // }
-                    // function checkRegister() {
-                    //     dialog.dataLoading(true)
-                    //     User.checkUserExists(widget.data.accountData.account, (response) => {
-                    //         if (response === undefined) {
-                    //             dialog.dataLoading(false)
-                    //             dialog.showInfo("連線逾時")
-                    //         } else if (response) {
-                    //             dialog.showInfo("此帳號已被使用")
-                    //         } else {
-                    //
-                    //             setTimeout(() => {
-                    //                 dialog.dataLoading(false)
-                    //                 appConfig().changePage(gvc, "register", {
-                    //                     pwd: widget.data.accountData.password,
-                    //                     account: widget.data.accountData.account,
-                    //                     third:vm.fet ? {type:'fet',uid:vm.fet} : undefined
-                    //                 }, {
-                    //                     animation: glitter.animation.fade
-                    //                 })
-                    //             }, 500)
-                    //
-                    //         }
-                    //     })
-                    // }
+                    function login(){
+                        User.login({
+                            third:vm.fet ? {type:'fet',uid:vm.fet} : undefined,
+                            pwd: widget.data.accountData.password,
+                            account: widget.data.accountData.account,
+                            callback(data: { user_id: number; last_name: string; first_name: string; name: string; photo: string; AUTH: string } | boolean): void {
+                                dialog.dataLoading(false)
+                                if (!data) {
+                                    dialog.showInfo('密碼輸入錯誤或是查無此帳號')
+                                } else {
+                                    dialog.showInfo('登入成功!')
+                                    appConfig().setHome(gvc, 'user_setting', {})
+
+                                }
+                            },
+                        })
+                    }
+                    function checkRegister() {
+                        dialog.dataLoading(true)
+                        User.checkUserExists(widget.data.accountData.account, (response) => {
+                            if (response === undefined) {
+                                dialog.dataLoading(false)
+                                dialog.showInfo("連線逾時")
+                            } else if (response) {
+                                dialog.showInfo("此帳號已被使用")
+                            } else {
+
+                                setTimeout(() => {
+                                    dialog.dataLoading(false)
+                                    appConfig().changePage(gvc, "register", {
+                                        pwd: widget.data.accountData.password,
+                                        account: widget.data.accountData.account,
+                                        third:vm.fet ? {type:'fet',uid:vm.fet} : undefined
+                                    }, {
+                                        animation: glitter.animation.fade
+                                    })
+                                }, 500)
+
+                            }
+                        })
+                    }
                     const vm={
                         fet:''
                     }
@@ -259,7 +261,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             alert("密碼必須大於8位數");
                                         }else {
                                             // checkRegister();
-                                            // login();
+                                            login();
                                         }
 
                                     })}">

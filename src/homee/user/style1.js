@@ -37,6 +37,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/edit.js', import.meta.url))
         },
+        systemSetting: {
+            title: "systemSetting",
+            subContent: "",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/systemSetting.js', import.meta.url))
+        },
         footer: {
             title: "footer",
             subContent: "",

@@ -2,19 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a5589240-3875-49d1-b7b0-64ff1285d06a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/account/style-1/forgotPW.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/account/style-1/register.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/api/category.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/category/style-1/subCategory.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/homee/api/homee-api.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/edit.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homee/user/viewModel/viewModel.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/api/checkout.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/api/language.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/api/myspace.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/api/product.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/api/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/define/voucher.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/homee/event.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/order/script-style-1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/order/style-1/empty.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/order/style-1/orderAllHistory.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/order/style-1/orderHistory.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/order/style1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/search/script-style-1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/search/style-1/search.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/search/style1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/homee/user/style-1/systemSetting.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homee/account/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/account/style1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homee/account/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/account/style1.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homee/category/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/category/style1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homee/category/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/category/style1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/funnel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/funnel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/funnel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/funnel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/account/style-1/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/account/style-1/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/account/style-1/login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/account/style-1/login.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/category/style-1/subCategory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/category/style-1/subCategory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/category/style-1/subCategory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/category/style-1/subCategory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/style-1/nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/homee/style-1/nav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/style-1/nav.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/homee/style-1/nav.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/style-1/navigationBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/homee/style-1/navigationBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/style-1/navigationBar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/homee/style-1/navigationBar.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/style-1/productItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/homee/style-1/productItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/style-1/productItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/homee/style-1/productItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/style1.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/homee/user/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/user/style1.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/homee/user/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/user/style1.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
@@ -40,7 +59,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/User/Documents/GitHub/One-page-plugin/src/homee/homee/api",
+    "last_opened_file_path": "C:/Users/User/Documents/GitHub/One-page-plugin/src/homee/homee",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -49,10 +68,10 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\homee\api" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\api" />
-      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\category\style-1" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\homee" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\order\style-1" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee" />
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\api" />
       <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\user\style-1" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -60,7 +79,7 @@
       <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\homee\img" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.start">
+  <component name="RunManager" selected="npm.build:tscAuto">
     <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -83,8 +102,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start" />
         <item itemvalue="npm.build:tscAuto" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -99,6 +118,7 @@
       <workItem from="1681790445966" duration="5838000" />
       <workItem from="1681876724686" duration="20904000" />
       <workItem from="1681961214911" duration="10224000" />
+      <workItem from="1682308049575" duration="12779000" />
     </task>
     <servers />
   </component>
@@ -360,6 +380,20 @@
         <option value="$PROJECT_DIR$/src/homee/category/style-1/subCategory.js" />
         <option value="$PROJECT_DIR$/src/config.js" />
         <option value="$PROJECT_DIR$/src/homee/homee/api/homee-api.js" />
+        <option value="$PROJECT_DIR$/src/homee/user/style-1/systemSetting.js" />
+        <option value="$PROJECT_DIR$/src/homee/search/style1.js" />
+        <option value="$PROJECT_DIR$/src/homee/search/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/homee/order/style-1/empty.js" />
+        <option value="$PROJECT_DIR$/src/homee/order/style1.js" />
+        <option value="$PROJECT_DIR$/src/homee/order/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/homee/order/style-1/orderHistory.js" />
+        <option value="$PROJECT_DIR$/src/homee/api/product.js" />
+        <option value="$PROJECT_DIR$/src/homee/api/language.js" />
+        <option value="$PROJECT_DIR$/src/homee/api/user.js" />
+        <option value="$PROJECT_DIR$/src/homee/api/checkout.js" />
+        <option value="$PROJECT_DIR$/src/homee/api/myspace.js" />
+        <option value="$PROJECT_DIR$/src/homee/order/style-1/orderAllHistory.js" />
+        <option value="$PROJECT_DIR$/src/homee/homee/event.js" />
       </list>
     </option>
   </component>

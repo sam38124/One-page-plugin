@@ -34,7 +34,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             }
 
             let images = widget.data.data.images ?? widget.data.data.preview_image;
-            console.log(images)
             gvc.addStyleLink(`https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css`)
             gvc.addStyle(`
                     .swiper-pagination-bullet {
@@ -129,7 +128,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     `
                 },
                 editor:()=>{
-                    return``
+                    return gvc.map([
+                        TriggerEvent.editer(gvc, widget, widget.data, {
+                            option: ['toProductDetail'],
+                            hover: true
+                        })
+                    ])
                 }
             }
         },

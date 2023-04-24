@@ -14,6 +14,9 @@ export class Funnel {
                     method: 'get',
                 }, (data) => {
                     let t = '';
+                    if (data["product_list"]) {
+                        data = data["product_list"];
+                    }
                     data.map((x) => {
                         t += `<li
                                 class="${ra}_li"

@@ -3,6 +3,7 @@ import {Glitter} from "../../../glitterBundle/Glitter.js";
 import {GVC} from "../../../glitterBundle/GVController.js";
 import {ScriptStyle1} from "../script-style-1.js";
 import {SharedView} from "../../commenPage/shareView.js";
+import {appConfig} from "../../../config.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -56,7 +57,7 @@ src="${logo.src}"><h3 class="p-0 m-0" style="${widget.data.titleStyle ?? ""}">${
                                     })}">
                                     <img src="https://homee-ai.github.io/glitter-htmlExtension/src//homee/src/category.svg" onclick="${gvc.event(() => {
                                         //todo
-                                        // appConfig().changePage(gvc, 'category')
+                                        appConfig().changePage(gvc, 'category')
                                     })}">
                        
                                 </div>

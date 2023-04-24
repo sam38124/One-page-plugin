@@ -20,6 +20,7 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
         },
 
 
+
         empty:{
             title: "",
                 subContent: "",
