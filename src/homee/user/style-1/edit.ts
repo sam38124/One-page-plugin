@@ -8,6 +8,7 @@ import {SharedView} from "../../commenPage/shareView.js";
 import {Dialog} from "../../dialog/dialog-mobile.js";
 import {Funnel} from "../../../glitterBundle/funnel.js";
 import {ViewModel} from "../viewModel/viewModel.js";
+import {appConfig} from "../../../config.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -124,123 +125,123 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     let b64: any = undefined
                     let resetPassword = false
                     let addressModel: any = []
-                    // appConfig().getUserData({
-                    //     callback: (response) => {
-                    //         vm.data = [
-                    //             {
-                    //                 left: "姓名",
-                    //                 type: "name",
-                    //                 name: "name",
-                    //                 placehold: {
-                    //                     get last() {
-                    //                         return response?.last_name || ""
-                    //                     },
-                    //                     set last(value){
-                    //                         response.last_name=value
-                    //                     },
-                    //                     get first() {
-                    //                         return response?.first_name || ""
-                    //                     },
-                    //                     set first(value){
-                    //                         response.first_name=value
-                    //                     }
-                    //                 }
-                    //             },
-                    //             {
-                    //                 left: "用戶名稱",
-                    //                 type: "text",
-                    //                 name: "userName",
-                    //                 get placehold(){
-                    //                     return (response.name) ?? ((vm.data.first_name + vm.data.last_name ) || "")
-                    //                 },
-                    //                 set placehold(value){
-                    //                     response.name=value
-                    //                 }
-                    //             },
-                    //             {
-                    //                 left: "電子郵件",
-                    //                 type: "email",
-                    //                 name: "email",
-                    //                 get placehold(){
-                    //                     return response.email || ""
-                    //                 },
-                    //                 set placehold(value){
-                    //                     response.email=value
-                    //                 }
-                    //             },
-                    //             {
-                    //                 left: "電話",
-                    //                 type: "number",
-                    //                 name: "phone",
-                    //                 get placehold(){
-                    //                     return response.phone
-                    //                 },
-                    //                 set placehold(value){
-                    //                     response.phone=value
-                    //                 }
-                    //             },
-                    //             {
-                    //                 left: "密碼",
-                    //                 type: "password",
-                    //                 name: "password",
-                    //                 check: false,
-                    //                 placehold:""
-                    //             },
-                    //             {
-                    //                 visible: false,
-                    //                 left: "新密碼",
-                    //                 type: "password",
-                    //                 name: "newPassword",
-                    //                 placehold: ""
-                    //             },
-                    //             {
-                    //                 visible: false,
-                    //                 left: "再次輸入",
-                    //                 type: "password",
-                    //                 name: "confirmPassword",
-                    //                 placehold: ""
-                    //             }
-                    //         ]
-                    //         if (response.addressModel){
-                    //             vm.addressModel = [
-                    //                 {
-                    //                     left: "姓名",
-                    //                     type: "name",
-                    //                     name: "addressName",
-                    //                     placehold: {
-                    //                         last: response.addressModel.last_name,
-                    //                         first: response.addressModel.first_name
-                    //                     }
-                    //                 },
-                    //                 {
-                    //                     left: "電話",
-                    //                     type: "number",
-                    //                     name: "addressPhone",
-                    //                     placehold: response.addressModel.address_phone
-                    //                 },
-                    //                 {
-                    //                     left: "公司名稱",
-                    //                     type: "text",
-                    //                     name: "addressCompany",
-                    //                     placehold: response.addressModel.company
-                    //                 },
-                    //                 {
-                    //                     left: "地址",
-                    //                     type: "text",
-                    //                     name: "address",
-                    //                     placehold: response.addressModel.address
-                    //                 }
-                    //             ];
-                    //         }
-                    //         else {
-                    //             vm.addressModel = gvc.parameter.pageConfig?.obj.data?.addressModel??[];
-                    //         }
-                    //
-                    //
-                    //         vm.userData = response
-                    //         vm.loading = false
-                    //     }
-                    // })
+                    appConfig().getUserData({
+                        callback: (response) => {
+                            vm.data = [
+                                {
+                                    left: "姓名",
+                                    type: "name",
+                                    name: "name",
+                                    placehold: {
+                                        get last() {
+                                            return response?.last_name || ""
+                                        },
+                                        set last(value){
+                                            response.last_name=value
+                                        },
+                                        get first() {
+                                            return response?.first_name || ""
+                                        },
+                                        set first(value){
+                                            response.first_name=value
+                                        }
+                                    }
+                                },
+                                {
+                                    left: "用戶名稱",
+                                    type: "text",
+                                    name: "userName",
+                                    get placehold(){
+                                        return (response.name) ?? ((vm.data.first_name + vm.data.last_name ) || "")
+                                    },
+                                    set placehold(value){
+                                        response.name=value
+                                    }
+                                },
+                                {
+                                    left: "電子郵件",
+                                    type: "email",
+                                    name: "email",
+                                    get placehold(){
+                                        return response.email || ""
+                                    },
+                                    set placehold(value){
+                                        response.email=value
+                                    }
+                                },
+                                {
+                                    left: "電話",
+                                    type: "number",
+                                    name: "phone",
+                                    get placehold(){
+                                        return response.phone
+                                    },
+                                    set placehold(value){
+                                        response.phone=value
+                                    }
+                                },
+                                {
+                                    left: "密碼",
+                                    type: "password",
+                                    name: "password",
+                                    check: false,
+                                    placehold:""
+                                },
+                                {
+                                    visible: false,
+                                    left: "新密碼",
+                                    type: "password",
+                                    name: "newPassword",
+                                    placehold: ""
+                                },
+                                {
+                                    visible: false,
+                                    left: "再次輸入",
+                                    type: "password",
+                                    name: "confirmPassword",
+                                    placehold: ""
+                                }
+                            ]
+                            if (response.addressModel){
+                                vm.addressModel = [
+                                    {
+                                        left: "姓名",
+                                        type: "name",
+                                        name: "addressName",
+                                        placehold: {
+                                            last: response.addressModel.last_name,
+                                            first: response.addressModel.first_name
+                                        }
+                                    },
+                                    {
+                                        left: "電話",
+                                        type: "number",
+                                        name: "addressPhone",
+                                        placehold: response.addressModel.address_phone
+                                    },
+                                    {
+                                        left: "公司名稱",
+                                        type: "text",
+                                        name: "addressCompany",
+                                        placehold: response.addressModel.company
+                                    },
+                                    {
+                                        left: "地址",
+                                        type: "text",
+                                        name: "address",
+                                        placehold: response.addressModel.address
+                                    }
+                                ];
+                            }
+                            else {
+                                vm.addressModel = gvc.parameter.pageConfig?.obj.data?.addressModel??[];
+                            }
+
+
+                            vm.userData = response
+                            vm.loading = false
+                        }
+                    })
 
                     function saveData() {
 

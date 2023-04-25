@@ -69,6 +69,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             },
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/allPage.js', import.meta.url))
         },
+        code: {
+            title: "code",
+            subContent: "",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/code.js', import.meta.url))
+        },
         footer: {
             title: "footer",
             subContent: "",

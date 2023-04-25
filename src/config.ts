@@ -66,46 +66,88 @@ export function appConfig(): {
             gvc.glitter.defaultSetting.pageAnimation = appConfig().translation
             const api = new Api()
             const dialog = new Dialog(gvc)
-            dialog.dataLoading(true)
-            api.homeeAJAX({
-                api: Api.serverURL,
-                route: '/api/v1/lowCode/pageConfig?query=config&tag=' + tag,
-                method: 'get'
-            }, (res:any) => {
-                dialog.dataLoading(false)
-                gvc.glitter.htmlGenerate.changePage(
+            // dialog.dataLoading(true)
+            const saasConfig: {
+                config: any;
+                api: any;
+            } = (window as any).saasConfig;
+            saasConfig.api.getPage(saasConfig.config.appName).then((res: any) => {
+
+                // gvc.glitter.htmlGenerate.setHome(
+                //     {
+                //         page_config: res.response.result[0].page_config,
+                //         config: res.response.result[0].config,
+                //         data: {},
+                //         tag: gvc.glitter.getUrlParameter('page')
+                //     }
+                // );
+
+                gvc.glitter.changePage(
+                    'glitterBundle/plugins/html-render.js',
+                    gvc.glitter.getUrlParameter('page'),
+                    true,
                     {
-                        config: res.result[0].config,
+                        page_config:{},
+                        config: res.response.result.find((item:any)=>{if (item.tag==tag)return item}).config,
+                        editMode: false,
                         data: obj,
-                        tag: tag,
-                        goBack: true,
-                        option: option
-                    }
-                )
-            })
+                    },
+                    obj.option ?? {}
+                );
+
+                // gvc.glitter.htmlGenerate.changePage(
+                //     {
+                //         config: res.response.result[0].config,
+                //         data: obj,
+                //         tag: tag,
+                //         goBack: true,
+                //         option: option
+                //     }
+                // )
+            });
+
+
+
+
         },
         setHome: (gvc: GVC, tag: string, obj?: any, option?: any) => {
             const api = new Api()
             const dialog = new Dialog(gvc)
             dialog.dataLoading(true)
-            api.homeeAJAX({
-                api: Api.serverURL,
-                route: '/api/v1/lowCode/pageConfig?query=config&tag=' + tag,
-                method: 'get'
-            }, (res:any) => {
+            const saasConfig: {
+                config: any;
+                api: any;
+            } = (window as any).saasConfig;
+            saasConfig.api.getPage(saasConfig.config.appName).then((data: any) => {
                 dialog.dataLoading(false)
-
+                console.log(data)
                 gvc.glitter.htmlGenerate.setHome(
-                    {
-                        config: res.result[0].config,
-                        data: obj,
-                        tag: tag,
-                        option: option
-                    }
-                )
-
-
-            })
+                        {
+                            config: data.response.result[0].config,
+                            data: obj,
+                            tag: tag,
+                            option: option
+                        }
+                    )
+            });
+            // api.homeeAJAX({
+            //     api: Api.serverURL,
+            //     route: '/api/v1/lowCode/pageConfig?query=config&tag=' + tag,
+            //     method: 'get'
+            // }, (res:any) => {
+            //     dialog.dataLoading(false)
+            //
+            //     gvc.glitter.htmlGenerate.setHome(
+            //         {
+            //             config: res.result[0].config,
+            //             data: obj,
+            //             tag: tag,
+            //             option: option
+            //         }
+            //     )
+            //
+            //
+            // })
         },
         translation: (() => {
             const glitter = (window as any).glitter

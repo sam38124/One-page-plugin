@@ -43,34 +43,27 @@ export function appConfig() {
             gvc.glitter.defaultSetting.pageAnimation = appConfig().translation;
             const api = new Api();
             const dialog = new Dialog(gvc);
-            dialog.dataLoading(true);
-            api.homeeAJAX({
-                api: Api.serverURL,
-                route: '/api/v1/lowCode/pageConfig?query=config&tag=' + tag,
-                method: 'get'
-            }, (res) => {
-                dialog.dataLoading(false);
-                gvc.glitter.htmlGenerate.changePage({
-                    config: res.result[0].config,
+            const saasConfig = window.saasConfig;
+            saasConfig.api.getPage(saasConfig.config.appName).then((res) => {
+                gvc.glitter.changePage('glitterBundle/plugins/html-render.js', gvc.glitter.getUrlParameter('page'), true, {
+                    page_config: {},
+                    config: res.response.result.find((item) => { if (item.tag == tag)
+                        return item; }).config,
+                    editMode: false,
                     data: obj,
-                    tag: tag,
-                    goBack: true,
-                    option: option
-                });
+                }, obj.option ?? {});
             });
         },
         setHome: (gvc, tag, obj, option) => {
             const api = new Api();
             const dialog = new Dialog(gvc);
             dialog.dataLoading(true);
-            api.homeeAJAX({
-                api: Api.serverURL,
-                route: '/api/v1/lowCode/pageConfig?query=config&tag=' + tag,
-                method: 'get'
-            }, (res) => {
+            const saasConfig = window.saasConfig;
+            saasConfig.api.getPage(saasConfig.config.appName).then((data) => {
                 dialog.dataLoading(false);
+                console.log(data);
                 gvc.glitter.htmlGenerate.setHome({
-                    config: res.result[0].config,
+                    config: data.response.result[0].config,
                     data: obj,
                     tag: tag,
                     option: option

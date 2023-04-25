@@ -38,7 +38,8 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 widget.data.link = data;
                                 widget.refreshComponent();
                             }
-                        })
+                        }),
+                        TriggerEvent.editer(gvc, widget, widget.data.clickEvent)
                     ]);
                 }
             };

@@ -126,6 +126,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             })
                             const selectSku = sku_list[key.join(' / ')]
                             setTimeout(()=>{
+
+
                                 // alert(selectSku.image_index)
                                 goToSlide(selectSku.image_index);
                             },250)
@@ -133,6 +135,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                        ${gvc.bindView({
                                 bind: 'productTitle',
                                 view: () => {
+                                    
+                                    
                                     return `  
                             <div class="productTitle" style="white-space:normal;word-wrap:break-word;word-break:break-all;">${widget.data.name}</div>
                             <div class="d-flex productPriceRow" style="">
@@ -146,7 +150,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         <div class="productQTYRow d-flex align-items-center justify-content-between " style="margin: 16px 0;">
                             <div class="qtyBar"></div>
                             <div class="d-flex">
-                                <img src="${new URL('../img/component/minusCircle.svg', import.meta.url)}" onclick="${gvc.event(() => {
+                                <img src="${new URL('../../img/component/minusCircle.svg', import.meta.url)}" onclick="${gvc.event(() => {
                                 qtyChange(false);
                             })}">
                                 ${gvc.bindView({
@@ -164,7 +168,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     })}">`
                                 }, divCreate: {class: `qtyNumber d-flex align-items-center justify-content-center`, style: ``}
                             })}
-                                <img src="${new URL('../img/component/plusCircle.svg', import.meta.url)}" onclick="${gvc.event(() => {
+                                <img src="${new URL('../../img/component/plusCircle.svg', import.meta.url)}" onclick="${gvc.event(() => {
                                 qtyChange();
                             })}">
                                 

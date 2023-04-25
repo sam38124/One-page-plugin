@@ -15,11 +15,14 @@ export class ScriptStyle1{
         (window as any).root = document.getElementsByTagName('html')[0];
         (window as any).root.classList.add('dark-mode');
         gvc.addStyleLink([
-
+            ScriptStyle1.getRout("../assets/bootstrap/css/bootstrap.css"),
+            ScriptStyle1.getRout("../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"),
         ]).then()
         gvc.addMtScript([
+            "../assets/bootstrap/js/bootstrap.js",
 
         ].map(((dd)=>{
+
             return   {src: ScriptStyle1.getRout(dd)}
         })), () => {
             try {

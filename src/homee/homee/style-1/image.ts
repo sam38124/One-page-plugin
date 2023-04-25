@@ -4,6 +4,8 @@ import {GVC} from "../../../glitterBundle/GVController.js";
 import {TriggerEvent} from "../../../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
+import {appConfig} from "../../../config.js";
+
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -21,6 +23,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             return ` 
                             <img class="w-100 ${widget.data.layout} ${widget.data.class}" style="${widget.data.style}" src="${widget.data.link ?? `https://oursbride.com/wp-content/uploads/2018/06/no-image.jpg`}"
                             onclick="${gvc.event(()=>{
+                                
                                 TriggerEvent.trigger({
                                     gvc,
                                     widget,
@@ -44,7 +47,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.data.link=data
                                 widget.refreshComponent()
                             }
-                        })
+                        }),
+                        TriggerEvent.editer(gvc , widget , widget.data.clickEvent)
                     ])
                 }
             }

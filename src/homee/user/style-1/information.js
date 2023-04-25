@@ -1,5 +1,6 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
 import { ScriptStyle1 } from "../script-style-1.js";
+import { appConfig } from "../../../config.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {
@@ -29,6 +30,12 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         loading: true
                     };
                     vm.loading = false;
+                    appConfig().getUserData({
+                        callback: (response) => {
+                            vm.data = response;
+                            vm.loading = false;
+                        }
+                    });
                     return gvc.bindView({
                         bind: id,
                         view: () => {

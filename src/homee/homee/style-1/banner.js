@@ -145,7 +145,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     return gvc.bindView({
                         bind: id,
                         view: () => {
-                            return slideControl([{ img: "https://stg-homee-api-public.s3.amazonaws.com/scene/undefined/1677773334893" }, { img: "https://prd-homee-api-public.s3.amazonaws.com/scene/undefined/1678638656166" }], true, false, false);
+                            return slideControl(widget.data.link, true, false, false);
                         }, divCreate: {},
                         onCreate: () => {
                         }

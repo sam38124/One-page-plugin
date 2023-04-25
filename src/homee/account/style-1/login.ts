@@ -184,7 +184,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 } else {
                                     dialog.showInfo('登入成功!')
                                     appConfig().setHome(gvc, 'user_setting', {})
-
+                                    const url = new URL('./', location.href);
+                                    url.searchParams.set('page', 'user_setting');
+                                    location.href = url.href;
                                 }
                             },
                         })

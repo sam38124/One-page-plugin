@@ -78,6 +78,7 @@ TriggerEvent.create(import.meta.url, {
                                             return /*html*/ `<select
                                             class="form-select form-control mt-2"
                                             onchange="${gvc.event((e) => {
+                                                console.log((window as any).$(e).val())
                                                 object.link = (window as any).$(e).val();
                                             })}"
                                         >

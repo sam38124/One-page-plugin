@@ -1,7 +1,7 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
 import { TriggerEvent } from "../../../glitterBundle/plugins/trigger-event.js";
 import { ScriptStyle1 } from "../script-style-1.js";
-Plugin.createComponent(import.meta.url, (glitter, editMode) => {
+export const product = Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {
             data: {
@@ -46,6 +46,12 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     <div class="${widget.data.class ?? ""}p-0 w-100" style="${widget.data.style ?? ""}; 
                         break-inside: avoid;margin-top: 16px;                                
                         height: auto;background: #FBF9F6;border-radius: 16px;" onclick="${gvc.event(() => {
+                        console.log(widget.data);
+                        TriggerEvent.trigger({
+                            gvc,
+                            widget,
+                            clickEvent: widget.data
+                        });
                     })}">
                                 
                     ${gvc.bindView({

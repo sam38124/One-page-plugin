@@ -6,6 +6,7 @@ import {Editor} from "../../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 import {SharedView} from "../../commenPage/shareView.js";
 import {Api} from "../../homee/api/homee-api.js";
+import {product} from "../../homee/style-1/productItem.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -62,7 +63,7 @@ placeholder="大家都在搜尋:沙發" oninput="${gvc.event((e) => {
                                                 vm.data=res.product_list
                                                 vm.loading = false
                                                 console.log(vm)
-                                                // gvc.notifyDataChange('search')
+                                                gvc.notifyDataChange('search')
                                             })
                                         }, 1000)
                                     })}">
@@ -78,6 +79,26 @@ ${(vm.loading) ? `
 <div class="spinner-border text-black mx-auto"></div>
 </div>
 `:``}
+<div class="w-100 d-flex flex-wrap">
+${vm.data.map((dd)=>{
+    return `
+    <div style="width:calc(50% - 8px);">
+        ${product.render(gvc, {
+
+        data:{
+            "style": "width:calc(50% - 8px);",
+            "data": dd,
+            "clickEvent": {
+                "src": `${new URL('../../', import.meta.url).href}/homee/event.js`,
+                "route": "toProductDetail"
+            }
+        }
+    } as any, setting, [] ).view()}
+    </div>
+    `
+    
+                                        })}
+</div>
 </div>`
                                     },
                                     divCreate: {}

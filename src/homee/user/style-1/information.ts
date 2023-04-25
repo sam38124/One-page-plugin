@@ -4,6 +4,7 @@ import {GVC} from "../../../glitterBundle/GVController.js";
 import {ClickEvent} from "../../../glitterBundle/plugins/click-event.js";
 import {Editor} from "../../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
+import {appConfig} from "../../../config.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -37,12 +38,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         loading: true
                     }
                     vm.loading = false;
-                    // appConfig().getUserData({
-                    //     callback: (response) => {
-                    //         vm.data = response
-                    //         vm.loading = false
-                    //     }
-                    // })
+                    appConfig().getUserData({
+                        callback: (response) => {
+                            vm.data = response
+                            vm.loading = false
+                        }
+                    })
 
                     return gvc.bindView({
                         bind:id,
