@@ -7,7 +7,7 @@ export class ShareDialog {
     };
     public errorMessage = (obj: { text?: string }) => {
     };
-    public successMessage = (obj: { text?: string }) => {
+    public successMessage = (obj: { text?: string,callback?:()=>void }) => {
     };
     public checkYesOrNot: (obj: { callback:(response:boolean)=>void, text: string }) => void;
     public policy: () => void;
@@ -23,8 +23,8 @@ export class ShareDialog {
         this.errorMessage = (obj: { text?: string; }) => {
             glitter.openDiaLog('dialog/dialog.js', 'errorMessage', {type:'errorMessage',obj:obj})
         };
-        this.successMessage = (obj: { text?: string; }) => {
-            glitter.openDiaLog('dialog/dialog.js', 'successMessage', {type:'successMessage',obj:obj})
+        this.successMessage = (obj: { text?: string; callback?:()=>void}) => {
+            glitter.openDiaLog('dialog/dialog.js', 'successMessage', {type:'successMessage',obj:obj,callback:obj.callback},{})
         };
         this.policy = () => {
             glitter.openDiaLog('dialog/dialog.js', 'policy', {type:'policy'})

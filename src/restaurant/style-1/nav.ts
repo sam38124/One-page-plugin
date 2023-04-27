@@ -22,7 +22,8 @@ function recursive(r:any, first?:any) {
             });
             glitter.ut.frSize({
                 sm:``
-            },()=>{ $("#navbar").toggleClass("navbar-mobile");
+            },()=>{
+                $("#navbar").toggleClass("navbar-mobile");
                 $('.mobile-nav-toggle').toggleClass("bi-list")
                 $('.mobile-nav-toggle').toggleClass("bi-x")})()
            

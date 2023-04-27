@@ -63,7 +63,7 @@ export class HtmlGenerate {
     };
     static editeInput(obj) {
         return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
-<input class="form-control" placeholder="${obj.placeHolder}" onchange="${obj.gvc.event((e) => {
+<input class="form-control" type="${obj.type ?? 'text'}" placeholder="${obj.placeHolder}" onchange="${obj.gvc.event((e) => {
             obj.callback(e.value);
         })}" value="${obj.default ?? ''}">`;
     }
@@ -215,19 +215,12 @@ ${obj.gvc.bindView({
                                 },
                                 divCreate: {
                                     style: `
-                                    ${gvc.map(['paddingT', 'paddingB', 'paddingL', 'paddingR'].map((d2, index) => {
-                                        let k = ['padding-top', 'padding-bottom', 'padding-left', 'padding-right'];
-                                        return `${k[index]}:${dd.data[d2] && dd.data[d2] !== '' ? dd.data[d2] : '0'};`;
-                                    }))} 
-                                    ${gvc.map(['marginT', 'marginB', 'marginL', 'marginR'].map((d2, index) => {
-                                        let k = ['margin-top', 'margin-bottom', 'margin-left', 'margin-right'];
-                                        return `${k[index]}:${dd.data[d2] && dd.data[d2] !== '' ? dd.data[d2] : '0'};`;
-                                    }))} ${hover.indexOf(dd.id) !== -1
+                                         ${hover.indexOf(dd.id) !== -1
                                         ? `border: 4px solid dodgerblue;border-radius: 5px;box-sizing: border-box;`
                                         : ``}
                                         ${HtmlGenerate.styleEditor(dd).style()}
                                     `,
-                                    class: `position-relative ${dd.class ?? ''}`,
+                                    class: `position-relative ${dd.class ?? ''} glitterTag${dd.hashTag}`,
                                 },
                                 onCreate: () => {
                                     if (hover.indexOf(dd.id) !== -1 && lastIndex !== dd.id) {
@@ -447,6 +440,17 @@ ${gvc.bindView(() => {
                                                         placeHolder: '請輸入自定義模塊名稱',
                                                         callback: (text) => {
                                                             dd.label = text;
+                                                            option.refreshAll();
+                                                            dd.refreshAll();
+                                                        },
+                                                    }),
+                                                    HtmlGenerate.editeInput({
+                                                        gvc: gvc,
+                                                        title: '輸入HashTag標籤',
+                                                        default: dd.hashTag,
+                                                        placeHolder: 'hashtag標籤',
+                                                        callback: (text) => {
+                                                            dd.hashTag = text;
                                                             option.refreshAll();
                                                             dd.refreshAll();
                                                         },

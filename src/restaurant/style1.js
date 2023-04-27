@@ -115,6 +115,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/special.js', import.meta.url))
         },
+        empty: {
+            title: "test",
+            subContent: "test",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/test.js', import.meta.url))
+        },
         slider: {
             title: "滑動式頁面",
             subContent: "滑動式頁面",
@@ -226,7 +232,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/contact-us.js', import.meta.url))
         },
-        empty: {
+        empty1: {
             title: "",
             subContent: "",
             defaultData: {},

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* 外层容器 */
+    .keyboard {
+      display: flex;
+      flex-wrap: wrap;
+      width: 300px;
+    }
+
+    /* 按键样式 */
+    .key {
+      flex: 0 0 25%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      font-size: 20px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+<div class="keyboard" id="keyboard-container">
+</div>
+
+<script>
+  // 获取键盘容器元素
+  const keyboardContainer = document.getElementById('keyboard-container');
+
+  // 定义键盘按键的字符数组
+  const keys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+
+  // 循环生成键盘按键
+  for (let i = 0; i < keys.length; i++) {
+    const key = document.createElement('div'); // 创建按键元素
+    key.className = 'key'; // 设置按键样式类名
+    key.textContent = keys[i]; // 设置按键文本内容
+    keyboardContainer.appendChild(key); // 将按键添加到键盘容器中
+  }
+</script>
+</body>
+</html>

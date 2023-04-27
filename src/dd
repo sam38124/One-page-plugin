@@ -1,0 +1,734 @@
+[
+	{
+		"id": "s0s1s1s1s3s1sds6-sbs9s0s9-4scs9s0-s9ses7s0-s2s0s9sds6scsfses0s4s4sf",
+		"js": "$style1/hyper/style1.js",
+		"css": {
+			"class": {},
+			"style": {}
+		},
+		"data": {
+			"expand": false,
+			"btnList": [
+				{
+					"name": "確認送出",
+					"expand": false,
+					"clickEvent": {
+						"src": "$style1/erp/event.js",
+						"route": "setShipemtState"
+					}
+				}
+			],
+			"formFrom": {
+				"clickEvent": {
+					"src": "$style1/erp/event.js",
+					"route": "toForm"
+				},
+				"triggerEvent": []
+			},
+			"formList": [
+				{
+					"col": "6",
+					"key": "id",
+					"colm": "6",
+					"type": "text",
+					"label": "出貨單號",
+					"expand": false,
+					"states": "1",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "orderID",
+					"colm": "6",
+					"type": "text",
+					"label": "訂單單號",
+					"expand": false,
+					"states": "1",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "order_date",
+					"colm": "6",
+					"type": "text",
+					"label": "接單日期",
+					"expand": false,
+					"states": "1",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "order_status",
+					"colm": "6",
+					"type": "select",
+					"label": "出貨狀態",
+					"expand": true,
+					"formExpand": {
+						"expand": false
+					},
+					"selectList": [
+						{
+							"key": "default",
+							"name": "待確認",
+							"value": "needCheck",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "已確認",
+							"value": "waitOut",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "14天內可出貨",
+							"value": "f_14",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "14-30天內可出貨",
+							"value": "f_14_30",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "31-60天 / 暫時缺貨",
+							"value": "f_31_60",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "待客服確認",
+							"value": "wait",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "停產",
+							"value": " discontinued",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "已出貨",
+							"value": "Shipped",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "已取消",
+							"value": "cancel",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "異常情況",
+							"value": "error",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "已送達",
+							"value": "arrived",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "海運-商品錯誤需請供應商帶走",
+							"value": "error_product",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "海運-商品外箱破損或未打木架",
+							"value": "crash_box",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "海運-商品數量缺少",
+							"value": "errorCount",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "海運-檢驗通過並裝櫃",
+							"value": "ship_passcheck",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "倉儲-商品錯誤需請供應商帶走",
+							"value": "error_product2",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "倉儲-商品外箱破損或未打木架",
+							"value": "crash_box2",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "倉儲-商品數量缺少",
+							"value": "errorCount2",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "倉儲-商品正常並運至倉儲",
+							"value": "to_stored",
+							"expand": false,
+							"visible": "visible"
+						}
+					],
+					"selectType": "manual"
+				},
+				{
+					"col": "12",
+					"def": "notPay",
+					"key": "payment_status",
+					"colm": "12",
+					"type": "select",
+					"label": "請款狀態",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					},
+					"selectList": [
+						{
+							"key": "default",
+							"name": "已付款",
+							"value": "pay",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "未付款",
+							"value": "notPay",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "待審核",
+							"value": "needCheck",
+							"expand": false,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "待付款",
+							"value": "needPay",
+							"expand": true,
+							"visible": "visible"
+						}
+					],
+					"selectType": "manual"
+				},
+				{
+					"col": "6",
+					"key": "request_money",
+					"colm": "6",
+					"type": "text",
+					"group": "請款設定",
+					"label": "請款金額",
+					"expand": false,
+					"states": "0",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"def": "once",
+					"key": "pay_method",
+					"colm": "6",
+					"type": "select",
+					"group": "請款設定",
+					"label": "請款方式",
+					"expand": false,
+					"states": "0",
+					"formExpand": {
+						"expand": false
+					},
+					"selectList": [
+						{
+							"key": "default",
+							"name": "單次結",
+							"value": "once",
+							"expand": true,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "月結",
+							"value": "mounth",
+							"expand": true,
+							"visible": "visible"
+						}
+					],
+					"selectType": "manual"
+				},
+				{
+					"col": "6",
+					"key": "name",
+					"colm": "6",
+					"type": "text",
+					"group": "商品資訊",
+					"label": "產品名稱",
+					"expand": false,
+					"states": "1",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "spec",
+					"colm": "6",
+					"type": "text",
+					"group": "商品資訊",
+					"label": "產品規格/顏色",
+					"expand": false,
+					"states": "1",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "sku",
+					"colm": "6",
+					"type": "text",
+					"group": "商品資訊",
+					"label": "營運商品編",
+					"expand": false,
+					"states": "1",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "vendor_sku",
+					"colm": "6",
+					"type": "text",
+					"group": "商品資訊",
+					"label": "供應商品編",
+					"expand": false,
+					"states": "1",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "price",
+					"colm": "6",
+					"type": "text",
+					"group": "商品資訊",
+					"label": "商品單價",
+					"expand": false,
+					"states": "1",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "quantity",
+					"colm": "6",
+					"type": "text",
+					"group": "商品資訊",
+					"label": "購買數量",
+					"expand": false,
+					"states": "0",
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "waybill_number",
+					"colm": "6",
+					"type": "text",
+					"group": "出貨設定",
+					"label": "運單編號",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "package",
+					"colm": "6",
+					"type": "text",
+					"group": "出貨設定",
+					"label": "包件數",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "size",
+					"colm": "6",
+					"type": "text",
+					"group": "出貨設定",
+					"label": "裝箱尺寸",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "shipping_value",
+					"colm": "6",
+					"type": "text",
+					"group": "出貨設定",
+					"label": "木架費/運費金額",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "pack_date",
+					"colm": "6",
+					"type": "date",
+					"group": "裝櫃明細",
+					"label": "裝櫃時間",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "unpack_date",
+					"colm": "6",
+					"type": "date",
+					"group": "裝櫃明細",
+					"label": "預計拆櫃時間",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "assembly",
+					"colm": "6",
+					"type": "select",
+					"group": "出貨設定",
+					"label": "是否需組裝",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					},
+					"selectList": [
+						{
+							"key": "default",
+							"name": "是",
+							"value": "yes",
+							"expand": true,
+							"visible": "visible"
+						},
+						{
+							"key": "default",
+							"name": "否",
+							"value": "no",
+							"expand": true,
+							"visible": "visible"
+						}
+					],
+					"selectType": "manual"
+				},
+				{
+					"col": "6",
+					"key": "box_number",
+					"colm": "6",
+					"type": "text",
+					"group": "出貨設定",
+					"label": "外箱編號",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "cuft",
+					"colm": "6",
+					"type": "text",
+					"group": "出貨設定",
+					"label": "材積",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "countdown",
+					"colm": "6",
+					"type": "date",
+					"group": "出貨設定",
+					"label": "預計出貨時間",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "12",
+					"key": "outside_photo",
+					"colm": "12",
+					"type": "arrayItem",
+					"addBt": "添加圖片",
+					"group": "出貨設定",
+					"index": "圖片",
+					"label": "商品實拍照片列表",
+					"expand": false,
+					"elemList": [
+						{
+							"col": "12",
+							"key": "src",
+							"type": "imageUpload",
+							"label": "圖片連結",
+							"expand": false,
+							"formExpand": {
+								"expand": false
+							}
+						},
+						{
+							"col": "12",
+							"key": "note",
+							"type": "textArea",
+							"label": "圖片備註",
+							"expand": false,
+							"elemList": [],
+							"formExpand": {
+								"expand": false
+							}
+						}
+					],
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "12",
+					"key": "actual_photo_stored",
+					"type": "arrayItem",
+					"addBt": "新增圖片",
+					"group": "倉儲端",
+					"label": "商品實拍照片列表",
+					"expand": false,
+					"elemList": [
+						{
+							"col": "12",
+							"key": "src",
+							"type": "imageUpload",
+							"group": "",
+							"label": "圖片",
+							"expand": false,
+							"formExpand": {
+								"expand": false
+							}
+						},
+						{
+							"col": "12",
+							"key": "text",
+							"type": "textArea",
+							"label": "備註",
+							"expand": false,
+							"formExpand": {
+								"expand": false
+							}
+						}
+					],
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "logistics_shipping_date",
+					"colm": "6",
+					"type": "date",
+					"label": "物流配送日期",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "end_logistics_qc",
+					"colm": "6",
+					"type": "text",
+					"label": "末端物流質檢",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "6",
+					"key": "storage",
+					"colm": "6",
+					"type": "text",
+					"group": "",
+					"label": "倉儲欄位",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "12",
+					"key": "note",
+					"type": "textArea",
+					"label": "備註",
+					"expand": false,
+					"formExpand": {
+						"expand": false
+					}
+				},
+				{
+					"col": "12",
+					"key": "actual_photo_ship",
+					"type": "arrayItem",
+					"addBt": "添加圖片",
+					"group": "裝櫃明細",
+					"label": "商品實拍照片列表",
+					"expand": false,
+					"elemList": [
+						{
+							"col": "12",
+							"key": "src",
+							"type": "imageUpload",
+							"label": "圖片",
+							"expand": false,
+							"formExpand": {
+								"expand": false
+							}
+						},
+						{
+							"col": "12",
+							"key": "actual_photo_stored",
+							"type": "arrayItem",
+							"addBt": "新增圖片",
+							"group": "倉儲端",
+							"label": "商品實拍照片列表",
+							"expand": false,
+							"elemList": [
+								{
+									"col": "12",
+									"key": "src",
+									"type": "imageUpload",
+									"group": "",
+									"label": "圖片",
+									"expand": false,
+									"formExpand": {
+										"expand": false
+									}
+								},
+								{
+                                					"col": "6",
+                                					"key": "request_money2",
+                                					"colm": "6",
+                                					"type": "text",
+                                					"group": "裝櫃明細",
+                                					"label": "請款金額",
+                                					"expand": false,
+                                					"states": "0",
+                                					"formExpand": {
+                                						"expand": false
+                                					}
+                                				},
+								{
+									"col": "12",
+									"key": "text",
+									"type": "textArea",
+									"label": "備註",
+									"expand": false,
+									"formExpand": {
+										"expand": false
+									}
+								}
+							],
+							"formExpand": {
+								"expand": false
+							}
+						},
+						{
+							"col": "12",
+							"key": "note",
+							"type": "textArea",
+							"label": "備註",
+							"expand": false,
+							"formExpand": {
+								"expand": false
+							}
+						}
+					],
+					"formExpand": {
+						"expand": false
+					}
+				}
+			],
+			"formEvent": {
+				"clickEvent": {
+					"src": "$style1/erp/event.js",
+					"route": "setShipemtState"
+				}
+			},
+			"formExpand": {
+				"expand": true
+			},
+			"btnListExpand": {
+				"expand": true
+			}
+		},
+		"type": "form",
+		"class": "p-2 mx-auto ",
+		"label": "編輯用表單",
+		"style": "width:800px;max-width:100%;",
+		"styleList": []
+	}
+]
+
+{"id":19,"userID":475979146,"account":"test1","role":2,"company":"90687001","pwd":"$2b$05$fcDwMotXGrsbwWNn8I1XieCI9PZSsHFgh.QCwX9ZXSE389SF8z8kO","userData":{"name":"供應商二","note":"dasmdsalk","email":"test1","companyID":"9021312","companyName":"Square Studio","companyType":"A"},"created_time":"2023-04-12T07:30:27.000Z"}

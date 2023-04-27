@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="a5589240-3875-49d1-b7b0-64ff1285d06a" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/homee/assets/bootstrap/css/bootstrap-grid.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/homee/assets/bootstrap/css/bootstrap-grid.css.map" afterDir="false" />
@@ -99,11 +103,61 @@
       <change beforePath="$PROJECT_DIR$/src/homee/user/style-1/information.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/user/style-1/information.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/homee/user/style-1/information.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/homee/user/style-1/information.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
+=======
+    <list default="true" id="0947365c-97f6-4dd5-a951-7866d74301cd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/smaple.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hyper/style-1/change-memory.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/qrcode.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/restaurant/style-1/test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entry.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialog/ShareDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialog/ShareDialog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialog/ShareDialog.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialog/ShareDialog.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/editor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/erp/erp-config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/erp/erp-config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/erp/erp-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/erp/erp-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/erp/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/erp/event.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/erp/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/erp/event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hyper/style-1/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hyper/style-1/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hyper/style-1/form.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hyper/style-1/form.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hyper/style-1/member-manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hyper/style-1/member-manager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hyper/style-1/member-manager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hyper/style-1/member-manager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hyper/style-1/table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hyper/style-1/table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hyper/style-1/table.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hyper/style-1/table.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hyper/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hyper/style1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hyper/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hyper/style1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/official.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/official.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/official.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/official.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/official/component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/official/component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/official/component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/official/component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style-1/nav.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style-1/nav.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/style1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/theDay/style1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/theDay/style1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theDay/style1.ts" afterDir="false" />
+>>>>>>> e598d6e (fix ui)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -118,13 +172,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/User/Documents/GitHub/One-page-plugin/src/homee/product/style-1",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+<<<<<<< HEAD
     "ts.external.directory.path": "C:\\Users\\User\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib"
   }
 }]]></component>
@@ -142,6 +199,18 @@
     </key>
   </component>
   <component name="RunManager" selected="npm.start">
+=======
+    "ts.external.directory.path": "/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/hyper/style-1" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.build:tscAuto">
+>>>>>>> e598d6e (fix ui)
     <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -176,12 +245,18 @@
       <created>1681790444054</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
+<<<<<<< HEAD
       <updated>1681790444054</updated>
       <workItem from="1681790445966" duration="5838000" />
       <workItem from="1681876724686" duration="20904000" />
       <workItem from="1681961214911" duration="10224000" />
       <workItem from="1682308049575" duration="14364000" />
       <workItem from="1682395230718" duration="20657000" />
+=======
+      <updated>1681742576963</updated>
+      <workItem from="1681742579519" duration="1089000" />
+      <workItem from="1682325116935" duration="53506000" />
+>>>>>>> e598d6e (fix ui)
     </task>
     <servers />
   </component>
@@ -431,6 +506,7 @@
         <option value="$PROJECT_DIR$/src/restaurant/style1.js" />
         <option value="$PROJECT_DIR$/src/dashboard/style-1/table4.js" />
         <option value="$PROJECT_DIR$/src/hyper/style-1/backend-manager.js" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/homee/user/style-1/ourService.js" />
         <option value="$PROJECT_DIR$/src/homee/account/style-1/empty.js" />
         <option value="$PROJECT_DIR$/src/homee/account/style1.js" />
@@ -459,6 +535,14 @@
         <option value="$PROJECT_DIR$/src/homee/homee/event.js" />
         <option value="$PROJECT_DIR$/src/homee/asset/js/cozahtml2.js" />
         <option value="$PROJECT_DIR$/src/homee/product/style-1/code.js" />
+=======
+        <option value="$PROJECT_DIR$/src/hyper/style1.js" />
+        <option value="$PROJECT_DIR$/src/hyper/script-style-1.js" />
+        <option value="$PROJECT_DIR$/src/official/component.js" />
+        <option value="$PROJECT_DIR$/src/dashboard/style-1/oneblock.js" />
+        <option value="$PROJECT_DIR$/src/restaurant/style-1/test.js" />
+        <option value="$PROJECT_DIR$/src/hyper/style-1/change-memory.js" />
+>>>>>>> e598d6e (fix ui)
       </list>
     </option>
   </component>

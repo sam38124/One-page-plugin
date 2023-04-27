@@ -2,7 +2,7 @@ import {ShareDialog} from './dialog/ShareDialog.js';
 import {ScriptStyle1} from "./one-page/script-style-1.js";
 
 export class Editor {
-    public static uploadImage(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
+    public static uploadImage(obj: { title: string; gvc: any; def: string; callback: (data: string) => void ;readonly?:boolean}) {
         const glitter = (window as any).glitter;
         const $ = glitter.$;
         return /*html*/ `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2 ${(obj.title) ? `` : `d-none`}">${obj.title}</h3>
@@ -20,6 +20,7 @@ export class Editor {
                         obj.def = e.value;
                         obj.gvc.notifyDataChange(id)
                     })}"
+                    ${obj.readonly ? `readonly`:``}
                 />
                 <div class="ms-1" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i class="fa-sharp fa-solid fa-eye text-white ms-2" onclick="${obj.gvc.event(() => {
@@ -27,7 +28,7 @@ export class Editor {
                     })}"></i>
                 <i
                     class="fa-regular fa-upload text-white ms-2"
-                    style="cursor: pointer;"
+                    style="cursor: pointer;${obj.readonly ? `display:none;`:``}"
                     onclick="${obj.gvc.event(() => {
                         glitter.ut.chooseMediaCallback({
                             single: true,
@@ -62,6 +63,7 @@ export class Editor {
                             },
                         });
                     })}"
+                   
                 ></i>`
                 },
                 divCreate: {
@@ -288,8 +290,8 @@ export class Editor {
         );
     }
 
-    public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: () => string; color?: string }) {
-        const color = obj.color ?? `#1d1d64;`;
+    public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: () => string; color?: string ,class?:string,style?:string}) {
+        const color = obj.color ?? `#3333a2;`;
         const glitter = (window as any).glitter;
         obj.data.expand = obj.data.expand ?? false
         return /*html*/ `${obj.gvc.bindView(() => {
@@ -299,8 +301,7 @@ export class Editor {
                 bind: id,
                 view: () => {
                     if (obj.data.expand) {
-                        console.log(`type-->` + typeof obj.innerText)
-                        return /*html*/ `<div class="w-100  rounded p-2 " style="background: ${color};">
+                        return /*html*/ `<div class="w-100  rounded p-2 ${obj.class}" style="background: ${color};${obj.style};">
                             <div
                                 class="d-flex p-0 align-items-center mb-2 w-100"
                                 onclick="${obj.gvc.event(() => {
@@ -316,7 +317,7 @@ export class Editor {
                             ${(typeof obj.innerText === 'string') ? obj.innerText : obj.innerText()}
                         </div>`;
                     }
-                    return /*html*/ `<div class="w-100  rounded p-2 " style="background-color: ${color};">
+                    return /*html*/ `<div class="w-100  rounded p-2 ${obj.class}" style="background-color:${color};${obj.style};">
                         <div
                             class="w-100 d-flex p-0 align-items-center"
                             onclick="${obj.gvc.event(() => {
@@ -347,7 +348,7 @@ export class Editor {
         title: string;
         gvc: any;
         def: string;
-        array: string[];
+        array: string[] ;
         callback: (text: string) => void;
         placeHolder: string;
     }) {
@@ -355,7 +356,7 @@ export class Editor {
         const gvc = obj.gvc;
         const $ = glitter.$;
         return /*html*/ `
-            ${Editor.h3(obj.title)}
+            ${(obj.title) ? Editor.h3(obj.title):``}
             <div class="btn-group dropdown w-100">
                 ${(() => {
             const id = glitter.getUUID();
@@ -398,7 +399,7 @@ export class Editor {
                     bind: id,
                     view: () => {
                         return obj.array
-                            .filter((d2) => {
+                            .filter((d2:any) => {
                                 return d2.toUpperCase().indexOf(obj.def.toUpperCase()) !== -1;
                             })
                             .map((d3) => {
@@ -416,7 +417,7 @@ export class Editor {
                     },
                     divCreate: {
                         class: `dropdown-menu`,
-                        style: `transform: translateY(40px);`,
+                        style: `transform: translateY(40px);max-height:300px;overflow-y:scroll;`,
                     },
                 };
             })}
@@ -469,6 +470,8 @@ export class Editor {
         refreshComponent: () => void,
         color1?: string,
         color2?: string,
+        class?:string,
+        style?:string
     }) {
 
         let dragm = {
@@ -485,7 +488,6 @@ export class Editor {
                     () => {
                         return obj.array
                             .map((dd, index) => {
-
                                 return Editor.toggleExpand({
                                     gvc: obj.gvc,
                                     title: `<div    draggable="true"  ondragenter="${obj.gvc.event((e: any, event: any) => {
@@ -500,6 +502,8 @@ export class Editor {
                                     data: dd.expand,
                                     innerText: dd.innerHtml,
                                     color: obj.color1 ??`#2b115d`,
+                                    class:obj.class ,
+                                    style:obj.style
                                 });
                             })
                             .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event)

@@ -56,7 +56,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                     <a href="tel:${dd.userData.phone}" class="btn w-100 btn-light " data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Call" aria-label="Call"><i class="mdi mdi-phone"></i></a>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a href="mailto:${dd.userData.phone}" class="btn w-100 btn-light " data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Email" aria-label="Email"><i class="mdi mdi-email-outline"></i></a>
+                                                    <a href="mailto:${dd.userData.email}" class="btn w-100 btn-light " data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Email" aria-label="Email"><i class="mdi mdi-email-outline"></i></a>
                                                 </div>
                                             </div>
                                             <button class="btn btn-warning mt-2 w-100" style="color:black;" onclick="${

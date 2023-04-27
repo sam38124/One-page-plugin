@@ -22,7 +22,7 @@ export class TriggerEvent {
         [name: string]: {
             title: string, fun: (gvc: GVC, widget: HtmlJson, obj: any,subData?:any) => {
                 editor: () => string,
-                event: () => void
+                event: (() => void) | Promise<any>
             }
         }
     }) {
@@ -51,10 +51,14 @@ export class TriggerEvent {
                     })
                 })
             }
-            oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent,oj.subData).event()
+            await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent,oj.subData).event()
         }
 
-        run().then()
+
+        return new Promise(async (resolve, reject)=>{
+            await run()
+            resolve(true)
+        })
     }
 
     public static editer(gvc: GVC, widget: HtmlJson, obj: any, option: {

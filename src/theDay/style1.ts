@@ -98,7 +98,7 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
 
 
         empty:{
-            title: "",
+            title: "測試",
                 subContent: "",
                 defaultData:{},
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/footer.js',import.meta.url))

@@ -243,30 +243,5 @@ TriggerEvent.create(import.meta.url, {
                 },
             };
         },
-    },
-    code:{
-        title:'Glitter-程式碼區塊',
-        fun:(gvc, widget, object)=>{
-            const glitter=(window as any).glitter
-            return {
-                editor: () => {
-                    object.code=object.code??""
-                    return glitter.htmlGenerate.editeText({
-                        gvc: gvc,
-                        title: '程式碼區塊',
-                        default: object.code,
-                        placeHolder: "程式碼區塊",
-                        callback: (text:string) => {
-                            object.code = text
-                            widget.refreshComponent()
-                        }
-                    });
-                },
-                event: () => {
-
-                    eval(object.code)
-                },
-            };
-        }
     }
 });

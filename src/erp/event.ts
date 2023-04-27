@@ -34,6 +34,10 @@ class GlobalData {
     };
 }
 
+(window as any).glitter.addMtScript([{src: 'https://momentjs.com/downloads/moment-with-locales.min.js'}], () => {
+
+}, () => {
+})
 TriggerEvent.create(import.meta.url, {
     login: {
         title: 'ERP-登入按鈕',
@@ -42,20 +46,20 @@ TriggerEvent.create(import.meta.url, {
             widget.data.loginSuccess = widget.data.loginSuccess ?? {}
             return {
                 editor: () => {
-                    return `<div class="mt-2"></div>${ErpConfig.roleList.map((data:any)=>{
-                        widget.data.loginSuccess[data.code]=widget.data.loginSuccess[data.code] ?? {}
+                    return `<div class="mt-2"></div>${ErpConfig.roleList.map((data: any) => {
+                        widget.data.loginSuccess[data.code] = widget.data.loginSuccess[data.code] ?? {}
                         return Editor.toggleExpand({
-                            gvc:gvc,
-                            title:data.name+"-登入成功的事件",
-                            data:data,
-                            innerText:()=>{
+                            gvc: gvc,
+                            title: data.name + "-登入成功的事件",
+                            data: data,
+                            innerText: () => {
                                 return TriggerEvent.editer(gvc, widget, widget.data.loginSuccess[data.code], {
                                     hover: true,
                                     option: [],
                                     title: ''
                                 })
                             },
-                            color:`#3d3f41`
+                            color: `#3d3f41`
                         })
                     }).join('<div class="my-2"></div>')}`
                 },
@@ -80,6 +84,7 @@ TriggerEvent.create(import.meta.url, {
                         shareDialog.dataLoading({visible: false})
                         if (d2.result) {
                             ErpConfig.setToken(d2.response.userData.token)
+                            ErpConfig.setRole(d2.response.userData.role)
                             TriggerEvent.trigger({
                                 gvc, widget, clickEvent: widget.data.loginSuccess[d2.response.userData.role]
                             })
@@ -194,6 +199,19 @@ TriggerEvent.create(import.meta.url, {
                                                     dd.code = text
                                                     widget.refreshComponent()
                                                 }
+                                            }),
+                                            Editor.select({
+                                                title: "存貨可視權限",
+                                                gvc: gvc,
+                                                def: dd.sku_p ?? 'only',
+                                                array: [{title: '全部', value: 'all'}, {
+                                                    title: '自己的',
+                                                    value: 'only'
+                                                }],
+                                                callback: (text) => {
+                                                    dd.sku_p = text
+                                                    widget.refreshComponent()
+                                                }
                                             })
                                         ]),
                                     minus: gvc.event(() => {
@@ -217,8 +235,35 @@ TriggerEvent.create(import.meta.url, {
                     ])
                 },
                 event: () => {
-                    ErpConfig.roleList = object.childAccount
-                    ErpConfig.api = object.api
+                    return new Promise((resolve, reject) => {
+                        ErpConfig.roleList = object.childAccount.map((dd: any) => {
+                            dd.sku_p = dd.sku_p ?? 'only'
+                            return dd
+                        })
+                        ErpConfig.api = object.api
+                        BaseApi.create({
+                            "url": ErpConfig.api + `/api/v1/user`,
+                            "type": "GET",
+                            "timeout": 0,
+                            "headers": {
+                                "Content-Type": "application/json",
+                                "Authorization": ErpConfig.getToken()
+                            },
+                        }).then((d2) => {
+                            if (!d2.result) {
+                                gvc.glitter.setUrlParameter('page', '')
+                                if ((window.parent as any).editerData === undefined) {
+                                    location.reload()
+                                }
+                            } else {
+                                ErpConfig.setRole(d2.response.result[0].role)
+                                ErpConfig.role = d2.response.result[0].role
+                                glitter.share.role = ErpConfig.role
+                                resolve(true)
+                            }
+                        })
+
+                    })
                 },
             };
         },
@@ -249,6 +294,7 @@ TriggerEvent.create(import.meta.url, {
                     })
                 },
                 event: () => {
+
                     const shareDialog = new ShareDialog(gvc.glitter)
                     // shareDialog.dataLoading({visible: true})
                     BaseApi.create({
@@ -264,6 +310,7 @@ TriggerEvent.create(import.meta.url, {
                             subData.data = d2.response.result.map((dd: any) => {
                                 dd.userData.account = dd.account
                                 dd.userData.userID = dd.userID
+                                dd.userData.email = dd.account
                                 return dd
                             });
                             subData.callback()
@@ -279,6 +326,7 @@ TriggerEvent.create(import.meta.url, {
         title: 'ERP-選擇用戶',
         fun: (gvc, widget, object, subData) => {
             const glitter = (window as any).glitter
+            object.comeFromArray = object.comeFromArray ?? []
             if (!object.comeFrom) {
                 ErpConfig.roleList.map((dd) => {
                     object.comeFrom = dd.code
@@ -287,15 +335,45 @@ TriggerEvent.create(import.meta.url, {
             }
             return {
                 editor: () => {
-                    return Editor.select({
-                        title: "設定用戶來源",
+                    return Editor.arrayItem({
+                        originalArray: object.comeFromArray,
                         gvc: gvc,
-                        def: object.comeFrom,
-                        array: ErpConfig.roleList.map((dd) => {
-                            return {title: dd.name, value: dd.code}
+                        title: '設定用戶來源',
+                        array: object.comeFromArray.map((dd: any, index: number) => {
+                            ErpConfig.roleList.map((d2) => {
+                                dd.comeFrom = dd.comeFrom ?? d2.code
+                            })
+                            return {
+                                title: `用戶角色:${index + 1}`, innerHtml: () => {
+                                    return Editor.select({
+                                        title: '',
+                                        gvc: gvc,
+                                        def: dd.comeFrom,
+                                        array: ErpConfig.roleList.map((dd) => {
+                                            return {title: dd.name, value: dd.code}
+                                        }),
+                                        callback: (text) => {
+                                            dd.comeFrom = text
+                                            widget.refreshComponent()
+                                        }
+                                    })
+                                },
+                                expand: dd,
+                                minus: gvc.event(() => {
+                                    object.comeFromArray.splice(index, 1)
+                                    widget.refreshComponent()
+                                })
+                            }
                         }),
-                        callback: (text) => {
-                            object.comeFrom = text
+                        expand: object,
+                        plus: {
+                            title: '添加區塊',
+                            event: gvc.event(() => {
+                                object.comeFromArray.push({});
+                                widget.refreshComponent();
+                            }),
+                        },
+                        refreshComponent: () => {
                             widget.refreshComponent()
                         }
                     })
@@ -304,7 +382,9 @@ TriggerEvent.create(import.meta.url, {
                     const shareDialog = new ShareDialog(gvc.glitter)
                     // shareDialog.dataLoading({visible: true})
                     BaseApi.create({
-                        "url": ErpConfig.api + `/api/v1/user/getMember?role=${object.comeFrom}`,
+                        "url": ErpConfig.api + `/api/v1/user/getMember?role=${object.comeFromArray.map((dd: any) => {
+                            return dd.comeFrom
+                        }).join(',')}`,
                         "type": "GET",
                         "timeout": 0,
                         "headers": {
@@ -318,6 +398,41 @@ TriggerEvent.create(import.meta.url, {
                                 dd.userData.userID = dd.userID
                                 return {
                                     key: dd.userData.name, value: dd.userID
+                                }
+                            });
+                            subData.callback()
+                        } else {
+                            shareDialog.errorMessage({text: "認證失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
+    selectPd: {
+        title: 'ERP-選擇商品',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter)
+                    // shareDialog.dataLoading({visible: true})
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/product?type=select`,
+                        "type": "GET",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                    }).then((d2) => {
+                        if (d2.result) {
+                            subData.data = d2.response.data.map((dd: any) => {
+                                return {
+                                    key: dd.sku, value: dd.sku
                                 }
                             });
                             subData.callback()
@@ -409,7 +524,9 @@ TriggerEvent.create(import.meta.url, {
                 event: () => {
                     const shareDialog = new ShareDialog(gvc.glitter)
                     BaseApi.create({
-                        "url": ErpConfig.api + `/api/v1/product?sku=${object.sku ?? ''}&page=${subData.page}&limit=${object.limit}`,
+                        "url": ErpConfig.api + `/api/v1/product?sku=${object.sku ?? ''}&page=${subData.page}&limit=${object.limit}&vendor=${ErpConfig.roleList.find((dd) => {
+                            return `${dd.code}` === `${ErpConfig.role}`
+                        })!.sku_p === 'only'}`,
                         "type": "GET",
                         "timeout": 0,
                         "headers": {
@@ -524,6 +641,53 @@ TriggerEvent.create(import.meta.url, {
             }
         }
     },
+    setShipemtState: {
+        title: 'ERP-設定出貨單',
+        fun: (gvc, widget, object, subData) => {
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    subData.log = undefined;
+                    const glitter = (window as any).glitter;
+                    const shareDialog = new ShareDialog(gvc.glitter);
+                    shareDialog.dataLoading({visible: true});
+                    const index = ['f_14', 'f_14_30', 'f_31_60'].indexOf(subData.order_status)
+                    if (index !== -1) {
+                        subData.deadLine = (window as any).moment().add([14, 30, 60][index], "days").format('YYYY-MM-DD HH:mm:ss');
+                    }
+
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/order/shippingState`,
+                        "type": "PUT",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                        data: JSON.stringify({
+                            shipping_state_token: subData.token,
+                            data: subData
+                        })
+                    }).then((d2) => {
+                        shareDialog.dataLoading({visible: false})
+                        if (d2.result) {
+                            if (d2.response.result) {
+                                location.reload()
+                                shareDialog.successMessage({text: "新增成功"})
+                                subData.callback()
+                            } else {
+                                shareDialog.errorMessage({text: d2.response.message})
+                            }
+                        } else {
+                            shareDialog.errorMessage({text: "設定失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
     getOrderList: {
         title: 'ERP-取得Order列表',
         fun: (gvc, widget, object, subData) => {
@@ -567,8 +731,10 @@ TriggerEvent.create(import.meta.url, {
                                 }, {key: '訂單編號', value: dd.orderID},
                                     {key: '建立日期', value: dd.created_at.replace('T', " ").replace('.000Z', '')}]
                             })
+
                             subData.editData = d2.response.data.map((dd: any) => {
                                 dd.config.id = dd.id
+                                dd.config['orderID'] = dd.orderID
                                 return dd.config
                             })
                             subData.pageSize = Math.floor(d2.response.total / object.limit)
@@ -606,83 +772,149 @@ TriggerEvent.create(import.meta.url, {
                     })
                 },
                 event: () => {
-                    const orderStatus= [
+                    const orderStatus = [
                         {
                             "name": "待確認",
-                            "value": "needCheck",
-                            "key": "default",
-                            "expand": true
+                            "value": "needCheck"
                         },
                         {
-                            "name": "待出貨",
-                            "value": "waitOut",
-                            "key": "default",
-                            "expand": true
+                            "name": "已確認",
+                            "value": "waitOut"
                         },
                         {
                             "name": "14天內可出貨",
-                            "value": "f_14",
-                            "key": "default",
-                            "expand": true
+                            "value": "f_14"
                         },
                         {
                             "name": "14-30天內可出貨",
-                            "value": "f_14_30",
-                            "key": "default",
-                            "expand": true
+                            "value": "f_14_30"
                         },
                         {
                             "name": "31-60天 / 暫時缺貨",
-                            "value": "f_31_60",
-                            "key": "default",
-                            "expand": true
+                            "value": "f_31_60"
                         },
                         {
                             "name": "待客服確認",
-                            "value": "wait",
-                            "key": "default",
-                            "expand": true
+                            "value": "wait"
                         },
                         {
                             "name": "停產",
-                            "value": " discontinued",
-                            "key": "default",
-                            "expand": false
+                            "value": "discontinued"
                         },
                         {
                             "name": "待請款",
-                            "value": "waitPay",
-                            "key": "default",
-                            "expand": false
+                            "value": "waitPay"
                         },
                         {
-                            "name": "已出貨",
-                            "value": "Shipped",
-                            "key": "default",
-                            "expand": false
+                            "name": (() => {
+
+                                if (`${ErpConfig.role}` === `3`) {
+                                    return "待檢驗"
+                                } else {
+                                    return "已出貨"
+                                }
+                            })(),
+                            "value": "Shipped"
                         },
                         {
                             "name": "已取消",
-                            "value": "cancel",
-                            "key": "default",
-                            "expand": false
+                            "value": "cancel"
                         },
                         {
                             "name": "異常情況",
-                            "value": "error",
-                            "key": "default",
-                            "expand": false
+                            "value": "error"
                         },
                         {
                             "name": "已送達",
+                            "value": "arrived"
+                        },
+                        {
+                            "name": "海運-異常",
+                            "value": "error_product"
+                        },
+                        {
+                            "name": "海運-異常",
+                            "value": "crash_box"
+                        },
+                        {
+                            "name": "海運-異常",
+                            "value": "errorCount"
+                        },
+                        {
+                            "name": "已檢驗",
+                            "value": "ship_passcheck"
+                        },
+                        {
+                            "name": "倉儲-異常",
+                            "value": "error_product2",
+                        },
+                        {
+                            "name": "倉儲-異常",
+                            "value": "crash_box2"
+                        },
+                        {
+                            "name": "倉儲-異常",
+                            "value": "errorCount2",
+                        },
+                        {
+                            "name": "倉儲-已入庫",
+                            "value": "to_stored",
+                        },
+                        {
+                            "name": "配送中",
+                            "value": "on_progress",
+                        },
+                        {
+                            "name": "已配送至客戶",
                             "value": "arrived",
-                            "key": "default",
-                            "expand": true
+                        },
+                        {
+                            "name": "配送異常",
+                            "value": "car_error",
+                        },
+                        {
+                            "name": "等待物流取貨",
+                            "value": "waitcartoget"
+                        },
+                        {
+                            "name": "已裝櫃",
+                            "value": "to-shipp"
+                        },
+                        {
+                            "name": "已下櫃",
+                            "value": "out_of_ship"
+                        }
+                    ]
+
+                    const payment_status = [
+                        {
+                            "name": "已付款",
+                            "value": "pay",
+                        },
+                        {
+                            "name": "未付款",
+                            "value": "notPay",
+                        },
+                        {
+                            "name": "待審核",
+                            "value": "needCheck",
+                        },
+                        {
+                            "name": "等待撥款",
+                            "value": "needPay"
                         }
                     ]
                     const shareDialog = new ShareDialog(gvc.glitter)
                     BaseApi.create({
-                        "url": ErpConfig.api + `/api/v1/order/shippingState?page=${subData.page}&limit=${object.limit}`,
+                        "url": ErpConfig.api + `/api/v1/order/shippingState?page=${subData.page}&limit=${object.limit}&vendor=${ErpConfig.roleList.find((dd) => {
+                            return `${dd.code}` === `${ErpConfig.role}`
+                        })!.sku_p === 'only'}${(() => {
+                            if (glitter.getUrlParameter('jsonQuery')) {
+                                return `&jsonQuery=${glitter.getUrlParameter('jsonQuery')}`
+                            } else {
+                                return ``
+                            }
+                        })()}`,
                         "type": "GET",
                         "timeout": 0,
                         "headers": {
@@ -691,32 +923,175 @@ TriggerEvent.create(import.meta.url, {
                         },
                     }).then((d2) => {
                         if (d2.result) {
-
                             subData.data = d2.response.data.map((dd: any) => {
-                                return [{
-                                    key: '訂單狀態',
-                                    value: `<div class="badge bg-danger fs-4">${(orderStatus.find((d2)=>{
-                                        return d2.value===dd.config.order_status
-                                    })??{name:'異常單據'}).name }</div>`
-                                }, {key: '訂單編號', value: dd.orderID},
-                                    {key: 'SKU', value: dd.config.sku},
-                                    { key: '訂單總額',value: parseInt(dd.config.quantity,10) * dd.pd[0].config.price},
-                                    {key: '建立日期', value: dd.created_at.replace('T', " ").replace('.000Z', '')}]
-                            })
+                                console.log(JSON.stringify(dd.vendor))
+                                const pd = (dd.product as any);
+                                dd.config.payment_status = dd.config.payment_status ?? 'notPay'
+                                const array = [{
+                                    key: 'QRCODE',
+                                    value: gvc.bindView(() => {
+                                        const id = gvc.glitter.getUUID()
+                                        const visible = gvc.glitter.getUUID()
+                                        return {
+                                            bind: id,
+                                            view: () => {
+                                                return `<div class="d-none" id="${gvc.id(visible)}"></div>`
+                                            },
+                                            divCreate: {
+                                                elem: `div`,
+                                                style: ``,
+                                                class: ` d-flex align-items-center justify-content-center`
+                                            },
+                                            onCreate: () => {
+                                                gvc.glitter.addMtScript([
+                                                    {src: new URL('../lib/qrcode.js', import.meta.url)}
+                                                ], () => {
+                                                    let url = new URL(location.href)
+                                                    url.searchParams.set('page', 'redirectToForm')
+                                                    url.searchParams.set('token', dd.token)
+                                                    new (window as any).QRCode(document.getElementById(gvc.id(id)), {
+                                                        text: url.href,
+                                                        width: 45,
+                                                        height: 45,
+                                                    });
+                                                    new (window as any).QRCode(document.getElementById(gvc.id(visible)), {
+                                                        text: url.href,
+                                                        width: 512,
+                                                        height: 512,
+                                                    });
+                                                    $(`#${gvc.id(id)} img`).click((event) => {
+                                                        glitter.openDiaLog(new URL('../dialog/image-preview.js', import.meta.url), 'preview',
+                                                            $(`#${gvc.id(visible)} img`).attr('src'))
+                                                        event.stopPropagation()
+                                                    })
+                                                }, () => {
+                                                })
 
-                            subData.editData = d2.response.data.map((dd: any) => {
-                                dd.config.id = dd.id
-                                if (dd.pd[0]) {
-                                    Object.keys(dd.pd[0].config).map((d2) => {
-                                        dd.config[d2] = dd.pd[0].config[d2]
+                                            }
+                                        }
                                     })
+                                }, {
+                                    key: '訂單狀態',
+                                    value: `<div class="badge  ${(() => {
+                                        switch (dd.config.order_status) {
+                                            case 'out_of_ship':
+                                            case 'waitOut':
+                                                return `bg-primary`
+                                            case 'waitcartoget':
+                                            case 'on_progress':
+                                            case 'car_error':
+                                            case 'to-shipp':
+                                            case 'ship_passcheck':
+                                            case 'to_stored':
+                                            case 'f_14':
+                                                return `bg-dark text-black`
+                                            case 'arrived':
+                                                return `bg-success text-black`
+                                            case 'Shipped':
+                                                return `bg-primary `
+                                            default :
+                                                return `bg-danger`
+                                        }
+                                    })()} fs-4" >${(orderStatus.find((d2) => {
+                                        return d2.value === dd.config.order_status
+                                    }) ?? {name: '異常訂單'}).name}</div>`
+                                },
+                                    {
+                                        key: '[出貨/拆櫃]', value: (() => {
+                                            const index = ['f_14', 'f_14_30', 'f_31_60'].indexOf(dd.config.order_status)
+                                            if (index !== -1) {
+                                                const startDate = (window as any).moment();
+                                                const endDate = (window as any).moment(dd.config.deadLine).format('YYYY-MM-DD');
+                                                const min = (window as any).moment(endDate).diff(startDate, 'day')
+                                                if (min > 0) {
+                                                    return `<span style="color:orange;">剩餘${min}天</span>`
+                                                } else {
+                                                    return `<span style="color:red;">已逾時</span>`
+                                                }
+
+                                            }
+                                            if (['waitOut', 'needCheck'].indexOf(dd.config.order_status) !== -1) {
+                                                return `<span>尚未開始</span>`
+                                            } else {
+                                                if (dd.config.order_status === 'to-shipp') {
+                                                    const startDate = (window as any).moment();
+                                                    const endDate = (window as any).moment(dd.config.unpack_date).format('YYYY-MM-DD');
+                                                    const min = (window as any).moment(endDate).diff(startDate, 'day')
+                                                    if (min >= 0) {
+                                                        return `<span style="color:orange;">剩餘${min}天</span>`
+                                                    } else {
+                                                        return `<span style="color:red;">已逾時</span>`
+                                                    }
+                                                } else {
+                                                    return `<span>已結束</span>`
+                                                }
+
+                                            }
+
+                                        })()
+                                    },
+                                    {key: '訂單編號', value: dd.orderID},
+                                    {key: 'SKU', value: dd.config.sku},
+                                    {key: '訂單總額', value: parseInt(dd.config.quantity, 10) * pd.price},
+                                    {key: '建立日期', value: dd.created_at.replace('T', " ").replace('.000Z', '')}]
+                                if (['1', '0', '2', '6', '8', '9'].indexOf(`${ErpConfig.role}`) !== -1) {
+                                    array.splice(2, 0, {
+                                        key: '請款狀態',
+                                        value: `<div class="badge ${(() => {
+                                            switch (dd.config.payment_status) {
+                                                case 'notPay':
+                                                    return `bg-dark text-black`
+                                                case 'pay':
+                                                    return `bg-success text-black`
+                                                case 'needCheck':
+                                                    return `bg-danger`
+                                                case 'needPay':
+                                                    return `bg-warring`
+                                                default :
+                                                    return `bg-danger`
+                                            }
+                                        })()} fs-4">${(payment_status.find((d2) => {
+                                            return d2.value === dd.config.payment_status
+                                        }) ?? {name: '異常單據'}).name}</div>`
+                                    });
                                 }
-                                dd.config['order_date'] = dd.created_at.replace('T', " ").replace('.000Z', '')
+                                return array
+                            });
+                            subData.editData = d2.response.data.filter((dd: any) => {
+                                try {
+                                    dd.config.id = dd.id
+                                    if (dd.product) {
+
+                                        Object.keys(dd.product).map((d2) => {
+                                            if (d2 !== 'id') {
+                                                dd.config[d2] = dd.product[d2]
+                                            }
+                                        })
+                                    }
+                                    dd.config.carbadge = parseInt(dd.config.quantity, 10) * dd.product.price
+                                    dd.config.totalMoney = parseInt(dd.config.shipping_value, 10) + dd.config.carbadge
+                                    dd.config.token = dd.token
+                                    dd.config['orderID'] = dd.orderID
+                                    dd.config['order_date'] = dd.created_at.replace('T', " ").replace('.000Z', '')
+                                    return true
+                                } catch (e) {
+                                    return false
+                                }
+                            })
+                            subData.editData = subData.editData.map((dd: any) => {
+                                dd.config.vendorName = dd.vendor.userData.name
+                                dd.config.vendorCompanyName = dd.vendor.userData.companyName
+                                dd.config.vendorEmail = dd.vendor.userData.email
+                                dd.config.vendorNote = dd.vendor.userData.note
+                                dd.config.vendorCompanyID = dd.vendor.userData.companyID
+                                dd.config.clickEvent = () => {
+                                    glitter.setUrlParameter('token', dd.token)
+                                }
                                 return dd.config
                             })
-
                             subData.pageSize = Math.floor(d2.response.total / object.limit)
                             subData.callback()
+
                         } else {
                             shareDialog.errorMessage({text: "認證失敗"})
                         }
@@ -736,7 +1111,7 @@ TriggerEvent.create(import.meta.url, {
                         originalArray: object.role,
                         gvc: gvc,
                         title: '區塊內容',
-                        array: object.role.map((dd:any, index:number) => {
+                        array: object.role.map((dd: any, index: number) => {
                             return {
                                 title: `用戶:${index + 1}`,
                                 expand: dd,
@@ -765,7 +1140,8 @@ TriggerEvent.create(import.meta.url, {
                         plus: {
                             title: '添加用戶',
                             event: gvc.event(() => {
-                                object.role.push({ role:  ErpConfig.roleList[0].code
+                                object.role.push({
+                                    role: ErpConfig.roleList[0].code
                                 });
                                 widget.refreshComponent();
                             }),
@@ -786,20 +1162,431 @@ TriggerEvent.create(import.meta.url, {
                         },
                     }).then((d2) => {
 
-                       if(d2.result&&object.role.map((dd:any)=>{
-                           return dd.role.indexOf(`${d2.response.result[0].role}`) !== -1
-                       })){
+                        if (d2.result && object.role.map((dd: any) => {
+                            return dd.role.indexOf(`${d2.response.result[0].role}`) !== -1
+                        })) {
 
-                       }else{
-                           gvc.glitter.setUrlParameter('page','')
-                           if((window.parent as any).editerData === undefined){
-                               location.reload()
-                           }
+                        } else {
+                            gvc.glitter.setUrlParameter('page', '')
+                            if ((window.parent as any).editerData === undefined) {
+                                location.reload()
+                            }
 
-                       }
+                        }
                     })
                 }
             }
         }
     },
+    toPay: {
+        title: 'ERP-申請撥款',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    const dialog = new ShareDialog(glitter as any);
+                    if (subData.payment_status !== 'notPay') {
+                        dialog.errorMessage({text: '已申請，請稍候審核'})
+                        return;
+                    }
+                    if (!subData.shipping_value) {
+                        dialog.errorMessage({text: '請輸入木架費與運費'})
+                        return;
+                    }
+                    if (subData.order_status == 'waitOut') {
+                        dialog.errorMessage({text: '請回壓訂單狀態'})
+                        return;
+                    }
+                    if (['Shipped', 'nostore'].indexOf(subData.order_status) !== -1) {
+                        dialog.errorMessage({text: '商品已出貨或停產不得申請請款'})
+                        return;
+                    }
+                    subData.payment_status = 'needCheck'
+                    subData.log = undefined;
+                    const shareDialog = new ShareDialog(gvc.glitter);
+                    shareDialog.dataLoading({visible: true});
+                    const index = ['f_14', 'f_14_30', 'f_31_60'].indexOf(subData.order_status)
+                    if (index !== -1) {
+                        subData.deadLine = (window as any).moment().add([14, 30, 60][index], "days").format('YYYY-MM-DD HH:mm:ss');
+                    }
+
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/order/shippingState`,
+                        "type": "PUT",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                        data: JSON.stringify({
+                            shipping_state_token: subData.token,
+                            data: subData
+                        })
+                    }).then((d2) => {
+                        shareDialog.dataLoading({visible: false})
+                        if (d2.result) {
+                            if (d2.response.result) {
+                                location.reload()
+                                shareDialog.successMessage({text: "新增成功"})
+                                subData.callback()
+                            } else {
+                                shareDialog.errorMessage({text: d2.response.message})
+                            }
+                        } else {
+                            shareDialog.errorMessage({text: "設定失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
+    goShippmentState: {
+        title: 'ERP-進行出貨',
+        fun: (gvc, widget, object, subData) => {
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter);
+                    if (subData.order_status === 'Shipped') {
+                        if (subData.payment_status !== 'pay') {
+                            shareDialog.errorMessage({text: "請先等待撥款完成"})
+                            return
+                        }
+                        if (!subData['package_list'] || subData['package_list'].find((dd: any) => {
+                            return (!dd.size_h) || (!dd.size_l) || (!dd.size_w) || (!dd.waybill_number)
+                        })) {
+                            shareDialog.errorMessage({text: "請確實填寫完包建項目"})
+                            return;
+                        }
+                        for (const a of ['package', 'assembly', 'countdown']) {
+
+                            if ((subData[a] === '') || (subData[a] === undefined)) {
+
+                                shareDialog.errorMessage({text: "請確實填寫完出貨項目"})
+                                return;
+                            }
+                        }
+                        if ((subData.outside_photo ?? []).length < 2) {
+                            shareDialog.errorMessage({text: "請上傳至少兩張外箱照片"})
+                            return;
+                        }
+                    } else if (subData.order_status === 'waitOut') {
+                        shareDialog.errorMessage({text: "請回壓訂單狀態!"})
+                        return;
+                    }
+                    if (!subData.nostored_license && (subData.order_status === 'discontinued')) {
+                        shareDialog.errorMessage({text: "停產需上傳證明文件!"})
+                        return;
+                    }
+                    subData.log = undefined;
+                    shareDialog.dataLoading({visible: true});
+                    const index = ['f_14', 'f_14_30', 'f_31_60'].indexOf(subData.order_status)
+                    if (index !== -1) {
+                        subData.deadLine = (window as any).moment().add([14, 30, 60][index], "days").format('YYYY-MM-DD HH:mm:ss');
+                    }
+
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/order/shippingState`,
+                        "type": "PUT",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                        data: JSON.stringify({
+                            shipping_state_token: subData.token,
+                            data: subData
+                        })
+                    }).then((d2) => {
+                        shareDialog.dataLoading({visible: false})
+                        if (d2.result) {
+                            if (d2.response.result) {
+                                if (subData.order_status === 'Shipped') {
+
+                                    shareDialog.successMessage({
+                                        text: "請將QRCODE貼上外箱完成出貨．", callback: () => {
+                                            gvc.glitter.addMtScript([
+                                                {src: new URL('../lib/qrcode.js', import.meta.url)}
+                                            ], () => {
+                                                $('#qrcodeGenerater').remove()
+                                                $('body').append('<div id="qrcodeGenerater" class="d-none"></div>')
+                                                let url = new URL(location.href)
+                                                url.searchParams.set('page', 'redirectToForm')
+                                                url.searchParams.set('token', subData.token)
+                                                new (window as any).QRCode(document.getElementById('qrcodeGenerater'), {
+                                                    text: url.href,
+                                                    width: 512,
+                                                    height: 512,
+                                                });
+                                                setTimeout(() => {
+                                                    gvc.glitter.openDiaLog(new URL('../dialog/image-preview.js', import.meta.url).href, 'preview',
+                                                        $(`#qrcodeGenerater img`).attr('src'))
+                                                }, 500)
+
+                                            }, () => {
+                                            })
+                                        }
+                                    })
+
+                                } else {
+                                    shareDialog.successMessage({text: "設定成功"})
+                                }
+                                subData.callback()
+                            } else {
+                                shareDialog.errorMessage({text: d2.response.message})
+                            }
+                        } else {
+                            shareDialog.errorMessage({text: "設定失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
+    goShippmentState2: {
+        title: 'ERP-海關審核',
+        fun: (gvc, widget, object, subData) => {
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter);
+                    if (subData.order_status === 'Shipped') {
+                        shareDialog.errorMessage({text: "請回壓檢核結果!"})
+                        return;
+                    }
+                    if ((subData.actual_photo_ship ?? []).length < 2) {
+                        shareDialog.errorMessage({text: "請上傳至少兩張外箱照片"})
+                        return;
+                    }
+                    if (subData.order_status === 'to-shipp') {
+                        for (const a of ['pack_date', 'unpack_date', 'box_number', 'cuft', 'box_price']) {
+                            if ((subData[a] === '') || (subData[a] === undefined)) {
+                                shareDialog.errorMessage({text: "請確實填寫完裝櫃明細"})
+                                return;
+                            }
+                        }
+                    }
+
+
+                    subData.log = undefined;
+                    shareDialog.dataLoading({visible: true});
+
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/order/shippingState`,
+                        "type": "PUT",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                        data: JSON.stringify({
+                            shipping_state_token: subData.token,
+                            data: subData
+                        })
+                    }).then((d2) => {
+                        shareDialog.dataLoading({visible: false})
+                        if (d2.result) {
+                            if (d2.response.result) {
+                                shareDialog.successMessage({text: "設定成功"})
+                                subData.callback()
+                            } else {
+                                shareDialog.errorMessage({text: d2.response.message})
+                            }
+                        } else {
+                            shareDialog.errorMessage({text: "設定失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
+    goShippmentState3: {
+        title: 'ERP-倉儲審核',
+        fun: (gvc, widget, object, subData) => {
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter);
+                    if (subData.order_status === 'ship_passcheck') {
+                        shareDialog.errorMessage({text: "請回壓檢核結果!"})
+                        return;
+                    }
+                    if ((subData.actual_photo_stored ?? []).length < 2) {
+                        shareDialog.errorMessage({text: "請上傳至少兩張外箱照片"})
+                        return;
+                    }
+                    subData.log = undefined;
+                    shareDialog.dataLoading({visible: true});
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/order/shippingState`,
+                        "type": "PUT",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                        data: JSON.stringify({
+                            shipping_state_token: subData.token,
+                            data: subData
+                        })
+                    }).then((d2) => {
+                        shareDialog.dataLoading({visible: false})
+                        if (d2.result) {
+                            if (d2.response.result) {
+                                shareDialog.successMessage({text: "設定成功"})
+                                subData.callback()
+                            } else {
+                                shareDialog.errorMessage({text: d2.response.message})
+                            }
+                        } else {
+                            shareDialog.errorMessage({text: "設定失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
+    goShippmentState4: {
+        title: 'ERP-物流審核',
+        fun: (gvc, widget, object, subData) => {
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter);
+                    if ((subData.car_image ?? []).length < 2) {
+                        shareDialog.errorMessage({text: "請上傳至少兩張外箱照片"})
+                        return;
+                    }
+                    subData.log = undefined;
+                    shareDialog.dataLoading({visible: true});
+                    BaseApi.create({
+                        "url": ErpConfig.api + `/api/v1/order/shippingState`,
+                        "type": "PUT",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": ErpConfig.getToken()
+                        },
+                        data: JSON.stringify({
+                            shipping_state_token: subData.token,
+                            data: subData
+                        })
+                    }).then((d2) => {
+                        shareDialog.dataLoading({visible: false})
+                        if (d2.result) {
+                            if (d2.response.result) {
+                                shareDialog.successMessage({text: "設定成功"})
+                                subData.callback()
+                            } else {
+                                shareDialog.errorMessage({text: d2.response.message})
+                            }
+                        } else {
+                            shareDialog.errorMessage({text: "設定失敗"})
+                        }
+                    })
+                }
+            }
+        }
+    },
+    toForm: {
+        title: 'ERP-取得出貨表單資料',
+        fun: (gvc, widget, object, subData) => {
+            object.triggerEvent = object.triggerEvent ?? []
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    if (gvc.glitter.getUrlParameter('token') !== undefined) {
+                        const shareDialog = new ShareDialog(gvc.glitter)
+                        BaseApi.create({
+                            "url": ErpConfig.api + `/api/v1/order/shippingState?token=${gvc.glitter.getUrlParameter('token')}`,
+                            "type": "GET",
+                            "timeout": 0,
+                            "headers": {
+                                "Content-Type": "application/json",
+                                "Authorization": ErpConfig.getToken()
+                            },
+                        }).then((d2) => {
+                            if (d2.result) {
+                                subData.editData = d2.response.data.filter((dd: any) => {
+                                    try {
+                                        dd.config.id = dd.id
+                                        if (dd.product) {
+
+                                            Object.keys(dd.product).map((d2) => {
+                                                if (d2 !== 'id') {
+                                                    dd.config[d2] = dd.product[d2]
+                                                }
+                                            })
+                                        }
+                                        dd.config.carbadge = parseInt(dd.config.quantity, 10) * dd.product.price
+                                        dd.config.totalMoney = parseInt(dd.config.shipping_value, 10) + dd.config.carbadge
+                                        dd.config.token = dd.token
+                                        dd.config['orderID'] = dd.orderID
+                                        dd.config['order_date'] = dd.created_at.replace('T', " ").replace('.000Z', '')
+                                        return true
+                                    } catch (e) {
+                                        return false
+                                    }
+                                })
+                                subData.editData = subData.editData.map((dd: any) => {
+                                    dd.config.vendorName = dd.vendor.userData.name
+                                    dd.config.vendorCompanyName = dd.vendor.userData.companyName
+                                    dd.config.vendorEmail = dd.vendor.userData.email
+                                    dd.config.vendorNote = dd.vendor.userData.note
+                                    dd.config.vendorCompanyID = dd.vendor.userData.companyID
+                                    return dd.config
+                                })
+                                subData.callback(subData.editData[0])
+                            } else {
+                                shareDialog.errorMessage({text: "認證失敗"})
+                            }
+                        })
+                    } else {
+                        subData.callback()
+                    }
+
+                    return ``
+                }
+            }
+        }
+    },
+    setShippmentType: {
+        title: 'ERP-設定訂單來源',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    return glitter.htmlGenerate.editeInput(
+                        {
+                            gvc: gvc,
+                            title: '訂單來源代碼',
+                            default: object.comeFrom ?? "",
+                            placeHolder: "",
+                            callback: (text: any) => {
+                                object.comeFrom = text
+                                widget.refreshComponent()
+                            }
+                        }
+                    )
+                },
+                event: () => {
+                    glitter.setUrlParameter("jsonQuery", object.comeFrom)
+                    gvc.recreateView()
+                }
+            }
+        }
+    }
 })

@@ -38,6 +38,9 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                                     }
                                 }else{
                                     data=d2.response.result[0]
+                                    try {
+                                        subData.callback(data)
+                                    }catch (e){}
                                     gvc.notifyDataChange(id)
                                 }
 
@@ -48,7 +51,6 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                             bind:id,
                             view:()=>{
                                 if(data){
-
                                     return new glitter.htmlGenerate(data.config, [],subData ?? {}).render(gvc);
                                 }else{
                                     return  ``
@@ -93,30 +95,33 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                             return {
                                 bind:id,
                                 view:()=>{
-                                    return group.map((dd)=>{
-                                        return `<l1 onclick="${gvc.event(()=>{
-                                                selectGroup=dd
-                                                gvc.notifyDataChange(id)
-                                            })}"  class="list-group-item list-group-item-action border-0 py-2 ${(selectGroup===dd) && 'active'} position-relative " style="border-radius: 0px;cursor: pointer;">${dd || "未分類"}</l1>`
-                                            +
-                                            `<div class="collapse multi-collapse ${(selectGroup===dd) && 'show'}" style="margin-left: 10px;">
- ${      data.dataList.filter((d2:any)=>{
-                                                return d2.group===dd
-                                            }).map((d3:any)=>{
-                                                if(d3.tag!==pd.tag){
-                                                    return `<a onclick="${gvc.event(()=>{
-                                                        pd.tag=d3.tag;
-                                                        widget.refreshComponent()
-                                                    })}"  class=" list-group-item list-group-item-action border-0 py-2 px-4"  style="border-radius: 0px;">${d3.name}</a>`
-                                                }else {
-                                                    return `<a onclick="${gvc.event(()=>{
-                                                        pd.tag=d3.tag;
-                                                        widget.refreshComponent()
-                                                    })}"  class=" list-group-item list-group-item-action border-0 py-2 px-4 bg-warning"  style="cursor:pointer;background-color: #FFDC6A !important;color:black !important;border-radius: 0px;">${d3.name}</a>`
-                                                }
-                                            }).join('')}
-</div>`
-                                    }).join('')
+                                    return     Editor.select({
+                                        title: "選擇嵌入頁面",
+                                        gvc: gvc,
+                                        def: pd.tag ?? "",
+                                        array:   [
+                                            {
+                                                title:'選擇嵌入頁面',value:''
+                                            }
+                                        ].concat(data.dataList.sort((function(a:any, b:any) {
+                                            if (a.group.toUpperCase() <  b.group.toUpperCase()) {
+                                                return -1;
+                                            }
+                                            if (a.group.toUpperCase() >  b.group.toUpperCase()) {
+                                                return 1;
+                                            }
+
+                                            // names must be equal
+                                            return 0;
+                                        })).map((dd: any) => {
+                                            return {
+                                                title:`${dd.group}-${dd.name}`,value:dd.tag
+                                            }
+                                        })),
+                                        callback: (text: string) => {
+                                            pd.tag=text;
+                                        },
+                                    })
                                 },
                                 divCreate:{}
                             }
@@ -127,12 +132,8 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                             bind:id,
                             view:()=>{
                                 if(data.dataList){
-                                    return  Editor.h3("預設嵌入頁面")+`<div class="dropdown-menu show position-relative" style="max-height: calc(100vh - 100px);width:300px;max-width:100%;overflow-y: scroll;">
-<ul class="list-group list-group-flush">
-    ${setPage(widget.data)}
-</ul>
-
-  </div>
+                                    return  `
+   ${setPage(widget.data)}
   ${Editor.arrayItem({
                                         gvc:gvc,
                                         title:"判斷式頁面嵌入",
@@ -160,13 +161,7 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                                                             widget.refreshComponent()
                                                         }
                                                     })+`
-${Editor.h3("嵌入頁面")}
-<div class="dropdown-menu show position-relative" style="max-height: calc(100vh - 100px);width:100%;overflow-y: scroll;">
-<ul class="list-group list-group-flush">
-    ${setPage(dd)}
-</ul>
-
-  </div>`,
+ ${setPage(dd)}`,
                                                 minus:gvc.event(()=>{
                                                     widget.data.list.splice(index,1)
                                                     widget.refreshComponent()

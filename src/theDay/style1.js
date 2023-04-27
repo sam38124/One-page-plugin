@@ -83,7 +83,7 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/contact.js', import.meta.url))
         },
         empty: {
-            title: "",
+            title: "測試",
             subContent: "",
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/footer.js', import.meta.url))

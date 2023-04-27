@@ -57,6 +57,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     <tbody>
                         ${(vm.data.length === 0) ? `` : `${vm.data.map((dd: any,index:number) => {
                                     return `<tr onclick="${gvc.event(()=>{
+                                        if(vm.editData[index].clickEvent){
+                                            vm.editData[index].clickEvent()  
+                                        }
                                         TriggerEvent.trigger({
                                             gvc: gvc, widget: widget, clickEvent: widget.data, subData: vm.editData[index]
                                         })                                
