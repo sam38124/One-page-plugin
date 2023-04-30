@@ -12,7 +12,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     return gvc.bindView(() => {
                         const id = glitter.getUUID();
                         const vm = {
-                            callback: () => {
+                            callback: (data) => {
                                 gvc.notifyDataChange(id);
                             },
                             page: 0,

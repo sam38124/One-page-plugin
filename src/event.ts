@@ -243,5 +243,29 @@ TriggerEvent.create(import.meta.url, {
                 },
             };
         },
+    },
+    code: {
+        title: 'Glitter-代碼區塊',
+        fun: (gvc, widget, object,subData,element) => {
+            return {
+                editor: () => {
+                    return gvc.glitter.htmlGenerate.editeText({
+                        gvc:gvc,
+                        title:"代碼區塊",
+                        default:object.code??"",
+                        placeHolder:"請輸入代碼區塊",
+                        callback:(text)=>{
+                            object.code=text
+                        }
+                    });
+                },
+                event: () => {
+                    return new Promise<any>(async (resolve, reject)=>{
+                        resolve(await (eval(object.code)))
+                    })
+                },
+            };
+        },
     }
+
 });

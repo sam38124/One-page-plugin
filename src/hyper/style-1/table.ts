@@ -15,13 +15,13 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     return gvc.bindView(() => {
                         const id = glitter.getUUID()
                         const vm: {
-                            callback: () => void,
+                            callback: (data:any) => void,
                             data: any,
                             page: number,
                             pageSize: number,
                             editData:any
                         } = {
-                            callback: () => {
+                            callback: (data:any) => {
                                 gvc.notifyDataChange(id)
                             },
                             page: 0,

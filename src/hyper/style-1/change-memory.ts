@@ -8,7 +8,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             return {
                 view: () => {
                     subData.formData.log = subData.formData.log ?? []
-                    console.log(JSON.stringify(subData))
                     return `<div class="w-100 p-0 m-0" style="white-space:normal;">${subData.formData.log.filter((dd: any) => {
                         return dd.key !== 'expand' && subData.formList.find((d2: any) => {
                             return dd.key === d2.key

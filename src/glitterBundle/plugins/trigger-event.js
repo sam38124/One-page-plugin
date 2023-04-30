@@ -22,6 +22,7 @@ export class TriggerEvent {
     static trigger(oj) {
         const glitter = window.glitter;
         const event = oj.clickEvent.clickEvent;
+        let returnData = '';
         async function run() {
             oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {};
             if (!oj.gvc.glitter.share.clickEvent[event.src]) {
@@ -35,11 +36,11 @@ export class TriggerEvent {
                     });
                 });
             }
-            await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData).event();
+            returnData = await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData, oj.element).event();
         }
         return new Promise(async (resolve, reject) => {
             await run();
-            resolve(true);
+            resolve(returnData);
         });
     }
     static editer(gvc, widget, obj, option = { hover: false, option: [] }) {

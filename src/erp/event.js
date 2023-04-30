@@ -244,7 +244,7 @@ TriggerEvent.create(import.meta.url, {
                         }).then((d2) => {
                             if (!d2.result) {
                                 gvc.glitter.setUrlParameter('page', '');
-                                if (window.parent.editerData === undefined) {
+                                if (glitter.getUrlParameter('page') !== 'home') {
                                     location.reload();
                                 }
                             }
@@ -919,9 +919,17 @@ TriggerEvent.create(import.meta.url, {
                         },
                     }).then((d2) => {
                         if (d2.result) {
+                            d2.response.data = d2.response.data.filter((dd) => {
+                                return dd.product !== undefined;
+                            });
                             subData.data = d2.response.data.map((dd) => {
-                                console.log(JSON.stringify(dd.vendor));
                                 const pd = dd.product;
+                                pd.price = pd.price ?? 0;
+                                const a = dd.orderData.config;
+                                dd.config.customer_address = a.customer_address;
+                                dd.config.customer_phone = a.customer_phone;
+                                dd.config.customer_email = a.customer_email;
+                                dd.config.customer_name = a.customer_name;
                                 dd.config.payment_status = dd.config.payment_status ?? 'notPay';
                                 const array = [{
                                         key: 'QRCODE',
@@ -1085,7 +1093,7 @@ TriggerEvent.create(import.meta.url, {
                                 return dd.config;
                             });
                             subData.pageSize = Math.floor(d2.response.total / object.limit);
-                            subData.callback();
+                            subData.callback(subData.data);
                         }
                         else {
                             shareDialog.errorMessage({ text: "認證失敗" });
@@ -1524,6 +1532,11 @@ TriggerEvent.create(import.meta.url, {
                                                 }
                                             });
                                         }
+                                        const a = dd.orderData.config;
+                                        dd.config.customer_address = a.customer_address;
+                                        dd.config.customer_phone = a.customer_phone;
+                                        dd.config.customer_email = a.customer_email;
+                                        dd.config.customer_name = a.customer_name;
                                         dd.config.carbadge = parseInt(dd.config.quantity, 10) * dd.product.price;
                                         dd.config.totalMoney = parseInt(dd.config.shipping_value, 10) + dd.config.carbadge;
                                         dd.config.token = dd.token;
@@ -1560,24 +1573,52 @@ TriggerEvent.create(import.meta.url, {
     },
     setShippmentType: {
         title: 'ERP-設定訂單來源',
-        fun: (gvc, widget, object, subData) => {
+        fun: (gvc, widget, object, subData, element) => {
             const glitter = window.glitter;
             return {
                 editor: () => {
-                    return glitter.htmlGenerate.editeInput({
-                        gvc: gvc,
-                        title: '訂單來源代碼',
-                        default: object.comeFrom ?? "",
-                        placeHolder: "",
-                        callback: (text) => {
-                            object.comeFrom = text;
-                            widget.refreshComponent();
-                        }
-                    });
+                    return ``;
                 },
                 event: () => {
-                    glitter.setUrlParameter("jsonQuery", object.comeFrom);
+                    glitter.setUrlParameter("jsonQuery", element?.e.value);
                     gvc.recreateView();
+                }
+            };
+        }
+    },
+    getShipmentListTitle: {
+        title: 'ERP-取得訂單列表標題',
+        fun: (gvc, widget, object, subData, element) => {
+            const glitter = window.glitter;
+            return {
+                editor: () => {
+                    return ``;
+                },
+                event: () => {
+                    return `出貨列表${(() => {
+                        switch (gvc.glitter.getUrlParameter('jsonQuery')) {
+                            case 'order_status=cancel':
+                                return `->訂單已取消`;
+                            case 'order_status=Shipped':
+                                return `->供應商-已出貨`;
+                            case 'order_status=out_of_ship':
+                                return `->海運-已下櫃`;
+                            case 'order_status=wait':
+                                return `->後勤-待客服確認`;
+                            case 'order_status=on_progress':
+                                return `->物流-配送中`;
+                            case 'order_status=arrived':
+                                return `->物流-配送完成`;
+                            case 'order_status=car_error':
+                                return `->物流-配送異常`;
+                            case 'payment_status=pay':
+                                return `->供應商-已付款`;
+                            case 'payment_status=notPay':
+                                return `->供應商-未付款`;
+                            default:
+                                return ``;
+                        }
+                    })()}`;
                 }
             };
         }

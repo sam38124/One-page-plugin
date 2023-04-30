@@ -387,7 +387,7 @@ export class Editor {
                             obj.def = e.value;
                             setTimeout(() => {
                                 obj.callback(obj.def);
-                            }, 100);
+                            }, 500);
                         })}"
                                     />`;
                     },
@@ -425,6 +425,12 @@ export class Editor {
         })()}
             </div>
         `;
+    }
+
+    public static returnInnerHtml(obj:{
+
+    }){
+
     }
 
     public static select(obj: {
@@ -471,7 +477,8 @@ export class Editor {
         color1?: string,
         color2?: string,
         class?:string,
-        style?:string
+        style?:string,
+        readonly?:boolean
     }) {
 
         let dragm = {
@@ -503,10 +510,10 @@ export class Editor {
                                     innerText: dd.innerHtml,
                                     color: obj.color1 ??`#2b115d`,
                                     class:obj.class ,
-                                    style:obj.style
+                                    style:obj.style,
                                 });
                             })
-                            .join('<div class="my-2"></div>') + Editor.plusBtn(obj.plus.title, obj.plus.event)
+                            .join('<div class="my-2"></div>') + ((obj.readonly) ? ``:Editor.plusBtn(obj.plus.title, obj.plus.event))
                     },
                 color: obj.color2 ?? `#3333a2`,
             })
