@@ -6,7 +6,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.bgSrc = widget.data.bgSrc ?? "https://liondesign-prd.s3.amazonaws.com/file/252530754/1680596876179-pexels-ingrid-north-1851190-3840x2160-25fps.mp4";
             widget.data.appImage = widget.data.appImage ?? {
                 i1: `https://liondesign-prd.s3.amazonaws.com/file/252530754/1680594749017-hero-phone-1.png`,
@@ -25,6 +24,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             };
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     return `<section
               class="overflow-hidden  position-lg-relative position-relative"
               style=""

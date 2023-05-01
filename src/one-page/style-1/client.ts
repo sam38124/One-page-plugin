@@ -9,7 +9,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.title = widget.data.title ?? '合作夥伴';
             widget.data.list = widget.data.list ?? [
                 {src: 'HOMEEAI', type: 'text'},
@@ -26,6 +25,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             };
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     const cl = glitter.getUUID();
                     return gvc.bindView(() => {
                         return {

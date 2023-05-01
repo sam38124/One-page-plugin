@@ -5,7 +5,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.bg = widget.data.bg ?? `https://liondesign-prd.s3.amazonaws.com/file/252530754/1679686154087-contact-bg.jpeg`;
             widget.data.info = widget.data.info ?? {
                 title: '我們的基地',
@@ -38,6 +37,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             ];
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     const contact = {
                         bg: widget.data.bg,
                         info: widget.data.info,

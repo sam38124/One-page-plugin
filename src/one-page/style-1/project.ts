@@ -9,7 +9,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.title = widget.data.title ?? '作品案例';
             widget.data.tag = widget.data.tag ?? [
                 {
@@ -160,6 +159,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             });
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     return `
 ${gvc.bindView(() => {
                         const swiperID = gvc.glitter.getUUID();

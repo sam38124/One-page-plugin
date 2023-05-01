@@ -6,7 +6,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.headerLayout = widget.data.headerLayout ?? {};
             widget.data.nav = widget.data.nav ?? {};
             widget.data.nav.logo = widget.data.nav.logo ?? {
@@ -43,6 +42,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             };
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     function recursive(r, first) {
                         var h = '';
                         if (r.list === undefined || r.list.length === 0) {

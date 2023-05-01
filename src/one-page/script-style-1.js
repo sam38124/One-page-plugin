@@ -9,7 +9,7 @@ export class ScriptStyle1 {
         }
         ScriptStyle1.hi = true;
         window.root = document.getElementsByTagName('html')[0];
-        window.root.classList.add('dark-mode');
+        window.root.classList.add('light-mode');
         gvc.addStyleLink([
             ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.min.css'),
             ScriptStyle1.getRout('assets/vendor/swiper/swiper-bundle.min.css'),

@@ -91,6 +91,40 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                                 group.push(dd.group)
                             }
                         })
+                        let data2:any=undefined
+                        let fal=0
+                        function getDd(){
+                            let tag=widget.data.tag
+                            for (const b of widget.data.list){
+                                if(eval(b.code)===true){
+                                    tag=b.tag
+                                    break
+                                }
+                            }
+                            BaseApi.create({
+                                "url": saasConfig.config.url+`/api/v1/template?appName=${saasConfig.config.appName}&tag=${tag}`,
+                                "type": "GET",
+                                "timeout": 0,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                }
+                            }).then((d2)=>{
+                                if(!d2.result){
+                                    fal+=1
+                                    if(fal<5){
+                                        setTimeout(()=>{getDd()},200)
+                                    }
+                                }else{
+                                    data2=d2.response.result[0]
+                                    try {
+                                        subData.callback(data)
+                                    }catch (e){}
+                                    gvc.notifyDataChange(id)
+                                }
+
+                            })
+                        }
+                        // getDd()
                         return  gvc.bindView(()=>{
                             return {
                                 bind:id,
@@ -121,7 +155,12 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                                         callback: (text: string) => {
                                             pd.tag=text;
                                         },
-                                    })
+                                    })+(()=>{
+                                        if(data2){
+                                            return  ``
+                                        }
+                                        return ``
+                                    })()
                                 },
                                 divCreate:{}
                             }

@@ -4,6 +4,7 @@ export class ErpConfig {
     static api = '';
     static role = '';
     static roleList = [];
+    static selectOrder = [];
     static setToken(token) {
         const glitter = window.glitter;
         if (token) {

@@ -9,7 +9,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.title = widget.data.title ?? '關於我們';
             widget.data.list = widget.data.list ?? [
                 {
@@ -39,6 +38,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             };
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     return gvc.bindView(() => {
                         const id = glitter.getUUID();
                         return {

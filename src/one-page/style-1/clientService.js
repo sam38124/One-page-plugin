@@ -6,7 +6,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.title =
                 widget.data.title ??
                     `<p class="lead mb-3">沒有那麼多的預算</p>
@@ -37,6 +36,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             };
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     return `<section class="container" id="glitterBase">
                             <div class="bg-secondary rounded-3 my-2 my-md-4 my-lg-5 py-5 px-3 px-md-0">
                                 <div class="row align-items-center">

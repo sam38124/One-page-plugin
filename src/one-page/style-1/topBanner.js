@@ -39,9 +39,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     btn: { name: '觀看作品案例', link: '#project' },
                 },
             };
-            ScriptStyle1.initialScript(gvc, widget);
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     const keyVision2 = {
                         l: widget.data.desktop.l,
                         r: widget.data.desktop.r,

@@ -34,10 +34,9 @@ class GlobalData {
     };
 }
 
-(window as any).glitter.addMtScript([{src: 'https://momentjs.com/downloads/moment-with-locales.min.js'}], () => {
+(window as any).glitter.addMtScript([{src: 'https://momentjs.com/downloads/moment-with-locales.min.js'}], () => {}, () => {})
 
-}, () => {
-})
+
 TriggerEvent.create(import.meta.url, {
     login: {
         title: 'ERP-登入按鈕',
@@ -88,6 +87,7 @@ TriggerEvent.create(import.meta.url, {
                             TriggerEvent.trigger({
                                 gvc, widget, clickEvent: widget.data.loginSuccess[d2.response.userData.role]
                             })
+
                         } else {
                             shareDialog.errorMessage({text: "登入失敗"})
                         }
@@ -236,6 +236,7 @@ TriggerEvent.create(import.meta.url, {
                 },
                 event: () => {
                     return new Promise((resolve, reject) => {
+                        glitter.share.backendInfo=glitter.share.backendInfo??{}
                         ErpConfig.roleList = object.childAccount.map((dd: any) => {
                             dd.sku_p = dd.sku_p ?? 'only'
                             return dd
@@ -251,16 +252,31 @@ TriggerEvent.create(import.meta.url, {
                             },
                         }).then((d2) => {
                             if (!d2.result) {
-                                gvc.glitter.setUrlParameter('page', '')
+                                gvc.glitter.setUrlParameter('page', 'home')
                                 if(glitter.getUrlParameter('page')!=='home'){
                                     location.reload()
                                 }
-
                             } else {
                                 ErpConfig.setRole(d2.response.result[0].role)
                                 ErpConfig.role = d2.response.result[0].role
                                 glitter.share.role = ErpConfig.role
                                 resolve(true)
+                                glitter.share.backendInfo.name=d2.response.result[0].userData.name
+                                glitter.share.backendInfo.role=[
+                                    {value:"0",title:"最高管理員"},
+                                    {value:"1",title:"營運端"},
+                                    {value:"2",title:"A型供應商"},
+                                    {value:"8",title:"B型供應商"},
+                                    {value:"9",title:"C型供應商"},
+                                    {value:"3",title:"海運端"},
+                                    {value:"4",title:"倉儲端"},
+                                    {value:"5",title:"物流端"},
+                                    {value:"6",title:"財務端"},
+                                    {value:"7",title:"後勤端"},
+                                    {value:"10",title:"拆櫃場"},
+                                ].find((dd)=>{
+                                    return dd.value===`${ErpConfig.role}`
+                                })!.title
                             }
                         })
 
@@ -732,7 +748,6 @@ TriggerEvent.create(import.meta.url, {
                                 }, {key: '訂單編號', value: dd.orderID},
                                     {key: '建立日期', value: dd.created_at.replace('T', " ").replace('.000Z', '')}]
                             })
-
                             subData.editData = d2.response.data.map((dd: any) => {
                                 dd.config.id = dd.id
                                 dd.config['orderID'] = dd.orderID
@@ -923,6 +938,7 @@ TriggerEvent.create(import.meta.url, {
                         },
                     }).then((d2) => {
                         if (d2.result) {
+                            ErpConfig.selectOrder=[]
                             d2.response.data = d2.response.data.filter((dd: any) => {
                                 return dd.product !== undefined
                             })
@@ -936,6 +952,21 @@ TriggerEvent.create(import.meta.url, {
                                 dd.config.customer_name=a.customer_name
                                 dd.config.payment_status = dd.config.payment_status ?? 'notPay'
                                 const array = [{
+                                    key: '●',
+                                    value: `<input type="checkbox" class="form-check-input batchDel" onchange="${gvc.event((e, event)=>{
+                                    if(e.checked){
+                                        ErpConfig.selectOrder.push(dd)
+                                    }else{
+                                        ErpConfig.selectOrder=ErpConfig.selectOrder.filter((d2)=>{
+                                            return dd.id !== d2.id
+                                        })
+                                    }
+                                 
+                                        e.stopPropagation()
+                                    })}" onclick="${gvc.event((e, event)=>{
+                                        event.stopPropagation()
+                                    })}">`
+                                },{
                                     key: 'QRCODE',
                                     value: gvc.bindView(() => {
                                         const id = gvc.glitter.getUUID()
@@ -1043,8 +1074,8 @@ TriggerEvent.create(import.meta.url, {
                                     {key: '訂單總額', value: parseInt(dd.config.quantity, 10) * pd.price},
                                     {key: '建立日期', value: dd.created_at.replace('T', " ").replace('.000Z', '')}]
                                 if (['1', '0', '2', '6', '8', '9'].indexOf(`${ErpConfig.role}`) !== -1) {
-                                    array.splice(2, 0, {
-                                        key: '請款狀態',
+                                    array.splice(3, 0, {
+                                        key: '供應/請款狀態',
                                         value: `<div class="badge ${(() => {
                                             switch (dd.config.payment_status) {
                                                 case 'notPay':
@@ -1061,6 +1092,28 @@ TriggerEvent.create(import.meta.url, {
                                         })()} fs-4">${(payment_status.find((d2) => {
                                             return d2.value === dd.config.payment_status
                                         }) ?? {name: '異常單據'}).name}</div>`
+                                    });
+                                }
+                                if (['1', '0',  '6', '3'].indexOf(`${ErpConfig.role}`) !== -1) {
+                                    array.splice(4, 0, {
+                                        key: '海運/請款狀態',
+                                        value: `<div class="badge ${(() => {
+                                            dd.config.payment_status2=dd.config.payment_status2??'notPay'
+                                            switch (dd.config.payment_status2) {
+                                                case 'notPay':
+                                                    return `bg-dark text-black`
+                                                case 'pay':
+                                                    return `bg-success text-black`
+                                                case 'needCheck':
+                                                    return `bg-danger`
+                                                case 'needPay':
+                                                    return `bg-warring`
+                                                default :
+                                                    return `bg-danger`
+                                            }
+                                        })()} fs-4">${(payment_status.find((d2) => {
+                                            return d2.value === dd.config.payment_status2
+                                        }) ?? {name: '未付款'}).name}</div>`
                                     });
                                 }
                                 return array
@@ -1628,5 +1681,95 @@ TriggerEvent.create(import.meta.url, {
                 }
             }
         }
-    }
+    },
+    logout: {
+        title: 'ERP-登出',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    ErpConfig.setToken('')
+                    location.reload()
+                }
+            }
+        }
+    },
+    mutilipleSelect: {
+        title: 'ERP-多選元件',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    return new Promise((resolve, reject)=>{
+                        if(`${ErpConfig.role}`==='3'){
+                            resolve(`<button class="btn btn-primary" onclick="${gvc.event((e,event)=>{
+                                async function exe(){
+                                    const shareDialog = new ShareDialog(gvc.glitter)
+                                    shareDialog.dataLoading({visible: false})
+                                    
+                                    for (const subData of ErpConfig.selectOrder){
+                                        for (const a of ['pack_date', 'unpack_date', 'box_number', 'cuft', 'box_price']) {
+                                            if ((subData.config[a] === '') || (subData.config[a] === undefined)) {
+                                                shareDialog.errorMessage({text: "請確實填寫完裝櫃明細"})
+                                                return;
+                                            }
+                                        }
+                                        if ((subData.config.actual_photo_ship ?? []).length < 2) {
+                                            shareDialog.errorMessage({text: "請上傳至少兩張外箱照片"})
+                                            return;
+                                        }
+                                    }
+                                   
+                                    for (const a of ErpConfig.selectOrder){
+                                    
+                                        const result=await (new Promise((resolve, reject)=>{
+                                            a.config.order_status='to-shipp'
+                                            a.config.log=undefined
+                                            BaseApi.create({
+                                                "url": ErpConfig.api + `/api/v1/order/shippingState`,
+                                                "type": "PUT",
+                                                "timeout": 0,
+                                                "headers": {
+                                                    "Content-Type": "application/json",
+                                                    "Authorization": ErpConfig.getToken()
+                                                },
+                                                data: JSON.stringify({
+                                                    shipping_state_token: a.token,
+                                                    data: a.config
+                                                })
+                                            }).then((d2) => {
+                                                if (d2.result) {
+                                                    resolve(true)
+                                                } else {
+                                                    resolve(false)
+                                                }
+                                            })
+                                        }))
+                                        if(!result){
+                                            shareDialog.dataLoading({visible: false})
+                                            shareDialog.errorMessage({text:"更新異常!"})
+                                            return
+                                        }
+                                    }
+                                    shareDialog.dataLoading({visible: false})
+                                    shareDialog.successMessage({text:"更新成功!"})
+                                    location.reload()
+                                }
+                                exe()
+                            })}">批量上櫃</button>`)
+                        }else{
+                            resolve(``)
+                        }
+
+                    })
+                }
+            }
+        }
+    },
 })

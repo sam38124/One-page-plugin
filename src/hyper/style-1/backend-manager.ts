@@ -5,6 +5,8 @@ import {ScriptStyle1} from "../script-style-1.js";
 import {Editor} from "../../editor.js";
 import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
 import {component} from "../../official/component.js";
+import {ErpConfig} from "../../erp/erp-config.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -56,6 +58,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             ]
             let formList = widget.data.formList
             widget.data.expandS=widget.data.expandS??{}
+            glitter.share.backendInfo=glitter.share.backendInfo??{}
+            widget.data.navagationBtn=widget.data.navagationBtn??[]
+            widget.data.navagationExp=widget.data.navagationExp??{}
+            const userData=glitter.share.backendInfo ?? {}
             return {
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget)
@@ -119,49 +125,42 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         </span>
                                         <ul class="list-unstyled topbar-menu float-end mb-0 ">
                                             <li class="dropdown notification-list">
-                                                <a
+                                                <div
                                                     class="nav-link dropdown-toggle nav-user arrow-none me-0"
-                                                    data-bs-toggle="dropdown"
-                                                    href="#"
-                                                    role="button"
-                                                    aria-haspopup="false"
-                                                    aria-expanded="false"
+                                                    onclick="${gvc.event((e, event)=>{
+                                                        $('.dropdown .dropdown-menu').toggleClass('show')
+                                })}"
                                                 >
                                                     <span class="account-user-avatar">
                                                         <img
-                                                            src="https://assets.imgix.net/~text?bg=5499C7&txtclr=ffffff&w=200&h=200&txtsize=100&txt=測試&txtfont=Helvetica&txtalign=middle,center"
+                                                            src="https://assets.imgix.net/~text?bg=5499C7&txtclr=ffffff&w=200&h=200&txtsize=100&txt=${glitter.share.backendInfo.name ?? ""}&txtfont=Helvetica&txtalign=middle,center"
                                                             alt="user-image"
                                                             class="img-fluid rounded-circle"
                                                         />
                                                     </span>
                                                     <span>
-                                                        <span class="account-user-name">${glitter.getCookieByName('name')}</span>
-                                                        <span class="account-position"></span>
+                                                        <span class="account-user-name">${glitter.share.backendInfo.name ?? ""}</span>
+                                                        <span class="account-position">${glitter.share.backendInfo.role ?? ""}</span>
                                                     </span>
-                                                </a>
+                                                </div>
                                                 <div
                                                     class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown"
                                                 >
-                                                    <a
+                                      ${widget.data.navagationBtn.map((dd:any)=>{
+                                    return `  <a
                                                         style="cursor:pointer"
                                                         onclick="${gvc.event(() => {
-
-                                })}"
+                                        TriggerEvent.trigger({
+                                            gvc, widget, clickEvent: dd
+                                        })
+                                    })}"
                                                         class="dropdown-item notify-item"
                                                     >
-                                                        <i class="dripicons-home me-1"></i>
-                                                        <span>回首頁</span>
-                                                    </a>
-                                                    <a
-                                                        style="cursor:pointer"
-                                                        onclick="${gvc.event(() => {
-
-                                })}"
-                                                        class="dropdown-item notify-item"
-                                                    >
-                                                        <i class="mdi mdi-logout me-1"></i>
-                                                        <span>登出</span>
-                                                    </a>
+                                                        <i class="${dd.icon} me-1"></i>
+                                                        <span>${dd.title}</span>
+                                                    </a>`
+                                }).join('')}
+                                                 
                                                 </div>
                                             </li>
                                         </ul>
@@ -188,6 +187,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 },
                 editor: () => {
                     return new Promise((resolve, reject)=>{
+
                         function recursive(data:any,first?:boolean){
                             return  Editor.arrayItem({
                                 originalArray:data,
@@ -332,6 +332,60 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             },
                                         })
                                     ])
+                                }
+                            }),
+                            Editor.arrayItem({
+                                originalArray:widget.data.navagationBtn,
+                                gvc: gvc,
+                                title: '導覽列內容',
+                                array: widget.data.navagationBtn.map((dd: any, index: number) => {
+                                    return {
+                                        title: dd.title || `區塊:${index + 1}`,
+                                        expand: dd,
+                                        innerHtml: (()=>{
+                                            return gvc.map([
+                                                Editor.fontawesome({
+                                                    title: 'icon',
+                                                    gvc: gvc,
+                                                    def: dd.icon,
+                                                    callback: (text: string) => {
+                                                        dd.icon = text;
+                                                        widget.refreshComponent()
+                                                    },
+                                                }),
+                                                glitter.htmlGenerate.editeInput({
+                                                    gvc: gvc,
+                                                    title: '導覽標題',
+                                                    default: dd.title,
+                                                    placeHolder: '請輸入導覽標題',
+                                                    callback: (text: string) => {
+                                                        dd.title=(text);
+                                                        widget.refreshComponent()
+                                                    },
+                                                }),
+                                                ClickEvent.editer(gvc, widget, dd, {
+                                                    hover: false,
+                                                    option: [],
+                                                    title: "點擊事件"
+                                                })
+                                            ])
+                                        }),
+                                        minus: gvc.event(() => {
+                                            widget.data.navagationBtn.splice(index, 1);
+                                            widget.refreshComponent();
+                                        }),
+                                    };
+                                }),
+                                expand: widget.data.navagationExp,
+                                plus: {
+                                    title: '添加區塊',
+                                    event: gvc.event(() => {
+                                        widget.data.navagationBtn.push({});
+                                        widget.refreshComponent();
+                                    }),
+                                },
+                                refreshComponent:()=>{
+                                    widget.refreshComponent()
                                 }
                             }),
                             recursive(widget.data.formList,true)

@@ -4,7 +4,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
-            ScriptStyle1.initialScript(gvc, widget);
             const publica = {
                 checkT: `<i class="bx bx-check text-primary fs-3"></i>`,
                 checkF: `<i class="bx bx-x text-danger fs-3"></i>`,
@@ -66,6 +65,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             };
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     return `
                             <section class="pt-2" id="price">
                                 <div class="container pt-4 pt-sm-2">

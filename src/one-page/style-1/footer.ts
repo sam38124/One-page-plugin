@@ -9,7 +9,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.logoStyle=widget.data.logoStyle??{}
             widget.data.outro = widget.data.outro ?? {
                 img: ScriptStyle1.getRout(`img/index/logoFull.svg`),
@@ -59,6 +58,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
         All Rights Reserved.`
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     const footer = {
                         outro: widget.data.outro,
                         info: widget.data.info,

@@ -152,7 +152,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                 linkData.icon.name = text;
                                             },
                                         }),
-                                        `<h3>修改顏色</h3>
+                                        `${Editor.h3("修改顏色")}
                                          <input type="color" value="${linkData.icon.color}" onchange="${gvc.event((e) => {
                                             linkData.icon.color = e.value;
                                             widget.refreshComponent();

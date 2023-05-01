@@ -5,7 +5,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.name = widget.data.name ?? '社群平台';
             widget.data.data = widget.data.data ?? [
                 {
@@ -62,6 +61,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             };
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     return `
                         <h1 class="container pb-4 mt-5">${service_detail.name}</h1>
         ${glitter.print(function () {

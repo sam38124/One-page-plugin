@@ -9,7 +9,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.main = widget.data.main ?? {
                 title: '品牌形象官方網站',
                 list: ['Bootstrap 4, 5', '單頁式 RWD 網站', '多種 Icon 設計', '只需輸入資料，即可快速建立', '多種模板、多個頁面元件'],
@@ -31,6 +30,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             };
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     return /*html*/ `<section
         id="price"
         class="jarallax dark-mode bg-dark py-xxl-5 d-flex align-items-center justify-content-center"

@@ -9,7 +9,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.title = widget.data.title ?? '萊恩設計的服務';
             widget.data.desc =
                 widget.data.desc ??
@@ -81,6 +80,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
             };
             return {
                 view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
                     return /*html*/ `<section class="jarallax dark-mode bg-dark py-xxl-5" id="service">
                             <div class="jarallax-img opacity-25" style="background-image: url(${service.bg})"></div>
                             <div class="d-none d-lg-block" style="margin-top: -60px; padding-top: 60px"></div>

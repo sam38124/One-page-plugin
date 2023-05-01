@@ -5,7 +5,7 @@ export class Editor {
     public static uploadImage(obj: { title: string; gvc: any; def: string; callback: (data: string) => void ;readonly?:boolean}) {
         const glitter = (window as any).glitter;
         const $ = glitter.$;
-        return /*html*/ `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2 ${(obj.title) ? `` : `d-none`}">${obj.title}</h3>
+        return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 ${(obj.title) ? `` : `d-none`}">${obj.title}</h3>
              ${obj.gvc.bindView(() => {
             const id = glitter.getUUID()
             return {
@@ -23,11 +23,11 @@ export class Editor {
                     ${obj.readonly ? `readonly`:``}
                 />
                 <div class="ms-1" style="width: 1px;height: 25px;background-color: white;"></div>
-                <i class="fa-sharp fa-solid fa-eye text-white ms-2" onclick="${obj.gvc.event(() => {
+                <i class="fa-sharp fa-solid fa-eye text-dark ms-2" onclick="${obj.gvc.event(() => {
                         glitter.openDiaLog(new URL('./dialog/image-preview.js', import.meta.url), 'preview', obj.def)
                     })}"></i>
                 <i
-                    class="fa-regular fa-upload text-white ms-2"
+                    class="fa-regular fa-upload text-dark ms-2"
                     style="cursor: pointer;${obj.readonly ? `display:none;`:``}"
                     onclick="${obj.gvc.event(() => {
                         glitter.ut.chooseMediaCallback({
@@ -238,13 +238,13 @@ export class Editor {
     }
 
     public static h3(title: string) {
-        return /*html*/ `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${title}</h3>`;
+        return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 text-dark">${title}</h3>`;
     }
 
     public static plusBtn(title: string, event: any) {
-        return /*html*/ `<div class="w-100 my-3" style="background: white;height: 1px;"></div>
+        return /*html*/ `<div class="w-100 my-3 bg-white" style="height: 1px;"></div>
             <div
-                class="text-white align-items-center justify-content-center d-flex p-1 rounded mt-3"
+                class="text-white fw-bold align-items-center justify-content-center d-flex p-1 rounded mt-3"
                 style="border: 2px dashed white;"
                 onclick="${event}"
             >
@@ -258,20 +258,20 @@ export class Editor {
             /*html*/ `
                 ${Editor.h3(obj.title)}
                 <div
-                    class="alert alert-dark alert-dismissible fade show p-2"
+                    class="alert alert-primary alert-dismissible fade show p-2"
                     role="alert"
                     style="white-space: normal;word-break: break-all;"
                 >
                     <a
                         onclick="${obj.gvc.event(() => glitter.openNewTab('https://fontawesome.com/search'))}"
-                        class=" fw text-white"
+                        class="fw-bold fw text-primary"
                         style="cursor: pointer;"
                         >fontawesome</a
                     >
                     與
                     <a
                         onclick="${obj.gvc.event(() => glitter.openNewTab('https://boxicons.com/'))}"
-                        class=" fw text-white"
+                        class="fw-bold fw text-primary"
                         style="cursor: pointer;"
                         >box-icon</a
                     >
@@ -291,7 +291,6 @@ export class Editor {
     }
 
     public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: () => string; color?: string ,class?:string,style?:string}) {
-        const color = obj.color ?? `#3333a2;`;
         const glitter = (window as any).glitter;
         obj.data.expand = obj.data.expand ?? false
         return /*html*/ `${obj.gvc.bindView(() => {
@@ -301,38 +300,40 @@ export class Editor {
                 bind: id,
                 view: () => {
                     if (obj.data.expand) {
-                        return /*html*/ `<div class="w-100  rounded p-2 ${obj.class}" style="background: ${color};${obj.style};">
+                        return /*html*/ `<div class="w-100  rounded p-2 ${obj.class}" style="background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);${obj.style};">
                             <div
-                                class="d-flex p-0 align-items-center mb-2 w-100"
+                                class="d-flex p-0 align-items-center mb-2 w-100 text-white"
                                 onclick="${obj.gvc.event(() => {
                             obj.data.expand = !obj.data.expand;
                             obj.gvc.notifyDataChange(id);
                         })}"
                                 style="cursor: pointer;"
                             >
-                                <h3 style="font-size: 16px;color: lightpink;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
+                                <h3 style="font-size: 16px;width: calc(100% - 60px);" class="m-0 p-0 text-white">${obj.title}</h3>
                                 <div class="flex-fill"></div>
                                 <div style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-white"></i></div>
                             </div>
                             ${(typeof obj.innerText === 'string') ? obj.innerText : obj.innerText()}
                         </div>`;
                     }
-                    return /*html*/ `<div class="w-100  rounded p-2 ${obj.class}" style="background-color:${color};${obj.style};">
+                    return /*html*/ `<div class="w-100  rounded p-2 ${obj.class}" style="background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);${obj.style};">
                         <div
-                            class="w-100 d-flex p-0 align-items-center"
+                            class="w-100 d-flex p-0 align-items-center text-white"
                             onclick="${obj.gvc.event(() => {
                         obj.data.expand = !obj.data.expand;
                         obj.gvc.notifyDataChange(id);
                     })}"
                             style="cursor: pointer;"
                         >
-                            <h3 style="font-size: 16px;color: lightpink;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
+                            <h3 style="font-size: 16px;width: calc(100% - 60px);" class="m-0 p-0 text-white">${obj.title}</h3>
                             <div class="flex-fill"></div>
                             <div style="cursor: pointer;">展開<i class="fa-solid fa-down ms-2 text-white"></i></div>
                         </div>
                     </div>`;
                 },
-                divCreate: {},
+                divCreate: {
+                    class:`toggleInner`
+                },
             };
         })}`;
     }
@@ -508,14 +509,14 @@ export class Editor {
                                     })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
                                     data: dd.expand,
                                     innerText: dd.innerHtml,
-                                    color: obj.color1 ??`#2b115d`,
-                                    class:obj.class ,
-                                    style:obj.style,
+                                    class:``+obj.class ,
+                                    style:`background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);`+obj.style,
                                 });
                             })
                             .join('<div class="my-2"></div>') + ((obj.readonly) ? ``:Editor.plusBtn(obj.plus.title, obj.plus.event))
                     },
-                color: obj.color2 ?? `#3333a2`,
+                class:``,
+                style:`background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
             })
         );
     }

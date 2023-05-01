@@ -11,7 +11,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
-            ScriptStyle1.initialScript(gvc, widget);
             widget.data.bgImage = widget.data.bgImage ?? 'https://liondesign-prd.s3.amazonaws.com/file/252530754/1679649346350-price-bg.jpeg'
             widget.data.title = widget.data.title ?? "歡迎來到 星澄基地"
             widget.data.policy = widget.data.policy ?? `一、隱私權保護政策的適用範圍
