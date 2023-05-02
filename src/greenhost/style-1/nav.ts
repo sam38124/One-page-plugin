@@ -1,9 +1,10 @@
 import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
-import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
+import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -12,6 +13,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
 
             return {
                 view:()=>{
+                    ScriptStyle1.initialScript(gvc,widget)
+                    let id = glitter.getUUID()
                     widget.data.bar=widget.data.bar??[
                         { name: "服務項目", link: "#service" },
                         { name: "產品介紹", link: "#project" },
@@ -26,24 +29,40 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         },
                     ]
                     widget.data.moreLink=widget.data.moreLink??[]
-                    ScriptStyle1.initialScript(gvc,widget)
-                    let id = glitter.getUUID()
                     widget.data.logoStyle=widget.data.logoStyle??{}
                     widget.data.logoTitleStyle=widget.data.logoTitleStyle??{}
+
+                    function search() {
+                        return /*html*/ `
+        <!-- Full Screen Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1">
+          <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content" style="background: rgba(29, 40, 51, 0.8);">
+              <div class="modal-header border-0">
+                <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body d-flex align-items-center justify-content-center">
+                <div class="input-group" style="max-width: 600px;">
+                  <input type="text" class="form-control bg-transparent border-light p-3 text-white" placeholder="輸入搜尋關鍵字" />
+                  <button class="btn btn-light px-4"><i class="bi bi-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Full Screen Search End -->
+      `;
+                    }
+
                     return gvc.bindView({
                         bind:id,
                         view:()=>{
                             const nav = {
                                 title: widget.data.title??"萊恩設計",
-                                logo: widget.data.logo??"",
+                                logo: widget.data.logo??ScriptStyle1.getRout("../glitterBundle/img/logo.svg"),
                                 bar: [
                                     ...widget.data.bar,
                                 ],
-                                top: {
-                                    phone: "0918-563-927",
-                                    clock: "週一至週五 09:00 - 19:00",
-                                },
-                                btn: { name: "登入", link: "#" },
                             }
                             if(widget.data.moreLink.length>0){
                                 nav.bar.push({
@@ -53,37 +72,110 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     ],
                                 })
                             }
-                            return `
-                            <!-- ======= Header ======= -->
-                            <header id="header" class="fixed-top d-flex align-items-center">
-                              <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-                                <div class="d-flex logo" onclick="${gvc.event(()=>{})}" style="cursor:pointer">
-                                  <img style="${glitter.htmlGenerate.styleEditor(widget.data.logoStyle).style()}"
-                                   src="${nav.logo}" alt="" class="img-fluid me-3 ${glitter.htmlGenerate.styleEditor(widget.data.logoStyle).class()}" />
-                                  <h1 class="logo me-auto me-lg-0 ${glitter.htmlGenerate.styleEditor(widget.data.logoTitleStyle).class()}"
-                                  style="${glitter.htmlGenerate.styleEditor(widget.data.logoTitleStyle).style()}"><a>${nav.title}</a></h1>
-                                </div>
-                    
-                                <nav id="navbar" class="navbar order-last order-lg-0">
-                                  <ul>
-                                    ${(()=>{
+                            return /*html*/ `
+        <!-- Spinner Start -->
+<!--        <div-->
+<!--          id="spinner"-->
+<!--          class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"-->
+<!--        >-->
+<!--          <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">-->
+<!--            <span class="sr-only">讀取中...</span>-->
+<!--          </div>-->
+<!--        </div>-->
+        <!-- Spinner End -->
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+          <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+            <a class="navbar-brand p-0" onclick="${gvc.event(()=>{glitter.location.reload()})}" style="cursor:pointer">
+              <h1 class="m-0 fs-3"><img src="${nav.logo}" class="me-3" />${nav.title}</h1>
+              <!-- <img src="img/logo.png" alt="Logo"> -->
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+              <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <div class="navbar-nav ms-auto py-0">
+                ${glitter.print(function () {
                                 var tmp = "";
-                                nav.bar.map((b) => (tmp += ScriptStyle1.recursive(b, true)));
+                                console.log(nav)
+                                nav.bar.map((n:any) => {
+                                    console.log("---------------data---------------")
+                                    console.log(n)
+                                    if (n.list === undefined) {
+                                        tmp += /*html*/ `<a class="nav-item nav-link" href="${n.link}" onclick="">${n.name}</a>`;
+                                    } else {
+                                        tmp += /*html*/ `
+                        <div class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">${n.name}</a>
+                          <div class="dropdown-menu m-0">
+                            ${glitter.print(function () {
+                                            var tmp = "";
+                                            n.list.map((l:any) => {
+                                                tmp += /*html*/ `
+                                  <a class="dropdown-item" href="${l.link}" onclick="">${l.name}</a>
+                                `;
+                                            });
+                                            return tmp;
+                                        })}
+                          </div>
+                        </div>
+                      `;
+                                    }
+                                });
                                 return tmp;
-                            })()}
-                                   
-                                  </ul>
-<!--                                  todo 這顆漢堡不會作動-->
-                                  <i class="bi bi-list mobile-nav-toggle"></i>
-                                </nav>
-                              </div>
-                            </header>
-                            <!-- End Header -->
-                            `
+                            })}
+              </div>
+              <button type="button" class="btn text-secondary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal">
+                <i class="fa fa-search"></i>
+              </button>
+              <a href="" class="btn btn-secondary py-2 px-4 ms-3">登入</a>
+            </div>
+          </nav>
+          <div id="keyVision">
+            <div class="bg-primary" style="height:6rem"></div>
+          </div>
+        </div>
+        ${search()}
+      `;
                         },divCreate:{},
                         onCreate:()=>{
-                            // @ts-ignore
-                            AOS.init();
+                            // Sticky Navbar
+                            $(window).scroll(function () {
+                                // @ts-ignore
+                                if ($(this).scrollTop() > 45) {
+                                    $(".navbar").addClass("sticky-top shadow-sm");
+                                } else {
+                                    $(".navbar").removeClass("sticky-top shadow-sm");
+                                }
+                            });
+
+                            // Dropdown on mouse hover
+                            const $dropdown = $(".dropdown");
+                            const $dropdownToggle = $(".dropdown-toggle");
+                            const $dropdownMenu = $(".dropdown-menu");
+                            const showClass = "show";
+
+                            $(window).on("load resize", function () {
+                                if (this.matchMedia("(min-width: 992px)").matches) {
+                                    $dropdown.hover(
+                                        function () {
+                                            const $this = $(this);
+                                            $this.addClass(showClass);
+                                            $this.find($dropdownToggle).attr("aria-expanded", "true");
+                                            $this.find($dropdownMenu).addClass(showClass);
+                                        },
+                                        function () {
+                                            const $this = $(this);
+                                            $this.removeClass(showClass);
+                                            $this.find($dropdownToggle).attr("aria-expanded", "false");
+                                            $this.find($dropdownMenu).removeClass(showClass);
+                                        }
+                                    );
+                                } else {
+                                    $dropdown.off("mouseenter mouseleave");
+                                }
+                            });
                         }
 
                     })
