@@ -169,11 +169,11 @@ export class Editor {
     static uploadLottie(obj) {
         const glitter = window.glitter;
         const $ = glitter.$;
-        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
-            <div class="alert alert-dark alert-dismissible fade show" role="alert" style="white-space: normal;word-break: break-word;">
+        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+            <div class="alert alert-primary alert-dismissible fade show" role="alert" style="white-space: normal;word-break: break-word;">
                 <a
                     onclick="${obj.gvc.event(() => glitter.openNewTab(`https://lottiefiles.com/`))}"
-                    class=" fw text-white"
+                    class="fw fw-bold"
                     style="cursor: pointer;"
                     >Lottie</a
                 >
@@ -190,8 +190,8 @@ export class Editor {
                 />
                 <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i
-                    class="fa-regular fa-upload text-white ms-2"
-                    style="cursor: pointer;"
+                    class="fa-regular fa-upload  text-dark ms-2"
+                    style="cursor: pointer;${(obj.color) ? `color:${obj.color};` : ``}"
                     onclick="${obj.gvc.event(() => {
             glitter.ut.chooseMediaCallback({
                 single: true,

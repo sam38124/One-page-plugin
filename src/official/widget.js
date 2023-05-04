@@ -39,6 +39,27 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                 gvc: gvc, widget: widget, clickEvent: widget.data.selectAPI, subData: vm
                             });
                         }
+                        let option = widget.data.attr.map((dd) => {
+                            if (dd.type === 'par') {
+                                return { key: dd.attr, value: dd.value };
+                            }
+                            else {
+                                return {
+                                    key: dd.attr, value: gvc.event((e, event) => {
+                                        TriggerEvent.trigger({
+                                            gvc: gvc,
+                                            widget: widget,
+                                            clickEvent: dd,
+                                            element: { e, event }
+                                        }).then((data) => {
+                                        });
+                                    })
+                                };
+                            }
+                        });
+                        if (widget.data.elem === 'img') {
+                            option.push({ key: 'src', value: widget.data.inner });
+                        }
                         return {
                             bind: id,
                             view: () => {
@@ -69,6 +90,8 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                             </option>`;
                                             }).join('');
                                         }
+                                    case 'img':
+                                        return ``;
                                     default:
                                         return widget.data.inner;
                                 }
@@ -77,24 +100,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                 elem: widget.data.elem,
                                 class: glitter.htmlGenerate.styleEditor(widget.data).class(),
                                 style: glitter.htmlGenerate.styleEditor(widget.data).style(),
-                                option: widget.data.attr.map((dd) => {
-                                    if (dd.type === 'par') {
-                                        return { key: dd.attr, value: dd.value };
-                                    }
-                                    else {
-                                        return {
-                                            key: dd.attr, value: gvc.event((e, event) => {
-                                                TriggerEvent.trigger({
-                                                    gvc: gvc,
-                                                    widget: widget,
-                                                    clickEvent: dd,
-                                                    element: { e, event }
-                                                }).then((data) => {
-                                                });
-                                            })
-                                        };
-                                    }
-                                })
+                                option: option
                             }
                         };
                     });
@@ -260,6 +266,47 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                                     });
                                                 }
                                                 return `<div class="alert  mt-2 p-2"  style="background-color: #262677;">${html}</div>`;
+                                            case 'img':
+                                                widget.data.dataFrom = widget.data.dataFrom ?? "static";
+                                                widget.data.innerEvenet = widget.data.innerEvenet ?? {};
+                                                return gvc.map([
+                                                    Editor.select({
+                                                        title: '內容取得',
+                                                        gvc: gvc,
+                                                        def: widget.data.dataFrom,
+                                                        array: [{
+                                                                title: "靜態",
+                                                                value: "static"
+                                                            }, {
+                                                                title: "程式碼",
+                                                                value: "code"
+                                                            }],
+                                                        callback: (text) => {
+                                                            widget.data.dataFrom = text;
+                                                            widget.refreshComponent();
+                                                        }
+                                                    }),
+                                                    (() => {
+                                                        if (widget.data.dataFrom === 'static') {
+                                                            return Editor.uploadImage({
+                                                                title: '選擇圖片',
+                                                                gvc: gvc,
+                                                                def: widget.data.inner ?? "",
+                                                                callback: (data) => {
+                                                                    widget.data.inner = data;
+                                                                    widget.refreshComponent();
+                                                                }
+                                                            });
+                                                        }
+                                                        else {
+                                                            return TriggerEvent.editer(gvc, widget, widget.data.innerEvenet, {
+                                                                option: [],
+                                                                hover: false,
+                                                                title: "程式碼"
+                                                            });
+                                                        }
+                                                    })()
+                                                ]);
                                             default:
                                                 widget.data.dataFrom = widget.data.dataFrom ?? "static";
                                                 widget.data.innerEvenet = widget.data.innerEvenet ?? {};
@@ -333,17 +380,34 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                                     widget.refreshComponent();
                                                 }
                                             }),
-                                            Editor.searchInput({
-                                                title: '特徵標籤',
-                                                gvc: gvc,
-                                                def: dd.attr,
-                                                array: ['onclick', 'oninput', 'onchange', 'ondrag'],
-                                                callback: (text) => {
-                                                    dd.attr = text;
-                                                    widget.refreshComponent();
-                                                },
-                                                placeHolder: "請輸入特徵標籤"
-                                            }),
+                                            (() => {
+                                                if (dd.type === 'par') {
+                                                    return Editor.searchInput({
+                                                        title: '特徵標籤',
+                                                        gvc: gvc,
+                                                        def: dd.attr,
+                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag'],
+                                                        callback: (text) => {
+                                                            dd.attr = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                        placeHolder: "請輸入特徵標籤"
+                                                    });
+                                                }
+                                                else {
+                                                    return Editor.searchInput({
+                                                        title: '特徵標籤',
+                                                        gvc: gvc,
+                                                        def: dd.attr,
+                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag'],
+                                                        callback: (text) => {
+                                                            dd.attr = text;
+                                                            widget.refreshComponent();
+                                                        },
+                                                        placeHolder: "請輸入特徵標籤"
+                                                    });
+                                                }
+                                            })(),
                                             (() => {
                                                 if (dd.type === 'par') {
                                                     return glitter.htmlGenerate.editeText({

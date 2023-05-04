@@ -1,7 +1,7 @@
 import {HtmlJson, Plugin} from "../../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../../glitterBundle/Glitter.js";
 import {GVC} from "../../../glitterBundle/GVController.js";
-import {ScriptStyle1} from "../script-style-1.js";
+import {ScriptStyle1} from "../../script-style-1.js";
 import {Category, ProductData} from "../../api/category.js";
 import {ProductSharedView} from "../../product/shareView/shareView.js";
 

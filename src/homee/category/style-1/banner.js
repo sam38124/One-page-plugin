@@ -1,6 +1,6 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
 import { TriggerEvent } from "../../../glitterBundle/plugins/trigger-event.js";
-import { ScriptStyle1 } from "../script-style-1.js";
+import { ScriptStyle1 } from "../../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},

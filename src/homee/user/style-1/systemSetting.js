@@ -1,5 +1,5 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
-import { ScriptStyle1 } from "../script-style-1.js";
+import { ScriptStyle1 } from "../../script-style-1.js";
 import { appConfig } from "../../../config.js";
 import { Dialog } from "../../dialog/dialog-mobile.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {

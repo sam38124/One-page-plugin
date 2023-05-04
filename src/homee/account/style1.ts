@@ -3,7 +3,6 @@ import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
 import {Editor} from "../../editor.js";
 import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
-import {ScriptStyle1} from "./script-style-1.js";
 
 Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
     // https://liondesign.tw/restaurant/index.html?type=editor&dialog=caddDialog&page=footer

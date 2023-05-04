@@ -3,7 +3,7 @@ import {Glitter} from "../../../glitterBundle/Glitter.js";
 import {GVC} from "../../../glitterBundle/GVController.js";
 import {ClickEvent} from "../../../glitterBundle/plugins/click-event.js";
 import {Editor} from "../../../editor.js";
-import {ScriptStyle1} from "../script-style-1.js";
+import {ScriptStyle1} from "../../script-style-1.js";
 import {appConfig} from "../../../config.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {

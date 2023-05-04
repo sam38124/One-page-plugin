@@ -1,12 +1,19 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
-import { ScriptStyle1 } from "../script-style-1.js";
+import { Editor } from "../../../editor.js";
 import { Dialog } from "../../dialog/dialog-mobile.js";
 import { User } from "../../api/user.js";
 import { appConfig } from "../../../config.js";
+import { ScriptStyle1 } from "../../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
+            widget.data.layout = widget.data.layout ?? {};
+            widget.data.layout.lottie = widget.data.layout.lottie ?? new URL('../../img/component/login/login_page.json', import.meta.url);
+            widget.data.layout.titleImage = widget.data.layout.titleImage ?? {
+                type: 'image',
+                src: new URL('../../img/component/login/logo.svg', import.meta.url)
+            };
             return {
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget);
@@ -17,17 +24,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                 html{
                 overflow-x: hidden;
                 }
-                @font-face {
-                    font-family: 'Noto Sans TC';
-                    src: url(assets/Font/NotoSansTC-Bold.otf);
-                    font-weight: bold;
-                }
-        
-                @font-face {
-                    font-family: 'Noto Sans TC';
-                    src: url(assets/Font/NotoSansTC-Regular.otf);
-                    font-weight: normal;
-                }
+             
                 main{
                     position: relative;
                     height: 100vh;
@@ -222,13 +219,22 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                     return `
                             <main style="overflow-x: hidden;">
                                 <div class="w-100" style="position: absolute;z-index:0;">
-                                    <lottie-player src="${new URL('../../img/component/login/login_page.json', import.meta.url)}"  background="#F8F3ED"  speed="1"  onclick="${gvc.event((e) => {
+                                ${(widget.data.layout.lottie.split('.').pop() === "json") ? `
+                                <lottie-player src="${widget.data.layout.lottie}"  background="#F8F3ED"  speed="1"  onclick="${gvc.event((e) => {
                                     })}" style="width: 100%;height: 900px;position: absolute;transform: translateY(-350px);"  loop  autoplay></lottie-player>
+                                ` : `
+                                <img src="${widget.data.layout.lottie}"  style="width: 100%;height: 900px;position: absolute;transform: translateY(-350px);">
+                                `}
                                 </div>
-                                <div class="loginBoard d-flex flex-column align-items-center">
-                                    <img src="${new URL('../../img/component/login/logo.svg', import.meta.url)}" alt=
-                                    "">
-                                    <div class="loginInf d-flex flex-column align-items-center">
+                                 <div class="loginBoard d-flex flex-column align-items-center w-100">
+                                   ${(widget.data.layout.titleImage.type === 'image') ? `<img src="${widget.data.layout.titleImage.src}"
+class="${glitter.htmlGenerate.styleEditor(widget.data.layout.titleImage).class()}"
+style="${glitter.htmlGenerate.styleEditor(widget.data.layout.titleImage).style()}"
+>` : `
+                                   <h3 style="font-size:15px;font-family: 'Noto Sans TC', sans-serif;${glitter.htmlGenerate.styleEditor(widget.data.layout.titleImage).style()};"
+                                   class="${glitter.htmlGenerate.styleEditor(widget.data.layout.titleImage).class()}">${widget.data.layout.titleImage.src}</h3>
+                                   `}
+                                    <div class="loginInf d-flex flex-column align-items-center w-100">
                                          <div class="loginRow d-flex w-100" style="border-bottom: 1px solid #FD6A58;">
                                                 <img src="${new URL('../../img/component/login/message.svg', import.meta.url)}" alt="" style="width: 24px;height: 24px;">
                                                 <input class="w-100 border-0 bg-white" placeholder="電子郵件地址或手機號碼" onchange="${gvc.event((e) => {
@@ -261,10 +267,17 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                             登入
                                         </div>
                                         <div class="w-100 d-flex align-items-center justify-content-center" style="margin-top:16px;font-weight: 500;font-size: 18px;line-height: 26px;font-feature-settings: 'pnum' on, 'lnum' on;color: #1E1E1E;" onclick="${gvc.event(() => {
+                                        appConfig().changePage(gvc, "register", {
+                                            pwd: widget.data.accountData.password,
+                                            account: widget.data.accountData.account,
+                                            third: vm.fet ? { type: 'fet', uid: vm.fet } : undefined
+                                        }, {
+                                            animation: glitter.animation.fade
+                                        });
                                     })}">註冊帳號</div>
                                         <div class="w-100 text-danger text-center mt-2 ${vm.fet ? '' : 'd-none'}">驗證成功，登入或註冊後即可綁定遠傳帳號</div>
-                                        <div class="moreLogin d-flex justify-content-center align-items-center">更多的登入方式</div>
-                                        <div class="funGroup d-flex justify-content-between">
+                                        <div class="moreLogin d-flex justify-content-center align-items-center d-none">更多的登入方式</div>
+                                        <div class="funGroup d-flex justify-content-between d-none">
                                             <img src="${new URL('../../img/component/login/FB.png', import.meta.url)}" style="height: 50px;width:50px;" alt="" onclick="${gvc.event(() => {
                                         glitter.runJsInterFace("loginWithFB", {}, (response) => {
                                             dialog.dataLoading(false);
@@ -275,25 +288,92 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                             <img src="${new URL('../../img/component/login/apple.png', import.meta.url)}" style="height: 55px;width:55px;margin-left: 16px;margin-right: 16px;" onclick="${gvc.event(() => {
                                     })}" alt="">
                                             <img src="${new URL('../../img/component/login/FET.png', import.meta.url)}"  style="height: 45px;width:45px;" onclick="${gvc.event(() => {
-                                        glitter.runJsInterFace("loginWithFet", {}, (response) => {
-                                        });
+                                        glitter.runJsInterFace("loginWithFet", {}, (response) => { });
                                     })}" alt="" >
                                         </div>
                                     </div>
-                    
                                 </div>
                             </main>
                        `;
                                 },
                                 divCreate: { class: ``, style: `` }
                             });
-                        }, divCreate: {},
+                        },
+                        divCreate: {},
                         onCreate: () => {
                         }
                     });
                 },
                 editor: () => {
-                    return ``;
+                    return gvc.map([
+                        Editor.toggleExpand({
+                            gvc: gvc,
+                            title: "客製化頁面",
+                            data: widget.data.layout,
+                            innerText: () => {
+                                return [Editor.uploadLottie({
+                                        gvc: gvc,
+                                        title: `背景區塊[可選圖檔或Lottie動畫區塊]`,
+                                        def: widget.data.layout.lottie ?? "",
+                                        callback: (text) => {
+                                            widget.data.layout.lottie = text;
+                                            widget.refreshComponent();
+                                        }
+                                    }), gvc.bindView(() => {
+                                        const id = glitter.getUUID();
+                                        return {
+                                            bind: id,
+                                            view: () => {
+                                                return gvc.map([
+                                                    Editor.select({
+                                                        title: "Logo類型",
+                                                        gvc: gvc,
+                                                        def: widget.data.layout.titleImage.type,
+                                                        array: [
+                                                            { title: "圖檔", value: "image" },
+                                                            { title: "文字", value: "text" }
+                                                        ],
+                                                        callback: (text) => {
+                                                            widget.data.layout.titleImage.type = text;
+                                                            widget.refreshComponent();
+                                                        }
+                                                    }),
+                                                    (() => {
+                                                        if (widget.data.layout.titleImage.type === 'image') {
+                                                            return Editor.uploadImage({
+                                                                gvc: gvc,
+                                                                title: "請輸入圖片連結",
+                                                                def: widget.data.layout.titleImage.src,
+                                                                callback: (text) => {
+                                                                    widget.data.layout.titleImage.src = text;
+                                                                    widget.refreshComponent();
+                                                                }
+                                                            });
+                                                        }
+                                                        else {
+                                                            return glitter.htmlGenerate.editeInput({
+                                                                gvc: gvc,
+                                                                title: "請輸入文字",
+                                                                default: widget.data.layout.titleImage.src,
+                                                                placeHolder: "請輸入文字內容",
+                                                                callback: (text) => {
+                                                                    widget.data.layout.titleImage.src = text;
+                                                                    widget.refreshComponent();
+                                                                }
+                                                            });
+                                                        }
+                                                    })(),
+                                                    glitter.htmlGenerate.styleEditor(widget.data.layout.titleImage).editor(gvc, () => {
+                                                        widget.refreshComponent();
+                                                    }, 'Logo設計樣式')
+                                                ]);
+                                            },
+                                            divCreate: {}
+                                        };
+                                    })].join('');
+                            }
+                        })
+                    ]);
                 }
             };
         },

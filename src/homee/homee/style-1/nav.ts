@@ -1,7 +1,7 @@
 import {HtmlJson, Plugin} from "../../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../../glitterBundle/Glitter.js";
 import {GVC} from "../../../glitterBundle/GVController.js";
-import {ScriptStyle1} from "../script-style-1.js";
+import {ScriptStyle1} from "../../script-style-1.js";
 import {SharedView} from "../../commenPage/shareView.js";
 import {appConfig} from "../../../config.js";
 
@@ -17,9 +17,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 view:()=>{
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID()
-                    console.log("----------here---------")
-                    console.log(ScriptStyle1.getRout("img/home_logo.svg"))
-
                     return gvc.bindView({
                         bind:id,
                         view:()=>{
@@ -46,15 +43,6 @@ height: ${logo.height};
 src="${logo.src}"><h3 class="p-0 m-0" style="${widget.data.titleStyle ?? ""}">${widget.data.title ?? ""}</h3></div>`,
                                 rightIcon: `
                                 <div class="d-flex align-items-center" style="gap:15px;">
-                       
-                                   <img src="${ScriptStyle1.getRout('../img/component/scan.svg')}" onclick="${gvc.event(() => {
-                                        glitter.runJsInterFace("qrcodeScanner", {}, () => {
-                                        })
-                                    })}">
-                                    <img src="${ScriptStyle1.getRout('../img/notify.svg')}" onclick="${gvc.event(() => {
-                                        glitter.runJsInterFace("noticeBell", {}, () => {
-                                        })
-                                    })}">
                                     <img src="https://homee-ai.github.io/glitter-htmlExtension/src//homee/src/category.svg" onclick="${gvc.event(() => {
                                         //todo
                                         appConfig().changePage(gvc, 'category')

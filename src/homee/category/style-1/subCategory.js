@@ -1,5 +1,5 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
-import { ScriptStyle1 } from "../script-style-1.js";
+import { ScriptStyle1 } from "../../script-style-1.js";
 import { Category } from "../../api/category.js";
 import { ProductSharedView } from "../../product/shareView/shareView.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {

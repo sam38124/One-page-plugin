@@ -1,5 +1,5 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
-import { ScriptStyle1 } from "../script-style-1.js";
+import { ScriptStyle1 } from "../../script-style-1.js";
 import { SharedView } from "../../commenPage/shareView.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {

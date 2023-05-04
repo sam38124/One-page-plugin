@@ -55,5 +55,11 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/footer.js', import.meta.url))
         },
+        entry: {
+            title: "啟動畫面",
+            subContent: "",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/entry.js', import.meta.url))
+        },
     };
 });

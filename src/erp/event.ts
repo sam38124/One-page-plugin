@@ -256,6 +256,7 @@ TriggerEvent.create(import.meta.url, {
                                 if(glitter.getUrlParameter('page')!=='home'){
                                     location.reload()
                                 }
+                                resolve(true)
                             } else {
                                 ErpConfig.setRole(d2.response.result[0].role)
                                 ErpConfig.role = d2.response.result[0].role

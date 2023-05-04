@@ -3,7 +3,7 @@ import {Glitter} from "../../../glitterBundle/Glitter.js";
 import {GVC} from "../../../glitterBundle/GVController.js";
 import {ClickEvent} from "../../../glitterBundle/plugins/click-event.js";
 import {Editor} from "../../../editor.js";
-import {ScriptStyle1} from "../script-style-1.js";
+import {ScriptStyle1} from "../../script-style-1.js";
 import {SharedView} from "../../commenPage/shareView.js";
 import {Api} from "../../homee/api/homee-api.js";
 import {product} from "../../homee/style-1/productItem.js";
