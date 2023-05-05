@@ -16,6 +16,12 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
             },
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/nav.js',import.meta.url))
         },
+        footer:{
+            title: "footer",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/footer.js',import.meta.url))
+        },
         hero:{
             title: "hero",
             subContent: "",
@@ -78,11 +84,7 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
         },
 
 
-        footer:{
-            title: "footer",
-                subContent: "",
-                defaultData:{},
-            render: Plugin.setComponent(import.meta.url,new URL('./style-1/footer.js',import.meta.url))
-        },
+
+
     }
 })

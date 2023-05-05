@@ -15,13 +15,14 @@ export class ScriptStyle1{
         (window as any).root = document.getElementsByTagName('html')[0];
         (window as any).root.classList.add('dark-mode');
         gvc.addStyleLink([
+            ScriptStyle1.getRout('assets/vendor/animate.css/animate.min.css'),
             ScriptStyle1.getRout('assets/vendor/aos/aos.css'),
             ScriptStyle1.getRout('assets/vendor/bootstrap/css/bootstrap.min.css'),
             ScriptStyle1.getRout('assets/vendor/bootstrap-icons/bootstrap-icons.css'),
+            ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.min.css'),
             ScriptStyle1.getRout('assets/vendor/glightbox/css/glightbox.min.css'),
             ScriptStyle1.getRout('assets/vendor/swiper/swiper-bundle.min.css'),
-            ScriptStyle1.getRout('assets/css/variables.css'),
-            ScriptStyle1.getRout('assets/css/main.css')
+            ScriptStyle1.getRout('assets/css/style.css')
         ]).then()
         gvc.addMtScript([
             "assets/vendor/aos/aos.js",
@@ -30,6 +31,7 @@ export class ScriptStyle1{
             "assets/vendor/isotope-layout/isotope.pkgd.min.js",
             "assets/vendor/swiper/swiper-bundle.min.js",
             "assets/vendor/php-email-form/validate.js",
+            'assets/vendor/animate.css/animate.js',
             'assets/js/main.js'
         ].map(((dd)=>{
             return   {src: ScriptStyle1.getRout(dd)}
@@ -99,7 +101,7 @@ export class ScriptStyle1{
         // let split = url.split(".");
         const isMatch = socialDomain.some((domain) => domain.toLowerCase() === returnString.toLowerCase());
         if (isMatch){
-            return `${size} ${size}-${returnString.toLowerCase()}`;
+            return `${size} ${size}l-${returnString.toLowerCase()}`;
         }else {
             if (size == "bi")
                 return `bi bi-link-45deg`;

@@ -94,7 +94,7 @@ export class ScriptStyle1 {
         }
         const isMatch = socialDomain.some((domain) => domain.toLowerCase() === returnString.toLowerCase());
         if (isMatch) {
-            return `${size} ${size}l-${returnString.toLowerCase()}`;
+            return `${size} ${size}-${returnString.toLowerCase()}`;
         }
         else {
             if (size == "bi")

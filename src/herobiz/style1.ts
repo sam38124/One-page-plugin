@@ -16,6 +16,12 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
             },
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/nav.js',import.meta.url))
         },
+        footer:{
+            title: "footer",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/footer.js',import.meta.url))
+        },
         banner:{
             title: "banner",
             subContent: "",
@@ -51,6 +57,48 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
             subContent: "",
             defaultData:{},
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/focus.js',import.meta.url))
+        },
+        service2:{
+            title: "service2",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/service2.js',import.meta.url))
+        },
+        testimonials:{
+            title: "testimonials",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/test.js',import.meta.url))
+        },
+        price:{
+            title: "price",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/price.js',import.meta.url))
+        },
+        FAQ:{
+            title: "FAQ",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/FAQ.js',import.meta.url))
+        },
+        portfolio:{
+            title: "portfolio",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/portfolio.js',import.meta.url))
+        },
+        team:{
+            title: "team",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/team.js',import.meta.url))
+        },
+        contact:{
+            title: "contact",
+            subContent: "",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/contact.js',import.meta.url))
         },
 
 

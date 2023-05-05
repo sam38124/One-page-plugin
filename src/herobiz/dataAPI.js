@@ -471,7 +471,10 @@ var sourceData = {
           "https://twitter.com/",
         ],
       },
-      { img: "assets/img/team/team-2.jpg", name: "陳佳玲", pro: "系統規劃師", link: ["https://squarestudio.tw", "#"] },
+      { img: "assets/img/team/team-2.jpg",
+        name: "陳佳玲",
+        pro: "系統規劃師",
+        link: ["https://squarestudio.tw", "#"] },
     ],
   },
   news: {
