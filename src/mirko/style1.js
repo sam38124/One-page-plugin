@@ -13,6 +13,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/hero.js', import.meta.url))
         },
+        inf: {
+            title: "inf",
+            subContent: "",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/inf.js', import.meta.url))
+        },
         about: {
             title: "about",
             subContent: "",
@@ -25,35 +31,41 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/service.js', import.meta.url))
         },
-        project: {
-            title: "project",
+        price: {
+            title: "price",
             subContent: "",
             defaultData: {},
-            render: Plugin.setComponent(import.meta.url, new URL('./style-1/project.js', import.meta.url))
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/price.js', import.meta.url))
         },
-        FAQ: {
-            title: "FAQ",
+        work: {
+            title: "work",
             subContent: "",
             defaultData: {},
-            render: Plugin.setComponent(import.meta.url, new URL('./style-1/FAQ.js', import.meta.url))
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/work.js', import.meta.url))
         },
-        team: {
-            title: "team",
+        testimonial: {
+            title: "testimonial",
             subContent: "",
             defaultData: {},
-            render: Plugin.setComponent(import.meta.url, new URL('./style-1/team.js', import.meta.url))
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/testimonial.js', import.meta.url))
         },
-        client: {
-            title: "client",
+        newsletter: {
+            title: "newsletter",
             subContent: "",
             defaultData: {},
-            render: Plugin.setComponent(import.meta.url, new URL('./style-1/client.js', import.meta.url))
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/newsletter.js', import.meta.url))
         },
         contact: {
             title: "contact",
             subContent: "",
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/contact.js', import.meta.url))
+        },
+        location: {
+            title: "location",
+            subContent: "",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/location.js', import.meta.url))
         },
         footer: {
             title: "footer",
