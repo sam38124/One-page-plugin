@@ -76,7 +76,7 @@ export class Editor {
     public static uploadFile(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
         const glitter = (window as any).glitter;
         const $ = glitter.$;
-        return /*html*/ `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+        return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
             <div class="d-flex align-items-center mb-3">
                 <input
                     class="flex-fill form-control "
@@ -88,7 +88,7 @@ export class Editor {
                 />
                 <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i
-                    class="fa-regular fa-upload text-white ms-2"
+                    class="fa-regular fa-upload  ms-2"
                     style="cursor: pointer;"
                     onclick="${obj.gvc.event(() => {
             glitter.ut.chooseMediaCallback({

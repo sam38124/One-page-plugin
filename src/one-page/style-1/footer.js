@@ -59,7 +59,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                  style="margin-right: 10px;${glitter.htmlGenerate.styleEditor(widget.data.logoStyle).style()}" />
                                                 ${footer.outro.title}
                                             </div>
-                                            <p class="text-light opacity-70 pb-lg-3 mb-2">${footer.outro.desc}</p>
+                                            <p class="text-muted  pb-lg-3 mb-2">${footer.outro.desc}</p>
                                         </div>
                                         <div class="col-sm-6 offset-xl-2 offset-md-1 pt-2 pt-md-1 pt-lg-0">
                                             <div class="w-100">

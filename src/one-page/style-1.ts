@@ -111,6 +111,12 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/login.js',import.meta.url)),
         },
+        videoSample:{
+            title: '',
+            subContent: '影片顯示區塊．',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/login.js',import.meta.url)),
+        }
     };
 });
 

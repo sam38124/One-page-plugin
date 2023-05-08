@@ -2,7 +2,6 @@ import {Plugin} from "../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../glitterBundle/Glitter.js";
 
 Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
-
     return {
         topNav: {
             title: '後台管理系統',

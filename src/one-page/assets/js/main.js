@@ -1,6 +1,5 @@
 $(function () {
   /* ========= preloader remove ========= */
-  document.getElementsByTagName("html")[0].classList.add("dark-mode");
   const preloader = document.querySelector(".page-loading");
   preloader.classList.remove("active");
   preloader.remove();

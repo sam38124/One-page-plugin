@@ -8,7 +8,7 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
             subContent: '顯示星澄基地的APP管理頁．',
             defaultData: {},
             render:Plugin.setComponent(import.meta.url,new URL('./glitter/appManager.js',import.meta.url)),
-        },
+        }
     };
 });
 
