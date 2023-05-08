@@ -69,8 +69,8 @@ export class TriggerEvent {
         gvc.glitter.share.clickEvent = gvc.glitter.share.clickEvent ?? {}
         const glitter = gvc.glitter
         const selectID = glitter.getUUID()
-        return `<div class="mt-2 ${(option.hover) ? `alert alert-primary` : ``}">
- <h3 class="m-0" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
+        return `<div class="mt-2 ${(option.hover) ? `alert alert-primary bg-primary` : ``}">
+ <h3 class="m-0  ${(option.hover) ? `text-dark` : ``}" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
  ${
             gvc.bindView(() => {
                 return {

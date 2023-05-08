@@ -1,5 +1,5 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
-import { Editor } from "../../editor.js";
+import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
 import { ShareDialog } from "../../dialog/ShareDialog.js";
 import { BaseApi } from "../../glitter/api/base.js";
 import { User } from "../../glitter/model/User.js";
@@ -9,6 +9,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
+            widget.data.createAPPF = widget.data.createAPPF ?? {};
             return {
                 view: () => {
                     const vm = {
@@ -51,7 +52,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
           </ol>
         </nav>
         <div class="d-lg-flex align-items-center justify-content-between py-4 mt-lg-2">
-          <h1 class="me-3">我的應用</h1>
+          <h1 class="me-3 mb-0">我的應用</h1>
           <div class="d-md-flex mb-3">
           </div>
         </div>
@@ -75,9 +76,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
               <div class="card-body pb-3">
                 <h3 class="h5 mb-2 d-flex justify-content-between align-items-center" style="font-size: 16px;">
                應用名稱:${dd.appName}
-               <button style="width: 30px;height: 30px;" class="btn btn-outline-light p-2" onclick="${gvc.event(() => {
+               <button style="width: 30px;height: 30px;" class="btn btn-outline-dark p-2" onclick="${gvc.event(() => {
                                         deleteEvent(gvc, dd);
-                                    })}" ><i class="bx bx-trash"></i></button>
+                                    })}" ><i class="bx bx-trash "></i></button>
                 </h3>
                 <h4 class="mb-3" style="font-size: 16px;color: darkorange;">
                 網址:
@@ -110,11 +111,13 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             </article>
           </div>`;
                                 }).join('') + `<div class="col pb-1 pb-lg-3 mb-4" style="cursor: pointer;" onclick="${gvc.event(() => {
-                                    appCreate(gvc, widget, setting, hoverID);
+                                    TriggerEvent.trigger({
+                                        gvc: gvc, widget: widget, clickEvent: widget.data.createAPPF, subData: vm
+                                    });
                                 })}">
-<div class="w-100 rounded d-flex align-items-center justify-content-center flex-column" style="min-height: 250px;border-style:dashed;border-color: white;">
-<i class="fa-solid fa-circle-plus text-white " style="font-size: 50px;"></i>
-<span class="mt-2 text-white" style="font-size: 18px;">添加應用</span>
+<div class="w-100 rounded d-flex align-items-center justify-content-center flex-column" style="min-height: 250px;border-style:dashed;border-color: black;">
+<i class="fa-solid fa-circle-plus  " style="font-size: 50px;"></i>
+<span class="mt-2 " style="font-size: 18px;" >添加應用</span>
 </div>
 </div>`;
                             },
@@ -129,11 +132,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                 editor: () => {
                     return gvc.map([
                         `<div class="mt-2"></div>`,
-                        Editor.toggleExpand({
-                            gvc: gvc, title: "模板設定", data: widget.data, innerText: () => {
-                                return template.render(gvc, widget, setting, hoverID).editor();
-                            }
-                        })
+                        TriggerEvent.editer(gvc, widget, widget.data.createAPPF)
                     ]);
                 },
             };
@@ -221,7 +220,7 @@ function appCreate(gvc, widget, setting, hoverID) {
         <div class="container mt-3 pt-md-2 pt-lg-4 pb-2 pb-md-4 pb-lg-5 px-0">
         <p style="font-size: 18px;"><span style="color: red;" class="me-2">*</span>您的應用名稱</p>
         <input type="text"  class="form-control form-control-lg"  autocomplete="off" onchange="${gvc.event((e) => {
-        widget.data.createAPP = e.value;
+        widget.data.createAPPF = e.value;
     })}">
          <p style="font-size: 18px;" class="mt-2"><span style="color: red;" class="me-2">*</span>選擇初始模板</p>
         ${template.render(gvc, widget, setting, hoverID).view()}

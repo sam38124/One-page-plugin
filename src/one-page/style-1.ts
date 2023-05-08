@@ -112,10 +112,10 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/login.js',import.meta.url)),
         },
         videoSample:{
-            title: '',
-            subContent: '影片顯示區塊．',
+            title: '影片描述',
+            subContent: '影片描述顯示區塊．',
             defaultData: {},
-            render: Plugin.setComponent(import.meta.url,new URL('./style-1/login.js',import.meta.url)),
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/videoDesc.js',import.meta.url)),
         }
     };
 });
