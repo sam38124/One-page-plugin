@@ -182,38 +182,72 @@ TriggerEvent.create(import.meta.url, {
                     });
                 },
                 event: () => {
-                    const glitter = window.glitter;
-                    const shareDialog = new ShareDialog(glitter);
-                    if (!widget.data.createAPP) {
-                        shareDialog.errorMessage({ text: "請輸入APP名稱" });
+                    function run() {
+                        const glitter = window.glitter;
+                        const shareDialog = new ShareDialog(glitter);
+                        if (!widget.data.createAPP) {
+                            shareDialog.errorMessage({ text: "請輸入APP名稱" });
+                            return;
+                        }
+                        const saasConfig = window.saasConfig;
+                        shareDialog.dataLoading({
+                            visible: true
+                        });
+                        BaseApi.create({
+                            "url": saasConfig.config.url + `/api/v1/app`,
+                            "type": "POST",
+                            "timeout": 0,
+                            "headers": {
+                                "Content-Type": "application/json",
+                                "Authorization": User.getToken()
+                            },
+                            "data": JSON.stringify({
+                                "domain": widget.data.createAPP,
+                                "appName": widget.data.createAPP,
+                                "copyApp": object.appName
+                            })
+                        }).then((d2) => {
+                            shareDialog.dataLoading({ visible: false });
+                            if (d2.result) {
+                                const url = new URL('../' + widget.data.createAPP, location.href);
+                                url.searchParams.set("type", "editor");
+                                url.searchParams.set("page", "");
+                                location.href = url.href;
+                            }
+                            else {
+                                shareDialog.errorMessage({ text: "創建失敗，此名稱已被使用!" });
+                            }
+                        });
+                    }
+                    if (gvc.glitter.getCookieByName('glitterToken') === undefined) {
+                        const shareDialog = new ShareDialog(gvc.glitter);
+                        shareDialog.errorMessage({ text: "請先登入" });
                         return;
                     }
-                    const saasConfig = window.saasConfig;
-                    shareDialog.dataLoading({
-                        visible: true
-                    });
-                    BaseApi.create({
-                        "url": saasConfig.config.url + `/api/v1/app`,
-                        "type": "POST",
-                        "timeout": 0,
-                        "headers": {
-                            "Content-Type": "application/json",
-                            "Authorization": User.getToken()
-                        },
-                        "data": JSON.stringify({
-                            "domain": widget.data.createAPP,
-                            "appName": widget.data.createAPP,
-                            "copyApp": object.appName
-                        })
-                    }).then((d2) => {
-                        shareDialog.dataLoading({ visible: false });
-                        if (d2.result) {
-                            location.reload();
-                        }
-                        else {
-                            shareDialog.errorMessage({ text: "創建失敗，此名稱已被使用!" });
-                        }
-                    });
+                    $('body').append(`<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="ps-1 pe-1" >
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">APP名稱</label>
+                        <input class="form-control" type="text" id="userName" required="" placeholder="請輸入APP名稱" onchange="${gvc.event((e) => {
+                        widget.data.createAPP = e.value;
+                    })}">
+                    </div>
+                </div>
+ <div class="modal-footer">
+                                                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">取消</button>
+                                                                <button type="button" class="btn btn-primary" onclick="${gvc.event(() => {
+                        run();
+                    })}">確認添加</button>
+                                                            </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>`);
+                    $('#delete-modal').modal('show');
                 }
             };
         }

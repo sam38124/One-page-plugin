@@ -83,7 +83,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     signInView: function () {
                         return `  <div class="w-100  pt-1 pt-md-4 pb-4 " style="width: 526px;max-width: 100%;">
             <h1 class="text-center text-xl-start">${widget.data.title}</h1>
-            <p class="text-center text-xl-start pb-3 mb-3 text-white">還沒有帳號嗎? <a class="" style="color: deepskyblue;cursor: pointer;" onclick="${gvc.event(function () {
+            <p class="text-center text-xl-start pb-3 mb-3 ">還沒有帳號嗎? <a class="" style="color: deepskyblue;cursor: pointer;" onclick="${gvc.event(function () {
                             type = "Register"
 gvc.notifyDataChange('SignInPlace')
                         })}"> 點我註冊.</a></p>
@@ -114,20 +114,20 @@ gvc.notifyDataChange('SignInPlace')
                         return `  
             <div class="w-100  pt-md-4 pb-4" style="width: 526px;max-width: 100%;">
             <h1 class="text-center text-xl-start">創建帳號</h1>
-            <p class="text-center text-xl-start pb-3 mb-3 text-white">已經有帳號了嗎? <a onclick="${gvc.event(function () {
+            <p class="text-center text-xl-start pb-3 mb-3 " style="">已經有帳號了嗎? <a onclick="${gvc.event(function () {
                             type = "SignIn"
                             gvc.notifyDataChange('SignInPlace')
                         })}" style="color: deepskyblue;cursor: pointer;">點我登入.</a></p>
             <div class="needs-validation" novalidate="">
               <div class="row">
                 ${
-                            widget.data.registerForm.map((data:any)=>{
+                            widget.data.registerForm.map((data: any) => {
                                 return `
                                 <div class="col-sm-${data.col}">
                   <div class="position-relative mb-4">
                     <label for="email" class="form-label fs-base">${data.label}</label>
-                    <input type="${data.type}" id="${data.key}" class="form-control form-control-lg" onchange="${gvc.event((e)=>{
-                                    registerFormData[data.key]=e.value
+                    <input type="${data.type}" id="${data.key}" class="form-control form-control-lg" onchange="${gvc.event((e) => {
+                                    registerFormData[data.key] = e.value
                                 })}">
                   </div>
                 </div>
@@ -167,17 +167,17 @@ gvc.notifyDataChange('SignInPlace')
               </div>
               <button  class="btn btn-primary shadow-primary btn-lg w-100" onclick="${gvc.event(function (e, event) {
                             const shareDialog = new ShareDialog(glitter)
-                  if(($('#terms') as any).get(0).checked){
-                      TriggerEvent.trigger({
-                          gvc, widget, clickEvent: widget.data.registerEvent,
-                          subData:registerFormData
-                      })
-                  }else{
-                      shareDialog.errorMessage({
-                          text:"請先同意隱私權政策"
-                      })
-                  }
-                          
+                            if (($('#terms') as any).get(0).checked) {
+                                TriggerEvent.trigger({
+                                    gvc, widget, clickEvent: widget.data.registerEvent,
+                                    subData: registerFormData
+                                })
+                            } else {
+                                shareDialog.errorMessage({
+                                    text: "請先同意隱私權政策"
+                                })
+                            }
+
                         })}">註冊</button>
             </div>
           </div>
@@ -193,7 +193,6 @@ gvc.notifyDataChange('SignInPlace')
                     return `  
   <div class="position-absolute w-100 h-100 " style="background-image: url(${widget.data.bgImage});
   background-repeat: no-repeat;background-position: center center;background-size: cover;"></div>
-  <div class="position-absolute w-100 h-100" style="background: rgba(0,0,0,0.6);"></div>
   <div class="d-flex align-items-center justify-content-center " style="height:100vh;">
       ${gvc.bindView(function () {
                           

@@ -46,7 +46,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
 `;
                         }
                     })()}
-              <div class="position-absolute w-100 h-100" style="background-color: rgba(0,0,0,0.6);z-index: 1;"></div>
+              <!-- <div class="position-absolute w-100 h-100" style="background-color: rgba(0,0,0,0.6);z-index: 1;"></div> -->
               <div class="container pt-4 pt-xl-5 mt-5 position-relative" style="z-index: 2;">
                 <div class="row pt-md-2 pt-lg-5">
                   <div class="col-md-5 d-flex flex-column mt-md-4 pt-5 pb-3 pb-sm-4 py-md-5">

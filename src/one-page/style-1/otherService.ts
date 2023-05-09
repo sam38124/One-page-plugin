@@ -82,12 +82,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             <li class="nav-item" role="presentation">
                                                 <button
                                                     class="nav-link text-nowrap ${i == 0 && `active`}"
-                                                    id="${a.tab}-tab"
+                                                    id="tab-${i}-tab"
                                                     data-bs-toggle="tab"
-                                                    data-bs-target="#${a.tab}"
+                                                    data-bs-target="#tab-${i}"
                                                     type="button"
                                                     role="tab"
-                                                    aria-controls="${a.tab}"
+                                                    aria-controls="tab-${i}"
                                                     aria-selected="false"
                                                 >
                                                     <i class="${a.icon} fs-lg opacity-60 me-2"></i>
@@ -107,9 +107,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             tmp += /*html*/ `
                                             <div
                                                 class="tab-pane fade ${i == 0 && `show active`}"
-                                                id="${a.tab}"
+                                                id="tab-${i}"
                                                 role="tabpanel"
-                                                aria-labelledby="${a.tab}-tab"
+                                                aria-labelledby="tab-${i}-tab"
                                             >
                                                 <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
                                                     <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
@@ -131,7 +131,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                     </div>
                                                     <div class="col-lg-6 col-md-7 mt-2 mb-3 mt-md-3">
                                                         <img
-                                                            src="${ScriptStyle1.getRout(`img/${a.tab}/${a.tab}01.jpg`)}"
+                                                            src="${a.linkimg ?? ScriptStyle1.getRout(`img/${a.tab}/${a.tab}01.jpg`)}"
                                                             class="d-block rounded-3 my-lg-2 mx-auto me-md-0"
                                                             width="564"
                                                             alt="Image"
@@ -199,13 +199,22 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                 widget.refreshComponent();
                                             },
                                         }) +
+                                        Editor.uploadImage({
+                                            gvc: gvc,
+                                            title: `預覽圖`,
+                                            def: dd.linkimg ?? ScriptStyle1.getRout(`img/${dd.tab}/${dd.tab}01.jpg`),
+                                            callback: (e) => {
+                                                dd.linkimg = e;
+                                                widget.refreshComponent();
+                                            },
+                                        })+
                                         TriggerEvent.editer(gvc, widget, dd.link, {
                                             hover: true,
                                             option: [],
                                             title: '點擊事件',
                                         }),
                                     minus: gvc.event(() => {
-                                        widget.data.servic.splice(index, 1);
+                                        widget.data.service.splice(index, 1);
                                         widget.refreshComponent();
                                     }),
                                 };

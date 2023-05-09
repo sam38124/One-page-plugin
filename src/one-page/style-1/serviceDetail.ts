@@ -10,6 +10,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
             widget.data.name = widget.data.name ?? '社群平台';
+            widget.data.titleStyle=widget.data.titleStyle??{}
             widget.data.data = widget.data.data ?? [
                 {
                     section: 'img_desc',
@@ -67,47 +68,46 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget);
                     return `
-                        <h1 class="container pb-4 mt-5">${service_detail.name}</h1>
+                        <h1 class="container pb-4 mt-5 ${(!service_detail.name) ? `d-none`:``} ${glitter.htmlGenerate.styleEditor(widget.data.titleStyle).class()}"
+                        style="${glitter.htmlGenerate.styleEditor(widget.data.titleStyle).style()}">${service_detail.name}</h1>
         ${glitter.print(function () {
                         var tmp = '';
-                        service_detail.data.map((s: any) => {
+                        service_detail.data.map((s: any,index:number) => {
                             s.list = s.list ?? [];
                             s.desc = s.desc ?? '';
+                            s.alignt =  s.alignt ?? "left"
                             switch (s.section) {
                                 case 'list_img':
                                     tmp += /*html*/ `
-                            <section class="container pt-2 pt-lg-3 mb-md-3 mb-lg-5 pb-5">
-                                <div class="row">
-                                    <div class="col-md-6 order-md-2 pb-2 pb-md-0 mb-4 mb-md-0">
-                                        <div class="ps-lg-5">
-                                            <img src="${s.img}" class="rounded-3" alt="Image" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 order-md-1">
+                            <section class=" container pt-2 pt-lg-3 ${((service_detail.data.length-1) !== index) ? `mb-md-3 mb-lg-5 pb-5`:``}">
+                                <div class="row align-items-center">
+                                   ${(()=>{
+                                       let list=([`
+                                       <div class="col-md-6 order-md-1">
                                         <h2 class="h3 mb-sm-4">${s.title}</h2>
-                                        <ul class="list-unstyled d-md-block d-none pb-2 pb-md-3 mb-3">
+                                        <ul class="list-unstyled  pb-2 pb-md-3 mb-3">
                                             ${glitter.print(function () {
-                                        var tmp = '';
-                                        s.list.map((l: any) => {
-                                            tmp += /*html*/ `
+                                           var tmp = '';
+                                           s.list.map((l: any) => {
+                                               tmp += /*html*/ `
                                                         <li class="d-flex align-items-center mb-2">
                                                             <i class="bx bx-check lead text-primary me-2"></i>${l}
                                                         </li>
                                                     `;
-                                        });
-                                        return tmp;
-                                    })}
+                                           });
+                                           return tmp;
+                                       })}
                                         </ul>
                                         ${
-                                        s.point && s.point.length != 0
-                                            ? /*html*/ `
+                                           s.point && s.point.length != 0
+                                               ? /*html*/ `
                                                   <div class="border rounded-3 mb-4 mb-lg-5">
                                                       <div class="row row-cols-1 row-cols-sm-2 g-0">
                                                           ${glitter.print(function () {
-                                                var tmp = '';
-                                                var l = s.point.length;
-                                                s.point.map((p: any, i: any) => {
-                                                    tmp += /*html*/ /*html*/ `<div
+                                                   var tmp = '';
+                                                   var l = s.point.length;
+                                                   s.point.map((p: any, i: any) => {
+                                                       tmp += /*html*/ /*html*/ `<div
                                                                       class="col d-flex align-items-center ${borderCss(i, l)} p-3"
                                                                   >
                                                                       <i class="${p.icon}"></i>
@@ -120,41 +120,52 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                                           </h3>
                                                                       </div>
                                                                   </div>`;
-                                                });
-                                                return tmp;
-                                            })}
+                                                   });
+                                                   return tmp;
+                                               })}
                                                       </div>
                                                   </div>
                                               `
-                                            : ``
-                                    }
+                                               : ``
+                                       }
                                     </div>
+                                    `,`<div class="col-md-6 order-md-2 pb-2 pb-md-0 mb-4 mb-md-0">
+                                        <div class="ps-lg-5">
+                                            <img src="${s.img}" class="rounded-3 shadow" alt="Image" />
+                                        </div>
+                                    </div>`])
+                                        if( s.alignt=='right'){
+                                            list=list.reverse()
+                                        }
+                                      return gvc.map(list)
+                                    })()}
                                 </div>
                             </section>
                         `;
                                     break;
                                 case 'img_desc':
                                     tmp += /*html*/ `
-                            <section class="container mb-md-3 mb-lg-5 pb-5">
-                                <div class="row">
-                                    <div class="col-md-6 pb-2 pb-md-0 mb-4 mb-md-0">
+                            <section class="container ${((service_detail.data.length-1) !== index) ? `mb-md-3 mb-lg-5 pb-5`:``}">
+                                <div class="row align-items-center">
+                                    ${(()=>{
+                                        let list=([` <div class="col-md-6 pb-2 pb-md-0 mb-4 mb-md-0">
                                         <div class="pe-lg-5">
-                                            <img src="${s.img}" class="rounded-3" alt="Image" />
+                                            <img src="${s.img}" class="rounded-3 shadow" alt="Image" />
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    `,`     <div class="col-md-6">
                                         <h2 class="h3 mb-sm-4">${s.title}</h2>
                                         <p class=" pb-2 pb-md-3 mb-3">${s.desc}</p>
                                         ${
-                                        s.point && s.point.length != 0
-                                            ? /*html*/ `
+                                            s.point && s.point.length != 0
+                                                ? /*html*/ `
                                                   <div class="border rounded-3 mb-4 mb-lg-5">
                                                       <div class="row row-cols-1 row-cols-sm-2 g-0">
                                                           ${glitter.print(function () {
-                                                var tmp = '';
-                                                var l = s.point.length;
-                                                s.point.map((p: any, i: any) => {
-                                                    tmp += /*html*/ /*html*/ `<div
+                                                    var tmp = '';
+                                                    var l = s.point.length;
+                                                    s.point.map((p: any, i: any) => {
+                                                        tmp += /*html*/ /*html*/ `<div
                                                                       class="col d-flex align-items-center ${borderCss(i, l)} p-3"
                                                                   >
                                                                       <i class="${p.icon}"></i>
@@ -167,15 +178,22 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                                           </h3>
                                                                       </div>
                                                                   </div>`;
-                                                });
-                                                return tmp;
-                                            })}
+                                                    });
+                                                    return tmp;
+                                                })}
                                                       </div>
                                                   </div>
                                               `
-                                            : ``
-                                    }
-                                    </div>
+                                                : ``
+                                        }
+                                    </div>`])
+                                        if( s.alignt=='right'){
+                                            list=list.reverse()
+                                        }
+                                        return gvc.map(list)
+                                    })()}
+                                   
+                               
                                 </div>
                             </section>
                         `;
@@ -187,7 +205,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         `;
                 },
                 editor: () => {
+
                     return gvc.map([
+                        glitter.htmlGenerate.styleEditor(widget.data.titleStyle).editor(gvc,()=>{
+                            widget.refreshComponent()
+                        },"標題設計樣式"),
                         glitter.htmlGenerate.editeInput({
                             gvc: gvc,
                             title: '標題',
@@ -227,6 +249,25 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             },
                                         }),
                                         Editor.select({
+                                            title: `排序方式`,
+                                            gvc: gvc,
+                                            def: dd.alignt ?? "left",
+                                            array: [
+                                                {
+                                                    title: '圖片靠左',
+                                                    value: `left`,
+                                                },
+                                                {
+                                                    title: '圖片靠右',
+                                                    value: `right`,
+                                                },
+                                            ],
+                                            callback: (text) => {
+                                                dd.alignt = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        Editor.select({
                                             title: `描述方式`,
                                             gvc: gvc,
                                             def: dd.section,
@@ -247,7 +288,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         }),
                                         (() => {
                                             if (dd.section === 'list_img') {
-                                                return /*html*/ `<div class="alert alert-dark mt-2">
+                                                return /*html*/ `<div class="alert shadow mt-2" style="background:darkcyan;">
                                                         ${dd.list
                                                     .map((d2: any, index: number) => {
                                                         return glitter.htmlGenerate.editeInput({
@@ -292,33 +333,33 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         Editor.arrayItem({
                                             gvc: gvc,
                                             title: '表格區塊',
-                                            originalArray:widget.data.point,
-                                            array: dd.point.map((dd: any, index: number) => {
+                                            originalArray:dd.point,
+                                            array: dd.point.map((d2: any, index: number) => {
                                                 return {
-                                                    title: dd.name || `區塊:${index + 1}`,
-                                                    expand: dd,
+                                                    title: d2.name || `區塊:${index + 1}`,
+                                                    expand: d2,
                                                     innerHtml:
                                                         glitter.htmlGenerate.editeInput({
                                                             gvc: gvc,
                                                             title: `標題`,
-                                                            default: dd.name,
+                                                            default: d2.name,
                                                             placeHolder: '輸入標題名稱',
                                                             callback: (text) => {
-                                                                dd.name = text;
+                                                                d2.name = text;
                                                                 widget.refreshComponent();
                                                             },
                                                         }) +
                                                         Editor.fontawesome({
                                                             title: 'icon標籤',
                                                             gvc: gvc,
-                                                            def: dd.icon,
+                                                            def: d2.icon,
                                                             callback: (text) => {
-                                                                dd.icon = text;
+                                                                d2.icon = text;
                                                                 widget.refreshComponent();
                                                             },
                                                         }),
                                                     minus: gvc.event(() => {
-                                                        widget.data.list.splice(index, 1);
+                                                        dd.point.splice(index, 1);
                                                         widget.refreshComponent();
                                                     }),
                                                 };
@@ -327,10 +368,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             plus: {
                                                 title: '添加區塊',
                                                 event: gvc.event(() => {
-                                                    widget.data.list.push({
-                                                        name: '標籤分類貼文',
-                                                        icon: 'bx bx-tag-alt',
-                                                    });
+                                                    dd.point.push( {name: '標籤分類貼文', icon: 'bx bx-tag-alt'});
                                                     widget.refreshComponent();
                                                 }),
                                             },
@@ -349,7 +387,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             plus: {
                                 title: '添加項目區塊',
                                 event: gvc.event(() => {
-                                    widget.data.list.push({
+                                    widget.data.data.push({
                                         section: 'list_img',
                                         img: ScriptStyle1.getRout('img/social/social04.jpg'),
                                         title: '活動頁面完善 · 參與者一個頁面就能得到所有資訊',
@@ -385,3 +423,42 @@ function borderCss(n: any, len: any) {
         return `border-bottom`;
     }
 }
+
+`<span>選用合適的模板，在透過<span style="font-size:25px;color:black;  background: linear-gradient(to top, #3a1c71, #d76d77, #ffaf7b);
+  background: -webkit-linear-gradient(to top, #3a1c71, #d76d77, #ffaf7b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;" class="fw-bold ps-2 pe-2"> Glitter Editor</span></span>  快速編輯您的網站或APP應用，簡單幾個步驟即可完成開發，點擊圖示快速查看示例影片．
+<div class="border rounded-3 mb-4 mb-lg-5">
+                                                      <div class="row row-cols-1 row-cols-sm-2 g-0">
+                                                          <div class="col d-flex align-items-center border-end-sm border-bottom p-3">
+                                                                      <i class="fa-regular fa-server"></i>
+                                                                      <div class="ps-2 ms-1">
+                                                                          <h3 class="h6 mb-0 " style="white-space: normal;word-break: break-all;">
+                                                                              超過20多種應用模板
+                                                                          </h3>
+                                                                      </div>
+                                                                  </div><div class="col d-flex align-items-center border-bottom p-3">
+                                                                      <i class="fa-solid fa-globe"></i>
+                                                                      <div class="ps-2 ms-1">
+                                                                          <h3 class="h6 mb-0 " style="white-space: normal;word-break: break-all;">
+                                                                              可拖曳式的編輯系統
+                                                                          </h3>
+                                                                      </div>
+                                                                  </div><div class="col d-flex align-items-center border-end-sm p-3">
+                                                                      <i class="fa-brands fa-android"></i>
+                                                                      <div class="ps-2 ms-1">
+                                                                          <h3 class="h6 mb-0 " style="white-space: normal;word-break: break-all;">
+                                                                              檔案管理系統
+                                                                          </h3>
+                                                                      </div>
+                                                                  </div><div class="col d-flex align-items-center  p-3">
+                                                                      <i class="fa-brands fa-apple"></i>
+                                                                      <div class="ps-2 ms-1">
+                                                                          <h3 class="h6 mb-0 " style="white-space: normal;word-break: break-all;">
+                                                                               模塊式組件
+                                                                          </h3>
+                                                                      </div>
+                                                                  </div>
+                                                      </div>
+                                                  </div>`

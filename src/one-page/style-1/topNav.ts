@@ -52,7 +52,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         if (r.list === undefined || r.list.length === 0) {
                             h += /*html*/ `<li>
                                     <a
-                                        class="${first ? 'nav-link text-white' : 'dropdown-item'} ${
+                                        class="${first ? 'nav-link text-dark' : 'dropdown-item'} ${
                                 typeof r.link === 'object' && first ? r.link[0] : ``
                             }"
                                         onclick="${gvc.event(() => {
@@ -68,7 +68,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 </li>`;
                         } else {
                             h += /*html*/ `<li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">${r.name}</a>
+                                    <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown">${r.name}</a>
                                     <ul class="dropdown-menu">
                                         ${glitter.print(function () {
                                 var tmp = '';
