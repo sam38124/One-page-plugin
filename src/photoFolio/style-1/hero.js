@@ -1,0 +1,91 @@
+import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+import { ScriptStyle1 } from "../script-style-1.js";
+import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
+Plugin.createComponent(import.meta.url, (glitter, editMode) => {
+    return {
+        defaultData: {},
+        render: (gvc, widget, setting, hoverID) => {
+            return {
+                view: () => {
+                    ScriptStyle1.initialScript(gvc, widget);
+                    let id = glitter.getUUID();
+                    widget.data.title = widget.data.title ?? `I'm <span>Jenny Wilson</span> a Professional Photographer from New York City`;
+                    widget.data.desc = widget.data.desc ?? "Blanditiis praesentium aliquam illum tempore incidunt debitis dolorem magni est deserunt sed qui libero. Qui voluptas amet.";
+                    widget.data.btn = widget.data.btn ?? { text: "Available for hire", href: {} };
+                    return gvc.bindView({
+                        bind: id,
+                        view: () => {
+                            let hero = {
+                                title: widget.data.title,
+                                desc: widget.data.desc,
+                                btn: widget.data.btn
+                            };
+                            return `
+
+                            <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex flex-column justify-content-center align-items-center" data-aos="fade" data-aos-delay="1500">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+          <h2>${widget.data.title}</h2>
+          <p>${widget.data.desc}</p>
+          <a onclick="${gvc.event(() => {
+                                TriggerEvent.trigger({
+                                    gvc, widget, clickEvent: hero.btn.href,
+                                });
+                            })}" class="btn-get-started">${hero.btn.text}</a>
+        </div>
+      </div>
+    </div>
+  </section><!-- End Hero Section -->
+
+                            `;
+                        }, divCreate: {},
+                        onCreate: () => {
+                            AOS.init();
+                        }
+                    });
+                },
+                editor: () => {
+                    return gvc.map([
+                        glitter.htmlGenerate.editeText({
+                            gvc: gvc,
+                            title: `標題`,
+                            default: widget.data.title,
+                            placeHolder: '輸入標題文字',
+                            callback: (text) => {
+                                widget.data.title = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        glitter.htmlGenerate.editeText({
+                            gvc: gvc,
+                            title: `副標題`,
+                            default: widget.data.title,
+                            placeHolder: '輸入副標題文字',
+                            callback: (text) => {
+                                widget.data.title = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        glitter.htmlGenerate.editeText({
+                            gvc: gvc,
+                            title: `按鍵文字`,
+                            default: widget.data.btn.text,
+                            placeHolder: '輸入按鍵文字',
+                            callback: (text) => {
+                                widget.data.btn.text = text;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        TriggerEvent.editer(gvc, widget, widget.data.btn.href, {
+                            hover: true,
+                            option: [],
+                            title: "按鍵觸發事件"
+                        })
+                    ]);
+                }
+            };
+        },
+    };
+});
