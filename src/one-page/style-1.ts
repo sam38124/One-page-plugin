@@ -71,7 +71,7 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
         },
         serviceDetail: {
             title: '服務區塊',
-            subContent: '顯示服務區塊的內容',
+            subContent: '顯示服務區塊的文章內容．',
             defaultData: {},
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/serviceDetail.js',import.meta.url)),
         },

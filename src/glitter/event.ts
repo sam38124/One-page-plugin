@@ -238,6 +238,11 @@ TriggerEvent.create(import.meta.url, {
                             }
                         })
                     }
+                    if(gvc.glitter.getCookieByName('glitterToken') === undefined){
+                        const shareDialog = new ShareDialog(gvc.glitter)
+                        shareDialog.errorMessage({text:"請先登入"})
+                        return
+                    }
                     $('body').append(`<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

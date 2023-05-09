@@ -42,7 +42,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         return {
                             bind:id,
                             view:()=>{
-                                return `<section class="container text-center">
+                                if(widget.data.type==='column'){
+                                    return `<section class="container text-center">
         <h2 class="h1 pt-1 mb-4">${widget.data.title}</h2>
         <div class="row justify-content-center mb-md-2 mb-lg-5">
           <div class="col-lg-6 col-md-8">
@@ -60,13 +61,64 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
           <img src="${widget.data.backengImage ?? "assets/img/landing/medical/video-cover.jpg"}" alt="Cover image">
         </div>
       </section>`
+                                }else{
+                                    return  ` <div class="row align-items-center">
+                                    ${(()=>{
+                                        let list=([` <div class="col-md-6 pb-2 pb-md-0 mb-4 mb-md-0">
+                                        <div class="pe-lg-5">
+                                         <div class="position-relative rounded-3 overflow-hidden mb-lg-3">
+        
+          <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center zindex-5">
+            <a href="${widget.data.link}" class="btn btn-video btn-icon btn-xl stretched-link bg-white" data-bs-toggle="video" data-lg-id="510c2edd-d4e2-4c1a-92c7-7cb0185224a1">
+              <i class="bx bx-play"></i>
+            </a>
+          </div>
+          <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-35 " style=""></span>
+          <img src="${widget.data.backengImage ?? "assets/img/landing/medical/video-cover.jpg"}" alt="Cover image">
+        </div>
+                                        </div>
+                                    </div>
+                                    `,`     <div class="col-md-6">
+                                        <h2 class="h3 mb-sm-4">${widget.data.title}</h2>
+                                        <p class=" pb-2 pb-md-3 mb-3">${widget.data.content}</p>
+                                    </div>`])
+                                        if( widget.data.alignt=='right'){
+                                            list=list.reverse()
+                                        }
+                                        return gvc.map(list)
+                                    })()}
+                                   
+                               
+                                </div>`
+                                }
+
                             },
                             divCreate:{}
                         }
                     })
                 },
                 editor: () => {
-                  return [ glitter.htmlGenerate.editeInput(
+                  return [
+                      Editor.select({
+                          title: `排序方式`,
+                          gvc: gvc,
+                          def: widget.data.alignt ?? "linear",
+                          array: [
+                              {
+                                  title: '垂直',
+                                  value: `column`,
+                              },
+                              {
+                                  title: '橫向',
+                                  value: `linear`,
+                              },
+                          ],
+                          callback: (text) => {
+                              widget.data.alignt = text;
+                              widget.refreshComponent();
+                          },
+                      }),
+                      glitter.htmlGenerate.editeInput(
                       {
                           gvc:gvc,
                           title:'標題',
