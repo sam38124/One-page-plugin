@@ -6,6 +6,8 @@ import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
 import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 
+
+
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
         defaultData: {},
@@ -15,6 +17,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID();
                     widget.data.title = widget.data.title??`I'm <span>Jenny Wilson</span> a Professional Photographer from New York City`;
+                    widget.data.titleStyle = widget.data.titleStyle ?? {}
+                    widget.data.descStyle = widget.data.descStyle ?? {}
                     widget.data.desc = widget.data.desc?? "Blanditiis praesentium aliquam illum tempore incidunt debitis dolorem magni est deserunt sed qui libero. Qui voluptas amet."
                     widget.data.btn = widget.data.btn ?? {text:"Available for hire" , href:{}}
                     return gvc.bindView({
@@ -39,8 +43,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-6 text-center">
-          <h2>${widget.data.title}</h2>
-          <p>${widget.data.desc}</p>
+          <h2 style="${glitter.htmlGenerate.styleEditor(widget.data.titleStyle).style()}" class="${glitter.htmlGenerate.styleEditor(widget.data.titleStyle).class()}">${widget.data.title}</h2>
+          <p style="${glitter.htmlGenerate.styleEditor(widget.data.descStyle).style()}" class="${glitter.htmlGenerate.styleEditor(widget.data.descStyle).class()}">${widget.data.desc}</p>
           <a onclick="${gvc.event(()=>{
             TriggerEvent.trigger({
                 gvc, widget, clickEvent: hero.btn.href,
@@ -72,16 +76,22 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.refreshComponent();
                             },
                         }),
+                        glitter.htmlGenerate.styleEditor(widget.data.titleStyle).editor(gvc,()=>{
+                            widget.refreshComponent()
+                        },'標題設計樣式'),
                         glitter.htmlGenerate.editeText({
                             gvc: gvc,
                             title: `副標題`,
-                            default: widget.data.title,
+                            default: widget.data.desc,
                             placeHolder: '輸入副標題文字',
                             callback: (text) => {
-                                widget.data.title = text;
+                                widget.data.desc = text;
                                 widget.refreshComponent();
                             },
                         }),
+                        glitter.htmlGenerate.styleEditor(widget.data.descStyle).editor(gvc,()=>{
+                            widget.refreshComponent()
+                        },'副標題設計樣式'),
                         glitter.htmlGenerate.editeText({
                             gvc: gvc,
                             title: `按鍵文字`,

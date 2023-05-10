@@ -1,4 +1,5 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+import { Editor } from "../../editor.js";
 import { ScriptStyle1 } from "../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
@@ -103,7 +104,45 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     });
                 },
                 editor: () => {
-                    return ``;
+                    return Editor.arrayItem({
+                        originalArray: widget.data.gallery,
+                        gvc: gvc,
+                        title: '圖片內容',
+                        array: widget.data.gallery.map((dd, index) => {
+                            return {
+                                title: `圖片:${index + 1}`,
+                                expand: dd,
+                                innerHtml: gvc.map([
+                                    Editor.uploadImage({
+                                        gvc: gvc,
+                                        title: '預覽圖片',
+                                        def: dd.src,
+                                        callback: (data) => {
+                                            dd.src = data;
+                                            widget.refreshComponent();
+                                        }
+                                    })
+                                ]),
+                                minus: gvc.event(() => {
+                                    widget.data.gallery.splice(index, 1);
+                                    widget.refreshComponent();
+                                }),
+                            };
+                        }),
+                        expand: widget.data,
+                        plus: {
+                            title: '添加區塊',
+                            event: gvc.event(() => {
+                                widget.data.gallery.push({
+                                    src: ScriptStyle1.getRout("assets/img/gallery/gallery-1.jpg")
+                                });
+                                widget.refreshComponent();
+                            }),
+                        },
+                        refreshComponent: () => {
+                            widget.refreshComponent();
+                        }
+                    });
                 }
             };
         },

@@ -74,7 +74,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                               
                     
                               <div class="text-center text-md-right mt-3">
-                                <button ${attr.btn}onclick="${gvc.event(function () {
+                                <button ${attr.btn} onclick="${gvc.event(function () {
                             var data = contact.formList.form.data;
                             var notFillIn = data.find((data) => data.need && !data.value);
                             if (notFillIn !== undefined) {

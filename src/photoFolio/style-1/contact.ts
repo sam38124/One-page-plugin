@@ -15,23 +15,22 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     let id = glitter.getUUID()
                     let contact = {
                         mail : widget.data.mail??"jianzhi.wang@ncdesign.info",
-                        title: widget.data.title??"聯絡我們",
-                        desc: widget.data.desc??"若想要了解我們的服務，填妥以下表單，萊恩設計將儘速回應您。",
+                        title: widget.data.title??"聯絡我們 Contact Us",
+                        desc: widget.data.desc??"想要更加了解我們的服務？填妥以下表單，或直接聯絡信箱，萊恩設計將儘速回應您。",
                         map: widget.data.map??"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621",
                         infoList:widget.data.infoList??{
                             info: [
-                                { icon: "bx bx-map", title: "地址", text: "台中市臺灣大道二段285號20樓" },
-                                { icon: "bx bx-phone", title: "電話", text: "(886) 0978-028-730" },
-                                { icon: "bx bx-envelope", title: "信箱", text: "jianzhi.wang@ncdesign.info" },
+                                { icon: "bi bi-geo-alt", title: "地址", text: "台中市北屯區後庄北路18號" },
+                                { icon: "bi bi-phone", title: "電話", text: "(886) 0978-028-730" },
+                                { icon: "bi bi-envelope", title: "信箱", text: "jianzhi.wang@ncdesign.info" },
                             ],
                         },
                         formList:widget.data.formList??{
                             form: [
                                 { title: "姓名", type: "name", need: true },
                                 { title: "信箱", type: "email", need: true },
-                                { title: "電話 / 手機", type: "number", need: true },
-                                { title: "主旨", type: "textarea", need: true },
-                                { title: "想說的內容", type: "textarea", need: true },
+                                { title: "主旨", type: "text", need: true },
+                                { title: "想說的內容", type: "textArea", need: true },
                             ],
                         }
 
@@ -82,21 +81,21 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                               
                     
                               <div class="text-center text-md-right mt-3">
-                                <button ${attr.btn} onclick="${gvc.event(function () {
+                                <button ${attr.btn}onclick="${gvc.event(function () {
                             var data: any = contact.formList.form.data;
                             var notFillIn = data.find((data: any) => data.need && !data.value);
                             if (notFillIn !== undefined) {
                                 alert('請輸入' + notFillIn.name);
                                 return;
-                                }
-                                glitter.openNewTab(
-                                    `mailto:${contact.mail}?body=${encodeURIComponent(
-                                        data
-                                            .map((dd: any) => {
-                                                return `${dd.name}:\n${dd.value}`;
-                                            })
-                                            .join(`\n\n`)
-                                    )}`
+                            }
+                            glitter.openNewTab(
+                                `mailto:${contact.mail}?body=${encodeURIComponent(
+                                    data
+                                        .map((dd: any) => {
+                                            return `${dd.name}:\n${dd.value}`;
+                                        })
+                                        .join(`\n\n`)
+                                )}`
                             );
                         })}">傳送訊息</button>
                               </div>
@@ -115,54 +114,51 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         bind:id,
                         view:()=>{
                             return /*html*/ `
-        <!-- ======= Contact Us Section ======= -->
-        <section id="contact" class="contact">
-          <div class="container mt-5" data-aos="fade-up">
-            <div class="section-title">
-              <h2>${contact.title}</h2>
-              <p>${contact.desc}</p>
-            </div>
+                            <main>
+                                    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
 
-            <div class="row">
-              <div class="col-lg-5 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-                <div class="info">
-                  ${glitter.print(function () {
-                                var tmp = "";
-                                contact.infoList.info.map((f:any) => {
-                                    tmp += /*html*/ `
-                        <div>
-                          <div class="info-box mb-4">
-                            <i class="${f.icon}"></i>
-                            <h4>${f.title}</h4>
-                            <p>${f.text}</p>
+        <div class="row gy-4 justify-content-center">
+            ${(()=>{
+                let html = ``
+                                console.log(contact.infoList.info)
+                contact.infoList.info.map((data:any)=>{
+                    html+=`
+                    <div class="col-lg-3">
+                        <div class="info-item d-flex">
+                          <i class="${data.icon} flex-shrink-0"></i>
+                          <div>
+                            <h4>${data.title}:</h4>
+                            <p>${data.text}</p>
                           </div>
                         </div>
-                      `;
-                                });
-                                return tmp;
-                            })}
+                    </div><!-- End Info Item -->
+                    `
+                })
+                return html    
+            })()}
 
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
-                    frameborder="0"
-                    style="border: 0; width: 100%; height: 290px"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-              </div>
 
-              <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-                ${lightForm(contact.formList.form, {
-                                div: `class="php-email-form"`,
-                                input: `class="form-control"`,
-                                textarea: `class="form-control"`,
-                                btn: `type="submit"`,
-                            })}
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- End Contact Us Section -->
+
+        </div>
+
+        <div class="row justify-content-center mt-4">
+
+          <div class="col-lg-9">
+            ${lightForm(contact.formList.form, {
+                div: `class="php-email-form"`,
+                input: `class="form-control"`,
+                textarea: `class="form-control"`,
+                btn: `type="submit"`,
+            })}
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+                            </main>
       `;
                         },divCreate:{},
                         onCreate:()=>{
