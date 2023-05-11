@@ -53,12 +53,12 @@ export class ScriptStyle1{
               <li>
                 <a
                   class="${first ? "nav-link" : ""} scrollto"
-                  onclick='${gvc.event(()=>{
-                    TriggerEvent.trigger({
-                        gvc, widget, clickEvent: r.click,
-                    })
-                  })}'
-                  style="cursor:pointer"
+                  onclick="${gvc.event(()=>{
+                        TriggerEvent.trigger({
+                            gvc, widget, clickEvent: r.click,
+                        })
+                  })}"
+                  style="cursor:pointer; ${r.highlight == "true" ?'color: #fff;':''}"
                   
                 >
                   ${r.title}
@@ -67,7 +67,7 @@ export class ScriptStyle1{
             `;
         } else {
             h += /*html*/ ` <li class="dropdown">
-          <a class="">${r.title}<i class="bi bi-chevron-${first ? "down" : "right"}"></i></a>
+          <a class="" style="${r.highlight == "true" ?'color: #fff;':''}">${r.title}<i class="bi bi-chevron-${first ? "down" : "right"} "></i></a>
           <ul class="">
             ${(()=>{
                 var tmp = "";

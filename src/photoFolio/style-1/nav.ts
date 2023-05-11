@@ -211,6 +211,25 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                 widget.refreshComponent();
                                             },
                                         }),
+                                        Editor.select({
+                                            title: `白色凸顯`,
+                                            gvc: gvc,
+                                            def: dd.highlight ?? "false",
+                                            array: [
+                                                {
+                                                    title: '是',
+                                                    value: `true`,
+                                                },
+                                                {
+                                                    title: '否',
+                                                    value: `false`,
+                                                },
+                                            ],
+                                            callback: (text) => {
+                                                dd.highlight = text
+                                                widget.refreshComponent();
+                                            },
+                                        }),
                                         TriggerEvent.editer(gvc, widget, dd.click, {
                                             hover: true,
                                             option: [],
