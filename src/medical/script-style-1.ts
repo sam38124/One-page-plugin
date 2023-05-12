@@ -1,4 +1,5 @@
 import {HtmlJson} from "../glitterBundle/plugins/plugin-creater.js";
+import {TriggerEvent} from "../glitterBundle/plugins/trigger-event.js";
 
 export class ScriptStyle1{
     public static   hi: boolean = false;
@@ -15,24 +16,23 @@ export class ScriptStyle1{
         (window as any).root = document.getElementsByTagName('html')[0];
         (window as any).root.classList.add('dark-mode');
         gvc.addStyleLink([
-            ScriptStyle1.getRout('assets/vendor/animate.css/animate.min.css'),
-            ScriptStyle1.getRout('assets/vendor/aos/aos.css'),
-            ScriptStyle1.getRout('assets/vendor/bootstrap/css/bootstrap.min.css'),
-            ScriptStyle1.getRout('assets/vendor/bootstrap-icons/bootstrap-icons.css'),
-            ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.min.css'),
-            ScriptStyle1.getRout('assets/vendor/glightbox/css/glightbox.min.css'),
+            ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.css'),
             ScriptStyle1.getRout('assets/vendor/swiper/swiper-bundle.min.css'),
+            ScriptStyle1.getRout('assets/vendor/lightgallery/css/lightgallery-bundle.min.css'),
+
+            ScriptStyle1.getRout('assets/css/theme.min.css'),
             ScriptStyle1.getRout('assets/css/style.css')
         ]).then()
         gvc.addMtScript([
-            "assets/vendor/aos/aos.js",
-            "assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
-            "assets/vendor/glightbox/js/glightbox.min.js",
-            "assets/vendor/isotope-layout/isotope.pkgd.min.js",
+            "assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js",
+            "assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js",
+            "assets/vendor/rellax/rellax.min.js",
             "assets/vendor/swiper/swiper-bundle.min.js",
-            "assets/vendor/php-email-form/validate.js",
-            'assets/vendor/animate.css/animate.js',
-            'assets/js/main.js'
+            "assets/vendor/lightgallery/lightgallery.min.js",
+            "assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js",
+            'assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js',
+            'assets/vendor/lightgallery/plugins/video/lg-video.min.js',
+            'assets/js/theme.min.js'
         ].map(((dd)=>{
             return   {src: ScriptStyle1.getRout(dd)}
         })), () => {
@@ -64,33 +64,35 @@ export class ScriptStyle1{
 
         })
     }
-    public static recursive(r:any, first?:any) {
+    public static recursive(r:any, first?:boolean) {
         var h = "";
         if (r.list === undefined) {
             h += /*html*/ `
-              <li>
-                <a
-                  class="${first ? "nav-link" : ""} scrollto"
-                  onclick=""
-                  style="cursor:pointer"
-                  data-hash=${r.link}
-                >
-                  ${r.title}
-                </a>
-              </li>
-            `;
+          <li class="${first ? "nav-link " : "dropdown-item"}">
+            <div
+              class=""
+              onclick=""
+             
+              style="cursor:pointer"
+            >
+              ${r.title}
+            </div>
+          </li>
+        `;
         } else {
-            h += /*html*/ ` <li class="dropdown">
-          <a class="">${r.title}<i class="bi bi-chevron-${first ? "down" : "right"}"></i></a>
-          <ul class="">
-            ${(()=>{
-                var tmp = "";
-                r.list.map((r2:any) => (tmp += ScriptStyle1.recursive(r2)));
-                return tmp;
-            })()}
-           
-          </ul>
-        </li>`;
+            console.log("------------------------")
+            console.log("test")
+            h += /*html*/ ` 
+            <li class="nav-item dropdown">
+                <div class="nav-link dropdown-toggle">${r.title}</div>
+                <ul class="dropdown-menu">
+                    ${(()=>{
+                        let tmp = "";
+                        r.list.map((r2:any) => (tmp += ScriptStyle1.recursive(r2)));
+                        return tmp;
+                    })()}     
+                </ul>
+            </li>`;
         }
         return h;
     }

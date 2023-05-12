@@ -134,8 +134,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             gvc: gvc,
                             title: '主要導覽列',
                             array: widget.data.bar.map((BARData, index) => {
-                                console.log("-----------------------------------");
-                                console.log(BARData);
                                 return {
                                     title: BARData.name || `連結:${index + 1}`,
                                     expand: BARData,

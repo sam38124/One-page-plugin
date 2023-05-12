@@ -12,28 +12,42 @@ export class ScriptStyle1 {
         window.root = document.getElementsByTagName('html')[0];
         window.root.classList.add('dark-mode');
         gvc.addStyleLink([
-            ScriptStyle1.getRout('assets/vendor/animate.css/animate.min.css'),
-            ScriptStyle1.getRout('assets/vendor/aos/aos.css'),
-            ScriptStyle1.getRout('assets/vendor/bootstrap/css/bootstrap.min.css'),
-            ScriptStyle1.getRout('assets/vendor/bootstrap-icons/bootstrap-icons.css'),
-            ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.min.css'),
-            ScriptStyle1.getRout('assets/vendor/glightbox/css/glightbox.min.css'),
+            ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.css'),
             ScriptStyle1.getRout('assets/vendor/swiper/swiper-bundle.min.css'),
+            ScriptStyle1.getRout('assets/vendor/lightgallery/css/lightgallery-bundle.min.css'),
+            ScriptStyle1.getRout('assets/css/theme.min.css'),
             ScriptStyle1.getRout('assets/css/style.css')
         ]).then();
         gvc.addMtScript([
-            "assets/vendor/aos/aos.js",
-            "assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
-            "assets/vendor/glightbox/js/glightbox.min.js",
-            "assets/vendor/isotope-layout/isotope.pkgd.min.js",
+            "assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js",
+            "assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js",
+            "assets/vendor/rellax/rellax.min.js",
             "assets/vendor/swiper/swiper-bundle.min.js",
-            "assets/vendor/php-email-form/validate.js",
-            'assets/vendor/animate.css/animate.js',
-            'assets/js/main.js'
+            "assets/vendor/lightgallery/lightgallery.min.js",
+            "assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js",
+            'assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js',
+            'assets/vendor/lightgallery/plugins/video/lg-video.min.js',
+            'assets/js/theme.min.js'
         ].map(((dd) => {
             return { src: ScriptStyle1.getRout(dd) };
         })), () => {
             try {
+                let mode = window.localStorage.getItem('mode'), root = document.getElementsByTagName('html')[0];
+                if (mode !== null && mode === 'dark') {
+                    root.classList.add('dark-mode');
+                }
+                else {
+                    root.classList.remove('dark-mode');
+                }
+                (function () {
+                    window.onload = function () {
+                        const preloader = document.querySelector('.page-loading');
+                        preloader.classList.remove('active');
+                        setTimeout(function () {
+                            preloader.remove();
+                        }, 1000);
+                    };
+                })();
                 widget.refreshComponent();
             }
             catch (e) {
@@ -45,30 +59,32 @@ export class ScriptStyle1 {
         var h = "";
         if (r.list === undefined) {
             h += `
-              <li>
-                <a
-                  class="${first ? "nav-link" : ""} scrollto"
-                  onclick=""
-                  style="cursor:pointer"
-                  data-hash=${r.link}
-                >
-                  ${r.title}
-                </a>
-              </li>
-            `;
+          <li class="${first ? "nav-link " : "dropdown-item"}">
+            <div
+              class=""
+              onclick=""
+             
+              style="cursor:pointer"
+            >
+              ${r.title}
+            </div>
+          </li>
+        `;
         }
         else {
-            h += ` <li class="dropdown">
-          <a class="">${r.title}<i class="bi bi-chevron-${first ? "down" : "right"}"></i></a>
-          <ul class="">
-            ${(() => {
-                var tmp = "";
+            console.log("------------------------");
+            console.log("test");
+            h += ` 
+            <li class="nav-item dropdown">
+                <div class="nav-link dropdown-toggle">${r.title}</div>
+                <ul class="dropdown-menu">
+                    ${(() => {
+                let tmp = "";
                 r.list.map((r2) => (tmp += ScriptStyle1.recursive(r2)));
                 return tmp;
-            })()}
-           
-          </ul>
-        </li>`;
+            })()}     
+                </ul>
+            </li>`;
         }
         return h;
     }
