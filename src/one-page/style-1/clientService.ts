@@ -135,7 +135,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                 dd.q = text;
                                                 widget.refreshComponent();
                                             },
-                                        }) +
+                                        })+
                                         glitter.htmlGenerate.editeText({
                                             gvc: gvc,
                                             title: `回答`,
@@ -146,6 +146,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                 widget.refreshComponent();
                                             },
                                         }),
+                                    minus:gvc.event(()=>{
+                                        widget.data.list.splice(index,1)
+                                        widget.refreshComponent()
+                                    })
                                 };
                             }),
                             expand: widget.data,

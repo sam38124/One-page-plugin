@@ -4,6 +4,7 @@ import {BaseApi} from "./api/base.js";
 import {ShareDialog} from "../dialog/ShareDialog.js";
 import {ErpConfig} from "./erp-config.js";
 import {User} from "../glitter/model/User.js";
+import {Qrcode} from "./qrcode.js";
 
 
 class GlobalData {
@@ -34,7 +35,9 @@ class GlobalData {
     };
 }
 
-(window as any).glitter.addMtScript([{src: 'https://momentjs.com/downloads/moment-with-locales.min.js'}], () => {}, () => {})
+(window as any).glitter.addMtScript([{src: 'https://momentjs.com/downloads/moment-with-locales.min.js'}], () => {
+}, () => {
+})
 
 
 TriggerEvent.create(import.meta.url, {
@@ -236,7 +239,7 @@ TriggerEvent.create(import.meta.url, {
                 },
                 event: () => {
                     return new Promise((resolve, reject) => {
-                        glitter.share.backendInfo=glitter.share.backendInfo??{}
+                        glitter.share.backendInfo = glitter.share.backendInfo ?? {}
                         ErpConfig.roleList = object.childAccount.map((dd: any) => {
                             dd.sku_p = dd.sku_p ?? 'only'
                             return dd
@@ -253,30 +256,33 @@ TriggerEvent.create(import.meta.url, {
                         }).then((d2) => {
                             if (!d2.result) {
                                 gvc.glitter.setUrlParameter('page', 'home')
-                                if(glitter.getUrlParameter('page')!=='home'){
+                                if (glitter.getUrlParameter('page') !== 'home') {
                                     location.reload()
                                 }
                                 resolve(true)
                             } else {
-                                ErpConfig.setRole(d2.response.result[0].role)
-                                ErpConfig.role = d2.response.result[0].role
+                                if(d2.response.result[0]){
+                                    ErpConfig.setRole(d2.response.result[0].role)
+                                    ErpConfig.role = d2.response.result[0].role
+                                    ErpConfig.userData=d2.response.result[0].userData
+                                    glitter.share.backendInfo.name = d2.response.result[0].userData.name
+                                }
                                 glitter.share.role = ErpConfig.role
                                 resolve(true)
-                                glitter.share.backendInfo.name=d2.response.result[0].userData.name
-                                glitter.share.backendInfo.role=[
-                                    {value:"0",title:"最高管理員"},
-                                    {value:"1",title:"營運端"},
-                                    {value:"2",title:"A型供應商"},
-                                    {value:"8",title:"B型供應商"},
-                                    {value:"9",title:"C型供應商"},
-                                    {value:"3",title:"海運端"},
-                                    {value:"4",title:"倉儲端"},
-                                    {value:"5",title:"物流端"},
-                                    {value:"6",title:"財務端"},
-                                    {value:"7",title:"後勤端"},
-                                    {value:"10",title:"拆櫃場"},
-                                ].find((dd)=>{
-                                    return dd.value===`${ErpConfig.role}`
+                                glitter.share.backendInfo.role = [
+                                    {value: "0", title: "最高管理員"},
+                                    {value: "1", title: "營運端"},
+                                    {value: "2", title: "A型供應商"},
+                                    {value: "8", title: "B型供應商"},
+                                    {value: "9", title: "C型供應商"},
+                                    {value: "3", title: "海運端"},
+                                    {value: "4", title: "倉儲端"},
+                                    {value: "5", title: "物流端"},
+                                    {value: "6", title: "財務端"},
+                                    {value: "7", title: "後勤端"},
+                                    {value: "10", title: "拆櫃場"},
+                                ].find((dd) => {
+                                    return dd.value === `${ErpConfig.role}`
                                 })!.title
                             }
                         })
@@ -751,6 +757,7 @@ TriggerEvent.create(import.meta.url, {
                             })
                             subData.editData = d2.response.data.map((dd: any) => {
                                 dd.config.id = dd.id
+                                dd.config.line_item = dd.line_item
                                 dd.config['orderID'] = dd.orderID
                                 return dd.config
                             })
@@ -920,7 +927,8 @@ TriggerEvent.create(import.meta.url, {
                             "value": "needPay"
                         }
                     ]
-                    const shareDialog = new ShareDialog(gvc.glitter)
+                    const shareDialog = new ShareDialog(gvc.glitter);
+
                     BaseApi.create({
                         "url": ErpConfig.api + `/api/v1/order/shippingState?page=${subData.page}&limit=${object.limit}&vendor=${ErpConfig.roleList.find((dd) => {
                             return `${dd.code}` === `${ErpConfig.role}`
@@ -928,6 +936,14 @@ TriggerEvent.create(import.meta.url, {
                             if (glitter.getUrlParameter('jsonQuery')) {
                                 return `&jsonQuery=${glitter.getUrlParameter('jsonQuery')}`
                             } else {
+                                return ``
+                            }
+                        })()}${(() => {
+                            if((ErpConfig.userData as any).areaList){
+                                return  `&inPlace=${(ErpConfig.userData as any).areaList.map((data:any)=>{
+                                    return data.area
+                                }).join(',')}`;
+                            }else{
                                 return ``
                             }
                         })()}`,
@@ -939,35 +955,35 @@ TriggerEvent.create(import.meta.url, {
                         },
                     }).then((d2) => {
                         if (d2.result) {
-                            ErpConfig.selectOrder=[]
+                            ErpConfig.selectOrder = []
                             d2.response.data = d2.response.data.filter((dd: any) => {
                                 return dd.product !== undefined
                             })
                             subData.data = d2.response.data.map((dd: any) => {
                                 const pd = (dd.product as any);
                                 pd.price = pd.price ?? 0
-                                const a =dd.orderData.config
-                                dd.config.customer_address=a.customer_address
-                                dd.config.customer_phone=a.customer_phone
-                                dd.config.customer_email=a.customer_email
-                                dd.config.customer_name=a.customer_name
+                                const a = dd.orderData.config
+                                dd.config.customer_address = a.customer_address
+                                dd.config.customer_phone = a.customer_phone
+                                dd.config.customer_email = a.customer_email
+                                dd.config.customer_name = a.customer_name
                                 dd.config.payment_status = dd.config.payment_status ?? 'notPay'
                                 const array = [{
                                     key: '●',
-                                    value: `<input type="checkbox" class="form-check-input batchDel" onchange="${gvc.event((e, event)=>{
-                                    if(e.checked){
-                                        ErpConfig.selectOrder.push(dd)
-                                    }else{
-                                        ErpConfig.selectOrder=ErpConfig.selectOrder.filter((d2)=>{
-                                            return dd.id !== d2.id
-                                        })
-                                    }
-                                 
+                                    value: `<input type="checkbox" class="form-check-input batchDel" onchange="${gvc.event((e, event) => {
+                                        if (e.checked) {
+                                            ErpConfig.selectOrder.push(dd)
+                                        } else {
+                                            ErpConfig.selectOrder = ErpConfig.selectOrder.filter((d2) => {
+                                                return dd.id !== d2.id
+                                            })
+                                        }
+
                                         e.stopPropagation()
-                                    })}" onclick="${gvc.event((e, event)=>{
+                                    })}" onclick="${gvc.event((e, event) => {
                                         event.stopPropagation()
                                     })}">`
-                                },{
+                                }, {
                                     key: 'QRCODE',
                                     value: gvc.bindView(() => {
                                         const id = gvc.glitter.getUUID()
@@ -986,9 +1002,10 @@ TriggerEvent.create(import.meta.url, {
                                                 gvc.glitter.addMtScript([
                                                     {src: new URL('../lib/qrcode.js', import.meta.url)}
                                                 ], () => {
-                                                    let url = new URL(location.href)
+                                                    let url = new URL(window.location.origin + window.location.pathname)
                                                     url.searchParams.set('page', 'redirectToForm')
                                                     url.searchParams.set('token', dd.token)
+
                                                     new (window as any).QRCode(document.getElementById(gvc.id(id)), {
                                                         text: url.href,
                                                         width: 45,
@@ -1095,11 +1112,11 @@ TriggerEvent.create(import.meta.url, {
                                         }) ?? {name: '異常單據'}).name}</div>`
                                     });
                                 }
-                                if (['1', '0',  '6', '3'].indexOf(`${ErpConfig.role}`) !== -1) {
+                                if (['1', '0', '6', '3'].indexOf(`${ErpConfig.role}`) !== -1) {
                                     array.splice(4, 0, {
                                         key: '海運/請款狀態',
                                         value: `<div class="badge ${(() => {
-                                            dd.config.payment_status2=dd.config.payment_status2??'notPay'
+                                            dd.config.payment_status2 = dd.config.payment_status2 ?? 'notPay'
                                             switch (dd.config.payment_status2) {
                                                 case 'notPay':
                                                     return `bg-dark text-black`
@@ -1372,26 +1389,26 @@ TriggerEvent.create(import.meta.url, {
 
                                     shareDialog.successMessage({
                                         text: "請將QRCODE貼上外箱完成出貨．", callback: () => {
-                                            gvc.glitter.addMtScript([
-                                                {src: new URL('../lib/qrcode.js', import.meta.url)}
-                                            ], () => {
-                                                $('#qrcodeGenerater').remove()
-                                                $('body').append('<div id="qrcodeGenerater" class="d-none"></div>')
-                                                let url = new URL(location.href)
-                                                url.searchParams.set('page', 'redirectToForm')
-                                                url.searchParams.set('token', subData.token)
-                                                new (window as any).QRCode(document.getElementById('qrcodeGenerater'), {
-                                                    text: url.href,
-                                                    width: 512,
-                                                    height: 512,
-                                                });
-                                                setTimeout(() => {
-                                                    gvc.glitter.openDiaLog(new URL('../dialog/image-preview.js', import.meta.url).href, 'preview',
-                                                        $(`#qrcodeGenerater img`).attr('src'))
-                                                }, 500)
-
-                                            }, () => {
-                                            })
+                                            // gvc.glitter.addMtScript([
+                                            //     {src: new URL('../lib/qrcode.js', import.meta.url)}
+                                            // ], () => {
+                                            //     $('#qrcodeGenerater').remove()
+                                            //     $('body').append('<div id="qrcodeGenerater" class="d-none"></div>')
+                                            //     let url = new URL(location.href)
+                                            //     url.searchParams.set('page', 'redirectToForm')
+                                            //     url.searchParams.set('token', subData.token)
+                                            //     new (window as any).QRCode(document.getElementById('qrcodeGenerater'), {
+                                            //         text: url.href,
+                                            //         width: 512,
+                                            //         height: 512,
+                                            //     });
+                                            //     setTimeout(() => {
+                                            //         gvc.glitter.openDiaLog(new URL('../dialog/image-preview.js', import.meta.url).href, 'preview',
+                                            //             $(`#qrcodeGenerater img`).attr('src'))
+                                            //     }, 500)
+                                            //
+                                            // }, () => {
+                                            // })
                                         }
                                     })
 
@@ -1593,11 +1610,11 @@ TriggerEvent.create(import.meta.url, {
                                                 }
                                             })
                                         }
-                                        const a =dd.orderData.config
-                                        dd.config.customer_address=a.customer_address
-                                        dd.config.customer_phone=a.customer_phone
-                                        dd.config.customer_email=a.customer_email
-                                        dd.config.customer_name=a.customer_name
+                                        const a = dd.orderData.config
+                                        dd.config.customer_address = a.customer_address
+                                        dd.config.customer_phone = a.customer_phone
+                                        dd.config.customer_email = a.customer_email
+                                        dd.config.customer_name = a.customer_name
                                         dd.config.carbadge = parseInt(dd.config.quantity, 10) * dd.product.price
                                         dd.config.totalMoney = parseInt(dd.config.shipping_value, 10) + dd.config.carbadge
                                         dd.config.token = dd.token
@@ -1707,14 +1724,14 @@ TriggerEvent.create(import.meta.url, {
                     return ``
                 },
                 event: () => {
-                    return new Promise((resolve, reject)=>{
-                        if(`${ErpConfig.role}`==='3'){
-                            resolve(`<button class="btn btn-primary" onclick="${gvc.event((e,event)=>{
-                                async function exe(){
+                    return new Promise((resolve, reject) => {
+                        if (`${ErpConfig.role}` === '3') {
+                            resolve(`<button class="btn btn-primary" onclick="${gvc.event((e, event) => {
+                                async function exe() {
                                     const shareDialog = new ShareDialog(gvc.glitter)
                                     shareDialog.dataLoading({visible: false})
-                                    
-                                    for (const subData of ErpConfig.selectOrder){
+
+                                    for (const subData of ErpConfig.selectOrder) {
                                         for (const a of ['pack_date', 'unpack_date', 'box_number', 'cuft', 'box_price']) {
                                             if ((subData.config[a] === '') || (subData.config[a] === undefined)) {
                                                 shareDialog.errorMessage({text: "請確實填寫完裝櫃明細"})
@@ -1726,12 +1743,12 @@ TriggerEvent.create(import.meta.url, {
                                             return;
                                         }
                                     }
-                                   
-                                    for (const a of ErpConfig.selectOrder){
-                                    
-                                        const result=await (new Promise((resolve, reject)=>{
-                                            a.config.order_status='to-shipp'
-                                            a.config.log=undefined
+
+                                    for (const a of ErpConfig.selectOrder) {
+
+                                        const result = await (new Promise((resolve, reject) => {
+                                            a.config.order_status = 'to-shipp'
+                                            a.config.log = undefined
                                             BaseApi.create({
                                                 "url": ErpConfig.api + `/api/v1/order/shippingState`,
                                                 "type": "PUT",
@@ -1752,19 +1769,20 @@ TriggerEvent.create(import.meta.url, {
                                                 }
                                             })
                                         }))
-                                        if(!result){
+                                        if (!result) {
                                             shareDialog.dataLoading({visible: false})
-                                            shareDialog.errorMessage({text:"更新異常!"})
+                                            shareDialog.errorMessage({text: "更新異常!"})
                                             return
                                         }
                                     }
                                     shareDialog.dataLoading({visible: false})
-                                    shareDialog.successMessage({text:"更新成功!"})
+                                    shareDialog.successMessage({text: "更新成功!"})
                                     location.reload()
                                 }
+
                                 exe()
                             })}">批量上櫃</button>`)
-                        }else{
+                        } else {
                             resolve(``)
                         }
 
@@ -1773,4 +1791,85 @@ TriggerEvent.create(import.meta.url, {
             }
         }
     },
+    boxSticker: {
+        title: 'ERP-外箱貼紙',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = (window as any).glitter
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    $('#selectPackage').remove()
+                    const id = glitter.getUUID()
+                    $('body').append(`<div id="selectPackage" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+            <h3 class="text-white">選擇列印目標</h3>
+                <div class="ps-1 pe-1" >
+${
+                        subData.package_list.map((dd: any, index: number) => {
+                            return `<button class="btn btn-primary me-2" onclick="${gvc.event(() => {
+                                function toDataURL(url: string, callback: any) {
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.onload = function () {
+                                        var reader = new FileReader();
+                                        reader.onloadend = function () {
+                                            callback(reader.result);
+                                        }
+                                        reader.readAsDataURL(xhr.response);
+                                    };
+                                    xhr.open('GET', url);
+                                    xhr.responseType = 'blob';
+                                    xhr.send();
+                                }
+
+                                toDataURL(subData.src, function (dataUrl: any) {
+                                    gvc.addMtScript([{src: 'https://html2canvas.hertzen.com/dist/html2canvas.js'}], () => {
+                                        $('body').append(`<div id="canvas" style="max-width:100%;width:500px;">${Qrcode.html(subData.orderID, subData.name, subData.sku, subData.spec, subData.quantity,
+                                            subData.package_list.length, dd.waybill_number, dd.size_l, dd.size_w, dd.size_h, dataUrl)}</div>`);
+                                        gvc.glitter.addMtScript([
+                                            {src: new URL('../lib/qrcode.js', import.meta.url)}
+                                        ], () => {
+                                            $('#qrcodeGenerater').remove()
+                                            $('body').append('<div id="qrcodeGenerater" class="d-none"></div>')
+                                            let url = new URL(window.location.origin + window.location.pathname)
+                                            url.searchParams.set('page', 'redirectToForm')
+                                            url.searchParams.set('token', subData.token)
+                                            new (window as any).QRCode(document.getElementById('qrcodeGenerater'), {
+                                                text: url.href,
+                                                width: 512,
+                                                height: 512,
+                                            });
+                                            setTimeout(() => {
+                                                $('#wordQrcode').attr('src', ($(`#qrcodeGenerater img`).attr('src') as any));
+                                                (window as any).html2canvas(document.querySelector("#canvas")).then((canvas: any) => {
+                                                    glitter.openDiaLog(new URL('../dialog/image-preview.js', import.meta.url), 'preview',
+                                                        canvas.toDataURL("image/png"))
+                                                    $('#canvas').remove()
+                                                });
+                                            }, 250)
+                                        }, () => {
+                                        })
+
+                                    }, () => {
+                                    })
+                                })
+                            })}" value="${index}">包件:${index + 1}</button>`
+                        }).join('')
+                    }
+                </div>
+ <div class="modal-footer mt-2">
+                                                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">取消</button>
+                                                            </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>`);
+                    ($('#selectPackage') as any).modal('show')
+                }
+            }
+        }
+    }
 })

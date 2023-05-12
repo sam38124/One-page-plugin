@@ -140,6 +140,10 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                 widget.refreshComponent();
                                             },
                                         }),
+                                    minus: gvc.event(() => {
+                                        widget.data.list.splice(index, 1);
+                                        widget.refreshComponent();
+                                    })
                                 };
                             }),
                             expand: widget.data,

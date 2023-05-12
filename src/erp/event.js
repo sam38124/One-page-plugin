@@ -3,6 +3,7 @@ import { Editor } from "../editor.js";
 import { BaseApi } from "./api/base.js";
 import { ShareDialog } from "../dialog/ShareDialog.js";
 import { ErpConfig } from "./erp-config.js";
+import { Qrcode } from "./qrcode.js";
 class GlobalData {
     static data = {
         pageList: [],
@@ -28,7 +29,9 @@ class GlobalData {
         },
     };
 }
-window.glitter.addMtScript([{ src: 'https://momentjs.com/downloads/moment-with-locales.min.js' }], () => { }, () => { });
+window.glitter.addMtScript([{ src: 'https://momentjs.com/downloads/moment-with-locales.min.js' }], () => {
+}, () => {
+});
 TriggerEvent.create(import.meta.url, {
     login: {
         title: 'ERP-登入按鈕',
@@ -249,11 +252,14 @@ TriggerEvent.create(import.meta.url, {
                                 resolve(true);
                             }
                             else {
-                                ErpConfig.setRole(d2.response.result[0].role);
-                                ErpConfig.role = d2.response.result[0].role;
+                                if (d2.response.result[0]) {
+                                    ErpConfig.setRole(d2.response.result[0].role);
+                                    ErpConfig.role = d2.response.result[0].role;
+                                    ErpConfig.userData = d2.response.result[0].userData;
+                                    glitter.share.backendInfo.name = d2.response.result[0].userData.name;
+                                }
                                 glitter.share.role = ErpConfig.role;
                                 resolve(true);
-                                glitter.share.backendInfo.name = d2.response.result[0].userData.name;
                                 glitter.share.backendInfo.role = [
                                     { value: "0", title: "最高管理員" },
                                     { value: "1", title: "營運端" },
@@ -745,6 +751,7 @@ TriggerEvent.create(import.meta.url, {
                             });
                             subData.editData = d2.response.data.map((dd) => {
                                 dd.config.id = dd.id;
+                                dd.config.line_item = dd.line_item;
                                 dd.config['orderID'] = dd.orderID;
                                 return dd.config;
                             });
@@ -926,6 +933,15 @@ TriggerEvent.create(import.meta.url, {
                             else {
                                 return ``;
                             }
+                        })()}${(() => {
+                            if (ErpConfig.userData.areaList) {
+                                return `&inPlace=${ErpConfig.userData.areaList.map((data) => {
+                                    return data.area;
+                                }).join(',')}`;
+                            }
+                            else {
+                                return ``;
+                            }
                         })()}`,
                         "type": "GET",
                         "timeout": 0,
@@ -982,7 +998,7 @@ TriggerEvent.create(import.meta.url, {
                                                     gvc.glitter.addMtScript([
                                                         { src: new URL('../lib/qrcode.js', import.meta.url) }
                                                     ], () => {
-                                                        let url = new URL(location.href);
+                                                        let url = new URL(window.location.origin + window.location.pathname);
                                                         url.searchParams.set('page', 'redirectToForm');
                                                         url.searchParams.set('token', dd.token);
                                                         new window.QRCode(document.getElementById(gvc.id(id)), {
@@ -1363,24 +1379,6 @@ TriggerEvent.create(import.meta.url, {
                                 if (subData.order_status === 'Shipped') {
                                     shareDialog.successMessage({
                                         text: "請將QRCODE貼上外箱完成出貨．", callback: () => {
-                                            gvc.glitter.addMtScript([
-                                                { src: new URL('../lib/qrcode.js', import.meta.url) }
-                                            ], () => {
-                                                $('#qrcodeGenerater').remove();
-                                                $('body').append('<div id="qrcodeGenerater" class="d-none"></div>');
-                                                let url = new URL(location.href);
-                                                url.searchParams.set('page', 'redirectToForm');
-                                                url.searchParams.set('token', subData.token);
-                                                new window.QRCode(document.getElementById('qrcodeGenerater'), {
-                                                    text: url.href,
-                                                    width: 512,
-                                                    height: 512,
-                                                });
-                                                setTimeout(() => {
-                                                    gvc.glitter.openDiaLog(new URL('../dialog/image-preview.js', import.meta.url).href, 'preview', $(`#qrcodeGenerater img`).attr('src'));
-                                                }, 500);
-                                            }, () => {
-                                            });
                                         }
                                     });
                                 }
@@ -1765,4 +1763,79 @@ TriggerEvent.create(import.meta.url, {
             };
         }
     },
+    boxSticker: {
+        title: 'ERP-外箱貼紙',
+        fun: (gvc, widget, object, subData) => {
+            const glitter = window.glitter;
+            return {
+                editor: () => {
+                    return ``;
+                },
+                event: () => {
+                    $('#selectPackage').remove();
+                    const id = glitter.getUUID();
+                    $('body').append(`<div id="selectPackage" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+            <h3 class="text-white">選擇列印目標</h3>
+                <div class="ps-1 pe-1" >
+${subData.package_list.map((dd, index) => {
+                        return `<button class="btn btn-primary me-2" onclick="${gvc.event(() => {
+                            function toDataURL(url, callback) {
+                                var xhr = new XMLHttpRequest();
+                                xhr.onload = function () {
+                                    var reader = new FileReader();
+                                    reader.onloadend = function () {
+                                        callback(reader.result);
+                                    };
+                                    reader.readAsDataURL(xhr.response);
+                                };
+                                xhr.open('GET', url);
+                                xhr.responseType = 'blob';
+                                xhr.send();
+                            }
+                            toDataURL(subData.src, function (dataUrl) {
+                                gvc.addMtScript([{ src: 'https://html2canvas.hertzen.com/dist/html2canvas.js' }], () => {
+                                    $('body').append(`<div id="canvas" style="max-width:100%;width:500px;">${Qrcode.html(subData.orderID, subData.name, subData.sku, subData.spec, subData.quantity, subData.package_list.length, dd.waybill_number, dd.size_l, dd.size_w, dd.size_h, dataUrl)}</div>`);
+                                    gvc.glitter.addMtScript([
+                                        { src: new URL('../lib/qrcode.js', import.meta.url) }
+                                    ], () => {
+                                        $('#qrcodeGenerater').remove();
+                                        $('body').append('<div id="qrcodeGenerater" class="d-none"></div>');
+                                        let url = new URL(window.location.origin + window.location.pathname);
+                                        url.searchParams.set('page', 'redirectToForm');
+                                        url.searchParams.set('token', subData.token);
+                                        new window.QRCode(document.getElementById('qrcodeGenerater'), {
+                                            text: url.href,
+                                            width: 512,
+                                            height: 512,
+                                        });
+                                        setTimeout(() => {
+                                            $('#wordQrcode').attr('src', $(`#qrcodeGenerater img`).attr('src'));
+                                            window.html2canvas(document.querySelector("#canvas")).then((canvas) => {
+                                                glitter.openDiaLog(new URL('../dialog/image-preview.js', import.meta.url), 'preview', canvas.toDataURL("image/png"));
+                                                $('#canvas').remove();
+                                            });
+                                        }, 250);
+                                    }, () => {
+                                    });
+                                }, () => {
+                                });
+                            });
+                        })}" value="${index}">包件:${index + 1}</button>`;
+                    }).join('')}
+                </div>
+ <div class="modal-footer mt-2">
+                                                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">取消</button>
+                                                            </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>`);
+                    $('#selectPackage').modal('show');
+                }
+            };
+        }
+    }
 });

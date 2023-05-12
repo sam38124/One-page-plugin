@@ -192,7 +192,7 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
                                                     if (dd.visible === 'invisible' && (dd.value !== formData[data.key])) {
                                                         return ``;
                                                     }
-                                                    formData[data.key] = formData[data.key] ?? dd.value;
+                                                    formData[data.key] = (formData[data.key] !== undefined && formData[data.key] !== '') ? formData[data.key] : dd.value;
                                                     return `<option value="${dd.value}" ${dd.value === formData[data.key] ? `selected` : ``}>
                                 ${dd.name}
                             </option>`;

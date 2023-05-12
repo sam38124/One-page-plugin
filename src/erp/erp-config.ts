@@ -3,6 +3,7 @@ export class ErpConfig {
     public static roleKey='asdamkl32'
     public static api=''
     public static role=''
+    public static userData={}
     public static roleList:{code:string,name:string,sku_p:string}[]=[]
 public static selectOrder:any[]=[]
     public static setToken(token?:string){

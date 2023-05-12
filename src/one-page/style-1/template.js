@@ -240,7 +240,7 @@ export const template = Plugin.createComponent(import.meta.url, (glitter, editMo
                                 widget.refreshComponent();
                             }
                         }),
-                        `<div class="alert alert-dark p-2 mt-2">
+                        `<div class="alert alert-primary bg-primary p-2 mt-2">
 ${Editor.h3('項目列表')}
                             ${(() => {
                             let dragm = {
@@ -249,6 +249,8 @@ ${Editor.h3('項目列表')}
                             };
                             return widget.data.list.map((data, index) => {
                                 data.tabExpand = data.tabExpand ?? {};
+                                data.btnList = data.btnList ?? [];
+                                data.btnExpand = data.btnExpand ?? {};
                                 return Editor.toggleExpand({
                                     gvc: gvc,
                                     title: `<div    draggable="true"  ondragenter="${gvc.event((e, event) => {
