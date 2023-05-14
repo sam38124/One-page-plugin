@@ -54,47 +54,9 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
                                 }
                                 return ``;
                             })()}
-                            ${(() => {
-                                if (widget.data.layout == "d-flex") {
-                                    return `
-                                        <span class="w-100 mb-2 fw-500 mt-2 " style="color: orange;">水平對齊</span>
-                                        <select class="form-select mt-2 " onchange="${gvc.event((e) => {
-                                        widget.data.justifyContent = e.value;
-                                        widget.refreshAll();
-                                    })}" >
-                                        ${(() => {
-                                        const data = [
-                                            { tit: "無", value: `` },
-                                            { tit: "水平置左", value: `justify-content-start` },
-                                            { tit: "水平置右", value: `justify-content-end` },
-                                            { tit: "水平置中", value: `justify-content-center` },
-                                            { tit: "水平平均分布不留左右", value: `justify-content-between` },
-                                            { tit: "水平平均分布留左右", value: `justify-content-around` },
-                                            { tit: "水平和左右接平均分布", value: `justify-content-evenly` },
-                                        ];
-                                        return gvc.map(data.map((it) => {
-                                            return `<option value="${it.value}" ${(widget.data.justifyContent === it.value) ? `selected` : ``} >${it.tit}</option>`;
-                                        }));
-                                    })()}
-                                        </select>
-                                    
-                                    `;
-                                }
-                                return ``;
-                            })()}
 `, glitter.htmlGenerate.styleEditor(widget.data.styleEd).editor(gvc, () => {
                                 widget.refreshComponent();
-                            }, '包裝容器樣式'), (() => {
-                                if (widget.data.setting.length > 0) {
-                                    return htmlGenerate.editor(gvc, {
-                                        return_: true,
-                                        refreshAll: widget.refreshAll
-                                    });
-                                }
-                                else {
-                                    return ``;
-                                }
-                            })()
+                            }, '包裝容器樣式')
                         ]);
                     })
                 };

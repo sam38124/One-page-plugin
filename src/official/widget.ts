@@ -391,7 +391,7 @@ let option=widget.data.attr.map((dd: any) => {
                                                         title: '特徵標籤',
                                                         gvc: gvc,
                                                         def: dd.attr,
-                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag'],
+                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag','placeholder'],
                                                         callback: (text: string) => {
                                                             dd.attr = text
                                                             widget.refreshComponent()
@@ -403,7 +403,7 @@ let option=widget.data.attr.map((dd: any) => {
                                                         title: '特徵標籤',
                                                         gvc: gvc,
                                                         def: dd.attr,
-                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag'],
+                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag','placeholder'],
                                                         callback: (text: string) => {
                                                             dd.attr = text
                                                             widget.refreshComponent()

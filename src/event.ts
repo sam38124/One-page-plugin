@@ -267,5 +267,4 @@ TriggerEvent.create(import.meta.url, {
             };
         },
     }
-
 });

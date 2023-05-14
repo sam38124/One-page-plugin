@@ -5,7 +5,6 @@ import {ScriptStyle1} from "../script-style-1.js";
 import {Editor} from "../../editor.js";
 import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
 import {component} from "../../official/component.js";
-import {ErpConfig} from "../../erp/erp-config.js";
 import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {

@@ -146,6 +146,7 @@ const template = (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: stri
                       >
                         <span class="position-absolute top-0 start-0 w-100 h-100 opacity-75  rounded-3" style="background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);"></span>
                         <div class="position-relative text-center zindex-2 d-flex flex-column align-items-center">
+                        <h3>${p.name}</h3>
                          <button class="btn btn-danger" style="height:40px;border-radius:20px;" onclick="${gvc.event((e, event) => {
                                     event.stopPropagation()
                                     TriggerEvent.trigger({

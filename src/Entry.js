@@ -1,7 +1,7 @@
 'use strict';
 export class Entry {
     static onCreate(glitter) {
-        `<div class="d-flex align-items-center"></div>`;
+        `<div class="d-flex align-items-center justify-content-center"></div>`;
         glitter.htmlGenerate.resourceHook = (src) => {
             if (location.host === `127.0.0.1:3080`) {
                 return src.replace(`$style1`, `http://127.0.0.1:3080/lionHtmlExtension`);
