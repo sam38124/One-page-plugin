@@ -100,10 +100,16 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/supportWidget.js', import.meta.url)),
         },
         login: {
-            title: '登入與註冊',
+            title: '登入與註冊．樣式一',
             subContent: '顯示登入與註冊的區塊．',
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/login.js', import.meta.url)),
+        },
+        login2: {
+            title: '登入與註冊．樣式二',
+            subContent: '顯示登入與註冊的區塊．',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/login2.js', import.meta.url)),
         },
         videoSample: {
             title: '影片描述',
