@@ -50,7 +50,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                       <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">
                         <div class="text-center p-4">
-                          <img class="img-fluid rounded-circle mb-4" src="${l.img}" alt="" />
+                          <img class="img-fluid rounded-circle mb-4" style="width:195px;height:195px;" src="${l.img}" alt="" />
                           <h5 class="fw-bold mb-1">${l.name}</h5>
                           <small>${l.pro}</small>
                         </div>

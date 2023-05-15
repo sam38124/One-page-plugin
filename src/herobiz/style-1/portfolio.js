@@ -19,63 +19,54 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                 list: [
                     {
                         title: "高雄醫藥大學",
-                        sub: "高雄醫藥大學校友聯繫平台 (Android / iOS)",
                         tag: ["app", "cms"],
                         img: ScriptStyle1.getRout("assets/img/portfolio/app-1.jpg"),
                     },
                     {
                         title: "橙的電子",
-                        sub: "胎壓偵測器之物聯網後台平台 (WEB)",
                         tag: ["cms", "dashboard", "web"],
                         img: ScriptStyle1.getRout("assets/img/portfolio/books-1.jpg"),
                     },
-                    { title: "緒玹科技", sub: "外包媒合平台 (Android / iOS)", tag: ["app"], img: ScriptStyle1.getRout("assets/img/portfolio/books-1.jpg") },
-                    { title: "御天科技", sub: "GOT-IT EIP (Android / iOS)", tag: ["app"], img: ScriptStyle1.getRout("assets/img/portfolio/app-2.jpg") },
-                    { title: "緒玹科技", sub: "外包媒合平台 WEB", tag: ["web"], img: ScriptStyle1.getRout("assets/img/portfolio/product-1.jpg") },
+                    { title: "緒玹科技", tag: ["app"], img: ScriptStyle1.getRout("assets/img/portfolio/books-1.jpg") },
+                    { title: "御天科技", tag: ["app"], img: ScriptStyle1.getRout("assets/img/portfolio/app-2.jpg") },
+                    { title: "緒玹科技", img: ScriptStyle1.getRout("assets/img/portfolio/product-1.jpg") },
                     {
                         title: "Petstagram寵生活",
-                        sub: "為寵物量身打造的社群媒體平台",
                         tag: ["app", "web"],
                         img: ScriptStyle1.getRout("assets/img/portfolio/product-3.jpg"),
                     },
                     {
                         title: "橙的電子",
-                        sub: "Android 手持應用終端 Sensor 燒錄器",
                         tag: ["ble", "app"],
                         img: ScriptStyle1.getRout("assets/img/portfolio/branding-2.jpg"),
                     },
                     {
                         title: "橙的電子",
-                        sub: "後端數據分析平台",
                         tag: ["cms", "dashboard", "web"],
                         img: ScriptStyle1.getRout("assets/img/portfolio/branding-2.jpg"),
                     },
                     {
                         title: "緒玹科技",
-                        sub: "訂單與薪資管理 (Android / iOS / WEB)",
                         tag: ["cms", "app", "web"],
                         img: ScriptStyle1.getRout("assets/img/portfolio/books-1.jpg"),
                     },
                     {
                         title: "橙的電子",
-                        sub: "胎壓偵測器之物聯網接收",
                         tag: ["app", "ble"],
                         img: ScriptStyle1.getRout("assets/img/portfolio/branding-1.jpg"),
                     },
                     { title: "橙的電子", sub: "USB-PAD藍芽無線燒錄器", tag: ["app", "ble"], img: ScriptStyle1.getRout("assets/img/portfolio/product-2.jpg") },
                     {
                         title: "星澄基地",
-                        sub: "星澄基地，跨站式程式開發平台．",
                         tag: ["web", "cms", "dashboard"],
                         img: ScriptStyle1.getRout("assets/img/portfolio/branding-1.jpg"),
                     },
                     {
                         title: "星澄基地",
-                        sub: "星澄基地，一站式後台管理平台．",
                         tag: ["web", "cms", "dashboard"],
                         img: ScriptStyle1.getRout("assets/img/portfolio/books-3.jpg"),
                     },
-                    { title: "萊恩設計", sub: "官方形象網站", tag: ["web"], img: ScriptStyle1.getRout("assets/img/portfolio/app-3.jpg") },
+                    { title: "萊恩設計", tag: ["web"], img: ScriptStyle1.getRout("assets/img/portfolio/app-3.jpg") },
                 ],
             };
             return {
@@ -206,10 +197,10 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         glitter.htmlGenerate.editeInput({
                             gvc: gvc,
                             title: '副標題',
-                            default: widget.data.sub,
+                            default: widget.data.desc,
                             placeHolder: '給一段適合的副標題',
                             callback: (text) => {
-                                widget.data.sub = text;
+                                widget.data.desc = text;
                                 widget.refreshComponent();
                             },
                         }),
@@ -278,16 +269,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                             placeHolder: '輸入大標題',
                                             callback: (text) => {
                                                 list.title = text;
-                                                widget.refreshComponent();
-                                            },
-                                        }),
-                                        glitter.htmlGenerate.editeText({
-                                            gvc: gvc,
-                                            title: `內文敘述`,
-                                            default: list.desc,
-                                            placeHolder: '輸入內文',
-                                            callback: (text) => {
-                                                list.desc = text;
                                                 widget.refreshComponent();
                                             },
                                         }),

@@ -78,7 +78,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                   <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="${200 * (i + 1)}">
                     <div class="team-member">
                       <div class="member-img">
-                        <img src="${l.img}" class="img-fluid" alt="" />
+                        <img style="height:356px;" src="${l.img}" class="img-fluid" alt="" />
                       </div>
                       <div class="member-info">
                         <div class="social">
