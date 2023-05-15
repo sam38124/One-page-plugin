@@ -59,8 +59,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         },
                     ];
                     widget.data.introList = widget.data.introList??[
-                        `Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt adipisci omnis et ut. Nulla accusantium dolor incidunt officia tempore. Et eius omnis.Cupiditate ut dicta maxime officiis quidem quia. Sed et consectetur qui quia repellendus itaque neque. Aliquid amet quidem ut quaerat cupiditate. Ab et eum qui repellendus omnis culpa magni laudantium dolores.`,
-                        `Recusandae est praesentium consequatur eos voluptatem. Vitae dolores aliquam itaque odio nihil. Neque ut neque ut quae voluptas. Maxime corporis aut ut ipsum consequatur. Repudiandae sunt sequi minus qui et. Doloribus molestiae officiis.Soluta eligendi fugiat omnis enim. Numquam alias sint possimus eveniet ad. Ratione in earum eum magni totam.`
+                        {text:`Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt adipisci omnis et ut. Nulla accusantium dolor incidunt officia tempore. Et eius omnis.Cupiditate ut dicta maxime officiis quidem quia. Sed et consectetur qui quia repellendus itaque neque. Aliquid amet quidem ut quaerat cupiditate. Ab et eum qui repellendus omnis culpa magni laudantium dolores.`},
+                        {text:`Recusandae est praesentium consequatur eos voluptatem. Vitae dolores aliquam itaque odio nihil. Neque ut neque ut quae voluptas. Maxime corporis aut ut ipsum consequatur. Repudiandae sunt sequi minus qui et. Doloribus molestiae officiis.Soluta eligendi fugiat omnis enim. Numquam alias sint possimus eveniet ad. Ratione in earum eum magni totam.`}
                     ]
 
                     return gvc.bindView({
@@ -76,7 +76,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         data:string
                                     }[]
                                 }[],
-                                introList:string[]
+                                introList:{
+                                    text:string
+                                }[]
                             }= {
                                 image:widget.data.image,
                                 title:widget.data.title,
@@ -130,7 +132,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     }
                     html+=`
                     <p class="${appendClass}">
-                      ${intro}
+                      ${intro.text}
                     </p>
                     `
                 })
@@ -154,6 +156,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 editor:()=>{
                     widget.data.infExpand = widget.data.infExpand??{};
                     widget.data.introExpand = widget.data.introExpand??{}
+                    console.log("------------------------")
+                    console.log(widget.data)
                     return gvc.map([
                         Editor.uploadImage({
                             gvc: gvc,
@@ -267,7 +271,8 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             originalArray:widget.data.introList,
                             gvc: gvc,
                             title: '自我介紹區塊',
-                            array: widget.data.introList.map((dd: string, index: number) => {
+                            array: widget.data.introList.map((dd: any, index: number) => {
+                                dd.expand = dd.expand??{};
                                 return {
                                     title: `第${index + 1}段文字`,
                                     expand: dd,
@@ -275,10 +280,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         glitter.htmlGenerate.editeText({
                                             gvc: gvc,
                                             title: `文字內容`,
-                                            default: dd,
+                                            default: dd.text,
                                             placeHolder: '輸入文字',
                                             callback: (text) => {
-                                                dd = text;
+                                                dd.text = text;
                                                 widget.refreshComponent();
                                             },
                                         }),
@@ -295,8 +300,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 title: '添加區塊',
                                 event: gvc.event(() => {
                                     widget.data.introList.push({
-                                        title:"Birthday",
-                                        data:"1 May 1995"
+                                        text:"Birthday"
                                     },);
                                     widget.refreshComponent();
                                 }),

@@ -20,10 +20,16 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/iconBoxes.js', import.meta.url))
         },
         showreel: {
-            title: "",
-            subContent: "透過精美的圖示與簡潔的說明，展現吸引眼球的內容。",
+            title: "影片專區",
+            subContent: "透過精心製作的影片，生動的傳達內容",
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/showreel.js', import.meta.url))
+        },
+        service: {
+            title: "服務簡介",
+            subContent: "探索我們提供的多元化服務，滿足您的需求。",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/service.js', import.meta.url))
         },
         empty: {
             title: "",
