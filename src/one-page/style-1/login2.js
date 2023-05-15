@@ -8,7 +8,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID) => {
-            widget.data.bgImage = widget.data.bgImage ?? "assets/img/account/signin-bg.jpg"
+            widget.data.bgImage = widget.data.bgImage ?? 'https://liondesign-prd.s3.amazonaws.com/file/252530754/1679649346350-price-bg.jpeg';
             widget.data.title = widget.data.title ?? "歡迎來到 星澄基地";
             widget.data.policy = widget.data.policy ?? `一、隱私權保護政策的適用範圍
 
@@ -107,7 +107,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     },
                     registerView: function () {
                         return `  
-            <div class="w-100  " style="width: 526px;max-width: 100%;">
+            <div class="w-100  pt-md-4 pb-4" style="width: 526px;max-width: 100%;">
             <h1 class="text-center text-xl-start">創建帳號</h1>
             <p class="text-center text-xl-start pb-3 mb-3 " style="">已經有帳號了嗎? <a onclick="${gvc.event(function () {
                             type = "SignIn";
@@ -184,12 +184,12 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget);
                     return `  
-  <div class="position-absolute w-100 h-100 " style="
+  <div class="position-absolute w-100 h-100 " style="background-image: url(${widget.data.bgImage});
   background-repeat: no-repeat;background-position: center center;background-size: cover;"></div>
-  <section class="position-relative vh-100 d-flex align-items-center justify-content-center ">
+  <section class="position-relative vh-100 pt-5 pb-4">
 
         <!-- Sign in form -->
-        <div class="container d-flex flex-wrap justify-content-center justify-content-xl-start h-100 d-flex align-items-center justify-content-center" >
+        <div class="container d-flex flex-wrap justify-content-center justify-content-xl-start h-100 pt-5">
             ${gvc.bindView(function () {
                         return {
                             bind: `SignInPlace`,
@@ -217,8 +217,16 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         };
                     })}
           </div>
+          <div class="w-100 align-self-end">
+            <p class="nav d-block fs-xs text-center text-xl-start pb-2 mb-0">
+              © All rights reserved. Made by 
+              <a class="nav-link d-inline-block p-0" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a>
+            </p>    
+          </div>
+        </div>
+        
         <!-- Background -->
-        <div class="position-absolute top-0 end-0 w-50 h-100 bg-position-center bg-repeat-0 bg-size-cover d-none d-xl-block" style="background-image: url(${widget.data.bgImage ?? "assets/img/account/signin-bg.jpg"});"></div>
+        <div class="position-absolute top-0 end-0 w-50 h-100 bg-position-center bg-repeat-0 bg-size-cover d-none d-xl-block" style="background-image: url(assets/img/account/signin-bg.jpg);"></div>
       </section>
 
     

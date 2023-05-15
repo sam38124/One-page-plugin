@@ -164,6 +164,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     })
                 },
                 editor:()=>{
+                    widget.data.listExpand = widget.data.listExpand??{}
                     return gvc.map([
                         glitter.htmlGenerate.editeInput({
                             gvc: gvc,
@@ -185,6 +186,97 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.refreshComponent();
                             },
                         }),
+                        Editor.uploadImage({
+                            gvc: gvc,
+                            title: `背景圖片`,
+                            def: widget.data.img,
+                            callback: (e) => {
+                                widget.data.img = e;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        Editor.arrayItem({
+                            originalArray:widget.data.list,
+                            gvc: gvc,
+                            title: '區塊內容',
+                            array: widget.data.list.map((dd: any, index: number) => {
+                                return {
+                                    title: dd.tab || `區塊:${index + 1}`,
+                                    expand: dd,
+                                    innerHtml: gvc.map([
+                                        glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: `頁面標籤`,
+                                            default: dd.tab,
+                                            placeHolder: '輸入標題名稱',
+                                            callback: (text) => {
+                                                dd.tab = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                        glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: `頁面內文`,
+                                            default: dd.content,
+                                            placeHolder: '輸入內容',
+                                            callback: (text) => {
+                                                dd.content = text;
+                                                widget.refreshComponent();
+                                            },
+                                        }),
+                                    ]),
+                                    minus: gvc.event(() => {
+                                        widget.data.list.splice(index, 1);
+                                        widget.refreshComponent();
+                                    }),
+                                };
+                            }),
+                            expand: widget.data.listExpand,
+                            plus: {
+                                title: '添加區塊',
+                                event: gvc.event(() => {
+                                    widget.data.list.push({
+                                        tab: "清單列表",
+                                        content: `<ul class="list-unstyled li-space-lg mb-5">
+              <li class="d-flex py-2">
+                <i class="bi bi-check2"></i>
+                <div class="flex-grow-1">
+                  <strong>銷售及收款循環</strong> 包括訂單處理、授信管理、運送貨品、開立銷貨發票、開出帳單、記錄收入及應收帳款、執行與記錄現金收入等之政策及程序。
+                </div>
+              </li>
+              <li class="d-flex py-2">
+                <i class="bi bi-check2"></i>
+                <div class="flex-grow-1">
+                  <strong>採購及付款循環</strong> 包括請購、進貨或採購原料、物料、資產和勞務、處理採購單、經收貨品、檢驗品質、填寫驗收報告書或處理退貨
+                </div>
+              </li>
+              <li class="d-flex py-2">
+                <i class="bi bi-check2"></i>
+                <div class="flex-grow-1">
+                  <strong>生產循環</strong> 包括擬訂生產計畫、開立用料清單、儲存材料、投入生產、計算存貨生產成本、計算銷貨成本等之政策及程序。
+                </div>
+              </li>
+              <li class="d-flex py-2">
+                <i class="bi bi-check2"></i>
+                <div class="flex-grow-1">
+                  <strong>薪工循環</strong> 包括僱用、請假、加班、辭退、訓練、退休、決定薪資率、計時、計算薪津總額、計算薪資稅及各項代扣款、設置薪資紀錄
+                </div>
+              </li>
+              <li class="d-flex py-2">
+                <i class="bi bi-check2"></i>
+                <div class="flex-grow-1">
+                  <strong>融資循環</strong> 包括借款、保證、承兌、租賃、發行公司債及其他有價證券等資金融通事項之授權、執行與記錄等之政策及程序。
+                </div>
+              </li>
+            </ul>`,
+                                    });
+                                    widget.refreshComponent();
+                                }),
+                            },
+                            refreshComponent:()=>{
+                                widget.refreshComponent()
+                            }
+                        })
                     ])
                 }
             }

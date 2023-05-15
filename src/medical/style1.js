@@ -19,6 +19,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./style-1/iconBoxes.js', import.meta.url))
         },
+        showreel: {
+            title: "",
+            subContent: "透過精美的圖示與簡潔的說明，展現吸引眼球的內容。",
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./style-1/showreel.js', import.meta.url))
+        },
         empty: {
             title: "",
             subContent: "",
