@@ -191,7 +191,7 @@ gvc.notifyDataChange('SignInPlace')
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget)
                     return `  
-  <div class="position-absolute w-100 h-100 " style="background-image: url(${widget.data.bgImage});
+  <div class="position-absolute w-100 h-100 " style="
   background-repeat: no-repeat;background-position: center center;background-size: cover;"></div>
   <section class="position-relative vh-100 pt-5 pb-4">
 
@@ -226,16 +226,10 @@ gvc.notifyDataChange('SignInPlace')
                         }
                     })}
           </div>
-          <div class="w-100 align-self-end">
-            <p class="nav d-block fs-xs text-center text-xl-start pb-2 mb-0">
-              © All rights reserved. Made by 
-              <a class="nav-link d-inline-block p-0" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a>
-            </p>    
-          </div>
         </div>
         
         <!-- Background -->
-        <div class="position-absolute top-0 end-0 w-50 h-100 bg-position-center bg-repeat-0 bg-size-cover d-none d-xl-block" style="background-image: url(assets/img/account/signin-bg.jpg);"></div>
+        <div class="position-absolute top-0 end-0 w-50 h-100 bg-position-center bg-repeat-0 bg-size-cover d-none d-xl-block" style="background-image: url(${widget.data.bgImage});"></div>
       </section>
 
     
