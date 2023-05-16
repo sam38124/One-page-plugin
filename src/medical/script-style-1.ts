@@ -16,6 +16,9 @@ export class ScriptStyle1{
         (window as any).root = document.getElementsByTagName('html')[0];
         (window as any).root.classList.add('dark-mode');
         gvc.addStyleLink([
+
+
+
             ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.css'),
             ScriptStyle1.getRout('assets/vendor/swiper/swiper-bundle.min.css'),
             ScriptStyle1.getRout('assets/vendor/lightgallery/css/lightgallery-bundle.min.css'),
@@ -30,8 +33,8 @@ export class ScriptStyle1{
             "assets/vendor/swiper/swiper-bundle.min.js",
             "assets/vendor/lightgallery/lightgallery.min.js",
             "assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js",
-            'assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js',
-            'assets/vendor/lightgallery/plugins/video/lg-video.min.js',
+            "assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js",
+            "assets/vendor/lightgallery/plugins/video/lg-video.min.js",
             'assets/js/theme.min.js'
         ].map(((dd)=>{
             return   {src: ScriptStyle1.getRout(dd)}
@@ -104,21 +107,17 @@ export class ScriptStyle1{
             else if (size == "bx")
                 return `bx bx-link-alt`;
         }
-        let domains = ""
-        if (link.match("https://")){
-            domains = link.split("https://")[1];
-        }else {
-            domains = link.split("http://")[1];
-        }
 
-        let socialDomain = ["instagram" , "twitter" , "facebook"]
+        let socialDomain = ["instagram" , "twitter" , "facebook" , "linkedin"]
+
         let returnString = ""
 
-        if (domains.split(".")[0]=="www"){
-            returnString = domains.split(".")[1];
+        if (link.split(".")[0]=="www"){
+            returnString = link.split(".")[1];
         }else {
-            returnString = domains.split(".")[0];
+            returnString = link.split(".")[0];
         }
+        console.log(link)
         // let split = url.split(".");
         const isMatch = socialDomain.some((domain) => domain.toLowerCase() === returnString.toLowerCase());
         if (isMatch){

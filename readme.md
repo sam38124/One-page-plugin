@@ -2,7 +2,7 @@
 ```
 Editor.uploadImage({
 gvc: gvc,
-title: '預覽圖片1'',
+title: '預覽圖片1',
 def:widget.data.image,
 callback:(data)=>{
 widget.data.mobile.m.lottie=data
