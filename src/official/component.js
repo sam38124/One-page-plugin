@@ -30,7 +30,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                             }).then((d2) => {
                                 if (!d2.result) {
                                     fal += 1;
-                                    if (fal < 5) {
+                                    if (fal < 20) {
                                         setTimeout(() => { getData(); }, 200);
                                     }
                                 }

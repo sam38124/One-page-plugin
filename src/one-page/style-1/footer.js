@@ -30,15 +30,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     title: `<a class="sent_mail" href="mailto:sam38124@gmail.com"> sam38124@gmail.com</a>`,
                 },
             ];
-            widget.data.btnList = widget.data.btnList ?? [
-                {
-                    img: ScriptStyle1.getRout('img/index/LINE_App.png'),
-                    tip: 'LINE',
-                    style: { color: '#00B900' },
-                    click: function () {
-                    },
-                },
-            ];
             widget.data.copyRight = widget.data.copyRight ?? `Copyright &copy; ${new Date().getFullYear()}
         <a href="https://liondesign.tw/lionDesign/" target="_blank" rel="noreferrer noopener" style="cursor:pointer;color:ivory;">Lion Design</a>
         All Rights Reserved.`;

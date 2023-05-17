@@ -10,7 +10,6 @@ export class ScriptStyle1{
             return
         }
         ScriptStyle1.hi = true;
-
         (window as any).mode = 'dark';
         (window as any).root = document.getElementsByTagName('html')[0];
         (window as any).root.classList.add('dark-mode');

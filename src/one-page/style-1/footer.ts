@@ -34,25 +34,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     title: /*html*/ `<a class="sent_mail" href="mailto:sam38124@gmail.com"> sam38124@gmail.com</a>`,
                 },
             ];
-            widget.data.btnList = widget.data.btnList ?? [
-                {
-                    img: ScriptStyle1.getRout('img/index/LINE_App.png'),
-                    tip: 'LINE',
-                    style: {color: '#00B900'},
-                    click: function () {
-                        // Swal.fire({
-                        //     title: /*html*/ `<a class="fs-5" style="color:black">QR code 掃不了? </a><a class="fs-5 text-info" onclick="${event(() =>
-                        //         funnel.hyperLink("https://line.me/ti/p/ZwqJbwWX2Y")
-                        //     )}" style="cursor:pointer">點此連結</a>`,
-                        //     text: "LINE 加入好友【萊恩設計-王建智】",
-                        //     imageUrl: "img/index/lineQR.png",
-                        //     imageWidth: 250,
-                        //     imageHeight: 250,
-                        //     imageAlt: "Custom image",
-                        // });
-                    },
-                },
-            ];
+
             widget.data.copyRight=widget.data.copyRight??`Copyright &copy; ${new Date().getFullYear()}
         <a href="https://liondesign.tw/lionDesign/" target="_blank" rel="noreferrer noopener" style="cursor:pointer;color:ivory;">Lion Design</a>
         All Rights Reserved.`

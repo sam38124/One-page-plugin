@@ -5,7 +5,6 @@ import {Editor} from '../editor.js';
 import {TriggerEvent} from '../glitterBundle/plugins/trigger-event.js';
 
 Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
-
     return {
         topNav: {
             title: '網站導覽列',

@@ -403,7 +403,7 @@ let option=widget.data.attr.map((dd: any) => {
                                                         title: '特徵標籤',
                                                         gvc: gvc,
                                                         def: dd.attr,
-                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag','placeholder'],
+                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag'],
                                                         callback: (text: string) => {
                                                             dd.attr = text
                                                             widget.refreshComponent()

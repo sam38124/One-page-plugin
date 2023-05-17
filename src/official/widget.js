@@ -399,7 +399,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                                         title: '特徵標籤',
                                                         gvc: gvc,
                                                         def: dd.attr,
-                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag', 'placeholder'],
+                                                        array: ['onclick', 'oninput', 'onchange', 'ondrag'],
                                                         callback: (text) => {
                                                             dd.attr = text;
                                                             widget.refreshComponent();
