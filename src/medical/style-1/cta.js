@@ -78,7 +78,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                 </div>
 
                 <!-- Swiper slider -->
-                <div class="swiper mx-0 mb-md-n2 mb-xxl-n3" data-swiper-options='{
+                <div class="swiperCTA mx-0 mb-md-n2 mb-xxl-n3" data-swiper-options='{
                   "spaceBetween": 30,
                   "loop": true,
                   "tabs": true,

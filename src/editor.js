@@ -275,6 +275,35 @@ export class Editor {
                 },
             }));
     }
+    static googleMap(obj) {
+        const glitter = window.glitter;
+        return (`
+                ${Editor.h3(obj.title)}
+                <div
+                    class="alert alert-primary alert-dismissible fade show p-2"
+                    role="alert"
+                    style="white-space: normal;word-break: break-all;"
+                >
+                    <a
+                        onclick="${obj.gvc.event(() => glitter.openNewTab('https://www.google.com/maps/'))}"
+                        class="fw-bold fw text-primary"
+                        style="cursor: pointer;"
+                        >googleMap</a
+                    >
+                   
+                    請搜尋目標地址，再點擊分享，在分頁上選擇嵌入地圖後，會得到一串HTML，請把src後的兩個""內的內容複製上來
+                </div>
+            ` +
+            glitter.htmlGenerate.editeInput({
+                gvc: obj.gvc,
+                title: '',
+                default: obj.def,
+                placeHolder: '請輸入src',
+                callback: (text) => {
+                    obj.callback(text);
+                },
+            }));
+    }
     static toggleExpand(obj) {
         const glitter = window.glitter;
         obj.data.expand = obj.data.expand ?? false;

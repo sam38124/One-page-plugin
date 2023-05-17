@@ -62,6 +62,18 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
             defaultData:{},
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/test.js',import.meta.url))
         },
+        news:{
+            title: "最新消息",
+            subContent: "最新消息網頁元件：即時提供最新消息的動態資訊集合。",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/news.js',import.meta.url))
+        },
+        contact:{
+            title: "聯繫資訊",
+            subContent: "輕鬆建立聯繫資訊，分享問題、意見或需求，以便提供個性化的支援和解答。",
+            defaultData:{},
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/contact.js',import.meta.url))
+        },
         empty:{
             title: "",
                 subContent: "",
