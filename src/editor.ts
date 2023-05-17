@@ -42,10 +42,14 @@ export class Editor {
                                     dialog.dataLoading({visible: false});
                                     const data1 = data.response;
                                     dialog.dataLoading({visible: true});
+
                                     $.ajax({
                                         url: data1.url,
                                         type: 'put',
                                         data: file,
+                                        "headers": {
+                                            "Content-Type": file.type
+                                        },
                                         processData: false,
                                         crossDomain: true,
                                         success: () => {

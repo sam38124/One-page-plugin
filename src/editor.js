@@ -45,6 +45,9 @@ export class Editor {
                                         url: data1.url,
                                         type: 'put',
                                         data: file,
+                                        "headers": {
+                                            "Content-Type": file.type
+                                        },
                                         processData: false,
                                         crossDomain: true,
                                         success: () => {
