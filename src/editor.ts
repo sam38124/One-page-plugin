@@ -2,7 +2,7 @@ import {ShareDialog} from './dialog/ShareDialog.js';
 import {ScriptStyle1} from "./one-page/script-style-1.js";
 
 export class Editor {
-    public static uploadImage(obj: { title: string; gvc: any; def: string; callback: (data: string) => void ;readonly?:boolean}) {
+    public static uploadImage(obj: { title: string; gvc: any; def: string; callback: (data: string) => void; readonly?: boolean }) {
         const glitter = (window as any).glitter;
         const $ = glitter.$;
         return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 ${(obj.title) ? `` : `d-none`}">${obj.title}</h3>
@@ -20,7 +20,7 @@ export class Editor {
                         obj.def = e.value;
                         obj.gvc.notifyDataChange(id)
                     })}"
-                    ${obj.readonly ? `readonly`:``}
+                    ${obj.readonly ? `readonly` : ``}
                 />
                 <div class="ms-1" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i class="fa-sharp fa-solid fa-eye text-dark ms-2" onclick="${obj.gvc.event(() => {
@@ -28,7 +28,7 @@ export class Editor {
                     })}"></i>
                 <i
                     class="fa-regular fa-upload text-dark ms-2"
-                    style="cursor: pointer;${obj.readonly ? `display:none;`:``}"
+                    style="cursor: pointer;${obj.readonly ? `display:none;` : ``}"
                     onclick="${obj.gvc.event(() => {
                         glitter.ut.chooseMediaCallback({
                             single: true,
@@ -42,14 +42,10 @@ export class Editor {
                                     dialog.dataLoading({visible: false});
                                     const data1 = data.response;
                                     dialog.dataLoading({visible: true});
-
-                                    $.ajax({
+                                    const objP: any = {
                                         url: data1.url,
                                         type: 'put',
                                         data: file,
-                                        "headers": {
-                                            "Content-Type": file.type
-                                        },
                                         processData: false,
                                         crossDomain: true,
                                         success: () => {
@@ -62,7 +58,13 @@ export class Editor {
                                             dialog.dataLoading({visible: false});
                                             dialog.errorMessage({text: '上傳失敗'});
                                         },
-                                    });
+                                    }
+                                    if (file.type.indexOf('svg') !== -1) {
+                                        objP["headers"] = {
+                                            "Content-Type": file.type
+                                        }
+                                    }
+                                    $.ajax(objP);
                                 });
                             },
                         });
@@ -179,7 +181,7 @@ export class Editor {
                             </div>`;
     }
 
-    public static uploadLottie(obj: { title: string; gvc: any; def: string; callback: (data: string) => void ,color?:string}) {
+    public static uploadLottie(obj: { title: string; gvc: any; def: string; callback: (data: string) => void, color?: string }) {
         const glitter = (window as any).glitter;
         const $ = glitter.$;
         return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
@@ -204,7 +206,7 @@ export class Editor {
                 <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i
                     class="fa-regular fa-upload  text-dark ms-2"
-                    style="cursor: pointer;${(obj.color) ? `color:${obj.color};`:``}"
+                    style="cursor: pointer;${(obj.color) ? `color:${obj.color};` : ``}"
                     onclick="${obj.gvc.event(() => {
             glitter.ut.chooseMediaCallback({
                 single: true,
@@ -293,6 +295,7 @@ export class Editor {
             })
         );
     }
+
     public static googleMap(obj: { title: string; gvc: any; def: string; callback: (text: string) => void }) {
         const glitter = (window as any).glitter;
         return (
@@ -325,7 +328,7 @@ export class Editor {
         );
     }
 
-    public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: () => string; color?: string ,class?:string,style?:string}) {
+    public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: () => string; color?: string, class?: string, style?: string }) {
         const glitter = (window as any).glitter;
         obj.data.expand = obj.data.expand ?? false
         return /*html*/ `${obj.gvc.bindView(() => {
@@ -367,7 +370,7 @@ export class Editor {
                     </div>`;
                 },
                 divCreate: {
-                    class:`toggleInner`
+                    class: `toggleInner`
                 },
             };
         })}`;
@@ -384,7 +387,7 @@ export class Editor {
         title: string;
         gvc: any;
         def: string;
-        array: string[] ;
+        array: string[];
         callback: (text: string) => void;
         placeHolder: string;
     }) {
@@ -392,7 +395,7 @@ export class Editor {
         const gvc = obj.gvc;
         const $ = glitter.$;
         return /*html*/ `
-            ${(obj.title) ? Editor.h3(obj.title):``}
+            ${(obj.title) ? Editor.h3(obj.title) : ``}
             <div class="btn-group dropdown w-100">
                 ${(() => {
             const id = glitter.getUUID();
@@ -435,7 +438,7 @@ export class Editor {
                     bind: id,
                     view: () => {
                         return obj.array
-                            .filter((d2:any) => {
+                            .filter((d2: any) => {
                                 return d2.toUpperCase().indexOf(obj.def.toUpperCase()) !== -1;
                             })
                             .map((d3) => {
@@ -463,9 +466,7 @@ export class Editor {
         `;
     }
 
-    public static returnInnerHtml(obj:{
-
-    }){
+    public static returnInnerHtml(obj: {}) {
 
     }
 
@@ -512,9 +513,9 @@ export class Editor {
         refreshComponent: () => void,
         color1?: string,
         color2?: string,
-        class?:string,
-        style?:string,
-        readonly?:boolean
+        class?: string,
+        style?: string,
+        readonly?: boolean
     }) {
 
         let dragm = {
@@ -544,14 +545,14 @@ export class Editor {
                                     })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
                                     data: dd.expand,
                                     innerText: dd.innerHtml,
-                                    class:``+obj.class ,
-                                    style:`background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);`+obj.style,
+                                    class: `` + obj.class,
+                                    style: `background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);` + obj.style,
                                 });
                             })
-                            .join('<div class="my-2"></div>') + ((obj.readonly) ? ``:Editor.plusBtn(obj.plus.title, obj.plus.event))
+                            .join('<div class="my-2"></div>') + ((obj.readonly) ? `` : Editor.plusBtn(obj.plus.title, obj.plus.event))
                     },
-                class:``,
-                style:`background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
+                class: ``,
+                style: `background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
             })
         );
     }

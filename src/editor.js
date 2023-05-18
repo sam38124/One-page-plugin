@@ -41,13 +41,10 @@ export class Editor {
                                     dialog.dataLoading({ visible: false });
                                     const data1 = data.response;
                                     dialog.dataLoading({ visible: true });
-                                    $.ajax({
+                                    const objP = {
                                         url: data1.url,
                                         type: 'put',
                                         data: file,
-                                        "headers": {
-                                            "Content-Type": file.type
-                                        },
                                         processData: false,
                                         crossDomain: true,
                                         success: () => {
@@ -60,7 +57,13 @@ export class Editor {
                                             dialog.dataLoading({ visible: false });
                                             dialog.errorMessage({ text: '上傳失敗' });
                                         },
-                                    });
+                                    };
+                                    if (file.type.indexOf('svg') !== -1) {
+                                        objP["headers"] = {
+                                            "Content-Type": file.type
+                                        };
+                                    }
+                                    $.ajax(objP);
                                 });
                             },
                         });
