@@ -205,9 +205,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                     Editor.uploadImage({
                                         gvc: gvc,
                                         title: '預覽圖片',
-                                        def: widget.data.img,
+                                        def: dd.img,
                                         callback: (data) => {
-                                            widget.data.img = data;
+                                            dd.img = data;
                                             widget.refreshComponent();
                                         }
                                     }),

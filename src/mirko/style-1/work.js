@@ -17,6 +17,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         { icon: "fas fa-users", num: 642, title: "員工數" },
                         { icon: "fas fa-clock", num: 86, title: "平均開發時間（工作日）" },
                     ];
+                    widget.data.img = widget.data.img ?? ScriptStyle1.getRout("./assets/images/work.jpg");
                     return gvc.bindView({
                         bind: id,
                         view: () => {
@@ -24,13 +25,14 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 title: widget.data.title,
                                 desc: widget.data.desc,
                                 list: widget.data.list,
+                                img: widget.data.img
                             };
                             return `
         <section class="work d-flex align-items-center py-5" id="work">
           <div class="container-fluid text-light">
             <div class="row">
               <div class="col-lg-6 d-flex align-items-center" data-aos="fade-right">
-                <img class="img-fluid" src="${ScriptStyle1.getRout("./assets/images/work.jpg")}" alt="work" />
+                <img class="img-fluid" src="${work.img}" alt="work" />
               </div>
               <div class="col-lg-5 d-flex align-items-center px-4 py-3" data-aos="">
                 <div class="row">
@@ -99,6 +101,14 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 widget.data.desc = text;
                                 widget.refreshComponent();
                             },
+                        }), Editor.uploadImage({
+                            gvc: gvc,
+                            title: '圖片1',
+                            def: widget.data.img,
+                            callback: (data) => {
+                                widget.data.img = data;
+                                widget.refreshComponent();
+                            }
                         }), Editor.arrayItem({
                             originalArray: widget.data.list,
                             gvc: gvc,

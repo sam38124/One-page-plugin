@@ -17,7 +17,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         mail : widget.data.mail??"jianzhi.wang@ncdesign.info",
                         title: widget.data.title??"想傳達您的訊息給萊恩設計嗎？",
                         desc: widget.data.desc??"若想要了解我們的服務，填妥以下表單，萊恩設計將儘速回應您。",
-                        img: ScriptStyle1.getRout("./assets/images/contact.jpg"),
+                        img: widget.data.img??ScriptStyle1.getRout("./assets/images/contact.jpg"),
                         map: widget.data.map??"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621",
                         formList:widget.data.formList??{
                             form: [
@@ -174,6 +174,15 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 widget.data.desc=text
                                 widget.refreshComponent()
                             },
+                        }),
+                        Editor.uploadImage({
+                            gvc: gvc,
+                            title: '預覽圖片1',
+                            def:widget.data.img,
+                            callback:(data)=>{
+                                widget.data.img=data
+                                widget.refreshComponent()
+                            }
                         }),
                         Editor.arrayItem({
                             originalArray:widget.data.formList,

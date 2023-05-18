@@ -78,7 +78,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         }),
                         Editor.toggleExpand({
                             gvc: gvc,
-                            title: '基本資訊',
+                            title: '按鍵',
                             data: widget.data.btn,
                             innerText: ()=>{
 

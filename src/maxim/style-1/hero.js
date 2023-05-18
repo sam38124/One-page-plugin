@@ -67,7 +67,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         }),
                         Editor.uploadImage({
                             gvc: gvc,
-                            title: '右方圖片',
+                            title: '背景圖片',
                             def: widget.data.img,
                             callback: (data) => {
                                 widget.data.img = data;

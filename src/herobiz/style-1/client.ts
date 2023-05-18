@@ -13,31 +13,31 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                 view:()=>{
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID()
-                    let client= widget.data.dataList??{
-                        dataList:{
-                            list:[
-                                {
-                                    img: ScriptStyle1.getRout("assets/img/clients/client-1.png")
-                                },
-                                {
-                                    img: ScriptStyle1.getRout("assets/img/clients/client-2.png")
-                                },
-                                {
-                                    img: ScriptStyle1.getRout("assets/img/clients/client-3.png")
-                                },
-                                {
-                                    img: ScriptStyle1.getRout("assets/img/clients/client-4.png")
-                                },
-                                {
-                                    img: ScriptStyle1.getRout("assets/img/clients/client-5.png")
-                                },
-                                {
-                                    img: ScriptStyle1.getRout("assets/img/clients/client-6.png")
-                                }
-                            ]
-                        },
+                    widget.data.dataList = widget.data.dataList ??{
+                        list:[
+                            {
+                                img: ScriptStyle1.getRout("assets/img/clients/client-1.png")
+                            },
+                            {
+                                img: ScriptStyle1.getRout("assets/img/clients/client-2.png")
+                            },
+                            {
+                                img: ScriptStyle1.getRout("assets/img/clients/client-3.png")
+                            },
+                            {
+                                img: ScriptStyle1.getRout("assets/img/clients/client-4.png")
+                            },
+                            {
+                                img: ScriptStyle1.getRout("assets/img/clients/client-5.png")
+                            },
+                            {
+                                img: ScriptStyle1.getRout("assets/img/clients/client-6.png")
+                            }
+                        ]
                     }
-                    widget.data=client;
+                    let client= {
+                        dataList :widget.data.dataList
+                    }
                     return gvc.bindView({
                         bind:id,
                         view:()=>{
@@ -63,6 +63,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
       `;
                         },divCreate:{},
                         onCreate:()=>{
+
                             // @ts-ignore
                             AOS.init();
 
@@ -105,6 +106,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             gvc: gvc,
                             title: '區塊內容',
                             array: widget.data.dataList.list.map((dd: any, index: number) => {
+
                                 return {
                                     title: `用戶:${index + 1}`,
                                     expand: dd,
@@ -114,7 +116,9 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             title: '用戶圖片',
                                             def:dd.img,
                                             callback:(data)=>{
+
                                                 dd.img=data
+
                                                 widget.refreshComponent()
                                             }
                                         })
