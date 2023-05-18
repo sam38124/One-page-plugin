@@ -74,6 +74,13 @@ Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{
             defaultData:{},
             render: Plugin.setComponent(import.meta.url,new URL('./style-1/contact.js',import.meta.url))
         },
+        footer:{
+            title: "頁腳",
+            subContent: "用於顯示版權信息、聯絡資訊、導航連結及其他相關頁面，提供用戶方便的導航和訊息查詢。",
+            defaultData:{
+            },
+            render: Plugin.setComponent(import.meta.url,new URL('./style-1/footer.js',import.meta.url))
+        },
         empty:{
             title: "",
                 subContent: "",

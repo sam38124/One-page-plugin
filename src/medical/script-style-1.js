@@ -72,8 +72,6 @@ export class ScriptStyle1 {
         `;
         }
         else {
-            console.log("------------------------");
-            console.log("test");
             h += ` 
             <li class="nav-item dropdown">
                 <div class="nav-link dropdown-toggle">${r.title}</div>
@@ -103,7 +101,6 @@ export class ScriptStyle1 {
         else {
             returnString = link.split(".")[0];
         }
-        console.log(link);
         const isMatch = socialDomain.some((domain) => domain.toLowerCase() === returnString.toLowerCase());
         if (isMatch) {
             return `${size} ${size}l-${returnString.toLowerCase()}`;
