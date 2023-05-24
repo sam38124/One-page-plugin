@@ -1,11 +1,11 @@
-import { ShareDialog } from '../dialog/ShareDialog.js';
+import {ShareDialog} from '../dialog/ShareDialog.js';
 
 
 export class EditorElem {
     public static uploadImage(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
         const glitter = (window as any).glitter;
         const $ = glitter.$;
-        return /*html*/ `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+        return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
             <div class="d-flex align-items-center mb-3">
                 <input
                     class="flex-fill form-control "
@@ -17,7 +17,7 @@ export class EditorElem {
                 />
                 <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i
-                    class="fa-regular fa-upload text-white ms-2"
+                    class="fa-regular fa-upload  ms-2"
                     style="cursor: pointer;"
                     onclick="${obj.gvc.event(() => {
             glitter.ut.chooseMediaCallback({
@@ -26,12 +26,12 @@ export class EditorElem {
                 callback(data: any) {
                     const saasConfig: { config: any; api: any } = (window as any).saasConfig;
                     const dialog = new ShareDialog(obj.gvc.glitter);
-                    dialog.dataLoading({ visible: true });
+                    dialog.dataLoading({visible: true});
                     const file = data[0].file;
                     saasConfig.api.uploadFile(file.name).then((data: any) => {
-                        dialog.dataLoading({ visible: false });
+                        dialog.dataLoading({visible: false});
                         const data1 = data.response;
-                        dialog.dataLoading({ visible: true });
+                        dialog.dataLoading({visible: true});
                         $.ajax({
                             url: data1.url,
                             type: 'put',
@@ -39,12 +39,12 @@ export class EditorElem {
                             processData: false,
                             crossDomain: true,
                             success: () => {
-                                dialog.dataLoading({ visible: false });
+                                dialog.dataLoading({visible: false});
                                 obj.callback(data1.fullUrl);
                             },
                             error: () => {
-                                dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: '上傳失敗' });
+                                dialog.dataLoading({visible: false});
+                                dialog.errorMessage({text: '上傳失敗'});
                             },
                         });
                     });
@@ -54,10 +54,11 @@ export class EditorElem {
                 ></i>
             </div>`;
     }
+
     public static uploadFile(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
         const glitter = (window as any).glitter;
         const $ = glitter.$;
-        return /*html*/ `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+        return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
             <div class="d-flex align-items-center mb-3">
                 <input
                     class="flex-fill form-control "
@@ -69,21 +70,21 @@ export class EditorElem {
                 />
                 <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i
-                    class="fa-regular fa-upload text-white ms-2"
+                    class="fa-regular fa-upload  ms-2"
                     style="cursor: pointer;"
                     onclick="${obj.gvc.event(() => {
             glitter.ut.chooseMediaCallback({
                 single: true,
-                accept: 'json,image/*,video/*',
+                accept: '*',
                 callback(data: any) {
                     const saasConfig: { config: any; api: any } = (window as any).saasConfig;
                     const dialog = new ShareDialog(obj.gvc.glitter);
-                    dialog.dataLoading({ visible: true });
+                    dialog.dataLoading({visible: true});
                     const file = data[0].file;
                     saasConfig.api.uploadFile(file.name).then((data: any) => {
-                        dialog.dataLoading({ visible: false });
+                        dialog.dataLoading({visible: false});
                         const data1 = data.response;
-                        dialog.dataLoading({ visible: true });
+                        dialog.dataLoading({visible: true});
                         $.ajax({
                             url: data1.url,
                             type: 'put',
@@ -91,12 +92,12 @@ export class EditorElem {
                             processData: false,
                             crossDomain: true,
                             success: () => {
-                                dialog.dataLoading({ visible: false });
+                                dialog.dataLoading({visible: false});
                                 obj.callback(data1.fullUrl);
                             },
                             error: () => {
-                                dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: '上傳失敗' });
+                                dialog.dataLoading({visible: false});
+                                dialog.errorMessage({text: '上傳失敗'});
                             },
                         });
                     });
@@ -106,6 +107,7 @@ export class EditorElem {
                 ></i>
             </div>`;
     }
+
     public static uploadVideo(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
         const glitter = (window as any).glitter;
         const $ = glitter.$;
@@ -127,12 +129,12 @@ export class EditorElem {
                         api: any;
                     } = (window as any).saasConfig;
                     const dialog = new ShareDialog(obj.gvc.glitter);
-                    dialog.dataLoading({ visible: true });
+                    dialog.dataLoading({visible: true});
                     const file = data[0].file;
                     saasConfig.api.uploadFile(file.name).then((data: any) => {
-                        dialog.dataLoading({ visible: false });
+                        dialog.dataLoading({visible: false});
                         const data1 = data.response;
-                        dialog.dataLoading({ visible: true });
+                        dialog.dataLoading({visible: true});
                         $.ajax({
                             url: data1.url,
                             type: 'put',
@@ -140,12 +142,12 @@ export class EditorElem {
                             processData: false,
                             crossDomain: true,
                             success: () => {
-                                dialog.dataLoading({ visible: false });
+                                dialog.dataLoading({visible: false});
                                 obj.callback(data1.fullUrl);
                             },
                             error: () => {
-                                dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: '上傳失敗' });
+                                dialog.dataLoading({visible: false});
+                                dialog.errorMessage({text: '上傳失敗'});
                             },
                         });
                     });
@@ -154,6 +156,7 @@ export class EditorElem {
         })}"></i>
                             </div>`;
     }
+
     public static uploadLottie(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
         const glitter = (window as any).glitter;
         const $ = glitter.$;
@@ -187,12 +190,12 @@ export class EditorElem {
                 callback(data: any) {
                     const saasConfig: { config: any; api: any } = (window as any).saasConfig;
                     const dialog = new ShareDialog(obj.gvc.glitter);
-                    dialog.dataLoading({ visible: true });
+                    dialog.dataLoading({visible: true});
                     const file = data[0].file;
                     saasConfig.api.uploadFile(file.name).then((data: any) => {
-                        dialog.dataLoading({ visible: false });
+                        dialog.dataLoading({visible: false});
                         const data1 = data.response;
-                        dialog.dataLoading({ visible: true });
+                        dialog.dataLoading({visible: true});
                         $.ajax({
                             url: data1.url,
                             type: 'put',
@@ -200,12 +203,12 @@ export class EditorElem {
                             processData: false,
                             crossDomain: true,
                             success: () => {
-                                dialog.dataLoading({ visible: false });
+                                dialog.dataLoading({visible: false});
                                 obj.callback(data1.fullUrl);
                             },
                             error: () => {
-                                dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: '上傳失敗' });
+                                dialog.dataLoading({visible: false});
+                                dialog.errorMessage({text: '上傳失敗'});
                             },
                         });
                     });
@@ -215,19 +218,22 @@ export class EditorElem {
                 ></i>
             </div>`;
     }
+
     public static h3(title: string) {
-        return /*html*/ `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${title}</h3>`;
+        return /*html*/ `<h3 style="color: black;font-size: 16px;margin-bottom: 10px;" class="mt-2">${title}</h3>`;
     }
+
     public static plusBtn(title: string, event: any) {
-        return /*html*/ `<div class="w-100 my-3" style="background: white;height: 1px;"></div>
+        return /*html*/ `<div class="w-100 my-3" style="background: black;height: 1px;"></div>
             <div
-                class="text-white align-items-center justify-content-center d-flex p-1 rounded mt-3"
-                style="border: 2px dashed white;"
+                class="fw-bold text-dark align-items-center justify-content-center d-flex p-1 rounded mt-3"
+                style="border: 2px dashed #004281;color:#004281;"
                 onclick="${event}"
             >
                 ${title}
             </div>`;
     }
+
     public static fontawesome(obj: { title: string; gvc: any; def: string; callback: (text: string) => void }) {
         const glitter = (window as any).glitter;
         return (
@@ -265,7 +271,8 @@ export class EditorElem {
             })
         );
     }
-    public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: string; color?: string }) {
+
+    public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: string | (() => string); color?: string }) {
         const color = obj.color ?? `#4144b0;`;
         const glitter = (window as any).glitter;
         return /*html*/ `${obj.gvc.bindView(() => {
@@ -274,7 +281,7 @@ export class EditorElem {
                 bind: id,
                 view: () => {
                     if (obj.data.expand) {
-                        return /*html*/ `<div class="w-100  rounded p-2 " style="background: ${color}; ">
+                        return /*html*/ `<div class=" w-100  rounded p-2 " style="background: ${color}; ">
                             <div
                                 class="d-flex p-0 align-items-center mb-2 w-100"
                                 onclick="${obj.gvc.event(() => {
@@ -283,11 +290,11 @@ export class EditorElem {
                         })}"
                                 style="cursor: pointer;"
                             >
-                                <h3 style="font-size: 16px;color: lightpink;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
+                                <h3 style="font-size: 16px;color: black;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
                                 <div class="flex-fill"></div>
-                                <div style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-white"></i></div>
+                                <div class="text-dark fw-bold" style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-dark"></i></div>
                             </div>
-                            ${obj.innerText}
+                            ${(typeof obj.innerText === 'string') ? obj.innerText : obj.innerText()}
                         </div>`;
                     }
                     return /*html*/ `<div class="w-100  rounded p-2 " style="background-color: ${color};">
@@ -299,9 +306,9 @@ export class EditorElem {
                     })}"
                             style="cursor: pointer;"
                         >
-                            <h3 style="font-size: 16px;color: lightpink;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
+                            <h3 style="font-size: 16px;color: black;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
                             <div class="flex-fill"></div>
-                            <div style="cursor: pointer;">展開<i class="fa-solid fa-down ms-2 text-white"></i></div>
+                            <span class="text-dark fw-bold" style="cursor: pointer;">展開<i class="fa-solid fa-down ms-2 text-dark"></i></span>
                         </div>
                     </div>`;
                 },
@@ -309,10 +316,11 @@ export class EditorElem {
             };
         })}`;
     }
+
     public static minusTitle(title: string, event: string) {
         return /*html*/ `<div class="d-flex align-items-center">
             <i class="fa-regular fa-circle-minus text-danger me-2" style="font-size: 20px;cursor: pointer;" onclick="${event}"></i>
-            <h3 style="color: white;font-size: 16px;" class="m-0">${title}</h3>
+            <h3 style="color: black;font-size: 16px;" class="m-0">${title}</h3>
         </div>`;
     }
 
@@ -363,7 +371,7 @@ export class EditorElem {
                         })}"
                                     />`;
                     },
-                    divCreate: { class: `w-100` },
+                    divCreate: {class: `w-100`},
                 };
             })}
                         ${obj.gvc.bindView(() => {
@@ -433,26 +441,26 @@ export class EditorElem {
     public static arrayItem(obj: {
         gvc: any;
         title: string;
-        array: { title: string; innerHtml: string; expand: any; minus: string }[];
-        originalArray:any,
+        array: { title: string; innerHtml: string | (() => string); expand: any; minus: string }[];
+        originalArray: any,
         expand: any;
         plus: {
             title: string;
             event: string;
         };
-        refreshComponent:()=>void,
-
+        refreshComponent: () => void,
+        outside?: boolean
     }) {
         let dragm = {
             start: 0,
             end: 0,
         };
-        const innerText= obj.array
-            .map((dd,index) => {
+        const innerText = obj.array
+            .map((dd, index) => {
 
                 return EditorElem.toggleExpand({
                     gvc: obj.gvc,
-                    title: `<div  draggable="true"  ondragenter="${obj.gvc.event((e:any, event:any) => {
+                    title: `<div  draggable="true"  ondragenter="${obj.gvc.event((e: any, event: any) => {
                         dragm.end = index;
                     })}" ondragstart="${obj.gvc.event(() => {
                         dragm.start = index;
@@ -463,31 +471,36 @@ export class EditorElem {
                     })}" >${EditorElem.minusTitle(dd.title, dd.minus)}</div>`,
                     data: dd.expand,
                     innerText: dd.innerHtml,
-                    color: `#2b115d`,
+                    color: `wheat`,
                 });
             })
-            .join('<div class="my-2"></div>') + EditorElem.plusBtn(obj.plus.title, obj.plus.event)
-        if(obj.expand===undefined){
-            return  innerText
+            .join('<div class="my-3" style="color:wheat"></div>') + EditorElem.plusBtn(obj.plus.title, obj.plus.event)
+        if (obj.expand === undefined) {
+            return innerText
+        }
+        if (obj.outside === false) {
+            return innerText;
         }
         return (
-            /*html*/ `<div class="mb-2"></div>` +
+            /*html*/`<div class="mb-2"></div>` +
             EditorElem.toggleExpand({
                 gvc: obj.gvc,
                 title: obj.title,
                 data: obj.expand,
-                innerText:innerText,
-                color: `#3333a2`,
+                innerText: innerText,
+                color: `wheat`,
             })
         );
     }
 }
+
 function swapArr(arr: any, index1: number, index2: number) {
     const data = arr[index1];
     arr.splice(index1, 1);
     arr.splice(index2, 0, data);
 }
-export class Element{
+
+export class Element {
     constructor() {
 
     }

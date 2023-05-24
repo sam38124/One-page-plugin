@@ -1,12 +1,14 @@
-import { ShareDialog } from './dialog/ShareDialog.js';
-import { ScriptStyle1 } from "./one-page/script-style-1.js";
+import {ShareDialog} from "../dialog/ShareDialog.js";
+
+
+
 export class Editor {
-    static uploadImage(obj) {
-        const glitter = window.glitter;
+    public static uploadImage(obj: { title: string; gvc: any; def: string; callback: (data: string) => void ;readonly?:boolean}) {
+        const glitter = (window as any).glitter;
         const $ = glitter.$;
-        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 ${(obj.title) ? `` : `d-none`}">${obj.title}</h3>
+        return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 ${(obj.title) ? `` : `d-none`}">${obj.title}</h3>
              ${obj.gvc.bindView(() => {
-            const id = glitter.getUUID();
+            const id = glitter.getUUID()
             return {
                 bind: id,
                 view: () => {
@@ -14,82 +16,74 @@ export class Editor {
                     class="flex-fill form-control "
                     placeholder="請輸入圖片連結"
                     value="${obj.def}"
-                    onchange="${obj.gvc.event((e) => {
+                    onchange="${obj.gvc.event((e: any) => {
                         obj.callback(e.value);
                         obj.def = e.value;
-                        obj.gvc.notifyDataChange(id);
+                        obj.gvc.notifyDataChange(id)
                     })}"
-                    ${obj.readonly ? `readonly` : ``}
+                    ${obj.readonly ? `readonly`:``}
                 />
                 <div class="ms-1" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i class="fa-sharp fa-solid fa-eye text-dark ms-2" onclick="${obj.gvc.event(() => {
-                        glitter.openDiaLog(new URL('./dialog/image-preview.js', import.meta.url), 'preview', obj.def);
+                        glitter.openDiaLog(new URL('./dialog/image-preview.js', import.meta.url), 'preview', obj.def)
                     })}"></i>
                 <i
                     class="fa-regular fa-upload text-dark ms-2"
-                    style="cursor: pointer;${obj.readonly ? `display:none;` : ``}"
+                    style="cursor: pointer;${obj.readonly ? `display:none;`:``}"
                     onclick="${obj.gvc.event(() => {
                         glitter.ut.chooseMediaCallback({
                             single: true,
                             accept: 'json,image/*',
-                            callback(data) {
-                                const saasConfig = window.saasConfig;
+                            callback(data: any) {
+                                const saasConfig: { config: any; api: any } = (window as any).saasConfig;
                                 const dialog = new ShareDialog(obj.gvc.glitter);
-                                dialog.dataLoading({ visible: true });
+                                dialog.dataLoading({visible: true});
                                 const file = data[0].file;
-                                saasConfig.api.uploadFile(file.name).then((data) => {
-                                    dialog.dataLoading({ visible: false });
+                                saasConfig.api.uploadFile(file.name).then((data: any) => {
+                                    dialog.dataLoading({visible: false});
                                     const data1 = data.response;
-                                    dialog.dataLoading({ visible: true });
-                                    const objP = {
+                                    dialog.dataLoading({visible: true});
+                                    $.ajax({
                                         url: data1.url,
                                         type: 'put',
                                         data: file,
-                                        headers: {
-                                            "Content-Type": data1.type
-                                        },
                                         processData: false,
                                         crossDomain: true,
                                         success: () => {
-                                            dialog.dataLoading({ visible: false });
+                                            dialog.dataLoading({visible: false});
                                             obj.callback(data1.fullUrl);
                                             obj.def = data1.fullUrl;
-                                            obj.gvc.notifyDataChange(id);
+                                            obj.gvc.notifyDataChange(id)
                                         },
                                         error: () => {
-                                            dialog.dataLoading({ visible: false });
-                                            dialog.errorMessage({ text: '上傳失敗' });
+                                            dialog.dataLoading({visible: false});
+                                            dialog.errorMessage({text: '上傳失敗'});
                                         },
-                                    };
-                                    if (file.type.indexOf('svg') !== -1) {
-                                        objP["headers"] = {
-                                            "Content-Type": file.type
-                                        };
-                                    }
-                                    $.ajax(objP);
+                                    });
                                 });
                             },
                         });
                     })}"
                    
-                ></i>`;
+                ></i>`
                 },
                 divCreate: {
                     class: `d-flex align-items-center mb-3`
                 }
-            };
+            }
         })}`;
     }
-    static uploadFile(obj) {
-        const glitter = window.glitter;
+
+    public static uploadFile(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
+        const glitter = (window as any).glitter;
         const $ = glitter.$;
-        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+        return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
             <div class="d-flex align-items-center mb-3">
                 <input
                     class="flex-fill form-control "
                     placeholder="請輸入檔案連結"
                     value="${obj.def}"
-                    onchange="${obj.gvc.event((e) => {
+                    onchange="${obj.gvc.event((e: any) => {
             obj.callback(e.value);
         })}"
                 />
@@ -101,31 +95,28 @@ export class Editor {
             glitter.ut.chooseMediaCallback({
                 single: true,
                 accept: 'json,image/*,video/*',
-                callback(data) {
-                    const saasConfig = window.saasConfig;
+                callback(data: any) {
+                    const saasConfig: { config: any; api: any } = (window as any).saasConfig;
                     const dialog = new ShareDialog(obj.gvc.glitter);
-                    dialog.dataLoading({ visible: true });
+                    dialog.dataLoading({visible: true});
                     const file = data[0].file;
-                    saasConfig.api.uploadFile(file.name).then((data) => {
-                        dialog.dataLoading({ visible: false });
+                    saasConfig.api.uploadFile(file.name).then((data: any) => {
+                        dialog.dataLoading({visible: false});
                         const data1 = data.response;
-                        dialog.dataLoading({ visible: true });
+                        dialog.dataLoading({visible: true});
                         $.ajax({
                             url: data1.url,
                             type: 'put',
                             data: file,
                             processData: false,
-                            headers: {
-                                "Content-Type": data1.type
-                            },
                             crossDomain: true,
                             success: () => {
-                                dialog.dataLoading({ visible: false });
+                                dialog.dataLoading({visible: false});
                                 obj.callback(data1.fullUrl);
                             },
                             error: () => {
-                                dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: '上傳失敗' });
+                                dialog.dataLoading({visible: false});
+                                dialog.errorMessage({text: '上傳失敗'});
                             },
                         });
                     });
@@ -135,12 +126,15 @@ export class Editor {
                 ></i>
             </div>`;
     }
-    static uploadVideo(obj) {
-        const glitter = window.glitter;
+
+    public static uploadVideo(obj: { title: string; gvc: any; def: string; callback: (data: string) => void }) {
+        const glitter = (window as any).glitter;
         const $ = glitter.$;
         return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
                             <div class="d-flex align-items-center mb-3">
-                                <input class="flex-fill form-control " placeholder="請輸入圖片連結" value="${obj.def}" onchange="${obj.gvc.event((e) => {
+                                <input class="flex-fill form-control " placeholder="請輸入圖片連結" value="${
+            obj.def
+        }" onchange="${obj.gvc.event((e: any) => {
             obj.callback(e.value);
         })}">
                                 <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
@@ -148,31 +142,31 @@ export class Editor {
             glitter.ut.chooseMediaCallback({
                 single: true,
                 accept: 'json,video/*',
-                callback(data) {
-                    const saasConfig = window.saasConfig;
+                callback(data: any) {
+                    const saasConfig: {
+                        config: any;
+                        api: any;
+                    } = (window as any).saasConfig;
                     const dialog = new ShareDialog(obj.gvc.glitter);
-                    dialog.dataLoading({ visible: true });
+                    dialog.dataLoading({visible: true});
                     const file = data[0].file;
-                    saasConfig.api.uploadFile(file.name).then((data) => {
-                        dialog.dataLoading({ visible: false });
+                    saasConfig.api.uploadFile(file.name).then((data: any) => {
+                        dialog.dataLoading({visible: false});
                         const data1 = data.response;
-                        dialog.dataLoading({ visible: true });
+                        dialog.dataLoading({visible: true});
                         $.ajax({
                             url: data1.url,
                             type: 'put',
                             data: file,
                             processData: false,
-                            headers: {
-                                "Content-Type": data1.type
-                            },
                             crossDomain: true,
                             success: () => {
-                                dialog.dataLoading({ visible: false });
+                                dialog.dataLoading({visible: false});
                                 obj.callback(data1.fullUrl);
                             },
                             error: () => {
-                                dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: '上傳失敗' });
+                                dialog.dataLoading({visible: false});
+                                dialog.errorMessage({text: '上傳失敗'});
                             },
                         });
                     });
@@ -181,10 +175,11 @@ export class Editor {
         })}"></i>
                             </div>`;
     }
-    static uploadLottie(obj) {
-        const glitter = window.glitter;
+
+    public static uploadLottie(obj: { title: string; gvc: any; def: string; callback: (data: string) => void ,color?:string}) {
+        const glitter = (window as any).glitter;
         const $ = glitter.$;
-        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+        return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
             <div class="alert alert-primary alert-dismissible fade show" role="alert" style="white-space: normal;word-break: break-word;">
                 <a
                     onclick="${obj.gvc.event(() => glitter.openNewTab(`https://lottiefiles.com/`))}"
@@ -199,43 +194,40 @@ export class Editor {
                     class="flex-fill form-control "
                     placeholder="請輸入圖片連結"
                     value="${obj.def}"
-                    onchange="${obj.gvc.event((e) => {
+                    onchange="${obj.gvc.event((e: any) => {
             obj.callback(e.value);
         })}"
                 />
                 <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i
                     class="fa-regular fa-upload  text-dark ms-2"
-                    style="cursor: pointer;${(obj.color) ? `color:${obj.color};` : ``}"
+                    style="cursor: pointer;${(obj.color) ? `color:${obj.color};`:``}"
                     onclick="${obj.gvc.event(() => {
             glitter.ut.chooseMediaCallback({
                 single: true,
                 accept: 'json,image/*,.json',
-                callback(data) {
-                    const saasConfig = window.saasConfig;
+                callback(data: any) {
+                    const saasConfig: { config: any; api: any } = (window as any).saasConfig;
                     const dialog = new ShareDialog(obj.gvc.glitter);
-                    dialog.dataLoading({ visible: true });
+                    dialog.dataLoading({visible: true});
                     const file = data[0].file;
-                    saasConfig.api.uploadFile(file.name).then((data) => {
-                        dialog.dataLoading({ visible: false });
+                    saasConfig.api.uploadFile(file.name).then((data: any) => {
+                        dialog.dataLoading({visible: false});
                         const data1 = data.response;
-                        dialog.dataLoading({ visible: true });
+                        dialog.dataLoading({visible: true});
                         $.ajax({
                             url: data1.url,
                             type: 'put',
                             data: file,
                             processData: false,
-                            headers: {
-                                "Content-Type": data1.type
-                            },
                             crossDomain: true,
                             success: () => {
-                                dialog.dataLoading({ visible: false });
+                                dialog.dataLoading({visible: false});
                                 obj.callback(data1.fullUrl);
                             },
                             error: () => {
-                                dialog.dataLoading({ visible: false });
-                                dialog.errorMessage({ text: '上傳失敗' });
+                                dialog.dataLoading({visible: false});
+                                dialog.errorMessage({text: '上傳失敗'});
                             },
                         });
                     });
@@ -245,11 +237,13 @@ export class Editor {
                 ></i>
             </div>`;
     }
-    static h3(title) {
-        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 text-dark">${title}</h3>`;
+
+    public static h3(title: string) {
+        return /*html*/ `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 text-dark">${title}</h3>`;
     }
-    static plusBtn(title, event) {
-        return `<div class="w-100 my-3 bg-white" style="height: 1px;"></div>
+
+    public static plusBtn(title: string, event: any) {
+        return /*html*/ `<div class="w-100 my-3 bg-white" style="height: 1px;"></div>
             <div
                 class="text-white fw-bold align-items-center justify-content-center d-flex p-1 rounded mt-3"
                 style="border: 2px dashed white;"
@@ -258,9 +252,11 @@ export class Editor {
                 ${title}
             </div>`;
     }
-    static fontawesome(obj) {
-        const glitter = window.glitter;
-        return (`
+
+    public static fontawesome(obj: { title: string; gvc: any; def: string; callback: (text: string) => void }) {
+        const glitter = (window as any).glitter;
+        return (
+            /*html*/ `
                 ${Editor.h3(obj.title)}
                 <div
                     class="alert alert-primary alert-dismissible fade show p-2"
@@ -288,50 +284,24 @@ export class Editor {
                 title: '',
                 default: obj.def,
                 placeHolder: '請輸入ICON-標籤',
-                callback: (text) => {
+                callback: (text: string) => {
                     obj.callback(text);
                 },
-            }));
+            })
+        );
     }
-    static googleMap(obj) {
-        const glitter = window.glitter;
-        return (`
-                ${Editor.h3(obj.title)}
-                <div
-                    class="alert alert-primary alert-dismissible fade show p-2"
-                    role="alert"
-                    style="white-space: normal;word-break: break-all;"
-                >
-                    <a
-                        onclick="${obj.gvc.event(() => glitter.openNewTab('https://www.google.com/maps/'))}"
-                        class="fw-bold fw text-primary"
-                        style="cursor: pointer;"
-                        >googleMap</a
-                    >
-                   
-                    請搜尋目標地址，再點擊分享，在分頁上選擇嵌入地圖後，會得到一串HTML，請把src後的兩個""內的內容複製上來
-                </div>
-            ` +
-            glitter.htmlGenerate.editeInput({
-                gvc: obj.gvc,
-                title: '',
-                default: obj.def,
-                placeHolder: '請輸入src',
-                callback: (text) => {
-                    obj.callback(text);
-                },
-            }));
-    }
-    static toggleExpand(obj) {
-        const glitter = window.glitter;
-        obj.data.expand = obj.data.expand ?? false;
-        return `${obj.gvc.bindView(() => {
+
+    public static toggleExpand(obj: { gvc: any; title: string; data: any; innerText: () => string; color?: string ,class?:string,style?:string}) {
+        const glitter = (window as any).glitter;
+        obj.data.expand = obj.data.expand ?? false
+        return /*html*/ `${obj.gvc.bindView(() => {
             const id = glitter.getUUID();
+
             return {
                 bind: id,
                 view: () => {
                     if (obj.data.expand) {
-                        return `<div class="w-100  rounded p-2 ${obj.class}" style="background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);${obj.style};">
+                        return /*html*/ `<div class="w-100  rounded p-2 ${obj.class}" style="background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);${obj.style};">
                             <div
                                 class="d-flex p-0 align-items-center mb-2 w-100 text-white"
                                 onclick="${obj.gvc.event(() => {
@@ -347,7 +317,7 @@ export class Editor {
                             ${(typeof obj.innerText === 'string') ? obj.innerText : obj.innerText()}
                         </div>`;
                     }
-                    return `<div class="w-100  rounded p-2 ${obj.class}" style="background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);${obj.style};">
+                    return /*html*/ `<div class="w-100  rounded p-2 ${obj.class}" style="background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);${obj.style};">
                         <div
                             class="w-100 d-flex p-0 align-items-center text-white"
                             onclick="${obj.gvc.event(() => {
@@ -363,33 +333,42 @@ export class Editor {
                     </div>`;
                 },
                 divCreate: {
-                    class: `toggleInner`
+                    class:`toggleInner`
                 },
             };
         })}`;
     }
-    static minusTitle(title, event) {
-        return `<div class="d-flex align-items-center">
+
+    public static minusTitle(title: string, event: string) {
+        return /*html*/ `<div class="d-flex align-items-center">
             <i class="fa-regular fa-circle-minus text-danger me-2" style="font-size: 20px;cursor: pointer;" onclick="${event}"></i>
             <h3 style="color: white;font-size: 16px;" class="m-0">${title}</h3>
         </div>`;
     }
-    static searchInput(obj) {
-        const glitter = window.glitter;
+
+    public static searchInput(obj: {
+        title: string;
+        gvc: any;
+        def: string;
+        array: string[] ;
+        callback: (text: string) => void;
+        placeHolder: string;
+    }) {
+        const glitter = (window as any).glitter;
         const gvc = obj.gvc;
         const $ = glitter.$;
-        return `
-            ${(obj.title) ? Editor.h3(obj.title) : ``}
+        return /*html*/ `
+            ${(obj.title) ? Editor.h3(obj.title):``}
             <div class="btn-group dropdown w-100">
                 ${(() => {
             const id = glitter.getUUID();
             const id2 = glitter.getUUID();
-            return `
+            return /*html*/ `
                         ${obj.gvc.bindView(() => {
                 return {
                     bind: id2,
                     view: () => {
-                        return `<input
+                        return /*html*/ `<input
                                         class="form-control w-100"
                                         style="height: 40px;"
                                         placeholder="${obj.placeHolder}"
@@ -401,12 +380,12 @@ export class Editor {
                                 $('#' + gvc.id(id)).removeClass(`show`);
                             }, 300);
                         })}"
-                                        oninput="${gvc.event((e) => {
+                                        oninput="${gvc.event((e: any) => {
                             obj.def = e.value;
                             gvc.notifyDataChange(id);
                         })}"
                                         value="${obj.def}"
-                                        onchange="${gvc.event((e) => {
+                                        onchange="${gvc.event((e: any) => {
                             obj.def = e.value;
                             setTimeout(() => {
                                 obj.callback(obj.def);
@@ -414,7 +393,7 @@ export class Editor {
                         })}"
                                     />`;
                     },
-                    divCreate: { class: `w-100` },
+                    divCreate: {class: `w-100`},
                 };
             })}
                         ${obj.gvc.bindView(() => {
@@ -422,20 +401,20 @@ export class Editor {
                     bind: id,
                     view: () => {
                         return obj.array
-                            .filter((d2) => {
-                            return d2.toUpperCase().indexOf(obj.def.toUpperCase()) !== -1;
-                        })
+                            .filter((d2:any) => {
+                                return d2.toUpperCase().indexOf(obj.def.toUpperCase()) !== -1;
+                            })
                             .map((d3) => {
-                            return `<button
+                                return /*html*/ `<button
                                                 class="dropdown-item"
                                                 onclick="${gvc.event(() => {
-                                obj.def = d3;
-                                obj.callback(obj.def);
-                            })}"
+                                    obj.def = d3;
+                                    obj.callback(obj.def);
+                                })}"
                                             >
                                                 ${d3}
                                             </button>`;
-                        })
+                            })
                             .join('');
                     },
                     divCreate: {
@@ -449,70 +428,107 @@ export class Editor {
             </div>
         `;
     }
-    static returnInnerHtml(obj) {
+
+    public static returnInnerHtml(obj:{
+
+    }){
+
     }
-    static select(obj) {
-        return `
+
+    public static select(obj: {
+        title: string;
+        gvc: any;
+        def: string;
+        array: string[] | { title: string; value: string }[];
+        callback: (text: string) => void;
+    }) {
+        return /*html*/ `
             ${Editor.h3(obj.title)}
             <select
                 class="form-select"
-                onchange="${obj.gvc.event((e) => {
+                onchange="${obj.gvc.event((e: any) => {
             obj.callback(e.value);
         })}"
             >
                 ${obj.array
             .map((dd) => {
-            if (typeof dd === 'object') {
-                return `<option value="${dd.value}" ${dd.value === obj.def ? `selected` : ``}>
+                if (typeof dd === 'object') {
+                    return /*html*/ `<option value="${dd.value}" ${dd.value === obj.def ? `selected` : ``}>
                                 ${dd.title}
                             </option>`;
-            }
-            else {
-                return `<option value="${dd}" ${dd === obj.def ? `selected` : ``}>${dd}</option>`;
-            }
-        })
+                } else {
+                    return /*html*/ `<option value="${dd}" ${dd === obj.def ? `selected` : ``}>${dd}</option>`;
+                }
+            })
             .join('')}
             </select>
         `;
     }
-    static arrayItem(obj) {
+
+    public static arrayItem(obj: {
+        gvc: any;
+        title: string;
+        array: { title: string; innerHtml: () => string; expand: any; minus: string }[];
+        originalArray: any,
+        expand: any;
+        plus: {
+            title: string;
+            event: string;
+        };
+        refreshComponent: () => void,
+        color1?: string,
+        color2?: string,
+        class?:string,
+        style?:string,
+        readonly?:boolean
+    }) {
+
         let dragm = {
             start: 0,
             end: 0,
         };
-        return (`<div class="mb-2"></div>` +
+        return (
+            /*html*/ `<div class="mb-2"></div>` +
             Editor.toggleExpand({
                 gvc: obj.gvc,
                 title: obj.title,
                 data: obj.expand,
-                innerText: () => {
-                    return obj.array
-                        .map((dd, index) => {
-                        return Editor.toggleExpand({
-                            gvc: obj.gvc,
-                            title: `<div    draggable="true"  ondragenter="${obj.gvc.event((e, event) => {
-                                dragm.end = index;
-                            })}" ondragstart="${obj.gvc.event(() => {
-                                dragm.start = index;
-                                dragm.end = index;
-                            })}"   ondragend="${obj.gvc.event(() => {
-                                ScriptStyle1.swapArr(obj.originalArray, dragm.start, dragm.end);
-                                obj.refreshComponent();
-                            })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
-                            data: dd.expand,
-                            innerText: dd.innerHtml,
-                            class: `` + obj.class,
-                            style: `background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);` + obj.style,
-                        });
-                    })
-                        .join('<div class="my-2"></div>') + ((obj.readonly) ? `` : Editor.plusBtn(obj.plus.title, obj.plus.event));
-                },
-                class: ``,
-                style: `background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
-            }));
+                innerText:
+                    () => {
+                        return obj.array
+                            .map((dd, index) => {
+                                return Editor.toggleExpand({
+                                    gvc: obj.gvc,
+                                    title: `<div    draggable="true"  ondragenter="${obj.gvc.event((e: any, event: any) => {
+                                        dragm.end = index;
+                                    })}" ondragstart="${obj.gvc.event(() => {
+                                        dragm.start = index;
+                                        dragm.end = index;
+                                    })}"   ondragend="${obj.gvc.event(() => {
+                                        swapArr(obj.originalArray, dragm.start, dragm.end);
+                                        obj.refreshComponent()
+                                    })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
+                                    data: dd.expand,
+                                    innerText: dd.innerHtml,
+                                    class:``+obj.class ,
+                                    style:`background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);`+obj.style,
+                                });
+                            })
+                            .join('<div class="my-2"></div>') + ((obj.readonly) ? ``:Editor.plusBtn(obj.plus.title, obj.plus.event))
+                    },
+                class:``,
+                style:`background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
+            })
+        );
     }
+}
+function   swapArr(arr: any, index1: number, index2: number) {
+    const data = arr[index1];
+    arr.splice(index1, 1);
+    arr.splice(index2, 0, data);
 }
 export class Element {
     constructor() {
+
     }
 }

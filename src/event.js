@@ -46,10 +46,21 @@ TriggerEvent.create(import.meta.url, {
                             }
                         }
                         recursive();
+                        setTimeout(() => {
+                            gvc.notifyDataChange(id);
+                        }, 1000);
                         return {
                             bind: id,
                             view: () => {
-                                object.type = object.type ?? 'inlink';
+                                if (![
+                                    { title: '內部連結', value: 'inlink' },
+                                    { title: '外部連結', value: 'outlink' },
+                                    { title: 'HashTag', value: 'hashTag' },
+                                ].find((dd) => {
+                                    return dd.value === object.type;
+                                })) {
+                                    object.type = 'inlink';
+                                }
                                 return ` ${Editor.h3('跳轉方式')}
                                     <select
                                         class="form-control form-select"
@@ -72,7 +83,20 @@ TriggerEvent.create(import.meta.url, {
                                     </select>
                                     ${(() => {
                                     if (object.type === 'inlink') {
-                                        return `<select
+                                        object.stackControl = object.stackControl ?? "home";
+                                        return `
+${Editor.select({
+                                            title: '堆棧控制',
+                                            gvc: gvc,
+                                            def: object.stackControl,
+                                            callback: (text) => {
+                                                object.stackControl = text;
+                                                widget.refreshComponent();
+                                            },
+                                            array: [{ title: '設為首頁', value: "home" }, { title: '頁面跳轉', value: "page" }],
+                                        })}
+${Editor.h3("選擇頁面")}
+<select
                                             class="form-select form-control mt-2"
                                             onchange="${gvc.event((e) => {
                                             console.log(window.$(e).val());
@@ -119,9 +143,42 @@ TriggerEvent.create(import.meta.url, {
                 },
                 event: () => {
                     if (object.type === 'inlink') {
-                        const url = new URL('./', location.href);
-                        url.searchParams.set('page', object.link);
-                        location.href = url.href;
+                        return new Promise(async (resolve, reject) => {
+                            const url = new URL('./', location.href);
+                            url.searchParams.set('page', object.link);
+                            const saasConfig = window.saasConfig;
+                            saasConfig.api.getPage(saasConfig.config.appName, object.link).then((data) => {
+                                if (data.response.result.length === 0) {
+                                    const url = new URL("./", location.href);
+                                    url.searchParams.set('page', data.response.redirect);
+                                    location.href = url.href;
+                                    return;
+                                }
+                                if (object.stackControl === 'home') {
+                                    gvc.glitter.htmlGenerate.setHome({
+                                        page_config: data.response.result[0].page_config,
+                                        config: data.response.result[0].config,
+                                        data: {},
+                                        tag: object.link,
+                                        option: {
+                                            animation: gvc.glitter.animation.fade
+                                        }
+                                    });
+                                }
+                                else {
+                                    gvc.glitter.htmlGenerate.changePage({
+                                        page_config: data.response.result[0].page_config,
+                                        config: data.response.result[0].config,
+                                        data: {},
+                                        tag: object.link,
+                                        goBack: true,
+                                        option: {
+                                            animation: gvc.glitter.animation.fade
+                                        }
+                                    });
+                                }
+                            });
+                        });
                     }
                     else if (object.type === 'hashTag') {
                         const yOffset = $("header").length > 0 ? -$("header").height() : 0;
@@ -132,7 +189,8 @@ TriggerEvent.create(import.meta.url, {
                     else {
                         gvc.glitter.runJsInterFace('openWeb', {
                             url: object.link,
-                        }, (data) => { }, {
+                        }, (data) => {
+                        }, {
                             webFunction(data, callback) {
                                 gvc.glitter.openNewTab(object.link);
                             },

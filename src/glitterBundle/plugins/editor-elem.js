@@ -3,7 +3,7 @@ export class EditorElem {
     static uploadImage(obj) {
         const glitter = window.glitter;
         const $ = glitter.$;
-        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
             <div class="d-flex align-items-center mb-3">
                 <input
                     class="flex-fill form-control "
@@ -15,7 +15,7 @@ export class EditorElem {
                 />
                 <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i
-                    class="fa-regular fa-upload text-white ms-2"
+                    class="fa-regular fa-upload  ms-2"
                     style="cursor: pointer;"
                     onclick="${obj.gvc.event(() => {
             glitter.ut.chooseMediaCallback({
@@ -55,7 +55,7 @@ export class EditorElem {
     static uploadFile(obj) {
         const glitter = window.glitter;
         const $ = glitter.$;
-        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
             <div class="d-flex align-items-center mb-3">
                 <input
                     class="flex-fill form-control "
@@ -67,12 +67,12 @@ export class EditorElem {
                 />
                 <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
                 <i
-                    class="fa-regular fa-upload text-white ms-2"
+                    class="fa-regular fa-upload  ms-2"
                     style="cursor: pointer;"
                     onclick="${obj.gvc.event(() => {
             glitter.ut.chooseMediaCallback({
                 single: true,
-                accept: 'json,image/*,video/*',
+                accept: '*',
                 callback(data) {
                     const saasConfig = window.saasConfig;
                     const dialog = new ShareDialog(obj.gvc.glitter);
@@ -209,13 +209,13 @@ export class EditorElem {
             </div>`;
     }
     static h3(title) {
-        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${title}</h3>`;
+        return `<h3 style="color: black;font-size: 16px;margin-bottom: 10px;" class="mt-2">${title}</h3>`;
     }
     static plusBtn(title, event) {
-        return `<div class="w-100 my-3" style="background: white;height: 1px;"></div>
+        return `<div class="w-100 my-3" style="background: black;height: 1px;"></div>
             <div
-                class="text-white align-items-center justify-content-center d-flex p-1 rounded mt-3"
-                style="border: 2px dashed white;"
+                class="fw-bold text-dark align-items-center justify-content-center d-flex p-1 rounded mt-3"
+                style="border: 2px dashed #004281;color:#004281;"
                 onclick="${event}"
             >
                 ${title}
@@ -265,7 +265,7 @@ export class EditorElem {
                 bind: id,
                 view: () => {
                     if (obj.data.expand) {
-                        return `<div class="w-100  rounded p-2 " style="background: ${color}; ">
+                        return `<div class=" w-100  rounded p-2 " style="background: ${color}; ">
                             <div
                                 class="d-flex p-0 align-items-center mb-2 w-100"
                                 onclick="${obj.gvc.event(() => {
@@ -274,11 +274,11 @@ export class EditorElem {
                         })}"
                                 style="cursor: pointer;"
                             >
-                                <h3 style="font-size: 16px;color: lightpink;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
+                                <h3 style="font-size: 16px;color: black;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
                                 <div class="flex-fill"></div>
-                                <div style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-white"></i></div>
+                                <div class="text-dark fw-bold" style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-dark"></i></div>
                             </div>
-                            ${obj.innerText}
+                            ${(typeof obj.innerText === 'string') ? obj.innerText : obj.innerText()}
                         </div>`;
                     }
                     return `<div class="w-100  rounded p-2 " style="background-color: ${color};">
@@ -290,9 +290,9 @@ export class EditorElem {
                     })}"
                             style="cursor: pointer;"
                         >
-                            <h3 style="font-size: 16px;color: lightpink;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
+                            <h3 style="font-size: 16px;color: black;width: calc(100% - 60px);" class="m-0 p-0">${obj.title}</h3>
                             <div class="flex-fill"></div>
-                            <div style="cursor: pointer;">展開<i class="fa-solid fa-down ms-2 text-white"></i></div>
+                            <span class="text-dark fw-bold" style="cursor: pointer;">展開<i class="fa-solid fa-down ms-2 text-dark"></i></span>
                         </div>
                     </div>`;
                 },
@@ -303,7 +303,7 @@ export class EditorElem {
     static minusTitle(title, event) {
         return `<div class="d-flex align-items-center">
             <i class="fa-regular fa-circle-minus text-danger me-2" style="font-size: 20px;cursor: pointer;" onclick="${event}"></i>
-            <h3 style="color: white;font-size: 16px;" class="m-0">${title}</h3>
+            <h3 style="color: black;font-size: 16px;" class="m-0">${title}</h3>
         </div>`;
     }
     static searchInput(obj) {
@@ -426,11 +426,14 @@ export class EditorElem {
                 })}" >${EditorElem.minusTitle(dd.title, dd.minus)}</div>`,
                 data: dd.expand,
                 innerText: dd.innerHtml,
-                color: `#2b115d`,
+                color: `wheat`,
             });
         })
-            .join('<div class="my-2"></div>') + EditorElem.plusBtn(obj.plus.title, obj.plus.event);
+            .join('<div class="my-3" style="color:wheat"></div>') + EditorElem.plusBtn(obj.plus.title, obj.plus.event);
         if (obj.expand === undefined) {
+            return innerText;
+        }
+        if (obj.outside === false) {
             return innerText;
         }
         return (`<div class="mb-2"></div>` +
@@ -439,7 +442,7 @@ export class EditorElem {
                 title: obj.title,
                 data: obj.expand,
                 innerText: innerText,
-                color: `#3333a2`,
+                color: `wheat`,
             }));
     }
 }

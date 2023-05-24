@@ -211,7 +211,6 @@ background: ${config.backGroundColor};display: none;z-index: 999999;overflow: hi
                         lastPage.scrollTop = glitter.$('html').get(0).scrollTop;
                         console.log('lastPage.scrollTop:' + lastPage.scrollTop);
                     }
-                    console.log('scrollTop--' + page);
                     glitter.$('html').stop().animate({ scrollTop: 0 }, 0);
                 }
             }, 100);
@@ -251,8 +250,9 @@ background: ${config.backGroundColor};display: none;z-index: 999999;overflow: hi
                 type: GVCType.Page,
                 animation: option.animation ?? glitter.defaultSetting.pageAnimation
             });
-            $('#glitterPage').append(`<div  id="page${config.id}" style="width:100vw;height:100vh;
-background: transparent;background: ${config.backGroundColor};display: none;position: absolute;top: 0;left: 0;z-index: 999999;overflow: hidden;">
+            $('#glitterPage').append(`<div  id="page${config.id}" style="
+min-width: 100vw; min-height: 100vh;  z-index: 999999; overflow: hidden
+background: transparent;background: ${config.backGroundColor};display: none;position: absolute;top: 0;left: 0;">
 </div>`);
             config.scrollTop = glitter.$('html').get(0).scrollTop;
             glitter.nowPageConfig = config;

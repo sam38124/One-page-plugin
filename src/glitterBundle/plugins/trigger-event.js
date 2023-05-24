@@ -14,6 +14,98 @@ export class TriggerEvent {
             return undefined;
         }
     }
+    static setEventRouter(original, relative) {
+        const glitter = window.glitter;
+        const url = new URL(relative, original);
+        url.searchParams.set("original", original);
+        return (gvc, widget, obj, subData, element) => {
+            const editViewId = glitter.getUUID();
+            glitter.share.componentData = glitter.share.componentData ?? {};
+            let val = glitter.share.componentData[url.href];
+            glitter.share.componentCallback = glitter.share.componentCallback ?? {};
+            glitter.share.componentCallback[url.href] = glitter.share.componentCallback[url.href] ?? [];
+            glitter.share.componentCallback[url.href].push((dd) => {
+                glitter.share.componentData[url.href] = dd;
+                gvc.notifyDataChange(editViewId);
+            });
+            gvc.glitter.addMtScript([
+                {
+                    src: url,
+                    type: 'module'
+                }
+            ], () => {
+                val = glitter.share.componentData[url.href];
+                console.log('setComponent-->' + url);
+            }, () => {
+            });
+            return {
+                event: () => {
+                    return new Promise(async (resolve, reject) => {
+                        const event = await (new Promise((resolve, reject) => {
+                            const timer = setInterval(() => {
+                                if (val) {
+                                    resolve(val);
+                                    clearInterval(timer);
+                                }
+                            }, 20);
+                            setTimeout(() => {
+                                clearInterval(timer);
+                                resolve(false);
+                            }, 3000);
+                        }));
+                        if (event) {
+                            resolve((await val.fun(gvc, widget, obj, subData, element).event()));
+                        }
+                        else {
+                            resolve(false);
+                        }
+                    });
+                },
+                editor: () => {
+                    return gvc.bindView(() => {
+                        return {
+                            bind: editViewId,
+                            view: () => {
+                                if (!val) {
+                                    return ``;
+                                }
+                                else {
+                                    return val.fun(gvc, widget, obj, subData, element).editor();
+                                }
+                            },
+                            divCreate: {}
+                        };
+                    });
+                }
+            };
+        };
+    }
+    static createSingleEvent(url, fun) {
+        const glitter = window.glitter;
+        const val = fun(glitter);
+        let fal = 0;
+        function tryLoop() {
+            try {
+                let delete2 = 0;
+                glitter.share.componentCallback[url].map((dd, index) => {
+                    dd(val);
+                    delete2 = index;
+                });
+                glitter.share.componentCallback[url].splice(0, delete2);
+            }
+            catch (e) {
+                if (fal < 10) {
+                    setTimeout(() => {
+                        tryLoop();
+                    }, 100);
+                }
+                fal += 1;
+                console.log('error' + url);
+            }
+        }
+        tryLoop();
+        return val;
+    }
     static create(url, event) {
         const glitter = window.glitter;
         glitter.share.clickEvent = glitter.share.clickEvent ?? {};
@@ -24,19 +116,26 @@ export class TriggerEvent {
         const event = oj.clickEvent.clickEvent;
         let returnData = '';
         async function run() {
-            oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {};
-            if (!oj.gvc.glitter.share.clickEvent[event.src]) {
-                await new Promise((resolve, reject) => {
-                    oj.gvc.glitter.addMtScript([
-                        { src: `${glitter.htmlGenerate.resourceHook(event.src)}`, type: 'module' }
-                    ], () => {
-                        resolve(true);
-                    }, () => {
-                        resolve(false);
+            try {
+                oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {};
+                if (!oj.gvc.glitter.share.clickEvent[event.src]) {
+                    await new Promise((resolve, reject) => {
+                        oj.gvc.glitter.addMtScript([
+                            { src: `${glitter.htmlGenerate.resourceHook(event.src)}`, type: 'module' }
+                        ], () => {
+                            setTimeout(() => {
+                                resolve(true);
+                            }, 50);
+                        }, () => {
+                            resolve(false);
+                        });
                     });
-                });
+                }
+                returnData = await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData, oj.element).event();
             }
-            returnData = await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData, oj.element).event();
+            catch (e) {
+                alert(e);
+            }
         }
         return new Promise(async (resolve, reject) => {
             await run();
@@ -48,7 +147,7 @@ export class TriggerEvent {
         const glitter = gvc.glitter;
         const selectID = glitter.getUUID();
         return `<div class="mt-2 ${(option.hover) ? `alert alert-primary bg-primary` : ``}">
- <h3 class="m-0  ${(option.hover) ? `text-dark` : ``}" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
+ <h3 class="m-0" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
  ${gvc.bindView(() => {
             return {
                 bind: selectID,

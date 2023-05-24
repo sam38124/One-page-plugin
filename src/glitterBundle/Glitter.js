@@ -289,13 +289,11 @@ export class Glitter {
             }
             var scritem = urlArray[index];
             var haveURL = false;
-            if (!option ?? { multiple: false }.multiple) {
-                glitter.$('head').children().map(function (data) {
-                    if (glitter.$('head').children().get(data).src === (scritem.src ?? scritem)) {
-                        haveURL = true;
-                    }
-                });
-            }
+            glitter.$('head').children().map(function (data) {
+                if (glitter.$('head').children().get(data).src === (scritem.src ?? scritem)) {
+                    haveURL = true;
+                }
+            });
             if (haveURL) {
                 index++;
                 addScript();
@@ -441,16 +439,24 @@ export class Glitter {
         var head = document.head;
         const id = gvc.getUUID();
         function add(filePath) {
-            var link = document.createElement("link");
-            link.type = "text/css";
-            link.rel = "stylesheet";
-            link.href = filePath;
-            link.id = id;
-            gvc.parameter.styleLinks.push({
-                id: id,
-                src: filePath
+            var haveURL = false;
+            Glitter.glitter.$('head').children().map(function (data) {
+                if (Glitter.glitter.$('head').children().get(data).src === (filePath)) {
+                    haveURL = true;
+                }
             });
-            head.appendChild(link);
+            if (!haveURL) {
+                var link = document.createElement("link");
+                link.type = "text/css";
+                link.rel = "stylesheet";
+                link.href = filePath;
+                link.id = id;
+                gvc.parameter.styleLinks.push({
+                    id: id,
+                    src: filePath
+                });
+                head.appendChild(link);
+            }
         }
         if (typeof data == "string") {
             add(data);

@@ -50,6 +50,7 @@ export class Plugin {
                 }
             ], () => {
                 val = glitter.share.componentData[url.href];
+                console.log('setComponent-->' + url);
             }, () => { });
             return {
                 view: () => {

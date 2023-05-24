@@ -1,5 +1,4 @@
-import { ShareDialog } from './dialog/ShareDialog.js';
-import { ScriptStyle1 } from "./one-page/script-style-1.js";
+import { ShareDialog } from "../dialog/ShareDialog.js";
 export class Editor {
     static uploadImage(obj) {
         const glitter = window.glitter;
@@ -41,13 +40,10 @@ export class Editor {
                                     dialog.dataLoading({ visible: false });
                                     const data1 = data.response;
                                     dialog.dataLoading({ visible: true });
-                                    const objP = {
+                                    $.ajax({
                                         url: data1.url,
                                         type: 'put',
                                         data: file,
-                                        headers: {
-                                            "Content-Type": data1.type
-                                        },
                                         processData: false,
                                         crossDomain: true,
                                         success: () => {
@@ -60,13 +56,7 @@ export class Editor {
                                             dialog.dataLoading({ visible: false });
                                             dialog.errorMessage({ text: '上傳失敗' });
                                         },
-                                    };
-                                    if (file.type.indexOf('svg') !== -1) {
-                                        objP["headers"] = {
-                                            "Content-Type": file.type
-                                        };
-                                    }
-                                    $.ajax(objP);
+                                    });
                                 });
                             },
                         });
@@ -115,9 +105,6 @@ export class Editor {
                             type: 'put',
                             data: file,
                             processData: false,
-                            headers: {
-                                "Content-Type": data1.type
-                            },
                             crossDomain: true,
                             success: () => {
                                 dialog.dataLoading({ visible: false });
@@ -162,9 +149,6 @@ export class Editor {
                             type: 'put',
                             data: file,
                             processData: false,
-                            headers: {
-                                "Content-Type": data1.type
-                            },
                             crossDomain: true,
                             success: () => {
                                 dialog.dataLoading({ visible: false });
@@ -225,9 +209,6 @@ export class Editor {
                             type: 'put',
                             data: file,
                             processData: false,
-                            headers: {
-                                "Content-Type": data1.type
-                            },
                             crossDomain: true,
                             success: () => {
                                 dialog.dataLoading({ visible: false });
@@ -288,35 +269,6 @@ export class Editor {
                 title: '',
                 default: obj.def,
                 placeHolder: '請輸入ICON-標籤',
-                callback: (text) => {
-                    obj.callback(text);
-                },
-            }));
-    }
-    static googleMap(obj) {
-        const glitter = window.glitter;
-        return (`
-                ${Editor.h3(obj.title)}
-                <div
-                    class="alert alert-primary alert-dismissible fade show p-2"
-                    role="alert"
-                    style="white-space: normal;word-break: break-all;"
-                >
-                    <a
-                        onclick="${obj.gvc.event(() => glitter.openNewTab('https://www.google.com/maps/'))}"
-                        class="fw-bold fw text-primary"
-                        style="cursor: pointer;"
-                        >googleMap</a
-                    >
-                   
-                    請搜尋目標地址，再點擊分享，在分頁上選擇嵌入地圖後，會得到一串HTML，請把src後的兩個""內的內容複製上來
-                </div>
-            ` +
-            glitter.htmlGenerate.editeInput({
-                gvc: obj.gvc,
-                title: '',
-                default: obj.def,
-                placeHolder: '請輸入src',
                 callback: (text) => {
                     obj.callback(text);
                 },
@@ -496,7 +448,7 @@ export class Editor {
                                 dragm.start = index;
                                 dragm.end = index;
                             })}"   ondragend="${obj.gvc.event(() => {
-                                ScriptStyle1.swapArr(obj.originalArray, dragm.start, dragm.end);
+                                swapArr(obj.originalArray, dragm.start, dragm.end);
                                 obj.refreshComponent();
                             })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
                             data: dd.expand,
@@ -511,6 +463,11 @@ export class Editor {
                 style: `background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
             }));
     }
+}
+function swapArr(arr, index1, index2) {
+    const data = arr[index1];
+    arr.splice(index1, 1);
+    arr.splice(index2, 0, data);
 }
 export class Element {
     constructor() {

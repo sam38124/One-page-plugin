@@ -3,145 +3,180 @@ import {Glitter} from "../glitterBundle/Glitter.js";
 import {GVC} from "../glitterBundle/GVController.js";
 import {BaseApi} from "../api/base.js";
 import {Editor} from "../editor.js";
+import {TriggerEvent} from "../glitterBundle/plugins/trigger-event.js";
 
-export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
+export const component = Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
-        render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[],subData) =>{
-            widget.data.list=widget.data.list??[]
+        render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData) => {
+            widget.data.list = widget.data.list ?? []
             return {
-                view:()=>{
-                    return gvc.bindView(()=>{
-                        const id=glitter.getUUID()
-                        let data:any=undefined
-                        const saasConfig=(window as any).saasConfig
-                        let fal=0
-                        function getData(){
-                            let tag=widget.data.tag
-                            for (const b of widget.data.list){
-                                if(eval(b.code)===true){
-                                    tag=b.tag
-                                    break
+                view: () => {
+                    return gvc.bindView(() => {
+                        const id = glitter.getUUID()
+                        let data: any = undefined
+                        const saasConfig = (window as any).saasConfig
+                        let fal = 0
+
+                        async function getData() {
+                            let tag = widget.data.tag
+                            for (const b of widget.data.list) {
+                                b.evenet = b.evenet ?? {}
+                                if (b.triggerType === 'trigger') {
+                                    const result = await new Promise((resolve, reject) => {
+                                        (TriggerEvent.trigger({
+                                            gvc: gvc,
+                                            widget: widget,
+                                            clickEvent: b.evenet,
+                                            subData
+                                        })).then((data) => {
+                                            resolve(data)
+                                            gvc.notifyDataChange(id)
+                                        })
+                                    })
+                                    if (result) {
+                                        tag = b.tag
+                                        break
+                                    }
+                                } else {
+                                    if ((await eval(b.code)) === true) {
+                                        tag = b.tag
+                                        break
+                                    }
                                 }
                             }
                             BaseApi.create({
-                                "url": saasConfig.config.url+`/api/v1/template?appName=${saasConfig.config.appName}&tag=${tag}`,
+                                "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}&tag=${tag}`,
                                 "type": "GET",
                                 "timeout": 0,
                                 "headers": {
                                     "Content-Type": "application/json"
                                 }
-                            }).then((d2)=>{
-                                if(!d2.result){
-                                    fal+=1
-                                    if(fal<20){
-                                        setTimeout(()=>{getData()},200)
+                            }).then((d2) => {
+                                if (!d2.result) {
+                                    fal += 1
+                                    if (fal < 20) {
+                                        setTimeout(() => {
+                                            getData()
+                                        }, 200)
                                     }
-                                }else{
-                                    data=d2.response.result[0]
+                                } else {
+                                    data = d2.response.result[0]
                                     try {
                                         subData.callback(data)
-                                    }catch (e){}
+                                    } catch (e) {
+                                    }
                                     gvc.notifyDataChange(id)
                                 }
 
                             })
                         }
-                        getData()
+
+                        setTimeout(() => {
+                            getData()
+                        }, 10)
+
                         return {
-                            bind:id,
-                            view:()=>{
-                                if(data){
-                                    return new glitter.htmlGenerate(data.config, [],subData ?? {}).render(gvc);
-                                }else{
-                                    return  ``
+                            bind: id,
+                            view: () => {
+                                if (data) {
+                                    return new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
+                                } else {
+                                    return ``
                                 }
                             },
-                            divCreate:{}
+                            divCreate: {}
                         }
                     })
                 },
-                editor:()=>{
-                    const id=glitter.getUUID()
-                    const data:any={
-                        dataList:undefined
+                editor: () => {
+                    const id = glitter.getUUID()
+                    const data: any = {
+                        dataList: undefined
                     }
-                    const saasConfig=(window as any).saasConfig
-                   function getData(){
-                       BaseApi.create({
-                           "url": saasConfig.config.url+`/api/v1/template?appName=${saasConfig.config.appName}`,
-                           "type": "GET",
-                           "timeout": 0,
-                           "headers": {
-                               "Content-Type": "application/json"
-                           }
-                       }).then((d2)=>{
-                           data.dataList=d2.response.result
-                           gvc.notifyDataChange(id)
-                       })
-                   }
-                    function setPage(pd:any){
+                    const saasConfig = (window as any).saasConfig
+
+                    function getData() {
+                        BaseApi.create({
+                            "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}`,
+                            "type": "GET",
+                            "timeout": 0,
+                            "headers": {
+                                "Content-Type": "application/json"
+                            }
+                        }).then((d2) => {
+                            data.dataList = d2.response.result
+                            gvc.notifyDataChange(id)
+                        })
+                    }
+
+                    function setPage(pd: any) {
                         let group: string[] = [];
-                        let selectGroup=''
-                        let id=glitter.getUUID()
+                        let selectGroup = ''
+                        let id = glitter.getUUID()
                         data.dataList.map((dd: any) => {
-                            if(dd.tag===pd.tag){
-                                selectGroup=dd.group
+                            if (dd.tag === pd.tag) {
+                                selectGroup = dd.group
                             }
                             if (group.indexOf(dd.group) === -1) {
                                 group.push(dd.group)
                             }
                         })
-                        let data2:any=undefined
-                        let fal=0
-                        function getDd(){
-                            let tag=widget.data.tag
-                            for (const b of widget.data.list){
-                                if(eval(b.code)===true){
-                                    tag=b.tag
+                        let data2: any = undefined
+                        let fal = 0
+
+                        function getDd() {
+                            let tag = widget.data.tag
+                            for (const b of widget.data.list) {
+                                if (eval(b.code) === true) {
+                                    tag = b.tag
                                     break
                                 }
                             }
                             BaseApi.create({
-                                "url": saasConfig.config.url+`/api/v1/template?appName=${saasConfig.config.appName}&tag=${tag}`,
+                                "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}&tag=${tag}`,
                                 "type": "GET",
                                 "timeout": 0,
                                 "headers": {
                                     "Content-Type": "application/json"
                                 }
-                            }).then((d2)=>{
-                                if(!d2.result){
-                                    fal+=1
-                                    if(fal<5){
-                                        setTimeout(()=>{getDd()},200)
+                            }).then((d2) => {
+                                if (!d2.result) {
+                                    fal += 1
+                                    if (fal < 5) {
+                                        setTimeout(() => {
+                                            getDd()
+                                        }, 200)
                                     }
-                                }else{
-                                    data2=d2.response.result[0]
+                                } else {
+                                    data2 = d2.response.result[0]
                                     try {
                                         subData.callback(data)
-                                    }catch (e){}
+                                    } catch (e) {
+                                    }
                                     gvc.notifyDataChange(id)
                                 }
 
                             })
                         }
+
                         // getDd()
-                        return  gvc.bindView(()=>{
+                        return gvc.bindView(() => {
                             return {
-                                bind:id,
-                                view:()=>{
-                                    return     Editor.select({
+                                bind: id,
+                                view: () => {
+                                    return Editor.select({
                                         title: "選擇嵌入頁面",
                                         gvc: gvc,
                                         def: pd.tag ?? "",
-                                        array:   [
+                                        array: [
                                             {
-                                                title:'選擇嵌入頁面',value:''
+                                                title: '選擇嵌入頁面', value: ''
                                             }
-                                        ].concat(data.dataList.sort((function(a:any, b:any) {
-                                            if (a.group.toUpperCase() <  b.group.toUpperCase()) {
+                                        ].concat(data.dataList.sort((function (a: any, b: any) {
+                                            if (a.group.toUpperCase() < b.group.toUpperCase()) {
                                                 return -1;
                                             }
-                                            if (a.group.toUpperCase() >  b.group.toUpperCase()) {
+                                            if (a.group.toUpperCase() > b.group.toUpperCase()) {
                                                 return 1;
                                             }
 
@@ -149,37 +184,38 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                                             return 0;
                                         })).map((dd: any) => {
                                             return {
-                                                title:`${dd.group}-${dd.name}`,value:dd.tag
+                                                title: `${dd.group}-${dd.name}`, value: dd.tag
                                             }
                                         })),
                                         callback: (text: string) => {
-                                            pd.tag=text;
+                                            pd.tag = text;
                                         },
-                                    })+(()=>{
-                                        if(data2){
-                                            return  ``
+                                    }) + (() => {
+                                        if (data2) {
+                                            return ``
                                         }
                                         return ``
                                     })()
                                 },
-                                divCreate:{}
+                                divCreate: {}
                             }
                         })
                     }
-                    return gvc.bindView(()=>{
+
+                    return gvc.bindView(() => {
                         return {
-                            bind:id,
-                            view:()=>{
-                                if(data.dataList){
-                                    return  `
+                            bind: id,
+                            view: () => {
+                                if (data.dataList) {
+                                    return `
    ${setPage(widget.data)}
   ${Editor.arrayItem({
-                                        gvc:gvc,
-                                        title:"判斷式頁面嵌入",
-                                        array:widget.data.list.map((dd:any,index:number)=>{
+                                        gvc: gvc,
+                                        title: "判斷式頁面嵌入",
+                                        array: widget.data.list.map((dd: any, index: number) => {
                                             return {
-                                                title:dd.name || `判斷式:${index+1}`,
-                                                expand:dd,
+                                                title: dd.name || `判斷式:${index + 1}`,
+                                                expand: dd,
                                                 innerHtml:
                                                     glitter.htmlGenerate.editeInput({
                                                         gvc: gvc,
@@ -188,49 +224,75 @@ export const component=Plugin.createComponent(import.meta.url, (glitter: Glitter
                                                         placeHolder: "輸入判斷式名稱",
                                                         callback: (text) => {
                                                             dd.name = text
-                                                            widget.refreshComponent()
+                                                            gvc.notifyDataChange(id)
                                                         }
-                                                    })+glitter.htmlGenerate.editeText({
+                                                    }) +
+                                                    Editor.select({
+                                                        title: '類型',
                                                         gvc: gvc,
-                                                        title: `判斷式內容`,
-                                                        default: dd.code,
-                                                        placeHolder: "輸入程式碼",
+                                                        def: dd.triggerType,
+                                                        array: [{
+                                                            title: '程式碼', value: 'manual'
+                                                        }, {
+                                                            title: '觸發事件', value: 'trigger'
+                                                        }],
                                                         callback: (text) => {
-                                                            dd.code = text
-                                                            widget.refreshComponent()
+                                                            dd.triggerType = text;
+                                                            gvc.notifyDataChange(id)
                                                         }
-                                                    })+`
+                                                    }) +
+                                                    (() => {
+                                                        if (dd.triggerType === 'trigger') {
+                                                            dd.evenet = dd.evenet ?? {}
+                                                            return TriggerEvent.editer(gvc, widget, dd.evenet, {
+                                                                hover: true,
+                                                                option: [],
+                                                                title: "觸發事件"
+                                                            })
+                                                        } else {
+                                                            return glitter.htmlGenerate.editeText({
+                                                                gvc: gvc,
+                                                                title: `判斷式內容`,
+                                                                default: dd.code,
+                                                                placeHolder: "輸入程式碼",
+                                                                callback: (text) => {
+                                                                    dd.code = text
+                                                                    gvc.notifyDataChange(id)
+                                                                }
+                                                            })
+                                                        }
+                                                    })() + `
  ${setPage(dd)}`,
-                                                minus:gvc.event(()=>{
-                                                    widget.data.list.splice(index,1)
+                                                minus: gvc.event(() => {
+                                                    widget.data.list.splice(index, 1)
                                                     widget.refreshComponent()
                                                 })
                                             }
                                         }),
-                                        expand:widget.data,
-                                        plus:{
-                                            title:"添加判斷",
-                                            event:gvc.event(()=>{
-                                                widget.data.list.push({code:''})
-                                                widget.refreshComponent()
+                                        expand: widget.data,
+                                        plus: {
+                                            title: "添加判斷",
+                                            event: gvc.event(() => {
+                                                widget.data.list.push({code: ''})
+                                                gvc.notifyDataChange(id)
                                             })
                                         },
-                                        refreshComponent:()=>{
+                                        refreshComponent: () => {
                                             widget.refreshComponent()
                                         },
-                                        originalArray:widget.data.list
+                                        originalArray: widget.data.list
                                     })}
 `
-                                }else{
-                                    return  ``
+                                } else {
+                                    return ``
                                 }
                             },
-                            divCreate:{},
-                            onCreate:()=>{
-                                if(!data.dataList){
-                                    setTimeout(()=>{
+                            divCreate: {},
+                            onCreate: () => {
+                                if (!data.dataList) {
+                                    setTimeout(() => {
                                         getData()
-                                    },100)
+                                    }, 100)
                                 }
                             }
                         }

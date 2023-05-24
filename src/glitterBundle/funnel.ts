@@ -36,11 +36,6 @@ export class Funnel {
                     },
                     (data) => {
                         let t = '';
-
-                        if (data["product_list"]){
-                            data = data["product_list"]
-                        }
-
                         data.map((x: any) => {
                             t += /*html*/ `<li
                                 class="${ra}_li"

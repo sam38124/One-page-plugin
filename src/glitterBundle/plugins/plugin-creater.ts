@@ -7,6 +7,7 @@ export interface HtmlJson {
         src: string,
         route: string
     },
+    hashTag: string;
     rout: string,
     type: string,
     id: string,
@@ -90,6 +91,7 @@ export class Plugin {
                 }
             ], () => {
                 val=glitter.share.componentData[url.href]
+                console.log('setComponent-->'+url)
             }, () => {})
             return {
                 view: () => {

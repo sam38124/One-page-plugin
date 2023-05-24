@@ -46,6 +46,9 @@ export class Editor {
                                         url: data1.url,
                                         type: 'put',
                                         data: file,
+                                        headers: {
+                                            "Content-Type": data1.type
+                                        },
                                         processData: false,
                                         crossDomain: true,
                                         success: () => {
@@ -114,6 +117,9 @@ export class Editor {
                             type: 'put',
                             data: file,
                             processData: false,
+                            headers: {
+                                "Content-Type": data1.type
+                            },
                             crossDomain: true,
                             success: () => {
                                 dialog.dataLoading({visible: false});
@@ -164,6 +170,9 @@ export class Editor {
                             type: 'put',
                             data: file,
                             processData: false,
+                            headers: {
+                                "Content-Type": data1.type
+                            },
                             crossDomain: true,
                             success: () => {
                                 dialog.dataLoading({visible: false});
@@ -225,6 +234,9 @@ export class Editor {
                             type: 'put',
                             data: file,
                             processData: false,
+                            headers: {
+                                "Content-Type": data1.type
+                            },
                             crossDomain: true,
                             success: () => {
                                 dialog.dataLoading({visible: false});

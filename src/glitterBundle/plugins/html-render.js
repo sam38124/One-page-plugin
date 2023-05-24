@@ -2,29 +2,60 @@ import { init } from '../GVController.js';
 import { TriggerEvent } from "./trigger-event.js";
 init((gvc, glitter, gBundle) => {
     glitter.share.htmlExtension = glitter.share.htmlExtension ?? {};
-    (gBundle.page_config.initialList ?? []).map((dd) => {
-        if (dd.when === 'initial') {
-            if (dd.type === 'script') {
+    const vm = {
+        loading: true
+    };
+    async function load() {
+        await (new Promise(async (resolve, reject) => {
+            (gBundle.page_config.initialList ?? []).map((dd) => {
+                if (dd.when === 'initial') {
+                    if (dd.type === 'script') {
+                        try {
+                            TriggerEvent.trigger({
+                                gvc: gvc, widget: undefined, clickEvent: dd
+                            });
+                        }
+                        catch (e) { }
+                    }
+                    else {
+                        try {
+                            eval(dd.src.official);
+                        }
+                        catch (e) {
+                        }
+                    }
+                }
+            });
+            resolve(true);
+        }));
+        (gBundle.page_config.initialStyleSheet ?? []).map(async (data) => {
+            if (data.type === 'script') {
                 try {
-                    TriggerEvent.trigger({
-                        gvc: gvc, widget: undefined, clickEvent: dd
-                    });
+                    gvc.addStyleLink(data);
                 }
                 catch (e) { }
             }
             else {
                 try {
-                    eval(dd.src.official);
+                    gvc.addStyle(data.src.official);
                 }
                 catch (e) { }
             }
-        }
+        });
+    }
+    ;
+    load().then(() => {
+        vm.loading = false;
+        gvc.notifyDataChange('main');
     });
     return {
         onCreateView: () => {
             return gvc.bindView({
                 bind: 'main',
                 view: () => {
+                    if (vm.loading) {
+                        return ``;
+                    }
                     return (gBundle.editMode && gBundle.editMode.render(gvc))
                         ||
                             new glitter.htmlGenerate(gBundle.config, []).render(gvc);

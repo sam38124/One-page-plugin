@@ -1,6 +1,7 @@
 import { Plugin } from "../glitterBundle/plugins/plugin-creater.js";
 import { BaseApi } from "../api/base.js";
 import { Editor } from "../editor.js";
+import { TriggerEvent } from "../glitterBundle/plugins/trigger-event.js";
 export const component = Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         render: (gvc, widget, setting, hoverID, subData) => {
@@ -12,12 +13,32 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                         let data = undefined;
                         const saasConfig = window.saasConfig;
                         let fal = 0;
-                        function getData() {
+                        async function getData() {
                             let tag = widget.data.tag;
                             for (const b of widget.data.list) {
-                                if (eval(b.code) === true) {
-                                    tag = b.tag;
-                                    break;
+                                b.evenet = b.evenet ?? {};
+                                if (b.triggerType === 'trigger') {
+                                    const result = await new Promise((resolve, reject) => {
+                                        (TriggerEvent.trigger({
+                                            gvc: gvc,
+                                            widget: widget,
+                                            clickEvent: b.evenet,
+                                            subData
+                                        })).then((data) => {
+                                            resolve(data);
+                                            gvc.notifyDataChange(id);
+                                        });
+                                    });
+                                    if (result) {
+                                        tag = b.tag;
+                                        break;
+                                    }
+                                }
+                                else {
+                                    if ((await eval(b.code)) === true) {
+                                        tag = b.tag;
+                                        break;
+                                    }
                                 }
                             }
                             BaseApi.create({
@@ -31,7 +52,9 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                 if (!d2.result) {
                                     fal += 1;
                                     if (fal < 20) {
-                                        setTimeout(() => { getData(); }, 200);
+                                        setTimeout(() => {
+                                            getData();
+                                        }, 200);
                                     }
                                 }
                                 else {
@@ -39,12 +62,15 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                     try {
                                         subData.callback(data);
                                     }
-                                    catch (e) { }
+                                    catch (e) {
+                                    }
                                     gvc.notifyDataChange(id);
                                 }
                             });
                         }
-                        getData();
+                        setTimeout(() => {
+                            getData();
+                        }, 10);
                         return {
                             bind: id,
                             view: () => {
@@ -111,7 +137,9 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                 if (!d2.result) {
                                     fal += 1;
                                     if (fal < 5) {
-                                        setTimeout(() => { getDd(); }, 200);
+                                        setTimeout(() => {
+                                            getDd();
+                                        }, 200);
                                     }
                                 }
                                 else {
@@ -119,7 +147,8 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                     try {
                                         subData.callback(data);
                                     }
-                                    catch (e) { }
+                                    catch (e) {
+                                    }
                                     gvc.notifyDataChange(id);
                                 }
                             });
@@ -184,18 +213,45 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                                     placeHolder: "輸入判斷式名稱",
                                                     callback: (text) => {
                                                         dd.name = text;
-                                                        widget.refreshComponent();
+                                                        gvc.notifyDataChange(id);
                                                     }
-                                                }) + glitter.htmlGenerate.editeText({
-                                                    gvc: gvc,
-                                                    title: `判斷式內容`,
-                                                    default: dd.code,
-                                                    placeHolder: "輸入程式碼",
-                                                    callback: (text) => {
-                                                        dd.code = text;
-                                                        widget.refreshComponent();
-                                                    }
-                                                }) + `
+                                                }) +
+                                                    Editor.select({
+                                                        title: '類型',
+                                                        gvc: gvc,
+                                                        def: dd.triggerType,
+                                                        array: [{
+                                                                title: '程式碼', value: 'manual'
+                                                            }, {
+                                                                title: '觸發事件', value: 'trigger'
+                                                            }],
+                                                        callback: (text) => {
+                                                            dd.triggerType = text;
+                                                            gvc.notifyDataChange(id);
+                                                        }
+                                                    }) +
+                                                    (() => {
+                                                        if (dd.triggerType === 'trigger') {
+                                                            dd.evenet = dd.evenet ?? {};
+                                                            return TriggerEvent.editer(gvc, widget, dd.evenet, {
+                                                                hover: true,
+                                                                option: [],
+                                                                title: "觸發事件"
+                                                            });
+                                                        }
+                                                        else {
+                                                            return glitter.htmlGenerate.editeText({
+                                                                gvc: gvc,
+                                                                title: `判斷式內容`,
+                                                                default: dd.code,
+                                                                placeHolder: "輸入程式碼",
+                                                                callback: (text) => {
+                                                                    dd.code = text;
+                                                                    gvc.notifyDataChange(id);
+                                                                }
+                                                            });
+                                                        }
+                                                    })() + `
  ${setPage(dd)}`,
                                                 minus: gvc.event(() => {
                                                     widget.data.list.splice(index, 1);
@@ -208,7 +264,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                             title: "添加判斷",
                                             event: gvc.event(() => {
                                                 widget.data.list.push({ code: '' });
-                                                widget.refreshComponent();
+                                                gvc.notifyDataChange(id);
                                             })
                                         },
                                         refreshComponent: () => {

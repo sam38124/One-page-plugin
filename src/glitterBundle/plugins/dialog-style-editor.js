@@ -27,11 +27,11 @@ init((gvc, glitter, gBundle) => {
         onCreateView: () => {
             const styleContainer = glitter.getUUID();
             return `
-            <div  class="w-100 h-100 d-flex flex-column align-items-center justify-content-center" style="background-color: rgba(255,255,255,0.5);" >
-            <div class="bg-dark m-auto rounded" style="max-width: 100%;max-height: 100%;width: 480px;overflow-y: scroll;">
+            <div  class="w-100 h-100 d-flex flex-column align-items-center justify-content-center" style="background-color: rgba(0,0,0,0.3);" >
+            <div class="bg-light m-auto rounded shadow" style="max-width: 100%;max-height: 100%;width: 480px;overflow-y: scroll;">
         <div class="w-100 d-flex align-items-center border-bottom justify-content-center position-relative" style="height: 68px;">
         <h3 class="modal-title fs-4" >設計樣式</h3>
-        <i class="fa-solid fa-xmark text-white position-absolute " style="font-size:20px;transform: translateY(-50%);right: 20px;top: 50%;cursor: pointer;"
+        <i class="fa-solid fa-xmark text-dark position-absolute " style="font-size:20px;transform: translateY(-50%);right: 20px;top: 50%;cursor: pointer;"
         onclick="${gvc.event(() => {
                 glitter.closeDiaLog(gvc.parameter.pageConfig?.tag);
             })}"></i>
@@ -63,7 +63,7 @@ ${gvc.bindView(() => {
                     return {
                         bind: idl,
                         view: () => {
-                            return `<div class="alert-dark alert ">
+                            return `<div class="alert-success alert ">
 ${design.styleList.map((dd, index) => {
                                 let title = (styleAttr.find((d2) => {
                                     return dd.tag === d2.tag;
@@ -77,7 +77,7 @@ ${design.styleList.map((dd, index) => {
                                         return `
 <div class="mb-2">
 </div>
-<div class="btn-group dropdown w-100">
+<div class="btn-group dropdown w-100" style="">
   ${(() => {
                                             let title = (styleAttr.find((d2) => {
                                                 return dd.tag === d2.tag;
@@ -122,7 +122,8 @@ ${gvc.bindView(() => {
                                                         }).join('');
                                                     },
                                                     divCreate: {
-                                                        class: `dropdown-menu`, style: `transform: translateY(40px);`
+                                                        class: `dropdown-menu`,
+                                                        style: `transform: translateY(40px);max-height: 200px;overflow-y:scroll;`
                                                     }
                                                 };
                                             })}                                 
