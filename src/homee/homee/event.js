@@ -5,6 +5,35 @@ import { Dialog } from "../dialog/dialog-mobile.js";
 import { Checkout } from "../api/checkout.js";
 import { appConfig } from "../../config.js";
 import { Funnel } from "../../glitterBundle/funnel.js";
+import { BaseApi } from "../../api/base.js";
+import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+import { Editor } from "../../editor.js";
+const machiDomain = 'https://machi-app.com/';
+class GlobalData {
+    static data = {
+        pageList: [],
+        isRunning: false,
+        run: () => {
+            if (GlobalData.data.isRunning) {
+                return;
+            }
+            GlobalData.data.isRunning = true;
+            const saasConfig = window.saasConfig;
+            saasConfig.api.getPage(saasConfig.config.appName).then((data) => {
+                if (data.result) {
+                    GlobalData.data.pageList = data.response.result.map((dd) => {
+                        dd.page_config = dd.page_config ?? {};
+                        return dd;
+                    });
+                }
+                else {
+                    GlobalData.data.isRunning = false;
+                    GlobalData.data.run();
+                }
+            });
+        },
+    };
+}
 TriggerEvent.create(import.meta.url, {
     link: {
         title: "連結跳轉",
@@ -506,5 +535,179 @@ ${gvc.bindView(() => {
                 }
             };
         }
-    }
+    },
+    setMachi: {
+        title: '設定Machi後端撈取路徑',
+        fun: (gvc, widget, object) => {
+            return {
+                editor: () => {
+                    return gvc.map([
+                        gvc.glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: '公司代號',
+                            default: object.company ?? "",
+                            placeHolder: '公司代號',
+                            callback: (text) => {
+                                object.company = text;
+                                widget.refreshAll();
+                            },
+                        }), gvc.glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: '帳號',
+                            default: object.account ?? "",
+                            placeHolder: '輸入跳轉的連結',
+                            callback: (text) => {
+                                object.account = text;
+                                widget.refreshAll();
+                            },
+                        }), gvc.glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: '密碼',
+                            default: object.pwd ?? "",
+                            placeHolder: '輸入跳轉的連結',
+                            callback: (text) => {
+                                object.pwd = text;
+                                widget.refreshAll();
+                            },
+                        })
+                    ]);
+                },
+                event: () => {
+                    return new Promise((resolve, reject) => {
+                        BaseApi.create({
+                            "url": `${machiDomain}/api/bm/member/login`,
+                            "type": "POST",
+                            "timeout": 0,
+                            headers: { 'Content-Type': 'application/json' },
+                            "data": JSON.stringify({
+                                "account": object.account,
+                                "password": object.pwd,
+                                "group_code": object.company
+                            })
+                        }).then((d2) => {
+                            Plugin.setAppConfig('HOMEEAppConfig', {
+                                token: d2.response.token
+                            });
+                            resolve(true);
+                        });
+                    });
+                }
+            };
+        }
+    },
+    link2: {
+        title: 'Glitter-連結跳轉',
+        fun: (gvc, widget, object) => {
+            return {
+                editor: () => {
+                    return gvc.bindView(() => {
+                        const id = gvc.glitter.getUUID();
+                        function recursive() {
+                            if (GlobalData.data.pageList.length === 0) {
+                                GlobalData.data.run();
+                                setTimeout(() => {
+                                    recursive();
+                                }, 200);
+                            }
+                            else {
+                                gvc.notifyDataChange(id);
+                            }
+                        }
+                        recursive();
+                        return {
+                            bind: id,
+                            view: () => {
+                                object.type = object.type ?? 'inlink';
+                                return ` ${Editor.h3('跳轉方式')}
+                                    <select
+                                        class="form-control form-select"
+                                        onchange="${gvc.event((e) => {
+                                    object.type = e.value;
+                                    gvc.notifyDataChange(id);
+                                })}"
+                                    >
+                                        ${[
+                                    { title: '內部連結', value: 'inlink' },
+                                    { title: '外部連結', value: 'outlink' },
+                                    { title: 'HashTag', value: 'hashTag' },
+                                ]
+                                    .map((dd) => {
+                                    return `<option value="${dd.value}" ${dd.value == object.type ? `selected` : ``}>
+                                            ${dd.title}
+                                        </option>`;
+                                })
+                                    .join('')}
+                                    </select>
+                                    ${(() => {
+                                    if (object.type === 'inlink') {
+                                        return `<select
+                                            class="form-select form-control mt-2"
+                                            onchange="${gvc.event((e) => {
+                                            console.log(window.$(e).val());
+                                            object.link = window.$(e).val();
+                                        })}"
+                                        >
+                                            ${GlobalData.data.pageList.map((dd) => {
+                                            object.link = object.link ?? dd.tag;
+                                            return `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
+                                                    ${dd.group}-${dd.name}
+                                                </option>`;
+                                        })}
+                                        </select>`;
+                                    }
+                                    else if (object.type === 'outlink') {
+                                        return gvc.glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: '',
+                                            default: object.link,
+                                            placeHolder: '輸入跳轉的連結',
+                                            callback: (text) => {
+                                                object.link = text;
+                                                widget.refreshAll();
+                                            },
+                                        });
+                                    }
+                                    else {
+                                        return gvc.glitter.htmlGenerate.editeInput({
+                                            gvc: gvc,
+                                            title: '',
+                                            default: object.link,
+                                            placeHolder: '輸入跳轉的HashTag',
+                                            callback: (text) => {
+                                                object.link = text;
+                                                widget.refreshAll();
+                                            },
+                                        });
+                                    }
+                                })()}`;
+                            },
+                            divCreate: {},
+                        };
+                    });
+                },
+                event: () => {
+                    if (object.type === 'inlink') {
+                        const url = new URL('./', location.href);
+                        url.searchParams.set('page', object.link);
+                        location.href = url.href;
+                    }
+                    else if (object.type === 'hashTag') {
+                        const yOffset = $("header").length > 0 ? -$("header").height() : 0;
+                        const element = document.getElementsByClassName(`glitterTag${object.link}`)[0];
+                        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                    }
+                    else {
+                        gvc.glitter.runJsInterFace('openWeb', {
+                            url: object.link,
+                        }, (data) => { }, {
+                            webFunction(data, callback) {
+                                gvc.glitter.openNewTab(object.link);
+                            },
+                        });
+                    }
+                },
+            };
+        },
+    },
 });

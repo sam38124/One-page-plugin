@@ -42,13 +42,7 @@ height: ${logo.height};
 "
 src="${logo.src}"><h3 class="p-0 m-0" style="${widget.data.titleStyle ?? ""}">${widget.data.title ?? ""}</h3></div>`,
                                 rightIcon: `
-                                <div class="d-flex align-items-center" style="gap:15px;">
-                                    <img src="https://homee-ai.github.io/glitter-htmlExtension/src//homee/src/category.svg" onclick="${gvc.event(() => {
-                                        //todo
-                                        appConfig().changePage(gvc, 'category')
-                                    })}">
-                       
-                                </div>
+                                
                        `
                             })
                         },divCreate:{},

@@ -90,6 +90,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     return gvc.bindView({
                         bind:id,
                         view:()=>{
+
                             return `
                         <footer class="d-flex align-items-center justify-content-between     w-100" style="padding-bottom: ${widget.data.bottomInset - 10}px;position: fixed;bottom: 0px;left: 0px;">
                             ${(() => {
@@ -111,12 +112,14 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             badge=count
                                             gvc.notifyDataChange(id)
                                         }
-                                        TriggerEvent.trigger({
-                                            gvc, widget, clickEvent: data.badge
-                                        })
+                                   
+                                        // TriggerEvent.trigger({
+                                        //     gvc, widget, clickEvent: data.badge
+                                        // })
                                         return {
                                             bind:id,
                                             view:()=>{
+                                       
                                                 if(badge===0){return  ``}
                                                 return `<div class=" d-flex align-items-center justify-content-center" style="position: absolute;
 width: 16px;
@@ -148,6 +151,7 @@ border-radius: 8px;">${badge}</div>`
                     })
                 },
                 editor: () => {
+                    return ``
                     return Editor.arrayItem({
                         title:"列表項目",
                         gvc:gvc,

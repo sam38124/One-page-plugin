@@ -104,9 +104,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                             badge = count;
                                             gvc.notifyDataChange(id);
                                         };
-                                        TriggerEvent.trigger({
-                                            gvc, widget, clickEvent: data.badge
-                                        });
                                         return {
                                             bind: id,
                                             view: () => {
@@ -141,6 +138,7 @@ border-radius: 8px;">${badge}</div>`;
                     });
                 },
                 editor: () => {
+                    return ``;
                     return Editor.arrayItem({
                         title: "列表項目",
                         gvc: gvc,
