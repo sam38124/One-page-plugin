@@ -1,6 +1,7 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
 import { ScriptStyle1 } from "../../script-style-1.js";
 import { Dialog } from "../../dialog/dialog-mobile.js";
+import { Checkout } from "../../api/checkout.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
@@ -350,6 +351,14 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                         margin-left: 20px;" onclick="${gvc.event((e) => {
                                         const dialog = new Dialog(gvc);
                                         if (selectSku.availableForSale) {
+                                            Checkout.addToCart({
+                                                category: "購物車",
+                                                skuID: selectSku.sku_id,
+                                                amount: widget.data.qty,
+                                                callback: (response) => {
+                                                    dialog.showInfo('已加入購物車');
+                                                }
+                                            });
                                         }
                                         else {
                                             dialog.showInfo("產品已售完");

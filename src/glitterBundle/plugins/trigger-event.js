@@ -214,7 +214,9 @@ ${gvc.bindView(() => {
                                                 type: 'module'
                                             }
                                         ], () => {
-                                            gvc.notifyDataChange(selectID);
+                                            console.log("------------------");
+                                            console.log(glitter.share.clickEvent);
+                                            console.log(glitter.htmlGenerate.resourceHook(obj.clickEvent.src));
                                         }, () => {
                                             console.log(`loadingError:` + obj.clickEvent.src);
                                         });

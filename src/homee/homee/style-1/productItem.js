@@ -46,7 +46,6 @@ export const product = Plugin.createComponent(import.meta.url, (glitter, editMod
                     <div class="${widget.data.class ?? ""}p-0 w-100" style="${widget.data.style ?? ""}; 
                         break-inside: avoid;margin-top: 16px;                                
                         height: auto;background: #FBF9F6;border-radius: 16px;" onclick="${gvc.event(() => {
-                        console.log(widget.data);
                         TriggerEvent.trigger({
                             gvc,
                             widget,
@@ -118,7 +117,7 @@ export const product = Plugin.createComponent(import.meta.url, (glitter, editMod
                     return gvc.map([
                         TriggerEvent.editer(gvc, widget, widget.data, {
                             option: ['toProductDetail'],
-                            hover: true
+                            hover: false
                         })
                     ]);
                 }

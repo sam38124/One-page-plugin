@@ -92,7 +92,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         view:()=>{
 
                             return `
-                        <footer class="d-flex align-items-center justify-content-between     w-100" style="padding-bottom: ${widget.data.bottomInset - 10}px;position: fixed;bottom: 0px;left: 0px;">
+                        <footer class="d-flex align-items-center justify-content-between     w-100" style="padding-bottom: ${widget.data.bottomInset - 10}px;position: fixed;bottom: 0px;left: 0px;z-index:2;">
                             ${(() => {
                                 return gvc.map(widget.data.dataList.map((data: any, index: number) => {
                                     data.badge=data.badge??{}
@@ -151,7 +151,7 @@ border-radius: 8px;">${badge}</div>`
                     })
                 },
                 editor: () => {
-                    return ``
+                    console.log("-------------------")
                     return Editor.arrayItem({
                         title:"列表項目",
                         gvc:gvc,
