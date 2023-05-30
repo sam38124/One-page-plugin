@@ -56,12 +56,12 @@ export class User {
         });
     }
     public static login({
-                            account,
-                            pwd,
-                            inviteCode,
-                            callback,
-                            third
-                        }: { third?:any,account: string, pwd: string,inviteCode?:string, callback: (data: { user_id: number; last_name: string; first_name: string; name: string; photo: string; AUTH: string } | boolean,code:any) => void }){
+                account,
+                pwd,
+                inviteCode,
+                callback,
+                third
+        }: { third?:any,account: string, pwd: string,inviteCode?:string, callback: (data: { user_id: number; last_name: string; first_name: string; name: string; photo: string; AUTH: string } | boolean,code:any) => void }){
         const glitter=Glitter.glitter
 
         $.ajax({

@@ -9,6 +9,7 @@ import {Funnel} from "../../glitterBundle/funnel.js";
 import {BaseApi} from "../../api/base.js";
 import {Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Editor} from "../../editor.js";
+import {Glitter} from "../../glitterBundle/Glitter.js";
 
 const machiDomain='https://machi-app.com/';
 
@@ -753,6 +754,83 @@ ${
                             }
                         );
                     }
+                },
+            };
+        },
+    },
+    setClient: {
+        title: 'SAAS的client設定',
+        fun: (gvc, widget, object) => {
+            return {
+                editor: () => {
+                    return gvc.bindView(() => {
+                        const id = gvc.glitter.getUUID();
+
+                        return {
+                            bind: id,
+                            view: () => {
+                                object.type = object.type ?? 'client-1';
+                                object.value = object.value ?? 'client-1';
+                                return /*html*/ ` ${Editor.h3('client選擇')}
+                                <select
+                                    class="form-control form-select"
+                                    onchange="${gvc.event((e) => {
+                                    object.type = e.value;
+                                    gvc.notifyDataChange(id);
+                                })}">
+                                ${[
+                                    { title: 'client-1', value: 'client-1' },
+                                ]
+                                    .map((dd) => {
+                                        return /*html*/ `<option value="${dd.value}" ${dd.value == object.type ? `selected` : ``}>
+                                            ${dd.title}
+                                        </option>`;
+                                    })
+                                    .join('')}
+                                    </select>
+                                    
+                                    `;
+                            },
+                            divCreate: {},
+                        };
+                    });
+                },
+                event: () => {
+                    let inf:any = {};
+
+                    inf["client-1"]={
+                        client_id:"VQXDuC3AIlPkr4s6uKzY7hbXmJlTgZnp",
+                        client_secret:"rk5BGqdDD6pUuVwtr7d4MisZSrEtoNovXiERNFB7drkO4LYZX-x_LxQkCJ25Tznw",
+                        username : "zack.lai@homee.ai",
+                        password : "HomeeClientsTest!",
+                        grant_type : "password",
+                        audience : "https://stg.api.homee.ai/",
+                        "X-Client-Id" : "1"
+                    }
+
+                    return new Promise((resolve, reject)=>{
+                        Glitter.glitter.share.client=object.value
+                        resolve(true)
+                        // BaseApi.create({
+                        //     "url": `https://stg-clients.us.auth0.com/oauth/token`,
+                        //     "type": "POST",
+                        //     "timeout": 0,
+                        //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        //     "data":{
+                        //         client_id:"VQXDuC3AIlPkr4s6uKzY7hbXmJlTgZnp",
+                        //         client_secret:"rk5BGqdDD6pUuVwtr7d4MisZSrEtoNovXiERNFB7drkO4LYZX-x_LxQkCJ25Tznw",
+                        //         username : "zack.lai@homee.ai",
+                        //         password : "HomeeClientsTest!",
+                        //         grant_type : "password",
+                        //         audience : "https://stg.api.homee.ai/"
+                        //     }
+                        // }).then((d2) => {
+                        //     console.log("-------------------------result------------------")
+                        //     console.log(d2)
+                        //     resolve(true)
+                        // })
+                    })
+
                 },
             };
         },
