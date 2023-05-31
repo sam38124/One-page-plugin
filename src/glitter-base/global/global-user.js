@@ -10,4 +10,5 @@ export class GlobalUser {
         window.glitter.setCookie(GlobalUser.getTag('token'), value);
     }
     static userData = {};
+    static updateUserData = {};
 }

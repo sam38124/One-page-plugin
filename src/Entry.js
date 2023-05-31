@@ -1,6 +1,8 @@
 'use strict';
 export class Entry {
     static onCreate(glitter) {
+        glitter.runJsInterFace("dismiss", {}, () => {
+        });
         `<div class="d-flex align-items-center justify-content-center"></div>`;
         glitter.htmlGenerate.resourceHook = (src) => {
             if (location.host === `127.0.0.1:3080`) {

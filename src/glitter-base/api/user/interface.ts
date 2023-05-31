@@ -35,7 +35,8 @@ TriggerEvent.create(import.meta.url, {
                             gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {}
                             gvc.glitter.share.public_api.GlobalUser = GlobalUser
                             GlobalUser.token = r.response.token
-                            GlobalUser.userData = r.response.userData
+                            GlobalUser.userData = r.response
+                            GlobalUser.updateUserData = JSON.parse(JSON.stringify(r.response))
                             TriggerEvent.trigger({
                                 gvc, widget, clickEvent: object.registerEvent, subData, element
                             })
@@ -114,23 +115,49 @@ TriggerEvent.create(import.meta.url, {
                     return ``
                 },
                 event: () => {
-                    gvc.glitter.share.public_api=gvc.glitter.share.public_api??{}
-                    gvc.glitter.share.public_api.GlobalUser=GlobalUser
-                    new Promise((resolve, reject)=>{
+                    gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {}
+                    gvc.glitter.share.public_api.GlobalUser = GlobalUser
+                    new Promise((resolve, reject) => {
                         ApiUser.getUserData(GlobalUser.token)?.then((r) => {
                             if (!r.result) {
-                                GlobalUser.token=''
+                                GlobalUser.token = ''
                             } else {
                                 GlobalUser.userData = r.response
+                                GlobalUser.updateUserData = JSON.parse(JSON.stringify(r.response))
                             }
                             //gvc.glitter.share.public_api.GlobalUser.userData
                             resolve(true)
                         })
                     })
-
+                },
+            };
+        },
+    },
+    updateUser: {
+        title: '官方事件-用戶-更改資料',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {}
+                    new Promise((resolve, reject) => {
+                        ApiUser.updateUserData(GlobalUser.updateUserData)?.then((r) => {
+                            const dialog = new ShareDialog(gvc.glitter)
+                            if (!r.result) {
+                                dialog.errorMessage({text: "連線異常，或帳號已被使用"})
+                            } else {
+                                location.reload()
+                            }
+                            resolve(true)
+                        })
+                    })
                 },
             };
         },
     }
 });
+
+
 
