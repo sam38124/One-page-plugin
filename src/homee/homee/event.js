@@ -440,6 +440,169 @@ ${gvc.bindView(() => {
                         def: (obj.data ?? {}).name ?? "",
                         searchData: "product_list"
                     }, (res) => {
+                        let apiData = {
+                            "total_count": 7,
+                            "product_list": [
+                                {
+                                    "id": 8133741674796,
+                                    "name": "（限量現貨搶購中）FORLI 岩板餐桌, D型腳座, 140*80 公分, 馬肚型",
+                                    "images": [
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50372935.jpg?v=1675362731"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50246608.jpg?v=1675362732"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50246597.jpg?v=1675362732"
+                                        }
+                                    ],
+                                    "preview_image": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50372935.jpg?v=1675362731&width=720",
+                                    "sale_price": 12290,
+                                    "price": 16800,
+                                    "showUp": false,
+                                    "quantity": 1
+                                },
+                                {
+                                    "id": 8138815668524,
+                                    "name": "FORLI 岩板餐桌",
+                                    "images": [
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/A49.jpg?v=1683040400"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/25490065_6411fe56-7dd4-4108-98e3-1f9fdb95fba6.jpg?v=1683121170"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/17799164_eecfb3fb-841e-4deb-8a3b-1caccd6e1dee.jpg?v=1683121170"
+                                        }
+                                    ],
+                                    "preview_image": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/A49.jpg?v=1683040400&width=720",
+                                    "sale_price": 6900,
+                                    "price": 27000,
+                                    "showUp": true,
+                                    "quantity": 1
+                                },
+                                {
+                                    "id": 8139694145836,
+                                    "name": "（限量現貨搶購中）FORLI 岩板餐桌, A型腳座, 140*80 公分, 馬肚形",
+                                    "images": [
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_1cee277e-4be6-4f52-83ab-3c74f1daa661.jpg?v=1675689090"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50374060.jpg?v=1675689090"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50374061.jpg?v=1675689090"
+                                        }
+                                    ],
+                                    "preview_image": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_1cee277e-4be6-4f52-83ab-3c74f1daa661.jpg?v=1675689090&width=720",
+                                    "sale_price": 8990,
+                                    "price": 11400,
+                                    "showUp": false,
+                                    "quantity": 1
+                                },
+                                {
+                                    "id": 8139707089196,
+                                    "name": "（限量現貨搶購中）FIRENZE 漂浮岩板餐桌, FORLI, 160*90 公分, 直邊圓角",
+                                    "images": [
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_1b2d1455-2e88-4c5a-b423-9e0fd861d052.jpg?v=1675690539"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50248625.jpg?v=1675690539"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50248626.jpg?v=1675690539"
+                                        }
+                                    ],
+                                    "preview_image": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_1b2d1455-2e88-4c5a-b423-9e0fd861d052.jpg?v=1675690539&width=720",
+                                    "sale_price": 19390,
+                                    "price": 24300,
+                                    "showUp": false,
+                                    "quantity": 1
+                                },
+                                {
+                                    "id": 8217925812524,
+                                    "name": "（限量現貨搶購中）FORLI 岩板餐桌, A型腳座, 160*90 公分, 直邊圓角",
+                                    "images": [
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_4ee2267c-a15a-4b33-93e8-8c3967e792d1.jpg?v=1679066692"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50374060_cc2ea874-b83f-4d72-aada-21eb8534d898.jpg?v=1679066692"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50374061_09e0ae68-0ab5-428c-a3d5-1d4f8e48744e.jpg?v=1679066692"
+                                        }
+                                    ],
+                                    "preview_image": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_4ee2267c-a15a-4b33-93e8-8c3967e792d1.jpg?v=1679066692&width=720",
+                                    "sale_price": 9490,
+                                    "price": 9490,
+                                    "showUp": false,
+                                    "quantity": 1
+                                },
+                                {
+                                    "id": 8217939083564,
+                                    "name": "（限量現貨搶購中）FIRENZE 漂浮岩板餐桌, FORLI, 160*90 公分, 直邊圓角",
+                                    "images": [
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_70059521-62c1-411c-8345-599c7ceb36fe.jpg?v=1679066837"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50248625_b9f9d93b-d9d5-4d72-a782-27d80afb2cb4.jpg?v=1679066837"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50248626_19e0196b-2980-4401-8120-98411d985c11.jpg?v=1679066837"
+                                        }
+                                    ],
+                                    "preview_image": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_70059521-62c1-411c-8345-599c7ceb36fe.jpg?v=1679066837&width=720",
+                                    "sale_price": 19390,
+                                    "price": 24300,
+                                    "showUp": false,
+                                    "quantity": 1
+                                },
+                                {
+                                    "id": 8217964118316,
+                                    "name": "（限量現貨搶購中）FORLI 岩板餐桌, A型腳座, 160*90 公分, 直邊圓角",
+                                    "images": [
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_676d93c8-7ed4-4b43-a94b-01fe6ea4a9dc.jpg?v=1679067545"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50374060_eb8d7c22-91ee-4b6e-87cd-d874fdbf5a6f.jpg?v=1679067545"
+                                        },
+                                        {
+                                            "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50374061_3ddaea2b-befc-492b-8d63-5ffee1d1acdd.jpg?v=1679067545"
+                                        }
+                                    ],
+                                    "preview_image": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_676d93c8-7ed4-4b43-a94b-01fe6ea4a9dc.jpg?v=1679067545&width=720",
+                                    "sale_price": 9490,
+                                    "price": 9490,
+                                    "showUp": false,
+                                    "quantity": 1
+                                }
+                            ]
+                        };
+                        let newApiData = [
+                            {
+                                "name": "name1",
+                                "id": 1,
+                                "type": "type1",
+                                "updated_at": "2023-05-30 09:57:25",
+                                "description": "description1",
+                                "created_at": "2023-05-30 09:57:25"
+                            },
+                            {
+                                "name": "name2",
+                                "id": 2,
+                                "type": "type2",
+                                "updated_at": "2023-05-31 05:48:40",
+                                "description": "description2",
+                                "created_at": "2023-05-31 05:48:40"
+                            }
+                        ];
                         obj.data = res;
                         widget.refreshAll();
                     });
@@ -761,7 +924,25 @@ ${gvc.bindView(() => {
                     };
                     return new Promise((resolve, reject) => {
                         Glitter.glitter.share.client = object.value;
+                        Glitter.glitter.share.XClientId = inf[object.value]["X-Client-Id"];
                         resolve(true);
+                        BaseApi.create({
+                            "url": `https://stg-clients.us.auth0.com/oauth/token`,
+                            "type": "POST",
+                            "timeout": 0,
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            "data": {
+                                client_id: inf[object.value].client_id,
+                                client_secret: inf[object.value].client_secret,
+                                username: inf[object.value].username,
+                                password: inf[object.value].password,
+                                grant_type: inf[object.value].grant_type,
+                                audience: inf[object.value].audience
+                            }
+                        }).then((d2) => {
+                            Glitter.glitter.share.ClientToken = d2.response["access_token"];
+                            resolve(true);
+                        });
                     });
                 },
             };

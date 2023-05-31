@@ -177,8 +177,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     const dialog = new Dialog(gvc);
                     let rebat = 0;
                     let refreshTimer: any = 0;
-                    console.log("--------------------")
-                    console.log(widget.data.cartItem)
 
                     function storeLocal(){
                         let mapData:any={}
@@ -234,15 +232,21 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         }, 1000)
                     }
 
-                    Checkout.getRebat((response:any)=>{
-                        rebat = response.data[0].credit_balance;
-                    });
 
                     dialog.dataLoading(true)
 
                     function getCartProData() {
                         Checkout.getCart((cdata) => {
                             cartData = cdata
+                            let apiData = {
+                                "購物車": {
+                                    "A020147-1-1": {
+                                        "count": 1,
+                                        "sku": "A020147-1-1",
+                                        "isSelect": true
+                                    }
+                                }
+                            }
                             let needGetInfoSku: string[] = []
                             Object.keys(cartData).map((dd: any) => {
                                 const obj: any = cartData[dd]
@@ -345,10 +349,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                     function initial() {
                         cartIn = []
                         cartOut = []
+                        console.log("--------------------")
+                        console.log(widget.data.cartItem)
 
                         widget.data.cartItem.forEach((cartCategory: any) => {
-                            console.log("--------------------")
-                            console.log(cartCategory)
+
                             let checkPush = false;
                             cartCategory.item.forEach((item: any) => {
                                 if (item.select) {

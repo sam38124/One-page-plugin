@@ -13,6 +13,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
             return {
                 view:()=>{
+
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID()
                     gvc.addStyle(`

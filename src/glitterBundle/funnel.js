@@ -14,6 +14,8 @@ export class Funnel {
                     route: set.path + (value ?? ''),
                     method: 'get',
                 }, (data) => {
+                    console.log("--------------product data----------");
+                    console.log(data);
                     let t = '';
                     ((set.searchData !== undefined) ? data[set.searchData] : data).map((x) => {
                         t += `<li

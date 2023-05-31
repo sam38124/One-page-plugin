@@ -53,14 +53,29 @@ export class User {
             },
         });
     }
-    static login({ account, pwd, inviteCode, callback, third }) {
+    static login({ account, pwd, callback, third }) {
         const glitter = Glitter.glitter;
         $.ajax({
             url: `${appConfig().serverURL}/api/v1/user/login`,
             type: 'post',
-            data: JSON.stringify({ email: account, pwd: pwd, inviteCode: inviteCode, third: third }),
+            data: JSON.stringify({ email: account, pwd: pwd, third: third }),
             contentType: 'application/json; charset=utf-8',
             success: (suss) => {
+                let apiData = {
+                    "user_id": 14077302,
+                    "email": "a0981825882@gmail.com",
+                    "first_name": "賴",
+                    "last_name": "仁鴻",
+                    "gender": 1,
+                    "create_time": 1678261652,
+                    "phone": "",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNDA3NzMwMiwiZW1haWwiOiJhMDk4MTgyNTg4MkBnbWFpbC5jb20iLCJmaXJzdF9uYW1lIjoi6LO0IiwibGFzdF9uYW1lIjoi5LuB6bS7IiwiZ2VuZGVyIjoxLCJpYXQiOjE2ODU1MTY1NDEsImV4cCI6MTY4NTUzNDU0MX0.zxyroDTmY34Ka3FGkFe373u7GZeiwiY1IeFLMK0iaTM",
+                    "photo": null,
+                    "name": "仁鴻",
+                    "shopify_pwd": "j9b9usdkrr",
+                    "invite_code": "UZMOGN",
+                    "pwd": "s42503516"
+                };
                 if (suss) {
                     suss.pwd = pwd;
                     appConfig().setUserData({
@@ -188,10 +203,10 @@ export class User {
             data: JSON.stringify(obj),
             contentType: 'application/json; charset=utf-8',
             success: (suss) => {
-                User.login({ account: obj.email, pwd: obj.pwd, inviteCode: obj.inviteCode, callback: obj.callback });
+                User.login({ account: obj.email, pwd: obj.pwd, callback: obj.callback });
             },
             error: (err) => {
-                User.login({ account: obj.email, pwd: obj.pwd, inviteCode: obj.inviteCode, callback: obj.callback });
+                User.login({ account: obj.email, pwd: obj.pwd, callback: obj.callback });
             },
         });
     }

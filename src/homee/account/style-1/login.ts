@@ -180,10 +180,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     dialog.showInfo('密碼輸入錯誤或是查無此帳號')
                                 } else {
                                     dialog.showInfo('登入成功!')
-                                    appConfig().setHome(gvc, 'user_setting', {})
-                                    const url = new URL('./', location.href);
-                                    url.searchParams.set('page', 'user_setting');
-                                    location.href = url.href;
+                                    // appConfig().setHome(gvc, 'user_setting', {})
+                                    // const url = new URL('./', location.href);
+                                    // url.searchParams.set('page', 'user_setting');
+                                    // location.href = url.href;
                                 }
                             },
                         })
