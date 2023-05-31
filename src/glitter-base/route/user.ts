@@ -1,4 +1,5 @@
 import {BaseApi} from "../../api/base.js";
+import {GlobalUser} from "../global/global-user.js";
 
 
 export class ApiUser{
@@ -24,6 +25,20 @@ export class ApiUser{
                 "Content-Type": "application/json",
                 "Authorization":token
             }
+        })
+    }
+    public static updateUserData(json:any){
+        return BaseApi.create({
+            "url": getBaseUrl()+`/api-public/v1/user`,
+            "type": "PUT",
+            "headers": {
+                "g-app":getConfig().config.appName,
+                "Content-Type": "application/json",
+                "Authorization":GlobalUser.token
+            },
+            data:JSON.stringify({
+                userData:json
+            })
         })
     }
     public static login(json:{account:string,pwd:string}){
