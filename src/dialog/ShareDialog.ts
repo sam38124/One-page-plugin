@@ -5,7 +5,7 @@ export class ShareDialog {
     public dataLoading = (obj: { text?: string; visible: boolean }) => {
 
     };
-    public errorMessage = (obj: { text?: string }) => {
+    public errorMessage = (obj: { text?: string, callback?:()=>void }) => {
     };
     public successMessage = (obj: { text?: string,callback?:()=>void }) => {
     };
@@ -20,8 +20,8 @@ export class ShareDialog {
                 glitter.closeDiaLog('dataLoading')
             }
         };
-        this.errorMessage = (obj: { text?: string; }) => {
-            glitter.openDiaLog('dialog/dialog.js', 'errorMessage', {type:'errorMessage',obj:obj})
+        this.errorMessage = (obj: { text?: string;  callback?:()=>void}) => {
+            glitter.openDiaLog('dialog/dialog.js', 'errorMessage', {type:'errorMessage',obj:obj,callback:obj.callback})
         };
         this.successMessage = (obj: { text?: string; callback?:()=>void}) => {
             glitter.openDiaLog('dialog/dialog.js', 'successMessage', {type:'successMessage',obj:obj,callback:obj.callback},{})

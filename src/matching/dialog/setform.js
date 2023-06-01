@@ -14,14 +14,14 @@ init((gvc, glitter, gBundle) => {
             return `
  <div class="vw-100 vh-100 position-fixed" style="background:rgba(0,0,0,0.7);z-index:-1;"></div>
  <div class="vw-100 vh-100 d-flex align-items-center justify-content-center">
-  <div class="rounded " style="width:700px;border-radius:24px;max-width:100%;background:white;overflow-y:auto;">
+  <div class="rounded" style="width:700px;border-radius:24px;max-width:100%;background:white;overflow-y:auto;">
   <div class="w-100 d-flex align-items-center border-bottom justify-content-center position-relative bg-white rounded-top" style="height: 68px;">
         <h3 class="modal-title fs-4">設定服務表單</h3>
         <i class="fa-solid fa-xmark text-dark position-absolute " style="font-size:20px;transform: translateY(-50%);right: 20px;top: 50%;cursor: pointer;" onclick="${gvc.event(() => {
                 glitter.closeDiaLog(gvc.parameter.pageConfig?.tag);
             })}"></i>
 </div>
-${gvc.bindView(() => {
+ ${gvc.bindView(() => {
                 return {
                     bind: id,
                     view: () => {
@@ -32,7 +32,10 @@ ${gvc.bindView(() => {
                                 mode = 'preview';
                                 gvc.notifyDataChange(id);
                             })}"><i class="fa-solid fa-eye me-2"></i>預覽</button>
-<button class="btn-warning text-dark btn mt-2 ">儲存</button></div>
+<button class="btn-warning text-dark btn mt-2 " onclick="${gvc.event(() => {
+                                glitter.htmlGenerate.saveEvent();
+                                glitter.closeDiaLog();
+                            })}">儲存</button></div>
 </div>`;
                         }
                         else {
@@ -42,7 +45,10 @@ ${gvc.bindView(() => {
                                 mode = 'edit';
                                 gvc.notifyDataChange(id);
                             })}"><i class="fa-solid fa-pencil me-2"></i>編輯</button>
-<button class="btn-warning text-dark btn mt-2 ">儲存</button></div>
+<button class="btn-warning text-dark btn mt-2 " onclick="${gvc.event(() => {
+                                glitter.htmlGenerate.saveEvent();
+                                glitter.closeDiaLog();
+                            })}">儲存</button></div>
 </div>`;
                         }
                     },

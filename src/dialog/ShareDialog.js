@@ -17,7 +17,7 @@ export class ShareDialog {
             }
         };
         this.errorMessage = (obj) => {
-            glitter.openDiaLog('dialog/dialog.js', 'errorMessage', { type: 'errorMessage', obj: obj });
+            glitter.openDiaLog('dialog/dialog.js', 'errorMessage', { type: 'errorMessage', obj: obj, callback: obj.callback });
         };
         this.successMessage = (obj) => {
             glitter.openDiaLog('dialog/dialog.js', 'successMessage', { type: 'successMessage', obj: obj, callback: obj.callback }, {});
