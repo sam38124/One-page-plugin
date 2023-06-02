@@ -7,6 +7,7 @@ export class ShareDialog {
     };
     checkYesOrNot;
     policy;
+    innerDialog;
     constructor(glitter) {
         this.dataLoading = (obj) => {
             if (obj.visible) {
@@ -31,6 +32,11 @@ export class ShareDialog {
                     glitter.closeDiaLog('checkYesOrNot');
                     obj.callback(response);
                 }, title: obj.text
+            });
+        };
+        this.innerDialog = (html) => {
+            glitter.openDiaLog(new URL('./dialog.js', import.meta.url).href, 'innerDialog', {
+                getView: html
             });
         };
     }

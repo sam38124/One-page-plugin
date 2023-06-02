@@ -182,6 +182,7 @@ TriggerEvent.create(import.meta.url, {
                     });
                 },
                 event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter);
                     function run() {
                         const glitter = window.glitter;
                         const shareDialog = new ShareDialog(glitter);
@@ -220,34 +221,31 @@ TriggerEvent.create(import.meta.url, {
                         });
                     }
                     if (gvc.glitter.getCookieByName('glitterToken') === undefined) {
-                        const shareDialog = new ShareDialog(gvc.glitter);
                         shareDialog.errorMessage({ text: "請先登入" });
                         return;
                     }
-                    $(`body`).append(`<div id="delete-modal" class="modal fade " tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+                    shareDialog.innerDialog((gvc) => {
+                        return `<div class="modal-content" style="max-width:90%;width:400px;">
             <div class="modal-body">
                 <div class="ps-1 pe-1" >
-
-                    <div class="mb-3">
+                  <div class="mb-3">
                         <label for="username" class="form-label">APP名稱</label>
                         <input class="form-control" type="text" id="userName" required="" placeholder="請輸入APP名稱" onchange="${gvc.event((e) => {
-                        widget.data.createAPP = e.value;
-                    })}">
+                            widget.data.createAPP = e.value;
+                        })}">
                     </div>
                 </div>
- <div class="modal-footer">
-                                                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">取消</button>
+ <div class="modal-footer mb-0 pb-0">
+                                                                <button type="button" class="btn btn-outline-dark" onclick="${gvc.event(() => {
+                            gvc.closeDialog();
+                        })}">取消</button>
                                                                 <button type="button" class="btn btn-primary" onclick="${gvc.event(() => {
-                        run();
-                    })}">確認添加</button>
+                            run();
+                        })}">確認添加</button>
                                                             </div>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>`);
-                    $('#delete-modal').modal('show');
+        </div>`;
+                    });
                 }
             };
         }

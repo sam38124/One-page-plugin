@@ -53,7 +53,9 @@ export class GVC {
         return this.parameter.pageConfig?.obj
    }
 
-
+    public closeDialog() {
+        this.glitter.closeDiaLog(this.parameter.pageConfig?.tag)
+    }
 
     public notifyDataChange(id: any) {
         const gvc = this

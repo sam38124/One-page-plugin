@@ -11,6 +11,7 @@ export class ShareDialog {
     };
     public checkYesOrNot: (obj: { callback:(response:boolean)=>void, text: string }) => void;
     public policy: () => void;
+    public innerDialog: (html: (gvc: GVC) => string) => void;
 
     constructor(glitter: Glitter) {
         this.dataLoading = (obj: { text?: string; visible: boolean }) => {
@@ -35,6 +36,11 @@ export class ShareDialog {
                     glitter.closeDiaLog('checkYesOrNot')
                     obj.callback(response)
                 },title:obj.text
+            })
+        }
+        this.innerDialog=(html:(gvc:GVC)=>string)=>{
+            glitter.openDiaLog(new URL('./dialog.js',import.meta.url).href, 'innerDialog', {
+                getView:html
             })
         }
 
