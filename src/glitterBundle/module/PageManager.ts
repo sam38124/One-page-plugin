@@ -139,7 +139,7 @@ export class PageManager {
                 }
             );
             $('#glitterPage').append(`<div id="page${config!.id}" style="min-width: 100vw;min-height: 100vh;left: 0;top: 0;
-background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: hidden;">
+background: ${config!.backGroundColor};display: none;z-index: 0;overflow: hidden;">
 </div>`)
             glitter.nowPageConfig = config;
             let module = glitter.modelJsList.find((dd) => {
@@ -279,7 +279,7 @@ background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: h
                 }
             );
             $('#glitterPage').append(`<div  id="page${config.id}" style="
-min-width: 100vw; min-height: 100vh;  z-index: 999999; overflow: hidden
+min-width: 100vw; min-height: 100vh;  z-index: 0; overflow: hidden
 background: transparent;background: ${config!.backGroundColor};display: none;position: absolute;top: 0;left: 0;">
 </div>`)
             config.scrollTop=glitter.$('html').get(0).scrollTop
@@ -345,7 +345,7 @@ background: transparent;background: ${config!.backGroundColor};display: none;pos
                 }
             );
             $('#glitterPage').append(`<div id="page${config!.id}" style="min-width: 100vw;min-height: 100vh;left: 0;top: 0;
-background: ${config!.backGroundColor};display: none;z-index: 999999;overflow: hidden;position: fixed;width:100vw;height: 100vh;" >
+background: ${config!.backGroundColor};display: none;z-index: 0;overflow: hidden;position: fixed;width:100vw;height: 100vh;" >
 </div>`)
             glitter.nowPageConfig = config;
 

@@ -224,7 +224,7 @@ TriggerEvent.create(import.meta.url, {
                         shareDialog.errorMessage({ text: "請先登入" });
                         return;
                     }
-                    $('body').append(`<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    $(`body`).append(`<div id="delete-modal" class="modal fade " tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">

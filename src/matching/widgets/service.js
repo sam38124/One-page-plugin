@@ -489,7 +489,7 @@ export const service = Plugin.createComponent(import.meta.url, (glitter, editMod
                             return `<div  class="${glitter.ut.frSize({
                                 sm: `container `
                             }, 'p-0')}" style="box-sizing: border-box;" >
-<div  class="p-2 border w-100 d-flex  glitterTagundefined" style="overflow-x: auto; white-space: nowrap;  display: inline-block; gap:10px;   " >
+<div  class="p-2 border w-100 d-flex  glitterTagundefined" style="overflow-x: auto; white-space: nowrap;  display: inline-block; gap:10px;" >
 ${widget.data.bigItem.map((dd, index) => {
                                 return `<div  class="rounded position-relative d-flex flex-column align-items-center justify-content-center glitterTagundefined" style="min-width:200px;height:125px;
 background:50%/cover no-repeat url('${dd.bg}');
@@ -523,7 +523,7 @@ ${(() => {
                             })()}
 </div>
 </div>
-<div class="row m-0 ${(subData.selectPlace) ? `` : `d-none`}" style="width:100%;">
+<div class="row m-0 ${(subData.selectPlace === false) ? `d-none` : ``}" style="width:100%;">
 <div class="${gridCol} d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
 服務縣市
 </div>
