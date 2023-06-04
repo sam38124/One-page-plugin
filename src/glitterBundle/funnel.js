@@ -9,15 +9,12 @@ export class Funnel {
             let last = 0;
             let multiSpec = '';
             function caller(value) {
-                value = encodeURI(value);
                 funnel.apiAJAX({
                     route: set.path + (value ?? ''),
                     method: 'get',
                 }, (data) => {
-                    console.log("--------------product data----------");
-                    console.log(data);
                     let t = '';
-                    ((set.searchData !== undefined) ? data[set.searchData] : data).map((x) => {
+                    data.map((x) => {
                         t += `<li
                                 class="${ra}_li"
                                 style="cursor:pointer"

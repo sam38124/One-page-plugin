@@ -116,36 +116,59 @@ export class TriggerEvent {
         const event = oj.clickEvent.clickEvent;
         let returnData = '';
         async function run() {
-            try {
+            return new Promise(async (resolve, reject) => {
+                async function pass() {
+                    try {
+                        setTimeout(() => {
+                            resolve(true);
+                        }, 4000);
+                        returnData = await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData, oj.element).event();
+                        resolve(true);
+                    }
+                    catch (e) {
+                        resolve(false);
+                    }
+                }
                 oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {};
                 if (!oj.gvc.glitter.share.clickEvent[event.src]) {
                     await new Promise((resolve, reject) => {
                         oj.gvc.glitter.addMtScript([
                             { src: `${glitter.htmlGenerate.resourceHook(event.src)}`, type: 'module' }
                         ], () => {
-                            setTimeout(() => {
-                                resolve(true);
-                            }, 50);
+                            pass();
                         }, () => {
                             resolve(false);
                         });
                     });
                 }
-                returnData = await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData, oj.element).event();
-            }
-            catch (e) {
-            }
+                else {
+                    pass();
+                }
+            });
         }
         return new Promise(async (resolve, reject) => {
-            await run();
-            resolve(returnData);
+            let fal = 10;
+            function check() {
+                run().then((res) => {
+                    if (res || (fal === 0)) {
+                        resolve(returnData);
+                    }
+                    else {
+                        setTimeout(() => {
+                            fal -= 1;
+                            check();
+                        }, 100);
+                    }
+                });
+            }
+            check();
         });
     }
     static editer(gvc, widget, obj, option = { hover: false, option: [] }) {
         gvc.glitter.share.clickEvent = gvc.glitter.share.clickEvent ?? {};
         const glitter = gvc.glitter;
         const selectID = glitter.getUUID();
-        return `<div class="mt-2 ${(option.hover) ? `alert alert-primary bg-primary` : ``}">
+        return `<div class="mt-2 ${(option.hover) ? `alert alert-primary` : ``}">
  <h3 class="m-0" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
  ${gvc.bindView(() => {
             return {
@@ -189,6 +212,9 @@ export class TriggerEvent {
 </select>
 ${gvc.bindView(() => {
                         const id = glitter.getUUID();
+                        setTimeout(() => {
+                            gvc.notifyDataChange(id);
+                        }, 200);
                         return {
                             bind: id,
                             view: () => {
@@ -207,15 +233,15 @@ ${gvc.bindView(() => {
                                 glitter.share.clickEvent = glitter.share.clickEvent ?? {};
                                 try {
                                     if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
-                                        glitter.addMtScript([
+                                        -glitter.addMtScript([
                                             {
                                                 src: glitter.htmlGenerate.resourceHook(obj.clickEvent.src),
                                                 type: 'module'
                                             }
                                         ], () => {
-                                            console.log("------------------");
-                                            console.log(glitter.share.clickEvent);
-                                            console.log(glitter.htmlGenerate.resourceHook(obj.clickEvent.src));
+                                            setTimeout(() => {
+                                                gvc.notifyDataChange(id);
+                                            }, 200);
                                         }, () => {
                                             console.log(`loadingError:` + obj.clickEvent.src);
                                         });

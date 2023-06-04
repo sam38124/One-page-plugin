@@ -438,7 +438,6 @@ ${gvc.bindView(() => {
                         path: Api.serverURL + '/api/v1/product?product_name=',
                         key: 'name',
                         def: (obj.data ?? {}).name ?? "",
-                        searchData: "product_list"
                     }, (res) => {
                         let apiData = {
                             "total_count": 7,

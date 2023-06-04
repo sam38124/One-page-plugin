@@ -142,32 +142,52 @@ export class TriggerEvent {
         let returnData = ''
 
         async function run() {
-            try {
-                oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {}
-                if (!oj.gvc.glitter.share.clickEvent[event.src]) {
-                    await new Promise((resolve, reject) => {
-                        oj.gvc.glitter.addMtScript([
-                            {src: `${glitter.htmlGenerate.resourceHook(event.src)}`, type: 'module'}
-                        ], () => {
-                            setTimeout(()=>{
-                                resolve(true)
-                            },50)
-                        }, () => {
-                            resolve(false)
-                        })
-                    })
-                }
-                returnData = await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData, oj.element).event()
-            }catch (e){
-
-            }
-
+           return new Promise<boolean>(async (resolve, reject)=>{
+               async function pass(){
+                   try {
+                       setTimeout(()=>{
+                           resolve(true)
+                       },4000)
+                       returnData = await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData, oj.element).event()
+                       resolve(true)
+                   }catch (e){
+                       resolve(false)
+                   }
+               }
+               oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {}
+               if (!oj.gvc.glitter.share.clickEvent[event.src]) {
+                   await new Promise((resolve, reject) => {
+                       oj.gvc.glitter.addMtScript([
+                           {src: `${glitter.htmlGenerate.resourceHook(event.src)}`, type: 'module'}
+                       ], () => {
+                           pass()
+                       }, () => {
+                           resolve(false)
+                       })
+                   })
+               }else {
+                   pass()
+               }
+           })
         }
 
 
         return new Promise(async (resolve, reject) => {
-            await run()
-            resolve(returnData)
+            let fal=10
+            function check(){
+                run().then((res)=>{
+                    if(res||(fal===0)){
+                        resolve(returnData)
+                    }else{
+                        setTimeout(()=>{
+                            fal-=1
+                            check()
+                        },100)
+                    }
+                })
+            }
+           check()
+
         })
     }
 
@@ -179,7 +199,7 @@ export class TriggerEvent {
         gvc.glitter.share.clickEvent = gvc.glitter.share.clickEvent ?? {}
         const glitter = gvc.glitter
         const selectID = glitter.getUUID()
-        return `<div class="mt-2 ${(option.hover) ? `alert alert-primary bg-primary` : ``}">
+        return `<div class="mt-2 ${(option.hover) ? `alert alert-primary` : ``}">
  <h3 class="m-0" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
  ${
             gvc.bindView(() => {
@@ -224,6 +244,9 @@ export class TriggerEvent {
 </select>
 ${gvc.bindView(() => {
                             const id = glitter.getUUID()
+                            setTimeout(()=>{
+                                gvc.notifyDataChange(id)
+                            },200)
                             return {
                                 bind: id,
                                 view: () => {
@@ -240,18 +263,17 @@ ${gvc.bindView(() => {
                                 onCreate: () => {
                                     glitter.share.clickEvent = glitter.share.clickEvent ?? {}
                                     try {
-                                        
-                                        if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
+                                        if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {-
                                             glitter.addMtScript([
                                                 {
                                                     src: glitter.htmlGenerate.resourceHook(obj.clickEvent.src),
                                                     type: 'module'
                                                 }
                                             ], () => {
-                                                console.log("------------------")
-                                                console.log(glitter.share.clickEvent)
-                                                console.log(glitter.htmlGenerate.resourceHook(obj.clickEvent.src))
-                                                // gvc.notifyDataChange(selectID)
+                                                setTimeout(()=>{
+                                                    gvc.notifyDataChange(id)
+                                                },200)
+                                               
                                             }, () => {
                                                 console.log(`loadingError:` + obj.clickEvent.src)
                                             })

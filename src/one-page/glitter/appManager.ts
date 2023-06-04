@@ -162,8 +162,9 @@ function deleteEvent(gvc: GVC, dd: any) {
         appName: undefined,
         delete: undefined
     }
-    $('body').append(`<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
+    const dialog=new ShareDialog(gvc.glitter)
+    dialog.innerDialog((gvc)=>{
+      return ` <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-body">
@@ -176,46 +177,47 @@ function deleteEvent(gvc: GVC, dd: any) {
                     <div class="mb-3">
                         <label for="username" class="form-label">APP名稱</label>
                         <input class="form-control" type="text" id="userName" required="" placeholder="請輸入APP名稱" onchange="${gvc.event((e) => {
-        data.appName = e.value
-    })}">
+          data.appName = e.value
+      })}">
                     </div>
  <div class="mb-3">
                         <label for="username" class="form-label">是否刪除</label>
                         <input class="form-control" type="text" id="password" required="" placeholder="請輸入我要刪除" onchange="${gvc.event((e) => {
-        data.delete = e.value
-    })}">
+          data.delete = e.value
+      })}">
                     </div>
                 </div>
  <div class="modal-footer">
-                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">取消</button>
+                                                                <button type="button" class="btn btn-light" onclick="${gvc.event(()=>{
+                                                                    gvc.glitter.closeDiaLog()
+      })}">取消</button>
                                                                 <button type="button" class="btn btn-danger" onclick="${gvc.event(() => {
-        const dialog = new ShareDialog(gvc.glitter)
-        if (dd.appName !== data.appName || data.delete !== '我要刪除') {
-            dialog.errorMessage({text: "輸入錯誤"})
-        } else {
-            dialog.dataLoading({visible: true})
-            BaseApi.create({
-                "url": saasConfig.config.url + `/api/v1/app`,
-                "type": "DELETE",
-                "timeout": 0,
-                "headers": {
-                    "Content-Type": "application/json",
-                    "Authorization": User.getToken()
-                },
-                data: JSON.stringify({
-                    appName: data.appName
-                })
-            }).then((d2) => {
-                location.reload()
-            })
-        }
-    })}">確認刪除</button>
+          const dialog = new ShareDialog(gvc.glitter)
+          if (dd.appName !== data.appName || data.delete !== '我要刪除') {
+              dialog.errorMessage({text: "輸入錯誤"})
+          } else {
+              dialog.dataLoading({visible: true})
+              BaseApi.create({
+                  "url": saasConfig.config.url + `/api/v1/app`,
+                  "type": "DELETE",
+                  "timeout": 0,
+                  "headers": {
+                      "Content-Type": "application/json",
+                      "Authorization": User.getToken()
+                  },
+                  data: JSON.stringify({
+                      appName: data.appName
+                  })
+              }).then((d2) => {
+                  location.reload()
+              })
+          }
+      })}">確認刪除</button>
                                                             </div>
             </div>
         </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>`);
-    ($('#delete-modal') as any).modal('show')
+    </div>`
+    })
 }
 
 const swiperID = 'dmkwkmw'
