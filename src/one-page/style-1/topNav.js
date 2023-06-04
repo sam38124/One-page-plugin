@@ -55,7 +55,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                     TriggerEvent.trigger({ gvc, widget, clickEvent: r });
                                 }
                             })}"
-                                        style="cursor:pointer"
+                                        style="cursor:pointer;${(widget.data.textColor && first) ? `color:${widget.data.textColor}!important;` : ``}"
                                         name="${typeof r.link === 'string' ? r.link.replace('#', '') : ``}"
                                         >${r.name}</a
                                     >
@@ -63,7 +63,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         }
                         else {
                             h += `<li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown">${r.name}</a>
+                                    <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" style="${(widget.data.textColor) ? `color:${widget.data.textColor}!important;` : ``}">${r.name}</a>
                                     <ul class="dropdown-menu">
                                         ${glitter.print(function () {
                                 var tmp = '';
@@ -87,7 +87,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             gvc, widget, clickEvent: widget.data.logoClick
                         });
                     })}"
-                                        style="cursor:pointer"
+                                        style="cursor:pointer;${(widget.data.textColor) ? `color:${widget.data.textColor}!important;` : ``}"
                                     >
                                         <img class="me-2 ${glitter.htmlGenerate.styleEditor(widget.data.nav.logo).class()}" src="${nav.logo.url}" width="30" style="${glitter.htmlGenerate.styleEditor(widget.data.nav.logo).style()}" />${glitter.ut.frSize({ sm: nav.title.pc }, nav.title.phone)}
                                     </a>
@@ -170,7 +170,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                         aria-expanded="false"
                                         aria-label="Toggle navigation"
                                     >
-                                        <span class="navbar-toggler-icon"></span>
+                                        <span class="navbar-toggler-icon" style="${(widget.data.textColor) ? `background-color:${widget.data.textColor}!important;` : ``}"></span>
                                     </button>
                                 </div>
                             </header>
@@ -185,6 +185,16 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             def: widget.data.nav.logo.url,
                             callback: (e) => {
                                 widget.data.nav.logo.url = e;
+                                widget.refreshComponent();
+                            },
+                        }),
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: `字體顏色`,
+                            default: widget.data.textColor ?? '',
+                            placeHolder: '輸入字體顏色',
+                            callback: (text) => {
+                                widget.data.textColor = text;
                                 widget.refreshComponent();
                             },
                         }),
