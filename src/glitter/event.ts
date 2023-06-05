@@ -75,14 +75,17 @@ TriggerEvent.create(import.meta.url, {
                         )
                     }).then((d2) => {
                         shareDialog.dataLoading({visible: false})
-                        if (d2.result) {
-                            User.setToken(d2.response.userData.token)
-                            TriggerEvent.trigger({
-                                gvc, widget, clickEvent: widget.data.loginSuccess
-                            })
-                        } else {
-                            shareDialog.errorMessage({text: "登入失敗"})
-                        }
+                        setTimeout(()=>{
+                            if (d2.result) {
+                                User.setToken(d2.response.userData.token)
+                                TriggerEvent.trigger({
+                                    gvc, widget, clickEvent: widget.data.loginSuccess
+                                })
+                            } else {
+                                shareDialog.errorMessage({text: "登入失敗"})
+                            }
+                        },500)
+
                     })
                 },
             };
@@ -136,14 +139,16 @@ TriggerEvent.create(import.meta.url, {
                         data: JSON.stringify(json)
                     }).then((d2) => {
                         shareDialog.dataLoading({visible: false})
-                        if (d2.result) {
-                            User.setToken(d2.response.token)
-                            TriggerEvent.trigger({
-                                gvc, widget, clickEvent: widget.data.registerSuccess
-                            })
-                        } else {
-                            shareDialog.errorMessage({text: "註冊失敗"})
-                        }
+                        setTimeout(()=>{
+                            if (d2.result) {
+                                User.setToken(d2.response.token)
+                                TriggerEvent.trigger({
+                                    gvc, widget, clickEvent: widget.data.registerSuccess
+                                })
+                            } else {
+                                shareDialog.errorMessage({text: "註冊失敗"})
+                            }
+                        },500)
                     })
                 },
             };
