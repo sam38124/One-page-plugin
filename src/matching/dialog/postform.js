@@ -45,10 +45,13 @@ ${gvc.bindView(() => {
                         if (viewType === 'selectService') {
                             return `
 ${component.render(gvc, { data: { tag: "select_widget" } }, [], [], {
-                                test: "boolea"
+                                hide_place: true
                             }).view()}
 <div class="d-flex align-items-end justify-content-end p-2">
-<button class="btn btn-warning text-dark me-2">下一步</button>
+<button class="btn btn-warning text-dark me-2" onclick="${gvc.event(() => {
+                                viewType = "editForm";
+                                gvc.notifyDataChange(id);
+                            })}">下一步</button>
 </div>
                                 `;
                         }

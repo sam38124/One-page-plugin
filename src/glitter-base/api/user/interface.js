@@ -161,5 +161,32 @@ TriggerEvent.create(import.meta.url, {
                 },
             };
         },
+    },
+    checkUser: {
+        title: '官方事件-用戶-判斷是否登入',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    return ``;
+                },
+                event: () => {
+                    return GlobalUser.token;
+                },
+            };
+        },
+    },
+    userLogOut: {
+        title: '官方事件-用戶-登出',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    return ``;
+                },
+                event: () => {
+                    GlobalUser.token = '';
+                    location.reload();
+                },
+            };
+        },
     }
 });

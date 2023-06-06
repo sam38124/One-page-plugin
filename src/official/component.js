@@ -234,7 +234,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                                         if (dd.triggerType === 'trigger') {
                                                             dd.evenet = dd.evenet ?? {};
                                                             return TriggerEvent.editer(gvc, widget, dd.evenet, {
-                                                                hover: true,
+                                                                hover: false,
                                                                 option: [],
                                                                 title: "觸發事件"
                                                             });

@@ -31,11 +31,13 @@ init((gvc, glitter, gBundle) => {
                                 "colm": "12",
                                 "type": "date",
                                 "label": "服務日期",
+                                "requirement": "true",
                                 "formExpand": { "expand": true }
                             }, {
                                 "col": "12",
                                 "key": "serviceTime",
                                 "colm": "12",
+                                "requirement": "true",
                                 "type": "time",
                                 "label": "服務時間",
                                 "formExpand": { "expand": true }
@@ -45,6 +47,7 @@ init((gvc, glitter, gBundle) => {
                                 "colm": "12",
                                 "type": "placeSelect",
                                 "label": "服務地區",
+                                "requirement": "true",
                                 "formExpand": { "expand": true },
                                 "selectType": "manual"
                             }, {
@@ -52,9 +55,22 @@ init((gvc, glitter, gBundle) => {
                                 "key": "serviceAddress",
                                 "colm": "12",
                                 "type": "address",
+                                "requirement": "true",
                                 "label": "詳細地址",
                                 "formExpand": { "expand": true }
+                            }, {
+                                "col": "12",
+                                "key": "budget",
+                                "tag": "form_budget",
+                                "colm": "12",
+                                "type": "custom",
+                                "label": "預算填寫",
+                                "expand": false,
+                                "component": {},
+                                "formExpand": { "expand": true },
+                                "requirement": "true"
                             }].reverse();
+                        console.log(JSON.stringify(gBundle.data.formList));
                         if (mode === 'edit') {
                             const a = {
                                 "id": "1685445504157",

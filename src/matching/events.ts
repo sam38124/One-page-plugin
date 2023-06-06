@@ -1,5 +1,6 @@
 import {TriggerEvent} from "../glitterBundle/plugins/trigger-event.js";
 import {globalEditer} from "../glitterBundle/html-component/global-editer.js";
+import {GlobalUser} from "../glitter-base/global/global-user.js";
 
 TriggerEvent.create(import.meta.url, {
     postCase: {
@@ -7,10 +8,20 @@ TriggerEvent.create(import.meta.url, {
         fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
-                    return ``
+                    return  TriggerEvent.editer(gvc, widget, widget.data, {
+                        option: [],
+                        title:"未登入的事件",
+                        hover: false
+                    })
                 },
                 event: () => {
-                    (window as any).glitter.openDiaLog(new URL('dialog/postform.js',import.meta.url).href,"postform",{})
+                    if(!GlobalUser.token){
+                        TriggerEvent.trigger({
+                            gvc, widget, clickEvent: widget.data,
+                        })
+                    }else{
+                        (window as any).glitter.openDiaLog(new URL('dialog/postform.js',import.meta.url).href,"postform",{})
+                    }
                 },
             };
         },

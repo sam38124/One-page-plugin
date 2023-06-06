@@ -32,6 +32,7 @@ export const post = TriggerEvent.createSingleEvent(import.meta.url, (glitter) =>
                                 callback: () => {
                                     if (subData.callback) {
                                         subData.callback(true);
+                                        location.reload();
                                     }
                                 }
                             });

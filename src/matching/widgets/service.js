@@ -523,7 +523,7 @@ ${(() => {
                             })()}
 </div>
 </div>
-<div class="row m-0 ${(subData.selectPlace === false) ? `d-none` : ``}" style="width:100%;">
+<div class="row m-0 ${(subData.hide_place) ? `d-none` : ``}" style="width:100%;">
 <div class="${gridCol} d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
 服務縣市
 </div>

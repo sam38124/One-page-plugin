@@ -193,16 +193,13 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                             readonly: data.states === '1' || readonly
                                         }) + `<div class="my-2 " style=""></div>`
                                     case 'custom':
-                                        if (data.component) {
-                                            return data.component.view()
-                                        }
                                         return component.render(gvc, {
                                             data: data,
                                             refreshComponent: widget.refreshComponent
                                         } as any, setting, hoverID, {
-                                            formData: subData,
-                                            formList: formListComponent,
-                                            readonly: data.states === '1'
+                                            data: data,
+                                            formData: formData,
+                                            readonly: readonly
                                         }).view()
                                     case 'cal':
                                         return `<input type="${data.type}" id="${data.key}"
@@ -250,29 +247,6 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                     resolve(true)
                                 }
                             })
-                            for (const a of widget.data.formList) {
-                                if (a.type === 'custom') {
-                                    // alert('sss')
-                                    await new Promise((resolve, reject) => {
-                                        a.component = component.render(gvc, {
-                                            data: a,
-                                            refreshComponent: widget.refreshComponent
-                                        } as any, setting, hoverID, {
-                                            formData: subData,
-                                            formList: formListComponent,
-                                            readonly: a.states === '1',
-                                            callback: (data: any) => {
-                                                if (data.config[0].data.formList) {
-                                                    formListComponent = formListComponent.concat(data.config[0].data.formList)
-                                                }
-                                                // formListComponent = formListComponent.concat(data.config[0].data.formList)
-                                                resolve(true)
-                                            }
-                                        })
-                                        a.component.view()
-                                    })
-                                }
-                            }
                         }
 
                         getData().then(() => {
@@ -298,7 +272,6 @@ ${widget.data.btnList.map((dd: any) => {
                                         })
                                     })}" style="${glitter.htmlGenerate.styleEditor(dd).style()}">${dd.name}</button>`
                                 }).join('')}
-
 </div>
 
                     `
