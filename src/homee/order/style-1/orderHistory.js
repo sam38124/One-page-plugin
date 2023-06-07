@@ -1,5 +1,4 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
-import { ClickEvent } from "../../../glitterBundle/plugins/click-event.js";
 import { ScriptStyle1 } from "../../script-style-1.js";
 import { Checkout } from "../../api/checkout.js";
 import { appConfig } from "../../../config.js";
@@ -107,13 +106,11 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 </div>
                             `;
                                     }))}
-                            <div class="d-flex align-items-center justify-content-center d-none" style="${classStyle.moreOrder}" onclick="${gvc.event(() => {
-                                        ClickEvent.trigger({
-                                            gvc, widget, clickEvent: widget.data.event
-                                        });
+                                <div class="d-flex align-items-center justify-content-center" style="${classStyle.moreOrder}" onclick="${gvc.event(() => {
+                                        appConfig().changePage(gvc, "order_all_history", {}, {});
                                     })}">
-                                更多訂單
-                            </div>`;
+                                    更多訂單
+                                </div>`;
                                 },
                                 divCreate: {}
                             })}

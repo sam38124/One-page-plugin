@@ -477,6 +477,7 @@ ${
                             searchData: "product_list"
                         },
                         (res) => {
+                            //原本api拿到的資料
                             let apiData = {
                                 "total_count": 7,
                                 "product_list": [
@@ -622,6 +623,7 @@ ${
                                 }
                             ]
                             };
+                            //接service api後 目前6/7拿到的資料
                             let newApiData = [
                                 {
                                     "name": "name1",

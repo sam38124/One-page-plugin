@@ -115,13 +115,11 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 </div>
                             `
                                     }))}
-                            <div class="d-flex align-items-center justify-content-center d-none" style="${classStyle.moreOrder}" onclick="${gvc.event(() => {
-                                        ClickEvent.trigger({
-                                            gvc, widget, clickEvent: widget.data.event
-                                        })
-                                    })}">
-                                更多訂單
-                            </div>`
+                                <div class="d-flex align-items-center justify-content-center" style="${classStyle.moreOrder}" onclick="${gvc.event(() => {
+                                        appConfig().changePage(gvc, "order_all_history",{},{});
+                                })}">
+                                    更多訂單
+                                </div>`
                                 },
                                 divCreate: {}
                             })}

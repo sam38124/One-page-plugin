@@ -9,8 +9,36 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget);
                     let id = glitter.getUUID();
+                    let orderList;
                     Checkout.getOrderList({
                         callback: (response) => {
+                            orderList = response;
+                            orderList = response.map((orderData) => {
+                                return {
+                                    number: orderData.name,
+                                    date: orderData.created_at.substring(0, 10),
+                                    paysStatus: (() => {
+                                        if (orderData.financial_status === 'paid') {
+                                            return `已付款`;
+                                        }
+                                        else {
+                                            return `未付款`;
+                                        }
+                                    })(),
+                                    processingStatus: (() => {
+                                        if (orderData.fulfillment_status === 'fulfilled') {
+                                            return `已出貨`;
+                                        }
+                                        else {
+                                            return `待出貨`;
+                                        }
+                                    })(),
+                                    amount: orderData.subtotal_price,
+                                    origin: orderData
+                                };
+                            });
+                            console.log("-----------------here-----------");
+                            console.log(orderList);
                         }
                     });
                     return gvc.bindView({
@@ -31,7 +59,10 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 statusValue: `width:25%;font-weight: 400;font-size: 10px;line-height: 14px;color: #292929;`,
                                 moreOrder: `font-weight: 400;font-size: 15px;color: #1E1E1E;`
                             };
-                            return `${gvc.map(widget.data.orderData.map((orderData) => {
+                            if (!orderList) {
+                                return ``;
+                            }
+                            return `${gvc.map(orderList.map((orderData) => {
                                 return `
                                 <div class="d-flex flex-column fontHomee" style="${classStyle.ticket}">
                                     <div class="d-flex">

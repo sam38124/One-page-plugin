@@ -34,7 +34,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                 sharedView.navigationBar({
                                     title: ``,
                                     leftIcon: `
-<img class="" src="${new URL('../../img/component/left-arrow.svg', import.meta.url).href}" style="width: 24px;height: 24px;margin-right: 16px" alt="" onclick="${gvc.event(() => {
+<img class="" src="https://homee-ai.github.io/glitter-htmlExtension/src/img/component/left-arrow.svg" style="width: 24px;height: 24px;margin-right: 16px" alt="" onclick="${gvc.event(() => {
                                         // gvc.glitter.goBack()
                                     })}">
  <input class="form-control flex-fill" style="
@@ -60,9 +60,48 @@ placeholder="大家都在搜尋:沙發" oninput="${gvc.event((e) => {
                                                 route: '/api/v1/product?product_name='+e.value,
                                                 method: 'get'
                                             }, (res) => {
+                                                //原本api取得的data
+                                                let apiData:{
+                                                    loading:boolean,
+                                                    data:{
+                                                        id:string,
+                                                        name:string,
+                                                        images:{
+                                                            url:string
+                                                        }[],
+                                                        preview_image:string,
+                                                        sale_price:number,
+                                                        price:number,
+                                                        showUp:boolean,
+                                                        quantity:number
+                                                    }[]
+                                                } = {
+                                                    "loading": false,
+                                                    "data": [
+                                                        {
+                                                            "id": "8139805786412",
+                                                            "name": "MOGLIO 邊几",
+                                                            "images": [
+                                                                {
+                                                                    "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_654ca61f-c763-4bb6-8cde-ace993dcc54b.jpg?v=1675694825"
+                                                                },
+                                                                {
+                                                                    "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50815819.jpg?v=1675695104"
+                                                                },
+                                                                {
+                                                                    "url": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/50815812.jpg?v=1675695104"
+                                                                }
+                                                            ],
+                                                            "preview_image": "https://cdn.shopify.com/s/files/1/0704/0158/9548/products/1_654ca61f-c763-4bb6-8cde-ace993dcc54b.jpg?v=1675694825&width=720",
+                                                            "sale_price": 2700,
+                                                            "price": 2700,
+                                                            "showUp": true,
+                                                            "quantity": 1
+                                                        }
+                                                    ]
+                                                }
                                                 vm.data=res.product_list
                                                 vm.loading = false
-                                                console.log(vm)
                                                 gvc.notifyDataChange('search')
                                             })
                                         }, 1000)

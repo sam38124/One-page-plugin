@@ -152,7 +152,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         <div class="productQTYRow d-flex align-items-center justify-content-between " style="margin: 16px 0;">
                             <div class="qtyBar"></div>
                             <div class="d-flex">
-                                <img src="${new URL('../../img/component/minusCircle.svg', import.meta.url)}" onclick="${gvc.event(() => {
+                                <img src="https://homee-ai.github.io/glitter-htmlExtension/src/img/component/minusCircle.svg" onclick="${gvc.event(() => {
                                 qtyChange(false);
                             })}">
                                 ${gvc.bindView({
@@ -170,7 +170,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                     })}">`
                                 }, divCreate: {class: `qtyNumber d-flex align-items-center justify-content-center`, style: ``}
                             })}
-                                <img src="${new URL('../../img/component/plusCircle.svg', import.meta.url)}" onclick="${gvc.event(() => {
+                                <img src="https://homee-ai.github.io/glitter-htmlExtension/src/img/component/plusCircle.svg" onclick="${gvc.event(() => {
                                 qtyChange();
                             })}">
                                 

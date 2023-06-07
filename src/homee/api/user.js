@@ -19,7 +19,6 @@ export class User {
                     data: JSON.stringify({ email: 'sam94074@gmail.com', pwd: `sam12345` }),
                     contentType: 'application/json; charset=utf-8',
                     success: (suss) => {
-                        console.log(suss);
                         callback({
                             data: {
                                 user_id: 12052350,
@@ -61,8 +60,22 @@ export class User {
             data: JSON.stringify({ email: account, pwd: pwd, third: third }),
             contentType: 'application/json; charset=utf-8',
             success: (suss) => {
+                let userData = {
+                    userId: "14077302",
+                    lastName: "Lai",
+                    firstName: "Zack",
+                    name: "Zack",
+                    photo: "",
+                    AUTH: "",
+                    gender: 1,
+                    create_time: "1678261652",
+                    phone: "",
+                    shopify_pwd: "j9b9usdkrr",
+                    invite_code: "UZMOGN",
+                    pwd: "test"
+                };
                 let apiData = {
-                    "user_id": 14077302,
+                    userId: 14077302,
                     "email": "a0981825882@gmail.com",
                     "first_name": "賴",
                     "last_name": "仁鴻",
@@ -74,7 +87,7 @@ export class User {
                     "name": "仁鴻",
                     "shopify_pwd": "j9b9usdkrr",
                     "invite_code": "UZMOGN",
-                    "pwd": "s42503516"
+                    "pwd": "tesxtpwd"
                 };
                 if (suss) {
                     suss.pwd = pwd;
