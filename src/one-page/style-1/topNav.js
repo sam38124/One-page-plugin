@@ -174,7 +174,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                         aria-expanded="false"
                                         aria-label="Toggle navigation"
                                     >
-                                    <i class="fa-regular fa-bars ${glitter.htmlGenerate.styleEditor(widget.data.menuItem).class()} fs-3" style="${glitter.htmlGenerate.styleEditor(widget.data.menuItem).style()}"
+                                    <i class="fa-regular fa-bars ${glitter.htmlGenerate.styleEditor(widget.data.menuItem).class()} fs-3  d-sm-none" style="${glitter.htmlGenerate.styleEditor(widget.data.menuItem).style()}"
                                     ></i>
                                            </button>
                                 </div>

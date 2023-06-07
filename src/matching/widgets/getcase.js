@@ -67,8 +67,7 @@ ${gvc.bindView(() => {
                                 if (vm.data.length === 0) {
                                     return `<div class="d-flex align-items-center justify-content-center col-12 mt-2 flex-column mb-4
 ">
- <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_rc6CDU.json"    speed="1"  onclick="${gvc.event((e) => {
-                                    })}" style="max-width: 100%;width: 300px;"  loop  autoplay></lottie-player>
+ <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_rc6CDU.json"    speed="1"   style="max-width: 100%;width: 300px;"  loop  autoplay></lottie-player>
    <h3 class="text-dark fs-5 mt-n3">查無相關服務</h3>
 </div>`;
                                 }
