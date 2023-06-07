@@ -3,7 +3,7 @@ import {Editor} from "../editor.js";
 import {BaseApi} from "./api/base.js";
 import {ShareDialog} from "../dialog/ShareDialog.js";
 import {User} from "./model/User.js";
-
+import {globalEditer} from "../glitterBundle/html-component/global-editer.js";
 
 
 class GlobalData {
@@ -75,14 +75,17 @@ TriggerEvent.create(import.meta.url, {
                         )
                     }).then((d2) => {
                         shareDialog.dataLoading({visible: false})
-                        if (d2.result) {
-                            User.setToken(d2.response.userData.token)
-                            TriggerEvent.trigger({
-                                gvc, widget, clickEvent: widget.data.loginSuccess
-                            })
-                        } else {
-                            shareDialog.errorMessage({text: "登入失敗"})
-                        }
+                        setTimeout(()=>{
+                            if (d2.result) {
+                                User.setToken(d2.response.userData.token)
+                                TriggerEvent.trigger({
+                                    gvc, widget, clickEvent: widget.data.loginSuccess
+                                })
+                            } else {
+                                shareDialog.errorMessage({text: "登入失敗"})
+                            }
+                        },500)
+
                     })
                 },
             };
@@ -109,7 +112,7 @@ TriggerEvent.create(import.meta.url, {
                     const shareDialog = new ShareDialog(glitter)
                     let userData: any = {}
                     Object.keys(subData).map((dd) => {
-                        if (['account', 'pwd', 'company','confirmPwd'].indexOf(dd) === -1) {
+                        if (['account', 'pwd', 'company', 'confirmPwd'].indexOf(dd) === -1) {
                             userData[dd] = subData[dd]
                         }
                     })
@@ -119,9 +122,9 @@ TriggerEvent.create(import.meta.url, {
                         "company": subData.company,
                         "userData": userData
                     }
-                    if(subData.pwd!==subData.confirmPwd){
+                    if (subData.pwd !== subData.confirmPwd) {
                         shareDialog.errorMessage({
-                            text:"請再次確認密碼"
+                            text: "請再次確認密碼"
                         })
                         return;
                     }
@@ -136,74 +139,78 @@ TriggerEvent.create(import.meta.url, {
                         data: JSON.stringify(json)
                     }).then((d2) => {
                         shareDialog.dataLoading({visible: false})
-                        if (d2.result) {
-                            User.setToken(d2.response.token)
-                            TriggerEvent.trigger({
-                                gvc, widget, clickEvent: widget.data.registerSuccess
-                            })
-                        } else {
-                            shareDialog.errorMessage({text: "註冊失敗"})
-                        }
+                        setTimeout(()=>{
+                            if (d2.result) {
+                                User.setToken(d2.response.token)
+                                TriggerEvent.trigger({
+                                    gvc, widget, clickEvent: widget.data.registerSuccess
+                                })
+                            } else {
+                                shareDialog.errorMessage({text: "註冊失敗"})
+                            }
+                        },500)
                     })
                 },
             };
         },
     },
-    logOut:{
+    logOut: {
         title: 'Glitter-登出按鈕',
-        fun: (gvc, widget, object, subData) =>{
+        fun: (gvc, widget, object, subData) => {
             return {
-                editor: () =>{
+                editor: () => {
                     return ``
                 },
-                event: () =>{
+                event: () => {
                     User.setToken(undefined)
-                    const url=new URL(location.href)
+                    const url = new URL(location.href)
                     url.searchParams.delete('page')
-                    location.href=url.href
+                    location.href = url.href
                 }
             }
         }
     },
-    checkLogin:{
+    checkLogin: {
         title: 'Glitter-登入檢查',
-        fun: (gvc, widget, object, subData) =>{
+        fun: (gvc, widget, object, subData) => {
             return {
-                editor: () =>{
+                editor: () => {
                     return ``
                 },
-                event: () =>{
-                    if(!User.getToken()){
-                        const url=new URL(location.href)
+                event: () => {
+                    if (!User.getToken()) {
+                        const url = new URL(location.href)
                         url.searchParams.delete('page')
-                        location.href=url.href
+                        location.href = url.href
                     }
                 }
             }
         }
     },
-    createAPP:{
-        title:'Glitter-創建APP',
-        fun: (gvc, widget, object, subData) =>{
+    createAPP: {
+        title: 'Glitter-創建APP',
+        fun: (gvc, widget, object, subData) => {
             return {
-                editor: () =>{
+                editor: () => {
                     return gvc.glitter.htmlGenerate.editeInput({
                         gvc: gvc,
                         title: `複製專案名稱`,
                         default: object.appName ?? "",
                         placeHolder: '輸入複製專案名稱',
                         callback: (text) => {
-                            object.appName  = text;
+                            object.appName = text;
                             widget.refreshComponent();
                         },
                     })
                 },
-                event: () =>{
-                    function run(){
+                event: () => {
+                    const shareDialog = new ShareDialog(gvc.glitter)
+
+                    function run() {
                         const glitter = (window as any).glitter
                         const shareDialog = new ShareDialog(glitter)
-                        if(!widget.data.createAPP){
-                            shareDialog.errorMessage({text:"請輸入APP名稱"})
+                        if (!widget.data.createAPP) {
+                            shareDialog.errorMessage({text: "請輸入APP名稱"})
                             return;
                         }
                         const saasConfig: {
@@ -211,7 +218,7 @@ TriggerEvent.create(import.meta.url, {
                             api: any;
                         } = (window as any).saasConfig;
                         shareDialog.dataLoading({
-                            visible:true
+                            visible: true
                         })
                         BaseApi.create({
                             "url": saasConfig.config.url + `/api/v1/app`,
@@ -224,49 +231,47 @@ TriggerEvent.create(import.meta.url, {
                             "data": JSON.stringify({
                                 "domain": widget.data.createAPP,
                                 "appName": widget.data.createAPP,
-                                "copyApp":object.appName
+                                "copyApp": object.appName
                             })
                         }).then((d2) => {
                             shareDialog.dataLoading({visible: false})
                             if (d2.result) {
-                                const url=new URL('../'+widget.data.createAPP,location.href)
-                                url.searchParams.set("type","editor")
-                                url.searchParams.set("page","")
-                                location.href=url.href
+                                const url = new URL('../' + widget.data.createAPP, location.href)
+                                url.searchParams.set("type", "editor")
+                                url.searchParams.set("page", "")
+                                location.href = url.href
                             } else {
                                 shareDialog.errorMessage({text: "創建失敗，此名稱已被使用!"})
                             }
                         })
                     }
-                    if(gvc.glitter.getCookieByName('glitterToken') === undefined){
-                        const shareDialog = new ShareDialog(gvc.glitter)
-                        shareDialog.errorMessage({text:"請先登入"})
+
+                    if (gvc.glitter.getCookieByName('glitterToken') === undefined) {
+                        shareDialog.errorMessage({text: "請先登入"})
                         return
                     }
-                    $('body').append(`<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+                    shareDialog.innerDialog((gvc) => {
+                        return `<div class="modal-content" style="max-width:90%;width:400px;">
             <div class="modal-body">
                 <div class="ps-1 pe-1" >
-
-                    <div class="mb-3">
+                  <div class="mb-3">
                         <label for="username" class="form-label">APP名稱</label>
                         <input class="form-control" type="text" id="userName" required="" placeholder="請輸入APP名稱" onchange="${gvc.event((e) => {
-                        widget.data.createAPP = e.value
-                    })}">
+                            widget.data.createAPP = e.value
+                        })}">
                     </div>
                 </div>
- <div class="modal-footer">
-                                                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">取消</button>
+ <div class="modal-footer mb-0 pb-0">
+                                                                <button type="button" class="btn btn-outline-dark" onclick="${gvc.event(() => {
+                            gvc.closeDialog()
+                        })}">取消</button>
                                                                 <button type="button" class="btn btn-primary" onclick="${gvc.event(() => {
-                      run()
-                    })}">確認添加</button>
+                            run()
+                        })}">確認添加</button>
                                                             </div>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>`);
-                    ($('#delete-modal') as any).modal('show')
+        </div>`
+                    });
 
                 }
             }

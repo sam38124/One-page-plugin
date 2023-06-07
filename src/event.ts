@@ -39,7 +39,6 @@ TriggerEvent.create(import.meta.url, {
                 editor: () => {
                     return gvc.bindView(() => {
                         const id = gvc.glitter.getUUID();
-
                         function recursive() {
                             if (GlobalData.data.pageList.length === 0) {
                                 GlobalData.data.run();
@@ -50,7 +49,6 @@ TriggerEvent.create(import.meta.url, {
                                 gvc.notifyDataChange(id);
                             }
                         }
-
                         recursive();
                          setTimeout(()=>{
                              gvc.notifyDataChange(id)
@@ -63,15 +61,15 @@ TriggerEvent.create(import.meta.url, {
                                     {title: '外部連結', value: 'outlink'},
                                     {title: 'HashTag', value: 'hashTag'},
                                 ].find((dd)=>{
-                                    return dd.value === object.type
+                                    return dd.value === object.link_change_type
                                 })){
-                                    object.type='inlink'
+                                    object.link_change_type='inlink'
                                 }
                                 return /*html*/ ` ${Editor.h3('跳轉方式')}
                                     <select
                                         class="form-control form-select"
                                         onchange="${gvc.event((e) => {
-                                    object.type = e.value;
+                                    object.link_change_type = e.value;
                                     gvc.notifyDataChange(id);
                                 })}"
                                     >
@@ -81,14 +79,14 @@ TriggerEvent.create(import.meta.url, {
                                     {title: 'HashTag', value: 'hashTag'},
                                 ]
                                     .map((dd) => {
-                                        return /*html*/ `<option value="${dd.value}" ${dd.value == object.type ? `selected` : ``}>
+                                        return /*html*/ `<option value="${dd.value}" ${dd.value == object.link_change_type ? `selected` : ``}>
                                             ${dd.title}
                                         </option>`;
                                     })
                                     .join('')}
                                     </select>
                                     ${(() => {
-                                    if (object.type === 'inlink') {
+                                    if (object.link_change_type === 'inlink') {
                                         object.stackControl=object.stackControl??"home"
                                         return /*html*/ `
 ${Editor.select({
@@ -116,7 +114,7 @@ ${Editor.h3("選擇頁面")}
                                                 </option>`;
                                         })}
                                         </select>`;
-                                    } else if (object.type === 'outlink') {
+                                    } else if (object.link_change_type === 'outlink') {
                                         return gvc.glitter.htmlGenerate.editeInput({
                                             gvc: gvc,
                                             title: '',
@@ -146,10 +144,11 @@ ${Editor.h3("選擇頁面")}
                     });
                 },
                 event: () => {
+                    object.link_change_type=object.link_change_type??object.type
                     /**
                      * 網頁直接跳轉連結，如為APP則打開WEBVIEW
                      * */
-                    if (object.type === 'inlink') {
+                    if (object.link_change_type === 'inlink') {
                         return new Promise(async (resolve, reject) => {
                             const url = new URL('./', location.href);
                             url.searchParams.set('page', object.link);
@@ -195,7 +194,7 @@ ${Editor.h3("選擇頁面")}
 
                         })
                         // location.href=
-                    } else if (object.type === 'hashTag') {
+                    } else if (object.link_change_type === 'hashTag') {
                         const yOffset = $("header").length > 0 ? -($("header") as any).height() : 0;
                         const element: any = document.getElementsByClassName(`glitterTag${object.link}`)[0];
                         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;

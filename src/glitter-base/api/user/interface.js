@@ -101,9 +101,11 @@ TriggerEvent.create(import.meta.url, {
                             else {
                                 GlobalUser.token = r.response.token;
                                 GlobalUser.userData = json.userData;
-                                TriggerEvent.trigger({
-                                    gvc, widget, clickEvent: object.registerEvent, subData, element
-                                });
+                                setTimeout(() => {
+                                    TriggerEvent.trigger({
+                                        gvc, widget, clickEvent: object.registerEvent, subData, element
+                                    });
+                                }, 1000);
                             }
                         });
                     }
@@ -158,6 +160,33 @@ TriggerEvent.create(import.meta.url, {
                             resolve(true);
                         });
                     });
+                },
+            };
+        },
+    },
+    checkUser: {
+        title: '官方事件-用戶-判斷是否登入',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    return ``;
+                },
+                event: () => {
+                    return GlobalUser.token;
+                },
+            };
+        },
+    },
+    userLogOut: {
+        title: '官方事件-用戶-登出',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    return ``;
+                },
+                event: () => {
+                    GlobalUser.token = '';
+                    location.reload();
                 },
             };
         },

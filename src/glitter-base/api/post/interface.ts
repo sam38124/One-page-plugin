@@ -4,6 +4,7 @@ import {component} from "../../../official/component.js";
 import {ShareDialog} from "../../../dialog/ShareDialog.js";
 import {ApiUser} from "../../route/user.js";
 import {GlobalUser} from "../../global/global-user.js";
+import {ApiPost} from "../../route/post.js";
 
 TriggerEvent.create(import.meta.url, {
     post: {

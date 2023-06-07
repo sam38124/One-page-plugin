@@ -1,5 +1,8 @@
 import {init} from "../../glitterBundle/GVController.js";
 import {form} from "../widgets/form.js";
+import {post} from "../../glitter-base/api/post/post-data.js";
+import {service} from "../widgets/service.js";
+import {component} from "../../official/component.js";
 
 
 init((gvc, glitter, gBundle) => {
@@ -8,6 +11,7 @@ init((gvc, glitter, gBundle) => {
             const id = glitter.getUUID()
             let selectBidItem = glitter.getUrlParameter('selectBidItem')
             let selectChild = glitter.getUrlParameter('selectChildItem')
+            const formData: any = {}
             let formModel: any = undefined;
             const saasConfig: {
                 config: any;
@@ -25,9 +29,11 @@ init((gvc, glitter, gBundle) => {
                     refreshComponent: () => {
                         gvc.notifyDataChange(id)
                     }
-                } as any, [], [], {})
+                } as any, [], [], formData)
                 gvc.notifyDataChange(id)
-            })
+            });
+            formData.serviceID = glitter.getUrlParameter('selectChildItem')
+            let viewType: "selectService" | "editForm" = "selectService";
             return `
  <div class="vw-100 vh-100 position-fixed" style="background:rgba(0,0,0,0.7);z-index:-1;"></div>
  <div class="vw-100 vh-100 d-flex align-items-center justify-content-center">
@@ -42,10 +48,38 @@ ${gvc.bindView(() => {
                 return {
                     bind: id,
                     view: () => {
-                        if(!formModel){
-                            return  ``
+                        if (viewType === 'selectService') {
+                            return `
+${(component.render(gvc, {data: {tag: "select_widget"}} as any, [], [], {
+                                hide_place: true
+                            }).view() as string)}
+<div class="d-flex align-items-end justify-content-end p-2">
+<button class="btn btn-warning text-dark me-2" onclick="${gvc.event(() => {
+                                viewType = "editForm"
+                                gvc.notifyDataChange(id)
+                            })}">下一步</button>
+</div>
+                                `
+                        } else {
+                            if (!formModel) {
+                                return ``
+                            }
+                            return `<div class="p-2">${(formModel.view() as string)} 
+<div class="d-flex  align-items-end justify-content-end">
+<button class="btn-warning text-dark btn mt-2" onclick="${gvc.event((e, event) => {
+                                (post.fun(gvc, {} as any, {}, {
+                                    data: formData,
+                                    callback: (response: boolean) => {
+                                        if (response) {
+                                            glitter.closeDiaLog()
+                                        }
+                                    }
+                                }) as any).event()
+                            })}">儲存</button>
+</div>
+</div>`
                         }
-                        return `<div class="p-2">${ (formModel.view() as string)}</div>`
+
                     },
                     divCreate: {
                         style: `max-height:calc(100vh - 100px);`

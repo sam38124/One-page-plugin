@@ -450,7 +450,7 @@ const servicePlace = [
         ]
     },
 ]
-Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
+export const service=Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData) => {
@@ -489,14 +489,20 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             !selectPlace || glitter.setUrlParameter('selectPlace',selectPlace)
                             glitter.setUrlParameter('selectBidItem',selectBidItem)
                             glitter.setUrlParameter('selectChildItem',selectChild)
-                            return `<div  class="container glitterTagundefined" style="box-sizing: border-box;" >
-<div  class="p-2 border w-100 d-flex  glitterTagundefined" style="overflow-x: auto; white-space: nowrap;  display: inline-block; gap:10px;   " >
+                            const gridCol=glitter.ut.frSize({
+                                sm:`col-2`
+                            },'col-3')
+                            return `<div  class="${glitter.ut.frSize({
+                                sm:`container `
+                            },'p-0')}" style="box-sizing: border-box;" >
+<div  class="p-2 border w-100 d-flex  glitterTagundefined" style="overflow-x: auto; white-space: nowrap;  display: inline-block; gap:10px;" >
 ${widget.data.bigItem.map((dd: any, index: number) => {
                                 return `<div  class="rounded position-relative d-flex flex-column align-items-center justify-content-center glitterTagundefined" style="min-width:200px;height:125px;
 background:50%/cover no-repeat url('${dd.bg}');
    " onclick="${gvc.event(()=>{
                                     glitter.setUrlParameter("selectBidItem",dd.id);
                                     gvc.notifyDataChange(id)
+                                    glitter.share.refreshService()
                                 })}">
 <div  class="position-absolute w-100 h-100 bg-dark  top-0 rounded glitterTagundefined" style="opacity:${(selectBidItem === dd.id) ? `25` : `70`}%;"></div>
 <span  class="text-white glitterTagundefined" style="z-index:1;font-size:25px;font-weight:500;" onclick="">${dd.title}</span>
@@ -504,10 +510,10 @@ background:50%/cover no-repeat url('${dd.bg}');
                             }).join('')}
 </div>
 <div class="row border m-0" style="width:100%;">
-<div class="position-relative border-end col-2" style="background:whitesmoke;">
+<div class="position-relative border-end col-3 col-sm-2" style="background:whitesmoke;">
 <span class="position-absolute  w-100 h-100 d-flex align-items-center justify-content-center " style="font-weight:500;left:0;">服務項目</span>
 </div>
-<div class="d-flex flex-wrap col-10" style="gap:10px;padding:10px;">
+<div class="d-flex flex-wrap col-sm-10 col-9" style="gap:10px;padding:10px;">
 ${(() => {
     
                                 return serviceList.map((dd:any,index:number) => {
@@ -518,21 +524,24 @@ ${(() => {
                                             selectChild=dd.id
                                             glitter.setUrlParameter('selectChildItem',selectChild)
                                             gvc.notifyDataChange(id)
+                                            glitter.share.refreshService()
                                         })}">${dd.title}</span>`
                                     }
                                 }).join('')
                             })()}
 </div>
 </div>
-<div class="row  m-0" style="width:100%;">
-<div class="col-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
+<div class="row m-0 ${(subData.hide_place) ? `d-none`:``}" style="width:100%;">
+<div class="${gridCol} d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
 服務縣市
 </div>
-<div class="col-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
+<div class="col-9 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
 <select class="form-select" style="font-size:14px;cursor:pointer;" onchange="${gvc.event((e, event) => {
                                 glitter.setUrlParameter('selectCity', e.value)
+                                glitter.setUrlParameter('selectPlace',"不拘")
                                 selectCity = e.value
                                 gvc.notifyDataChange(id)
+                                glitter.share.refreshService()
                             })}">
 <option >不拘</option>
 ${
@@ -541,14 +550,15 @@ ${
                                 })
                             }</select>
 </div>
-<div class="col-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
+<div class="${gridCol} d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
 服務地區
 </div>
-<div class="col-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
+<div class="col-9 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
 <select class="form-select" style="font-size:14px;" onchange="${gvc.event((e, event) => {
                                 glitter.setUrlParameter('selectPlace', e.value)
                                 selectPlace = e.value
                                 gvc.notifyDataChange(id)
+                                glitter.share.refreshService()
                             })}">
 <option >不拘</option>
 ${
@@ -560,18 +570,24 @@ ${
                             }</select>
 </div>
 
-<div class="col-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
+<div class="col-3 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
 客戶預算
 </div>
-<div class="col-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
+<div class="col-9 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
 <input class="w-100 form-control" onchange="${gvc.event((e,event)=>{
                                 budget=e.value
-                            })}" placeholder="請輸入預算">
+                                glitter.setUrlParameter('budget', e.value)
+                                glitter.share.refreshService()
+                            })}" placeholder="請輸入預算" value="${glitter.getUrlParameter('budget') ?? ""}">
 </div>
 </div>
 </div>`
                         }, divCreate: {},
                         onCreate: () => {
+
+                            // alert(JSON.stringify( setting.find((dd:any)=>{
+                            //     return dd.type==='serviceList'
+                            // })))
 
                         }
 

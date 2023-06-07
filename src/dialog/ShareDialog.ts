@@ -5,12 +5,13 @@ export class ShareDialog {
     public dataLoading = (obj: { text?: string; visible: boolean }) => {
 
     };
-    public errorMessage = (obj: { text?: string }) => {
+    public errorMessage = (obj: { text?: string, callback?:()=>void }) => {
     };
     public successMessage = (obj: { text?: string,callback?:()=>void }) => {
     };
     public checkYesOrNot: (obj: { callback:(response:boolean)=>void, text: string }) => void;
     public policy: () => void;
+    public innerDialog: (html: (gvc: GVC) => string) => void;
 
     constructor(glitter: Glitter) {
         this.dataLoading = (obj: { text?: string; visible: boolean }) => {
@@ -20,8 +21,8 @@ export class ShareDialog {
                 glitter.closeDiaLog('dataLoading')
             }
         };
-        this.errorMessage = (obj: { text?: string; }) => {
-            glitter.openDiaLog('dialog/dialog.js', 'errorMessage', {type:'errorMessage',obj:obj})
+        this.errorMessage = (obj: { text?: string;  callback?:()=>void}) => {
+            glitter.openDiaLog('dialog/dialog.js', 'errorMessage', {type:'errorMessage',obj:obj,callback:obj.callback})
         };
         this.successMessage = (obj: { text?: string; callback?:()=>void}) => {
             glitter.openDiaLog('dialog/dialog.js', 'successMessage', {type:'successMessage',obj:obj,callback:obj.callback},{})
@@ -35,6 +36,11 @@ export class ShareDialog {
                     glitter.closeDiaLog('checkYesOrNot')
                     obj.callback(response)
                 },title:obj.text
+            })
+        }
+        this.innerDialog=(html:(gvc:GVC)=>string)=>{
+            glitter.openDiaLog(new URL('./dialog.js',import.meta.url).href, 'innerDialog', {
+                getView:html
             })
         }
 

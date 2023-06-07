@@ -57,6 +57,7 @@ const template = (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: stri
         tag: widget.data.tag,
         list: widget.data.list,
     }
+
     return {
         view: () => {
             ScriptStyle1.initialScript(gvc, widget)

@@ -13,6 +13,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                         let data = undefined;
                         const saasConfig = window.saasConfig;
                         let fal = 0;
+                        subData.parentConfig = widget;
                         async function getData() {
                             let tag = widget.data.tag;
                             for (const b of widget.data.list) {
@@ -234,7 +235,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                                         if (dd.triggerType === 'trigger') {
                                                             dd.evenet = dd.evenet ?? {};
                                                             return TriggerEvent.editer(gvc, widget, dd.evenet, {
-                                                                hover: true,
+                                                                hover: false,
                                                                 option: [],
                                                                 title: "觸發事件"
                                                             });
