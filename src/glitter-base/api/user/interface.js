@@ -101,9 +101,11 @@ TriggerEvent.create(import.meta.url, {
                             else {
                                 GlobalUser.token = r.response.token;
                                 GlobalUser.userData = json.userData;
-                                TriggerEvent.trigger({
-                                    gvc, widget, clickEvent: object.registerEvent, subData, element
-                                });
+                                setTimeout(() => {
+                                    TriggerEvent.trigger({
+                                        gvc, widget, clickEvent: object.registerEvent, subData, element
+                                    });
+                                }, 1000);
                             }
                         });
                     }

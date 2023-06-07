@@ -14,7 +14,8 @@ export const getData=TriggerEvent.createSingleEvent(import.meta.url, (glitter) =
                     const dialog = new ShareDialog(gvc.glitter)
                     ApiPost.get({
                         page:object.page ?? subData.page,
-                        limit:object.limit ?? subData.limit
+                        limit:object.limit ?? subData.limit,
+                        query:object.query ?? subData.query ?? []
                     })?.then((r) => {
                         if (!r.result) {
                             dialog.errorMessage({
@@ -26,7 +27,7 @@ export const getData=TriggerEvent.createSingleEvent(import.meta.url, (glitter) =
                                 }
                             })
                         } else {
-                            subData.callback(r.response.data)
+                            subData.callback(r.response)
                         }
                     })
                 }

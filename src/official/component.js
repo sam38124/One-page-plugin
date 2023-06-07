@@ -13,6 +13,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                         let data = undefined;
                         const saasConfig = window.saasConfig;
                         let fal = 0;
+                        subData.parentConfig = widget;
                         async function getData() {
                             let tag = widget.data.tag;
                             for (const b of widget.data.list) {

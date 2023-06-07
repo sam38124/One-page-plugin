@@ -23,10 +23,11 @@ export class ApiPost {
 
     public static get(json: {
         page: number,
-        limit: number
+        limit: number,
+        query:{key:string,value:string,type:string}[]
     }) {
         return BaseApi.create({
-            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}&limit=${json.limit}`,
+            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}&limit=${json.limit}&query=${JSON.stringify(json.query)}`,
             "type": "GET",
             "headers": {
                 "Content-Type": "application/json",

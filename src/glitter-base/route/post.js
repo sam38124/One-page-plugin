@@ -17,7 +17,7 @@ export class ApiPost {
     }
     static get(json) {
         return BaseApi.create({
-            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}&limit=${json.limit}`,
+            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}&limit=${json.limit}&query=${JSON.stringify(json.query)}`,
             "type": "GET",
             "headers": {
                 "Content-Type": "application/json",

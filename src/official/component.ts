@@ -16,7 +16,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter: Glitt
                         let data: any = undefined
                         const saasConfig = (window as any).saasConfig
                         let fal = 0
-
+                        subData.parentConfig=widget
                         async function getData() {
                             let tag = widget.data.tag
                             for (const b of widget.data.list) {
