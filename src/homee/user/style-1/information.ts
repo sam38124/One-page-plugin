@@ -38,9 +38,12 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                         loading: true
                     }
                     vm.loading = false;
+                    glitter.share.userToken = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNHQ2VwY3Zyb2NtWkpFd2JkU2h3bCJ9.eyJpc3MiOiJodHRwczovL3N0Zy1jbGllbnQtMS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjQzOGUwYzBiN2FkZDE1YTg5YjRjMjRhIiwiYXVkIjoiaHR0cHM6Ly9zdGcuYXBpLmhvbWVlLmFpLyIsImlhdCI6MTY4NjIxMTc3MywiZXhwIjoxNjg2Mjk4MTczLCJhenAiOiJ0V2VlT0NRZ3FheTdSRmFTSWM5V3drZFBYUUFhbDEwSiIsImd0eSI6InBhc3N3b3JkIn0.Xg2ahkDPUHKYqeoLuRS7xUBe6LXdzxevgmwXuwCfdeRRhqGx_8p5shnisVUtIYFhVgV5YB7dMwNDrRD8sEUXGGhGTgudho7YGDQA3-Gh-eYNe_hiy_fBSPZl9WALQACzmlIg0pbi2dXmj5TRH3EJwTmKDNQBq2RaMctkZf3VGvB4i7B4RQN5nsf99GjgUay2H2ZbDr7I1s2JyBIOIXnOWl9N8g5GxMuL1WUEnU2c1YtJ4Vya6LPopCEwPzEWdbwayIyNSTdaV2BzY-9H6bG4tUjDUfswfbkLCfuwVxx5bbQdvAJ9tamDEKcKmxYvve_JE1eHIsz2Myg-JRKyrsHdJg"
+
                     appConfig().getUserData({
                         callback: (response) => {
                             vm.data = response
+                            console.log(vm.data)
                             vm.loading = false
                         }
                     })

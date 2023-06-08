@@ -1,5 +1,6 @@
 import { Plugin } from "../../../glitterBundle/plugins/plugin-creater.js";
 import { TriggerEvent } from "../../../glitterBundle/plugins/trigger-event.js";
+import { Editor } from "../../../editor.js";
 import { ScriptStyle1 } from "../../script-style-1.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
@@ -69,7 +70,35 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     });
                 },
                 editor: () => {
-                    return ``;
+                    return gvc.map(widget.data.dataList.map((dd, index) => {
+                        return `<div class="alert border mt-2">
+                                ${glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: `banner標題${index + 1}`,
+                            default: dd.title,
+                            placeHolder: dd.title,
+                            callback: (text) => {
+                                dd.title = text;
+                                widget.refreshAll();
+                            }
+                        })}
+                                
+                                <h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">banner圖片${index + 1}</h3>
+                                <div class="mt-2"></div>
+                                <div class="d-flex flex-column mb-3">
+                                    ${Editor.uploadImage({
+                            gvc: gvc,
+                            title: '圖片',
+                            def: dd.img,
+                            callback: (data) => {
+                                dd.img = data;
+                                widget.refreshComponent();
+                            }
+                        })}                                    
+                                </div>
+                            ${TriggerEvent.editer(gvc, widget, dd)}
+                            </div>`;
+                    }));
                 }
             };
         },

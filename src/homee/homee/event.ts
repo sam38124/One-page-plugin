@@ -373,6 +373,7 @@ ${
                                     lo()
                                 }
                                 api.homeeAJAX({route: '/collection', method: 'get'}, (res) => {
+
                                     gvc.glitter.share.storeCollection=res
                                     lo()
                                 });
@@ -974,28 +975,31 @@ ${
                         "X-Client-Id" : "1"
                     }
 
-                    return new Promise((resolve, reject)=>{
-                        Glitter.glitter.share.client = object.value
-                        Glitter.glitter.share.XClientId = inf[object.value]["X-Client-Id"];
-                        resolve(true)
-                        BaseApi.create({
-                            "url": `https://stg-clients.us.auth0.com/oauth/token`,
-                            "type": "POST",
-                            "timeout": 0,
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            "data":{
-                                client_id:inf[object.value].client_id,
-                                client_secret:inf[object.value].client_secret,
-                                username : inf[object.value].username,
-                                password : inf[object.value].password,
-                                grant_type : inf[object.value].grant_type,
-                                audience : inf[object.value].audience
-                            }
-                        }).then((d2) => {
-                            Glitter.glitter.share.ClientToken = d2.response["access_token"];
-                            resolve(true)
-                        })
-                    })
+
+                    // return new Promise((resolve, reject)=>{
+                    //     Glitter.glitter.share.client = object.value
+                    //     Glitter.glitter.share.XClientId = inf[object.value]["X-Client-Id"];
+                    //     resolve(true)
+                    //     BaseApi.create({
+                    //         "url": `https://stg-clients.us.auth0.com/oauth/token`,
+                    //         "type": "POST",
+                    //         "timeout": 0,
+                    //         headers: { "Content-Type": "application/x-www-form-urlencoded",
+                    //             "Cookie": "did=s%3Av0%3Aa8ba4390-fead-11ed-9d05-cf9415357fa1.4hsV2tgumYVB40E1iwwTkgCAcYk59zdS%2F%2F36KO%2Fp9aE; did_compat=s%3Av0%3Aa8ba4390-fead-11ed-9d05-cf9415357fa1.4hsV2tgumYVB40E1iwwTkgCAcYk59zdS%2F%2F36KO%2Fp9aE" },
+                    //         "data":{
+                    //             "client_id": "VQXDuC3AIlPkr4s6uKzY7hbXmJlTgZnp",
+                    //             "client_secret": "rk5BGqdDD6pUuVwtr7d4MisZSrEtoNovXiERNFB7drkO4LYZX-x_LxQkCJ25Tznw",
+                    //             "username": "wayne.huang@homee.ai",
+                    //             "password": "HomeeClientsTest!",
+                    //             "grant_type": "password",
+                    //             "audience": "https://stg.api.homee.ai/"
+                    //         }
+                    //     }).then((d2) => {
+                    //         // Glitter.glitter.share.ClientToken = d2.response["access_token"];
+                    //
+                    //         // resolve(true)
+                    //     })
+                    // })
 
                 },
             };

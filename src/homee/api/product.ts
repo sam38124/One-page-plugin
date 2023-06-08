@@ -631,7 +631,7 @@ export class Product {
         });
     }
 
-    //取得文章列表
+
     public static getSubcategoryList(parCategoryID: string, callback: (data: any) => void) {
         const that = this;
         let jsonData: any

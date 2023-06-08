@@ -8,7 +8,6 @@ import { Funnel } from "../../glitterBundle/funnel.js";
 import { BaseApi } from "../../api/base.js";
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
 import { Editor } from "../../editor.js";
-import { Glitter } from "../../glitterBundle/Glitter.js";
 const machiDomain = 'https://machi-app.com/';
 class GlobalData {
     static data = {
@@ -921,28 +920,6 @@ ${gvc.bindView(() => {
                         audience: "https://stg.api.homee.ai/",
                         "X-Client-Id": "1"
                     };
-                    return new Promise((resolve, reject) => {
-                        Glitter.glitter.share.client = object.value;
-                        Glitter.glitter.share.XClientId = inf[object.value]["X-Client-Id"];
-                        resolve(true);
-                        BaseApi.create({
-                            "url": `https://stg-clients.us.auth0.com/oauth/token`,
-                            "type": "POST",
-                            "timeout": 0,
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            "data": {
-                                client_id: inf[object.value].client_id,
-                                client_secret: inf[object.value].client_secret,
-                                username: inf[object.value].username,
-                                password: inf[object.value].password,
-                                grant_type: inf[object.value].grant_type,
-                                audience: inf[object.value].audience
-                            }
-                        }).then((d2) => {
-                            Glitter.glitter.share.ClientToken = d2.response["access_token"];
-                            resolve(true);
-                        });
-                    });
                 },
             };
         },

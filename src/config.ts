@@ -113,17 +113,33 @@ export function appConfig(): {
         })(),
         getUserData: ({callback}: { callback: (result: any) => void }) => {
             const glitter = (window as any).glitter
-            glitter.getPro("daiqdmoiwme21", (response: any) => {
-                try {
-                    const userData: any = JSON.parse(response.data)
-                    userData.name=userData.name ?? userData.first_name+userData.last_name
-                    userData.photo=userData.photo ?? `https://assets.imgix.net/~text?bg=7ED379&txtclr=ffffff&w=200&h=200&txtsize=90&txt=${userData.first_name}&txtfont=Helvetica&txtalign=middle,center`
-                    callback(userData)
-                } catch (e) {
-                    callback({})
-                }
+            console.log(glitter.share.userToken)
+            var settings = {
+                "url": "https://api.stg.homee.ai/users/users/images/presigned_url",
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "X-Client-Id": "1",
+                    "Authorization":glitter.share.userToken
+                },
+            };
 
-            })
+            $.ajax(settings).done(function (response) {
+
+                const userData: any = response
+                callback(userData)
+            });
+            // glitter.getPro("daiqdmoiwme21", (response: any) => {
+            //     try {
+            //         const userData: any = JSON.parse(response.data)
+            //         userData.name=userData.name ?? userData.first_name+userData.last_name
+            //         userData.photo=userData.photo ?? `https://assets.imgix.net/~text?bg=7ED379&txtclr=ffffff&w=200&h=200&txtsize=90&txt=${userData.first_name}&txtfont=Helvetica&txtalign=middle,center`
+            //         callback(userData)
+            //     } catch (e) {
+            //         callback({})
+            //     }
+            //
+            // })
         },
         setUserData: ({value, callback}: { value: any, callback: (result: any) => void }) => {
             const glitter = (window as any).glitter
