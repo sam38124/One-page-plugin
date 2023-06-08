@@ -3,7 +3,9 @@ import {Glitter} from './glitterBundle/Glitter.js';
 
 export class Entry {
     public static onCreate(glitter: Glitter) {
-
+        glitter.ut.frSize({
+            sm:''
+        },'margin-bottom:150px;')
 glitter.runJsInterFace("dismiss",{},()=>{});
 
         `<div class="vw-100 vh-100 position-absolute z-index-1 justify-content-sm-start" style="background:rgba(0,0,0,0.6);"></div>`

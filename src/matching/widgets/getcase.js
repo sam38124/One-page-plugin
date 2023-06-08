@@ -2,10 +2,13 @@ import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
 import { user_star } from "./user_star.js";
 import { getData } from "../../glitter-base/api/post/get-data.js";
 import { PageSplit } from '../../widget/splitPage.js';
+import { Editor } from "../../editor.js";
+import { GlobalUser } from "../../glitter-base/global/global-user.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID, subData) => {
+            widget.data.dataFrom = widget.data.dataFrom ?? 'searchCase';
             return {
                 view: () => {
                     const ps = new PageSplit(gvc);
@@ -19,29 +22,15 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         query: [],
                         page: 0,
                         limit: 10,
-                        count: 0
+                        count: 0,
+                        datasource: []
                     };
-                    const selectCity = glitter.getUrlParameter('selectCity');
-                    const selectPlace = glitter.getUrlParameter('selectPlace');
-                    const budget = glitter.getUrlParameter('budget');
-                    const selectService = glitter.getUrlParameter('selectChildItem');
-                    if (selectCity && (selectCity !== '不拘')) {
-                        vm.query.push({ key: 'selectCity', value: selectCity, type: "=" });
-                        if (selectPlace && (selectPlace !== '不拘')) {
-                            vm.query.push({ key: 'selectPlace', value: selectPlace, type: "=" });
-                        }
-                    }
-                    if (selectService) {
-                        vm.query.push({ key: 'serviceID', value: selectService, type: "=" });
-                    }
-                    if (budget && budget !== -1) {
-                        vm.query.push({ key: 'budget', value: budget, type: "<=" });
-                    }
                     function loadData() {
                         getData.fun(gvc, {}, {}, {
                             page: vm.page,
                             limit: vm.limit,
                             query: vm.query,
+                            datasource: vm.datasource,
                             callback: (response) => {
                                 vm.data = response.data;
                                 vm.count = response.count;
@@ -49,6 +38,27 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 gvc.notifyDataChange(vm.id);
                             }
                         }).event();
+                    }
+                    if (widget.data.dataFrom === 'searchCase') {
+                        const selectCity = glitter.getUrlParameter('selectCity');
+                        const selectPlace = glitter.getUrlParameter('selectPlace');
+                        const budget = glitter.getUrlParameter('budget');
+                        const selectService = glitter.getUrlParameter('selectChildItem');
+                        if (selectCity && (selectCity !== '不拘')) {
+                            vm.query.push({ key: 'selectCity', value: selectCity, type: "=" });
+                            if (selectPlace && (selectPlace !== '不拘')) {
+                                vm.query.push({ key: 'selectPlace', value: selectPlace, type: "=" });
+                            }
+                        }
+                        if (selectService) {
+                            vm.query.push({ key: 'serviceID', value: selectService, type: "=" });
+                        }
+                        if (budget && budget !== -1) {
+                            vm.query.push({ key: 'budget', value: budget, type: "<=" });
+                        }
+                    }
+                    else {
+                        vm.datasource.push(GlobalUser.userInfo.userID);
                     }
                     loadData();
                     return `
@@ -171,7 +181,23 @@ ${(() => {
                         }, '容器樣式'),
                         glitter.htmlGenerate.styleEditor(widget.data.cardStyle).editor(gvc, () => {
                             widget.refreshComponent();
-                        }, '卡片樣式')
+                        }, '卡片樣式'),
+                        Editor.select({
+                            title: '資料來源',
+                            gvc: gvc,
+                            def: widget.data.dataFrom,
+                            array: [{
+                                    title: "尋找案件",
+                                    value: "searchCase"
+                                }, {
+                                    title: "我的案件",
+                                    value: "myCase"
+                                }],
+                            callback: (text) => {
+                                widget.data.dataFrom = text;
+                                widget.refreshComponent();
+                            }
+                        })
                     ].join(`<br>`);
                 }
             };

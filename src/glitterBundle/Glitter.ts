@@ -573,7 +573,7 @@ export class Glitter {
             document.body.removeChild(link);
         },
         frSize(sizeMap: any, def: any) {
-            var wi = this.glitter.$('html').width()
+            var wi = $('html').width() as any
             var sm = (sizeMap.sm ?? def)
             var me = (sizeMap.me ?? sm)
             var lg = (sizeMap.lg ?? me)

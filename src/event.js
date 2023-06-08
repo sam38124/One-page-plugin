@@ -1,6 +1,7 @@
 import { TriggerEvent } from './glitterBundle/plugins/trigger-event.js';
 import { Editor } from './editor.js';
 import { component } from "./official/component.js";
+import { BaseApi } from "./api/base.js";
 class GlobalData {
     static data = {
         pageList: [],
@@ -93,7 +94,10 @@ ${Editor.select({
                                                 object.stackControl = text;
                                                 widget.refreshComponent();
                                             },
-                                            array: [{ title: '設為首頁', value: "home" }, { title: '頁面跳轉', value: "page" }],
+                                            array: [{ title: '設為首頁', value: "home" }, {
+                                                    title: '頁面跳轉',
+                                                    value: "page"
+                                                }],
                                         })}
 ${Editor.h3("選擇頁面")}
 <select
@@ -311,6 +315,102 @@ ${Editor.h3("選擇頁面")}
                 event: () => {
                     return new Promise(async (resolve, reject) => {
                         resolve(await (eval(object.code)));
+                    });
+                },
+            };
+        },
+    },
+    drawer: {
+        title: 'Glitter-打開抽屜',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    const id = gvc.glitter.getUUID();
+                    function recursive() {
+                        if (GlobalData.data.pageList.length === 0) {
+                            GlobalData.data.run();
+                            setTimeout(() => {
+                                recursive();
+                            }, 200);
+                        }
+                        else {
+                            gvc.notifyDataChange(id);
+                        }
+                    }
+                    recursive();
+                    return gvc.bindView(() => {
+                        return {
+                            bind: id,
+                            view: () => {
+                                return `${Editor.h3("選擇頁面")}
+                       <select
+                                            class="form-select form-control mt-2"
+                                            onchange="${gvc.event((e) => {
+                                    console.log(window.$(e).val());
+                                    object.link = window.$(e).val();
+                                })}"
+                                        >
+                                            ${GlobalData.data.pageList.map((dd) => {
+                                    object.link = object.link ?? dd.tag;
+                                    return `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
+                                                    ${dd.group}-${dd.name}
+                                                </option>`;
+                                })}
+                                        </select>`;
+                            },
+                            divCreate: {}
+                        };
+                    });
+                },
+                event: () => {
+                    let fal = 0;
+                    let data = undefined;
+                    const id = gvc.glitter.getUUID();
+                    async function getData() {
+                        let tag = widget.data.tag;
+                        const saasConfig = window.saasConfig;
+                        BaseApi.create({
+                            "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}&tag=${object.link}`,
+                            "type": "GET",
+                            "timeout": 0,
+                            "headers": {
+                                "Content-Type": "application/json"
+                            }
+                        }).then((d2) => {
+                            if (!d2.result) {
+                                fal += 1;
+                                if (fal < 20) {
+                                    setTimeout(() => {
+                                        getData();
+                                    }, 200);
+                                }
+                            }
+                            else {
+                                data = d2.response.result[0];
+                                try {
+                                    subData.callback(data);
+                                }
+                                catch (e) {
+                                }
+                                gvc.notifyDataChange(id);
+                            }
+                        });
+                    }
+                    ;
+                    getData();
+                    gvc.glitter.setDrawer(gvc.bindView(() => {
+                        return {
+                            bind: id,
+                            view: () => {
+                                if (!data) {
+                                    return ``;
+                                }
+                                return new window.glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
+                            },
+                            divCreate: {}
+                        };
+                    }), () => {
+                        gvc.glitter.openDrawer();
                     });
                 },
             };

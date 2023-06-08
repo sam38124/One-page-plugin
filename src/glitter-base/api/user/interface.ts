@@ -35,7 +35,7 @@ TriggerEvent.create(import.meta.url, {
                             gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {}
                             gvc.glitter.share.public_api.GlobalUser = GlobalUser
                             GlobalUser.token = r.response.token
-                            GlobalUser.userData = r.response
+                            GlobalUser.userInfo = r.response
                             GlobalUser.updateUserData = JSON.parse(JSON.stringify(r.response))
                             TriggerEvent.trigger({
                                 gvc, widget, clickEvent: object.registerEvent, subData, element
@@ -96,7 +96,7 @@ TriggerEvent.create(import.meta.url, {
                                 })
                             } else {
                                 GlobalUser.token = r.response.token
-                                GlobalUser.userData = json.userData
+                                GlobalUser.userInfo = json.userData
                                 setTimeout(()=>{
                                     TriggerEvent.trigger({
                                         gvc, widget, clickEvent: object.registerEvent, subData, element
@@ -125,10 +125,10 @@ TriggerEvent.create(import.meta.url, {
                             if (!r.result) {
                                 GlobalUser.token = ''
                             } else {
-                                GlobalUser.userData = r.response
+                                GlobalUser.userInfo = r.response
                                 GlobalUser.updateUserData = JSON.parse(JSON.stringify(r.response))
                             }
-                            //gvc.glitter.share.public_api.GlobalUser.userData
+                            //gvc.glitter.share.public_api.GlobalUser.userInfo
                             resolve(true)
                         })
                     })

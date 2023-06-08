@@ -29,6 +29,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             subContent: "將製作好的頁面，當作模塊進行嵌入．",
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./official/component.js', import.meta.url)),
+        },
+        mobileFooter: {
+            title: '手機版導覽列',
+            subContent: '手機版底部導覽列．',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./official/footer.js', import.meta.url)),
         }
     };
 });
