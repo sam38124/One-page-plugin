@@ -2,7 +2,7 @@ import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {GVC} from "../../glitterBundle/GVController.js";
 import {user_star} from "./user_star.js";
 import {getData} from "../../glitter-base/api/post/get-data.js";
-import { PageSplit } from '../../widget/splitPage.js';
+import {PageSplit} from '../../widget/splitPage.js';
 import {Editor} from "../../editor.js";
 
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
@@ -12,56 +12,58 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             return {
                 view: () => {
                     const ps = new PageSplit(gvc);
-                    glitter.share.refreshService=(()=>{
+                    glitter.share.refreshService = (() => {
                         widget.refreshComponent()
                     })
-                    const vm :{
-                        loading:boolean,
-                        data:any,
-                        id:string,
-                        query:{key:string,value:string,type:string}[],
+                    const vm: {
+                        loading: boolean,
+                        data: any,
+                        id: string,
+                        query: { key: string, value: string, type: string }[],
                         page: number,
                         limit: number,
-                        count:number
-                    }= {
+                        count: number
+                    } = {
                         loading: true,
                         data: [],
                         id: glitter.getUUID(),
-                        query:[],
+                        query: [],
                         page: 0,
                         limit: 10,
-                        count:0
+                        count: 0
                     };
-                    const selectCity=glitter.getUrlParameter('selectCity')
-                    const selectPlace=glitter.getUrlParameter('selectPlace')
-                    const budget=glitter.getUrlParameter('budget')
-                    const selectService=glitter.getUrlParameter('selectChildItem')
-                    if(selectCity&&(selectCity!=='不拘')){
-                        vm.query.push({key:'selectCity',value:selectCity,type:"="})
-                        if(selectPlace&&(selectPlace!=='不拘')){
-                            vm.query.push({key:'selectPlace',value:selectPlace,type:"="})
+                    const selectCity = glitter.getUrlParameter('selectCity')
+                    const selectPlace = glitter.getUrlParameter('selectPlace')
+                    const budget = glitter.getUrlParameter('budget')
+                    const selectService = glitter.getUrlParameter('selectChildItem')
+                    if (selectCity && (selectCity !== '不拘')) {
+                        vm.query.push({key: 'selectCity', value: selectCity, type: "="})
+                        if (selectPlace && (selectPlace !== '不拘')) {
+                        vm.query.push({key: 'selectPlace', value: selectPlace, type: "="})
                         }
                     }
-                    if(selectService){
-                        vm.query.push({key:'serviceID',value:selectService,type:"="})
+                    if (selectService) {
+                        vm.query.push({key: 'serviceID', value: selectService, type: "="})
                     }
 
-                    if(budget&&budget!==-1){
-                        vm.query.push({key:'budget',value:budget,type:"<="})
+                    if (budget && budget !== -1) {
+                        vm.query.push({key: 'budget', value: budget, type: "<="})
                     }
-                    function loadData(){
+
+                    function loadData() {
                         (getData.fun(gvc, {} as any, {}, {
                             page: vm.page,
                             limit: vm.limit,
-                            query:vm.query,
+                            query: vm.query,
                             callback: (response: any) => {
                                 vm.data = response.data
-                                vm.count=response.count
+                                vm.count = response.count
                                 vm.loading = false
                                 gvc.notifyDataChange(vm.id)
                             }
                         }) as any).event()
                     }
+
                     loadData()
                     return `
 <div class="${glitter.htmlGenerate.styleEditor(widget.data.containerStyle).class()}  " style="${glitter.htmlGenerate.styleEditor(widget.data.containerStyle).style()}">
@@ -76,12 +78,10 @@ ${gvc.bindView(() => {
 </div>
 </div>`
                                 }
-                                if(vm.data.length===0){
-                                        return `<div class="d-flex align-items-center justify-content-center col-12 mt-2 flex-column mb-4
+                                if (vm.data.length === 0) {
+                                    return `<div class="d-flex align-items-center justify-content-center col-12 mt-2 flex-column mb-4
 ">
- <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_rc6CDU.json"    speed="1"  onclick="${gvc.event((e) => {
-                                       
-                                        })}" style="max-width: 100%;width: 300px;"  loop  autoplay></lottie-player>
+ <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_rc6CDU.json"    speed="1"   style="max-width: 100%;width: 300px;"  loop  autoplay></lottie-player>
    <h3 class="text-dark fs-5 mt-n3">查無相關服務</h3>
 </div>`
                                 }
@@ -128,9 +128,9 @@ ${(() => {
                                             if (d2.content["selectPlace"]) {
                                                 array.push(d2.content["selectPlace"])
                                             }
-                                            if(array.length===0){
-                                                return  `不拘`
-                                            }else{
+                                            if (array.length === 0) {
+                                                return `不拘`
+                                            } else {
                                                 return array.join('，')
                                             }
                                         })()}</span></div>
@@ -157,15 +157,15 @@ ${(() => {
                                     } else {
                                         return ``
                                     }
-                                }).join('')+`${
+                                }).join('') + `${
                                     vm.data.length === 0
                                         ? ''
                                         : ps.pageSplit(
                                             Math.round(vm.count / vm.limit),
-                                            vm.page+1,
+                                            vm.page + 1,
                                             (page) => {
                                                 (vm.data = []), (vm.loading = true);
-                                                vm.page=page-1
+                                                vm.page = page - 1
                                                 gvc.notifyDataChange(vm.id);
                                                 loadData()
                                             },
@@ -183,15 +183,15 @@ ${(() => {
                   `
                 },
                 editor: () => {
-                    widget.data.cardStyle=widget.data.cardStyle??{}
-                    widget.data.containerStyle=widget.data.containerStyle??{}
+                    widget.data.cardStyle = widget.data.cardStyle ?? {}
+                    widget.data.containerStyle = widget.data.containerStyle ?? {}
                     return [
-                        glitter.htmlGenerate.styleEditor(widget.data.containerStyle).editor(gvc,()=>{
+                        glitter.htmlGenerate.styleEditor(widget.data.containerStyle).editor(gvc, () => {
                             widget.refreshComponent()
-                        },'容器樣式'),
-                        glitter.htmlGenerate.styleEditor(widget.data.cardStyle).editor(gvc,()=>{
+                        }, '容器樣式'),
+                        glitter.htmlGenerate.styleEditor(widget.data.cardStyle).editor(gvc, () => {
                             widget.refreshComponent()
-                        },'卡片樣式')
+                        }, '卡片樣式')
                     ].join(`<br>`)
                 }
             }

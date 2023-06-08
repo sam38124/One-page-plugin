@@ -40,6 +40,8 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                 bar: widget.data.nav.bar,
                 btn: widget.data.nav.btn,
             };
+            widget.data.menuItem = widget.data.menuItem ?? {};
+            widget.data.linkLayout = widget.data.linkLayout ?? {};
             return {
                 view: () => {
                     ScriptStyle1.initialScript(gvc, widget);
@@ -48,14 +50,16 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         if (r.list === undefined || r.list.length === 0) {
                             h += `<li>
                                     <a
-                                        class="${first ? 'nav-link text-dark' : 'dropdown-item'} ${typeof r.link === 'object' && first ? r.link[0] : ``}"
+                                        class="${first ? 'nav-link text-dark' : 'dropdown-item'} ${typeof r.link === 'object' && first ? r.link[0] : ``} ${glitter.htmlGenerate.styleEditor(widget.data.linkLayout).class()}"
                                         onclick="${gvc.event(() => {
                                 $('#navbarNav').offcanvas('hide');
                                 if (r.link) {
                                     TriggerEvent.trigger({ gvc, widget, clickEvent: r });
                                 }
                             })}"
-                                        style="cursor:pointer;${(widget.data.textColor && first) ? `color:${widget.data.textColor}!important;` : ``}"
+                                        style="cursor:pointer;${(widget.data.textColor && first) ? `color:${widget.data.textColor}!important;` : ``}
+                                        ${glitter.htmlGenerate.styleEditor(widget.data.linkLayout).style()}
+                                        "
                                         name="${typeof r.link === 'string' ? r.link.replace('#', '') : ``}"
                                         >${r.name}</a
                                     >
@@ -63,7 +67,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         }
                         else {
                             h += `<li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" style="${(widget.data.textColor) ? `color:${widget.data.textColor}!important;` : ``}">${r.name}</a>
+                                    <a class="nav-link dropdown-toggle text-dark  ${glitter.htmlGenerate.styleEditor(widget.data.linkLayout).class()}" data-bs-toggle="dropdown" style="${(widget.data.textColor) ? `color:${widget.data.textColor}!important;` : ``} ${glitter.htmlGenerate.styleEditor(widget.data.linkLayout).style()}">${r.name}</a>
                                     <ul class="dropdown-menu">
                                         ${glitter.print(function () {
                                 var tmp = '';
@@ -163,15 +167,16 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                     </div>
                                     <button
                                         type="button"
-                                        class="navbar-toggler ${nav.bar.list.length > 0 ? `` : `d-none`}"
+                                        class="navbar-toggler ${nav.bar.list.length > 0 ? `d-flex align-items-center justify-content-center` : `d-none`} "
                                         data-bs-toggle="offcanvas"
                                         data-bs-target="#navbarNav"
                                         aria-controls="navbarNav"
                                         aria-expanded="false"
                                         aria-label="Toggle navigation"
                                     >
-                                        <span class="navbar-toggler-icon" style="${(widget.data.textColor) ? `background-color:${widget.data.textColor}!important;` : ``}"></span>
-                                    </button>
+                                    <i class="fa-regular fa-bars ${glitter.htmlGenerate.styleEditor(widget.data.menuItem).class()} fs-3  d-sm-none" style="${glitter.htmlGenerate.styleEditor(widget.data.menuItem).style()}"
+                                    ></i>
+                                           </button>
                                 </div>
                             </header>
                             <div class="w-100" style="height: 50px;"></div> `;
@@ -205,6 +210,14 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         glitter.htmlGenerate.styleEditor(widget.data.headerLayout).editor(gvc, () => {
                             widget.refreshComponent();
                         }, '背景樣式'),
+                        `<br>`,
+                        glitter.htmlGenerate.styleEditor(widget.data.menuItem).editor(gvc, () => {
+                            widget.refreshComponent();
+                        }, '漢堡包樣式'),
+                        `<br>`,
+                        glitter.htmlGenerate.styleEditor(widget.data.linkLayout).editor(gvc, () => {
+                            widget.refreshComponent();
+                        }, '連結樣式'),
                         `<div class="my-2"></div>`,
                         Editor.toggleExpand({
                             gvc: gvc,
