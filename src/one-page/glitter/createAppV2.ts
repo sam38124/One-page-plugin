@@ -71,7 +71,7 @@ const id2=glitter.getUUID()
                         return ` <h2 class="h1 mb-4  ${glitter.htmlGenerate.styleEditor(widget.data.descStyle).class()}"
  style="${glitter.htmlGenerate.styleEditor(widget.data.descStyle).style()}"
  >${template.title}</h2>
-          <p class="fs-lg pb-2 pb-md-3 pb-lg-0 mb-4 mb-lg-5  ${glitter.htmlGenerate.styleEditor(widget.data.descStyle).class()}"
+          <p class="fs-lg pb-2 pb-md-3 pb-lg-0 mb-0 mb-lg-5  ${glitter.htmlGenerate.styleEditor(widget.data.descStyle).class()}"
             style="${glitter.htmlGenerate.styleEditor(widget.data.descStyle).style()}"
             >${template.desc}</p>
             <div class="row">
@@ -80,7 +80,7 @@ const id2=glitter.getUUID()
                             var tmp = "";
                             template.tag.map((a: any, i: any) => {
                                 tmp += /*html*/ `
-                  <li class="nav-item mx-0" role="presentation">
+                  <li class="nav-item mx-0 ps-2" role="presentation">
                     <button
                       class="nav-link text-nowrap w-100 ${(filter===a.className) ? `active`:``}"
                       type="button"
@@ -98,7 +98,7 @@ const id2=glitter.getUUID()
                             return tmp;
                         })}
           </ul>
-             <div class="masonry-grid row  mb-4  col-12 col-sm-10 mt-0 " data-aos="fade-up" data-aos-delay="200">
+             <div class="masonry-grid row  mb-4  col-12 col-sm-10 mt-0 m-0 " data-aos="fade-up" data-aos-delay="200">
             <!-- Project grid -->
             ${glitter.print(function () {
                             return template.list.map((p: any) => {
