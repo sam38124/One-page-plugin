@@ -24,15 +24,12 @@ export class ApiPost {
     public static get(json: {
         page: number,
         limit: number,
-        query: { key: string, value: string, type: string }[],
+        query: { key: string, value: any, type: string | 'relative_post' | 'relative_user',query?:any }[],
         datasource?: string[]
     }) {
-        json.datasource=json.datasource ?? []
+        json.datasource = json.datasource ?? []
         return BaseApi.create({
-            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}
-            &limit=${json.limit}
-            &query=${JSON.stringify(json.query)}
-            &datasource=${JSON.stringify(json.datasource)}`,
+            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}&limit=${json.limit}&query=${JSON.stringify(json.query)}&datasource=${JSON.stringify(json.datasource)}`,
             "type": "GET",
             "headers": {
                 "Content-Type": "application/json",

@@ -11,8 +11,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter: Glitt
             widget.data.list = widget.data.list ?? []
             return {
                 view: () => {
-                    return gvc.bindView(() => {
-                        const id = glitter.getUUID()
+                    return new Promise((resolve, reject)=>{
                         let data: any = undefined
                         const saasConfig = (window as any).saasConfig
                         let fal = 0
@@ -30,8 +29,8 @@ export const component = Plugin.createComponent(import.meta.url, (glitter: Glitt
                                             subData
                                         })).then((data) => {
                                             resolve(data)
-                                            gvc.notifyDataChange(id)
                                         })
+
                                     })
                                     if (result) {
                                         tag = b.tag
@@ -65,7 +64,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter: Glitt
                                         subData.callback(data)
                                     } catch (e) {
                                     }
-                                    gvc.notifyDataChange(id)
+                                  resolve(new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc,undefined,subData.createOption ?? {}))
                                 }
 
                             })
@@ -74,19 +73,86 @@ export const component = Plugin.createComponent(import.meta.url, (glitter: Glitt
                         setTimeout(() => {
                             getData()
                         }, 10)
-
-                        return {
-                            bind: id,
-                            view: () => {
-                                if (data) {
-                                    return new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
-                                } else {
-                                    return ``
-                                }
-                            },
-                            divCreate: {}
-                        }
                     })
+                    // return gvc.bindView(() => {
+                    //     const id = glitter.getUUID()
+                    //     let data: any = undefined
+                    //     const saasConfig = (window as any).saasConfig
+                    //     let fal = 0
+                    //     subData.parentConfig=widget
+                    //     async function getData() {
+                    //         let tag = widget.data.tag
+                    //         for (const b of widget.data.list) {
+                    //             b.evenet = b.evenet ?? {}
+                    //             if (b.triggerType === 'trigger') {
+                    //                 const result = await new Promise((resolve, reject) => {
+                    //                     (TriggerEvent.trigger({
+                    //                         gvc: gvc,
+                    //                         widget: widget,
+                    //                         clickEvent: b.evenet,
+                    //                         subData
+                    //                     })).then((data) => {
+                    //                         resolve(data)
+                    //                         gvc.notifyDataChange(id)
+                    //                     })
+                    //                 })
+                    //                 if (result) {
+                    //                     tag = b.tag
+                    //                     break
+                    //                 }
+                    //             } else {
+                    //                 if ((await eval(b.code)) === true) {
+                    //                     tag = b.tag
+                    //                     break
+                    //                 }
+                    //             }
+                    //         }
+                    //         BaseApi.create({
+                    //             "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}&tag=${tag}`,
+                    //             "type": "GET",
+                    //             "timeout": 0,
+                    //             "headers": {
+                    //                 "Content-Type": "application/json"
+                    //             }
+                    //         }).then((d2) => {
+                    //             if (!d2.result) {
+                    //                 fal += 1
+                    //                 if (fal < 20) {
+                    //                     setTimeout(() => {
+                    //                         getData()
+                    //                     }, 200)
+                    //                 }
+                    //             } else {
+                    //                 data = d2.response.result[0]
+                    //                 try {
+                    //                     subData.callback(data)
+                    //                 } catch (e) {
+                    //                 }
+                    //                 gvc.notifyDataChange(id)
+                    //             }
+                    //
+                    //         })
+                    //     }
+                    //
+                    //     setTimeout(() => {
+                    //         getData()
+                    //     }, 10)
+                    //
+                    //     return {
+                    //         bind: id,
+                    //         view: () => {
+                    //             if (data) {
+                    //
+                    //                 return new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
+                    //             } else {
+                    //                 return ``
+                    //             }
+                    //         },
+                    //         divCreate: {
+                    //             class:subData.class??"",style:subData.style??''
+                    //         }
+                    //     }
+                    // })
                 },
                 editor: () => {
                     const id = glitter.getUUID()

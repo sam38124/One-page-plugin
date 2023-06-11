@@ -242,16 +242,17 @@ export const widgetComponent = {
                                                                     dd.name = text;
                                                                     widget.refreshComponent();
                                                                 }
-                                                            }) + glitter.htmlGenerate.editeInput({
-                                                                gvc: gvc,
-                                                                title: `Value`,
-                                                                default: dd.value,
-                                                                placeHolder: "輸入參數值",
-                                                                callback: (text) => {
-                                                                    dd.value = text;
-                                                                    widget.refreshComponent();
-                                                                }
                                                             }) +
+                                                                glitter.htmlGenerate.editeInput({
+                                                                    gvc: gvc,
+                                                                    title: `Value`,
+                                                                    default: dd.value,
+                                                                    placeHolder: "輸入參數值",
+                                                                    callback: (text) => {
+                                                                        dd.value = text;
+                                                                        widget.refreshComponent();
+                                                                    }
+                                                                }) +
                                                                 `${Editor.select({
                                                                     title: "參數可見度",
                                                                     gvc: gvc,
@@ -451,7 +452,6 @@ export const widgetComponent = {
                         gvc: gvc,
                         title: '特徵值',
                         array: widget.data.attr.map((dd, index) => {
-                            dd.type = dd.type ?? "par";
                             dd.attr = dd.attr ?? "";
                             return {
                                 title: dd.attr ?? `特徵:${index + 1}`,

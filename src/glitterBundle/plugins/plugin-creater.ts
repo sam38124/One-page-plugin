@@ -173,4 +173,3 @@ function getUrlParameter(url: string, sParam: string): any {
         }
     }
 }
-

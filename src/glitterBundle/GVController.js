@@ -198,23 +198,12 @@ export class GVC {
             }
         }, 100);
         const divCreate = ((typeof map.divCreate === "function") ? map.divCreate() : map.divCreate) ?? { elem: 'div' };
-        const data = map.view((text) => {
-            setTimeout(() => {
-                $(`#${gvc.parameter.pageConfig?.id}${map.bind}`).html(text);
-            }, 10);
-        });
-        if (typeof data === 'string') {
-            return `<${divCreate.elem ?? 'div'} id="${gvc.parameter.pageConfig?.id}${map.bind}" class="${divCreate.class ?? ""}" style="${divCreate.style ?? ""}" 
-${gvc.map((divCreate.option ?? []).map((dd) => {
-                return ` ${dd.key}="${dd.value}"`;
-            }))}
->${data}</${divCreate.elem ?? 'div'}>`;
-        }
+        const data = map.view();
         return `<${divCreate.elem ?? 'div'} id="${gvc.parameter.pageConfig?.id}${map.bind}" class="${divCreate.class ?? ""}" style="${divCreate.style ?? ""}" 
 ${gvc.map((divCreate.option ?? []).map((dd) => {
             return ` ${dd.key}="${dd.value}"`;
         }))}
-></${divCreate.elem ?? 'div'}>`;
+>${data}</${divCreate.elem ?? 'div'}>`;
     }
     event(fun, noCycle) {
         const gvc = this;
@@ -396,7 +385,7 @@ export function init(fun, gt) {
     }
     window.clickMap[gvc.parameter.pageConfig.id] = gvc.parameter.clickMap;
     lifeCycle.onCreate();
-    gvc.parameter.pageConfig.deleteResource = () => {
+    gvc.parameter.pageConfig.deleteResource = (destroy) => {
         window.clickMap[gvc.parameter.pageConfig.id] = undefined;
         lifeCycle.onPause();
         gvc.parameter.styleLinks.map((dd) => {
@@ -408,5 +397,8 @@ export function init(fun, gt) {
         gvc.parameter.jsList.map((dd) => {
             $(`#${dd.id}`).remove();
         });
+        if (destroy) {
+            lifeCycle.onDestroy();
+        }
     };
 }

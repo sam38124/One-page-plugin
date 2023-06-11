@@ -84,6 +84,7 @@ export class Glitter {
     public changePage = PageManager.changePage
     public removePage = PageManager.removePage
     public openDiaLog = PageManager.openDiaLog
+    public innerDialog=PageManager.innerDialog
     public closeDiaLog = PageManager.closeDiaLog
     public hideLoadingView = PageManager.hideLoadingView
     public goBack = PageManager.goBack
@@ -573,7 +574,7 @@ export class Glitter {
             document.body.removeChild(link);
         },
         frSize(sizeMap: any, def: any) {
-            var wi = $('html').width() as any
+            var wi = this.glitter.$('html').width()
             var sm = (sizeMap.sm ?? def)
             var me = (sizeMap.me ?? sm)
             var lg = (sizeMap.lg ?? me)

@@ -4,11 +4,18 @@ import { getData } from "../../glitter-base/api/post/get-data.js";
 import { PageSplit } from '../../widget/splitPage.js';
 import { Editor } from "../../editor.js";
 import { GlobalUser } from "../../glitter-base/global/global-user.js";
+import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
+import { getPostForm } from "../global/form.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
         render: (gvc, widget, setting, hoverID, subData) => {
             widget.data.dataFrom = widget.data.dataFrom ?? 'searchCase';
+            widget.data.cardStyle = widget.data.cardStyle ?? {};
+            widget.data.containerStyle = widget.data.containerStyle ?? {};
+            widget.data.seeEvent = widget.data.seeEvent ?? {};
+            widget.data.query = widget.data.query ?? [];
+            widget.data.queryExpand = widget.data.queryExpand ?? {};
             return {
                 view: () => {
                     const ps = new PageSplit(gvc);
@@ -54,12 +61,39 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             vm.query.push({ key: 'serviceID', value: selectService, type: "=" });
                         }
                         if (budget && budget !== -1) {
-                            vm.query.push({ key: 'budget', value: budget, type: "<=" });
+                            vm.query.push({ key: 'budget', value: parseInt(budget, 10), type: "<=" });
                         }
                     }
                     else {
                         vm.datasource.push(GlobalUser.userInfo.userID);
                     }
+                    function getQuery(dd) {
+                        if (dd.dataType === 'number') {
+                            dd.value = parseInt(dd.value, 10);
+                        }
+                        if (dd.query) {
+                            dd.query = dd.query.map((d2) => {
+                                return getQuery(d2);
+                            });
+                        }
+                        let key = dd.key;
+                        let value = dd.value;
+                        try {
+                            key = eval(dd.key);
+                        }
+                        catch (e) {
+                        }
+                        try {
+                            value = eval(dd.value);
+                        }
+                        catch (e) {
+                        }
+                        return { key: key, value: value, type: dd.type, query: dd.query };
+                    }
+                    JSON.parse(JSON.stringify(widget.data.query)).map((dd) => {
+                        vm.query.push(getQuery(dd));
+                    });
+                    vm.query.push({ key: 'type', value: 'post_case', type: "=" });
                     loadData();
                     return `
 <div class="${glitter.htmlGenerate.styleEditor(widget.data.containerStyle).class()}  " style="${glitter.htmlGenerate.styleEditor(widget.data.containerStyle).style()}">
@@ -78,7 +112,7 @@ ${gvc.bindView(() => {
                                     return `<div class="d-flex align-items-center justify-content-center col-12 mt-2 flex-column mb-4
 ">
  <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_rc6CDU.json"    speed="1"   style="max-width: 100%;width: 300px;"  loop  autoplay></lottie-player>
-   <h3 class="text-dark fs-5 mt-n3">查無相關服務</h3>
+   <h3 class="text-dark fs-5 mt-n3">查無相關案件</h3>
 </div>`;
                                 }
                                 return vm.data.map((d2) => {
@@ -97,7 +131,7 @@ ${(() => {
                                                 return dd.key === 'budget';
                                             });
                                             if (budget && d2.content[budget.key] !== "-1") {
-                                                return `<h3 style="color:orangered;top:10px;right:10px;font-size:18px;" class="position-absolute">$${d2.content[budget.key].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+                                                return `<h3 style="color:orangered;top:10px;right:10px;font-size:18px;" class="position-absolute">$${`${d2.content[budget.key]}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
 </h3>`;
                                             }
                                             else {
@@ -144,7 +178,19 @@ ${(() => {
                                             return `${index + 1}.${dd.label}:${ct}`;
                                         })).join(',')}</p>
     <div class="d-flex w-100 align-items-end">
-    <a  class="btn btn-sm btn-primary ms-auto" style="font-size:14px;">前往查看</a>
+    <a  class="btn btn-sm btn-primary ms-auto" style="font-size:14px;"
+    onclick="${gvc.event(() => {
+                                            glitter.setUrlParameter('caseID', d2.id);
+                                            TriggerEvent.trigger({
+                                                gvc, widget, clickEvent: widget.data.seeEvent, subData: {
+                                                    postFrom: d2.userID,
+                                                    formData: d2.content,
+                                                    formList: getPostForm(servData.formList),
+                                                    readonly: true
+                                                }
+                                            });
+                                        })}"
+    >前往查看</a>
 </div>
     
   </div>
@@ -167,21 +213,113 @@ ${(() => {
                             divCreate: { class: `row p-0 m-0` }
                         };
                     })}
-  
 </div>
                   
                   `;
                 },
                 editor: () => {
-                    widget.data.cardStyle = widget.data.cardStyle ?? {};
-                    widget.data.containerStyle = widget.data.containerStyle ?? {};
+                    function getArrayItem(data) {
+                        data.query = data.query ?? [];
+                        data.queryExpand = data.queryExpand ?? {};
+                        return Editor.arrayItem({
+                            originalArray: data.query,
+                            gvc: gvc,
+                            title: '搜索條件',
+                            array: data.query.map((data, index) => {
+                                return {
+                                    title: data.key ?? `項目:${index + 1}`,
+                                    expand: data,
+                                    innerHtml: gvc.map([
+                                        glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: 'Key',
+                                            default: data.key ?? "",
+                                            placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                            callback: (text) => {
+                                                data.key = text;
+                                                widget.refreshComponent();
+                                            }
+                                        }),
+                                        glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: 'Value',
+                                            default: data.value ?? "",
+                                            placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                            callback: (text) => {
+                                                data.value = text;
+                                                widget.refreshComponent();
+                                            }
+                                        }),
+                                        Editor.select({
+                                            gvc: gvc,
+                                            title: '資料類型',
+                                            def: data.dataType ?? "text",
+                                            array: [
+                                                { title: "文字", value: "text" },
+                                                { title: "數字", value: "number" }
+                                            ],
+                                            callback: (text) => {
+                                                data.dataType = text;
+                                                widget.refreshComponent();
+                                            }
+                                        }),
+                                        Editor.select({
+                                            gvc: gvc,
+                                            title: '比較值',
+                                            def: data.type ?? "text",
+                                            array: [
+                                                { title: "內容關聯", value: "relative_post" },
+                                                { title: ">", value: ">" },
+                                                { title: "=", value: "=" },
+                                                { title: "<", value: "<" },
+                                                { title: "<=", value: "<=" }
+                                            ],
+                                            callback: (text) => {
+                                                data.type = text;
+                                                widget.refreshComponent();
+                                            }
+                                        }),
+                                        (() => {
+                                            if (data.type === 'relative_post') {
+                                                data.query = data.query ?? [];
+                                                return getArrayItem(data);
+                                            }
+                                            else {
+                                                return ``;
+                                            }
+                                        })()
+                                    ]),
+                                    minus: gvc.event(() => {
+                                        data.query.splice(index, 1);
+                                        widget.refreshComponent();
+                                    }),
+                                };
+                            }),
+                            expand: data.queryExpand,
+                            plus: {
+                                title: '添加區塊',
+                                event: gvc.event(() => {
+                                    data.query.push({});
+                                    widget.refreshComponent();
+                                }),
+                            },
+                            refreshComponent: () => {
+                                widget.refreshComponent();
+                            }
+                        });
+                    }
                     return [
                         glitter.htmlGenerate.styleEditor(widget.data.containerStyle).editor(gvc, () => {
                             widget.refreshComponent();
-                        }, '容器樣式'),
+                        }, '容器樣式') + `<br>`,
                         glitter.htmlGenerate.styleEditor(widget.data.cardStyle).editor(gvc, () => {
                             widget.refreshComponent();
-                        }, '卡片樣式'),
+                        }, '卡片樣式') + `<br>`,
+                        TriggerEvent.editer(gvc, widget, widget.data.seeEvent, {
+                            hover: false,
+                            option: [],
+                            title: "前往查看"
+                        }),
                         Editor.select({
                             title: '資料來源',
                             gvc: gvc,
@@ -197,8 +335,9 @@ ${(() => {
                                 widget.data.dataFrom = text;
                                 widget.refreshComponent();
                             }
-                        })
-                    ].join(`<br>`);
+                        }),
+                        getArrayItem(widget.data)
+                    ].join(``);
                 }
             };
         }

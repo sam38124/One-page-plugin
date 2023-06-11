@@ -8,8 +8,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
             widget.data.list = widget.data.list ?? [];
             return {
                 view: () => {
-                    return gvc.bindView(() => {
-                        const id = glitter.getUUID();
+                    return new Promise((resolve, reject) => {
                         let data = undefined;
                         const saasConfig = window.saasConfig;
                         let fal = 0;
@@ -27,7 +26,6 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                             subData
                                         })).then((data) => {
                                             resolve(data);
-                                            gvc.notifyDataChange(id);
                                         });
                                     });
                                     if (result) {
@@ -65,25 +63,13 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                     }
                                     catch (e) {
                                     }
-                                    gvc.notifyDataChange(id);
+                                    resolve(new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc, undefined, subData.createOption ?? {}));
                                 }
                             });
                         }
                         setTimeout(() => {
                             getData();
                         }, 10);
-                        return {
-                            bind: id,
-                            view: () => {
-                                if (data) {
-                                    return new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
-                                }
-                                else {
-                                    return ``;
-                                }
-                            },
-                            divCreate: {}
-                        };
                     });
                 },
                 editor: () => {

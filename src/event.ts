@@ -3,6 +3,7 @@ import {Editor} from './editor.js';
 import {template} from "./one-page/style-1/template.js";
 import {component} from "./official/component.js";
 import {BaseApi} from "./api/base.js";
+import {GVC} from "./glitterBundle/GVController.js";
 
 class GlobalData {
     public static data = {
@@ -252,57 +253,31 @@ ${Editor.h3("選擇頁面")}
                                 return `<select
                                             class="form-select form-control mt-2"
                                             onchange="${gvc.event((e) => {
-                                        object.link = (window as any).$(e).val();
-                                    })}"
+                                    object.link = (window as any).$(e).val();
+                                })}"
                                         >
                                             ${GlobalData.data.pageList.map((dd: any) => {
-                                        object.link = object.link ?? dd.tag;
-                                        return /*html*/ `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
+                                    object.link = object.link ?? dd.tag;
+                                    return /*html*/ `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
                                                     ${dd.group}-${dd.name}
                                                 </option>`;
-                                    })}
-                                        </select>` +
-                                    glitter.htmlGenerate.editeInput(
-                                        {
-                                            gvc: gvc,
-                                            title: '標題',
-                                            default: object.title ?? "",
-                                            placeHolder: "",
-                                            callback: (text) => {
-                                                object.title = text
-                                            }
-                                        }
-                                    )
+                                })}
+                                        </select>`
                             },
                             divCreate: {}
                         }
                     })
                 },
                 event: () => {
-                    const id = gvc.glitter.getUUID()
-                    if (document.getElementById(id)) {
-                        $(`#${id}`).remove()
-                    }
-                    $('body').append(`
-<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-hidden="true" style="">
-<div class="modal-dialog modal-dialog-centered modal-lg" style="">
-     <div class="modal-content">
-            <div class="modal-header ">
-            <h4 class="modal-title" id="myCenterModalLabel">${object.title}</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-</div>
-<section class="position-relative  pt-0" >
-       ${component.render(gvc, ({
-                        data: {
-                            tag: object.link
-                        }
-                    } as any), ([] as any), [], subData).view()}
-      </section>
-            </div>
-</div>
-</div>
-`);
-                    ($(`#${id}`) as any).modal('show')
+                    subData = subData ?? {}
+                    gvc.glitter.innerDialog((gvc: GVC) => {
+                        return component.render(gvc, ({
+                            data: {
+                                tag: object.link
+                            }
+                        } as any), ([] as any), [], subData).view() as string
+                    }, gvc.glitter.getUUID())
+
                 }
             }
         }
@@ -349,7 +324,8 @@ ${Editor.h3("選擇頁面")}
         fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
-                    const id=gvc.glitter.getUUID()
+                    const id = gvc.glitter.getUUID()
+
                     function recursive() {
                         if (GlobalData.data.pageList.length === 0) {
                             GlobalData.data.run();
@@ -362,10 +338,10 @@ ${Editor.h3("選擇頁面")}
                     }
 
                     recursive();
-                    return  gvc.bindView(()=>{
+                    return gvc.bindView(() => {
                         return {
-                            bind:id,
-                            view:()=>{
+                            bind: id,
+                            view: () => {
                                 return `${Editor.h3("選擇頁面")}
                        <select
                                             class="form-select form-control mt-2"
@@ -382,14 +358,15 @@ ${Editor.h3("選擇頁面")}
                                 })}
                                         </select>`
                             },
-                            divCreate:{}
+                            divCreate: {}
                         }
                     })
                 },
                 event: () => {
-                    let fal=0
-                    let data:any=undefined
-                    const id=gvc.glitter.getUUID()
+                    let fal = 0
+                    let data: any = undefined
+                    const id = gvc.glitter.getUUID()
+
                     async function getData() {
                         let tag = widget.data.tag
                         const saasConfig = (window as any).saasConfig
@@ -420,18 +397,18 @@ ${Editor.h3("選擇頁面")}
                         })
                     };
                     getData()
-                    gvc.glitter.setDrawer(gvc.bindView(()=>{
+                    gvc.glitter.setDrawer(gvc.bindView(() => {
                         return {
-                            bind:id,
-                            view:()=>{
-                                if(!data){
-                                    return  ``
+                            bind: id,
+                            view: () => {
+                                if (!data) {
+                                    return ``
                                 }
                                 return new (window as any).glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
                             },
-                            divCreate:{}
+                            divCreate: {}
                         }
-                    }),()=>{
+                    }), () => {
                         gvc.glitter.openDrawer()
                     })
                 },

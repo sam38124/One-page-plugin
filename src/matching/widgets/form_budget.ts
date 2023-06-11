@@ -38,9 +38,13 @@ console.log(JSON.stringify(data))
                         default:formData[data.key] as string,
                         placeHolder:"請輸入預算",
                         callback:(text)=>{
-                            formData[data.key]=text
+                            formData[data.key]=text.replace(/\D/g, "")
+                            if(formData[data.key]!=='' && formData[data.key]!==undefined){
+                                formData[data.key]=parseInt(formData[data.key])
+                            }
                             widget.refreshComponent()
-                        }
+                        },
+                        type:'number'
                     })}
               `}
 </div>

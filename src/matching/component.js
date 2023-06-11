@@ -18,6 +18,18 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             subContent: '表單預算填寫．',
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./widgets/form_budget.js', import.meta.url)),
-        }
+        },
+        form: {
+            title: '表單設定',
+            subContent: '設定表單內容．',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./widgets/form.js', import.meta.url)),
+        },
+        post_form: {
+            title: '發案表單',
+            subContent: '發案表單設定．',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./widgets/post_form.js', import.meta.url)),
+        },
     };
 });

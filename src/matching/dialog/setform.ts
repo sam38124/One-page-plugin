@@ -28,72 +28,28 @@ init((gvc, glitter, gBundle) => {
                 return {
                     bind: id,
                     view: () => {
-                        const key = [{
-                            "col": "12",
-                            "key": "serviceDate",
-                            "colm": "12",
-                            "type": "date",
-                            "label": "服務日期",
-                            "requirement": "true",
-                            "formExpand": {"expand": true}
-                        }, {
-                            "col": "12",
-                            "key": "serviceTime",
-                            "colm": "12",
-                            "requirement": "true",
-                            "type": "time",
-                            "label": "服務時間",
-                            "formExpand": {"expand": true}
-                        }, {
-                            "col": "12",
-                            "key": "serviceArea",
-                            "colm": "12",
-                            "type": "placeSelect",
-                            "label": "服務地區",
-                            "requirement": "true",
-                            "formExpand": {"expand": true},
-                            "selectType": "manual"
-                        }, {
-                            "col": "12",
-                            "key": "serviceAddress",
-                            "colm": "12",
-                            "type": "address",
-                            "requirement": "true",
-                            "label": "詳細地址",
-                            "formExpand": {"expand": true}
-                        }, {
-                            "col": "12",
-                            "key": "budget",
-                            "tag": "form_budget",
-                            "colm": "12",
-                            "type": "custom",
-                            "label": "預算填寫",
-                            "expand": false,
-                            "component": {},
-                            "formExpand": {"expand": true},
-                            "requirement": "true"
-                        }].reverse()
+                     
                         
                         console.log(JSON.stringify(gBundle.data.formList))
                         if (mode === 'edit') {
-                            const a = {
-                                "id": "1685445504157",
-                                "title": "清潔服務",
-                                "expand": true,
-                                "btnList": [],
-                                "formFrom": {},
-                                "formList": [],
-                                "formEvent": {},
-                                "formExpand": {},
-                                "btnListExpand": {}
-                            }
-                            key.map((data) => {
-                                if (!gBundle.data.formList.find((dd: any) => {
-                                    return dd.key === data.key
-                                })) {
-                                    gBundle.data.formList.splice(0, 0, data)
-                                }
-                            })
+                            // const a = {
+                            //     "id": "1685445504157",
+                            //     "title": "清潔服務",
+                            //     "expand": true,
+                            //     "btnList": [],
+                            //     "formFrom": {},
+                            //     "formList": [],
+                            //     "formEvent": {},
+                            //     "formExpand": {},
+                            //     "btnListExpand": {}
+                            // }
+                            // key.map((data) => {
+                            //     if (!gBundle.data.formList.find((dd: any) => {
+                            //         return dd.key === data.key
+                            //     })) {
+                            //         gBundle.data.formList.splice(0, 0, data)
+                            //     }
+                            // })
                             return `<div class="p-2">${formModel.editor() as string}
 <div class="d-flex  align-items-end justify-content-end">
 <button class="btn-primary  btn mt-2 me-2" onclick="${gvc.event(() => {

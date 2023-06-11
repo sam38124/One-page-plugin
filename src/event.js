@@ -240,46 +240,21 @@ ${Editor.h3("選擇頁面")}
                                                     ${dd.group}-${dd.name}
                                                 </option>`;
                                 })}
-                                        </select>` +
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: '標題',
-                                        default: object.title ?? "",
-                                        placeHolder: "",
-                                        callback: (text) => {
-                                            object.title = text;
-                                        }
-                                    });
+                                        </select>`;
                             },
                             divCreate: {}
                         };
                     });
                 },
                 event: () => {
-                    const id = gvc.glitter.getUUID();
-                    if (document.getElementById(id)) {
-                        $(`#${id}`).remove();
-                    }
-                    $('body').append(`
-<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-hidden="true" style="">
-<div class="modal-dialog modal-dialog-centered modal-lg" style="">
-     <div class="modal-content">
-            <div class="modal-header ">
-            <h4 class="modal-title" id="myCenterModalLabel">${object.title}</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-</div>
-<section class="position-relative  pt-0" >
-       ${component.render(gvc, {
-                        data: {
-                            tag: object.link
-                        }
-                    }, [], [], subData).view()}
-      </section>
-            </div>
-</div>
-</div>
-`);
-                    $(`#${id}`).modal('show');
+                    subData = subData ?? {};
+                    gvc.glitter.innerDialog((gvc) => {
+                        return component.render(gvc, {
+                            data: {
+                                tag: object.link
+                            }
+                        }, [], [], subData).view();
+                    }, gvc.glitter.getUUID());
                 }
             };
         }

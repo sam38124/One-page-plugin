@@ -190,5 +190,42 @@ TriggerEvent.create(import.meta.url, {
                 },
             };
         },
+    },
+    checkLogin: {
+        title: '官方事件-用戶-登入判斷',
+        fun: (gvc, widget, object, subData, element) => {
+            widget.data.loginUserEvent = widget.data.loginUserEvent ?? {};
+            return {
+                editor: () => {
+                    return `<div class="border border-white m-2 p-2">
+${TriggerEvent.editer(gvc, widget, widget.data.loginUserEvent, {
+                        option: [],
+                        title: "已登入用戶的事件",
+                        hover: false
+                    })}
+</div>
+<div class="border border-white m-2 p-2">
+${TriggerEvent.editer(gvc, widget, widget.data, {
+                        option: [],
+                        title: "未登入用戶的事件",
+                        hover: false
+                    })}
+</div>
+`;
+                },
+                event: () => {
+                    if (!GlobalUser.token) {
+                        TriggerEvent.trigger({
+                            gvc, widget, clickEvent: widget.data,
+                        });
+                    }
+                    else {
+                        TriggerEvent.trigger({
+                            gvc, widget, clickEvent: widget.data.loginUserEvent,
+                        });
+                    }
+                },
+            };
+        },
     }
 });

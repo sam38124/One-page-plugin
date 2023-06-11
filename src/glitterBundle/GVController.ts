@@ -189,8 +189,8 @@ export class GVC {
 
     public bindView(map: (
         () =>
-        { view: (callback: ((text: string) => void)) => (string|void), bind: string, divCreate?: { elem?: string, style?: string, class?: string, option?: { key: string, value: string }[] } | (() => ({ elem?: string, style?: string, class?: string, option?: { key: string, value: string }[] })), dataList?: { obj: any, key: string }[], onCreate?: () => void, onInitial?: () => void }) |
-        { view: (callback: ((text: string) => void)) => (string|void), bind: string, divCreate?: { elem?: string, style?: string, class?: string, option?: { key: string, value: string }[] } | (() => ({ elem?: string, style?: string, class?: string, option?: { key: string, value: string }[] })), dataList?: { obj: any, key: string }[], onCreate?: () => void, onInitial?: () => void }
+        { view: () => (string), bind: string, divCreate?: { elem?: string, style?: string, class?: string, option?: { key: string, value: string }[] } | (() => ({ elem?: string, style?: string, class?: string, option?: { key: string, value: string }[] })), dataList?: { obj: any, key: string }[], onCreate?: () => void, onInitial?: () => void }) |
+        { view: () => (string), bind: string, divCreate?: { elem?: string, style?: string, class?: string, option?: { key: string, value: string }[] } | (() => ({ elem?: string, style?: string, class?: string, option?: { key: string, value: string }[] })), dataList?: { obj: any, key: string }[], onCreate?: () => void, onInitial?: () => void }
     ): string {
         const gvc = this
         if (typeof map === "function") {
@@ -220,23 +220,12 @@ export class GVC {
             }
         }, 100)
         const divCreate = ((typeof (map as any).divCreate === "function") ? (map as any).divCreate() : (map as any).divCreate) ?? {elem: 'div'};
-        const data = map.view((text) => {
-            setTimeout(() => {
-                $(`#${gvc.parameter.pageConfig?.id}${map.bind}`).html(text)
-            }, 10)
-        })
-        if (typeof data === 'string') {
-            return `<${divCreate.elem ?? 'div'} id="${gvc.parameter.pageConfig?.id}${map.bind}" class="${divCreate.class ?? ""}" style="${divCreate.style ?? ""}" 
-${gvc.map((divCreate.option ?? []).map((dd: any) => {
-                return ` ${dd.key}="${dd.value}"`
-            }))}
->${data}</${divCreate.elem ?? 'div'}>`
-        }
+        const data = map.view()
         return `<${divCreate.elem ?? 'div'} id="${gvc.parameter.pageConfig?.id}${map.bind}" class="${divCreate.class ?? ""}" style="${divCreate.style ?? ""}" 
 ${gvc.map((divCreate.option ?? []).map((dd: any) => {
             return ` ${dd.key}="${dd.value}"`
         }))}
-></${divCreate.elem ?? 'div'}>`
+>${data}</${divCreate.elem ?? 'div'}>`
 
     }
 
@@ -432,7 +421,7 @@ export function init(fun: (gvc: GVC, glitter: Glitter, gBundle: any) => {
 
     (window as any).clickMap[gvc.parameter.pageConfig!.id] = gvc.parameter.clickMap;
     lifeCycle.onCreate();
-    gvc.parameter.pageConfig!.deleteResource = () => {
+    gvc.parameter.pageConfig!.deleteResource = (destroy:Boolean) => {
         (window as any).clickMap[gvc.parameter.pageConfig!.id] = undefined
         lifeCycle.onPause()
         gvc.parameter.styleLinks.map((dd) => {
@@ -444,5 +433,8 @@ export function init(fun: (gvc: GVC, glitter: Glitter, gBundle: any) => {
         gvc.parameter.jsList.map((dd) => {
             $(`#${dd.id}`).remove()
         })
+        if(destroy){
+            lifeCycle.onDestroy()
+        }
     }
 }

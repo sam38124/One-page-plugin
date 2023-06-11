@@ -16,9 +16,13 @@ const staticObj = {
             value: `checkbox`,
         },
         {
-        title: '文字',
-        value: `text`,
-    },
+            title: '文字',
+            value: `text`,
+        },
+        {
+            title: '數字',
+            value: `number`,
+        },
         {
             title: '信箱',
             value: `email`,
@@ -74,7 +78,12 @@ const staticObj = {
         {
             title: "地區選擇",
             value: "placeSelect"
-        }]
+        },
+        {
+            title: '隱藏參數',
+            value: `hideData`,
+        }
+        ]
 }
 
 export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
@@ -82,23 +91,20 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
         defaultData: {},
         render: (gvc, widget, setting, hoverID, subData) => {
             widget.data.formExpand = widget.data.formExpand ?? {}
-            widget.data.formList = widget.data.formList ?? []
-            widget.data.formEvent = widget.data.formEvent ?? {}
+            widget.data.formList = subData.formList ?? widget.data.formList ?? []
             subData = subData ?? {}
             let readonly = subData.readonly
-            subData = subData.formData ?? subData
+            subData = subData.formData ?? {}
             widget.data.btnList = widget.data.btnList ?? []
             widget.data.btnListExpand = widget.data.btnListExpand ?? {}
             widget.data.formFrom = widget.data.formFrom ?? {}
+            gvc.getBundle()[widget.data.formKey ?? "formData"]=subData
             let refreshTimer: any = 0
             const id = glitter.getUUID()
             return {
                 view: () => {
                     let loading = true
                     let haveGroup: any = []
-                    let formListComponent: any = widget.data.formList
-                    let formListIndex: any = []
-
                     function generateForm(formList: any, formData: any, appendGroup?: string) {
                         return formList.map((data: any) => {
                             if (data.group && !appendGroup) {
@@ -120,7 +126,16 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                 }
                             }
                             if (data.type !== 'arrayItem') {
-                                formData[data.key] = (formData[data.key] == undefined) ? (data.def ?? '') : formData[data.key]
+                                formData[data.key] = (formData[data.key] == undefined) ? ((()=>{
+                                    try {
+                                        return eval(data.def)
+                                    }catch (e){
+                                        return  data.def
+                                    }
+                                })() ?? '') : formData[data.key]
+                                if(data.type==='number'){
+                                    formData[data.key] = formData[data.key] ?? 0
+                                }
                             } else {
                                 formData[data.key] = (formData[data.key] == undefined) ? [] : formData[data.key]
                             }
@@ -128,11 +143,11 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                             return `
                   <div class="col-sm-${data.col} col-${data.colm}">
                   <div class="position-relative ${(data.type === 'arrayItem' || data.type === 'custom') ? `` : `mb-2`}" >
-                    <label  class="form-label fs-base ${(data.type === 'arrayItem' || data.type === 'custom') ? `d-none` : ``}"  >${(data.requirement==='true') ? `<span class="text-danger ms-2"> * </span>${data.label}`:data.label}</label>
+                    <label  class="form-label fs-base ${(data.type === 'arrayItem' || data.type === 'custom' || data.type === 'hideData') ? `d-none` : ``}"  >${(data.requirement === 'true') ? `<span class="text-danger ms-2"> * </span>${data.label}` : data.label}</label>
                     ${(() => {
                                 switch (data.type) {
                                     case 'checkbox':
-                                        return  checkbox.render(gvc, widget, setting, hoverID, {
+                                        return checkbox.render(gvc, widget, setting, hoverID, {
                                             data: data,
                                             formData: formData,
                                             readonly: readonly
@@ -144,9 +159,15 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                             readonly: readonly
                                         }).view()
                                     case 'textArea':
-                                        return `<textArea class="form-control" style="height:100px;" onchange="${gvc.event((e) => {
-                                            formData[data.key] = e.value
-                                        })}" ${(data.states === '1' || readonly) ? `readonly` : ``}>${formData[data.key] ?? ""}</textArea>`
+                                        return glitter.htmlGenerate.editeText({
+                                            gvc:gvc,
+                                            title:'',
+                                            default:formData[data.key] ?? "",
+                                            placeHolder:"",
+                                            callback:(text)=>{
+                                                formData[data.key] = text
+                                            }
+                                        })
                                     case 'imageUpload':
                                         return Editor.uploadImage({
                                             gvc: gvc,
@@ -214,11 +235,18 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                         return placeSelect.render(gvc, widget, setting, hoverID, {
                                             formData: formData
                                         }).view()
+                                    case 'hideData':
+                                        return  ``
                                     default:
                                         return `<input type="${data.type}" id="${data.key}"
    value="${formData[data.key] ?? ""}" class="form-control form-control-lg" style="font-size:15px;" onchange="${gvc.event((e) => {
                                             formData[data.key] = e.value
-                                            widget.refreshComponent()
+                                            e.value=e.value || 0
+                                            if(data.type==='number'){
+                                                formData[data.key]=parseInt(e.value)
+                                            }
+                                            // widget.refreshComponent()
+                                            gvc.notifyDataChange(id)
                                         })}" ${(data.states === '1' || readonly) ? `readonly` : ``}>`;
                                 }
                             })()}
@@ -260,8 +288,11 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                     return ``
                                 }
                                 return `
-                   <div class="row">
+                   <div class="row" >
                       ${generateForm(widget.data.formList, subData)}
+                      ${(readonly) ? `
+                      <div class="w-100 h-100 position-absolute top-0 left-0"></div>
+                      `:``}
 </div>
 <div class="w-100 d-flex ">
 <div class="flex-fill"></div>
@@ -291,7 +322,7 @@ ${widget.data.btnList.map((dd: any) => {
                             title: '表單項目',
                             array: array.map((dd: any, index: number) => {
                                 dd.formExpand = dd.formExpand ?? {}
-                                dd.requirement=dd.requirement??"true"
+                                dd.requirement = dd.requirement ?? "true"
                                 return {
                                     title: dd.label || `區塊:${index + 1}`,
                                     expand: dd.formExpand,
@@ -304,10 +335,28 @@ ${widget.data.btnList.map((dd: any) => {
                                                 placeHolder: "標題",
                                                 callback: (text) => {
                                                     dd.label = text
-                                                    dd.key = text
+                                                    if(widget.data.formIndex !== 'true'){
+                                                        dd.key = text
+                                                    }
                                                     widget.refreshComponent()
                                                 }
                                             }),
+                                            (()=>{
+                                                if(widget.data.formIndex === 'true'){
+                                                    return glitter.htmlGenerate.editeInput({
+                                                        gvc: gvc,
+                                                        title: 'Key',
+                                                        default: dd.key || '',
+                                                        placeHolder: "請輸入Key值",
+                                                        callback: (text) => {
+                                                            dd.key = text
+                                                            widget.refreshComponent()
+                                                        }
+                                                    })
+                                                }else{
+                                                    return ``
+                                                }
+                                            })(),
                                             Editor.select({
                                                 title: `輸入類型`,
                                                 gvc: gvc,
@@ -317,17 +366,17 @@ ${widget.data.btnList.map((dd: any) => {
                                                     dd.type = text;
                                                     widget.refreshComponent();
                                                 },
-                                            }) +   Editor.select({
+                                            }) + Editor.select({
                                                 title: `是否必填`,
                                                 gvc: gvc,
                                                 def: dd.requirement,
-                                                array: [{title:"是",value:"true"},{title:"否",value:"false"}],
+                                                array: [{title: "是", value: "true"}, {title: "否", value: "false"}],
                                                 callback: (text) => {
                                                     dd.requirement = text;
                                                     widget.refreshComponent();
                                                 },
-                                            })+ (() => {
-                                                switch (dd.type){
+                                            }) + (() => {
+                                                switch (dd.type) {
                                                     case 'checkbox':
                                                         return checkbox.render(gvc, widget, setting, hoverID, {
                                                             dd: dd,
@@ -373,16 +422,17 @@ ${widget.data.btnList.map((dd: any) => {
                                                                 widget.refreshComponent()
                                                             },
                                                         })
-                                                    default:return glitter.htmlGenerate.editeInput({
-                                                        gvc: gvc,
-                                                        title: '預設值',
-                                                        default: dd.def,
-                                                        placeHolder: '請輸入預設值',
-                                                        callback: (text) => {
-                                                            dd.def = text
-                                                            widget.refreshComponent()
-                                                        },
-                                                    })
+                                                    default:
+                                                        return glitter.htmlGenerate.editeText({
+                                                            gvc: gvc,
+                                                            title: '預設值',
+                                                            default: dd.def,
+                                                            placeHolder: '請輸入預設值',
+                                                            callback: (text) => {
+                                                                dd.def = text
+                                                                widget.refreshComponent()
+                                                            },
+                                                        })
                                                 }
                                             })(),
 
@@ -411,6 +461,30 @@ ${widget.data.btnList.map((dd: any) => {
                     }
 
                     return `<div class="mt-2"></div>` + gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: "表單KEY值",
+                            default: widget.data.formKey ?? "",
+                            placeHolder: "請輸入資料存取標籤",
+                            callback: (text) => {
+                                widget.data.formKey=text
+                                widget.refreshComponent()
+                            }
+                        }),
+                        Editor.select({
+                            title:"是否設定資料索引",
+                            gvc:gvc,
+                            def:widget.data.formIndex ?? "false",
+                            array:[
+                                {title:"是",value:"true"},
+                                {title:"否",value:"false"}
+                            ],
+                            callback:(text)=>{
+                                widget.data.formIndex=text
+                                widget.refreshComponent()
+                            }
+                        }),
+
                         getFormEditor(widget.data.formList)
                     ])
 

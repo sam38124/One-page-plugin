@@ -56,7 +56,7 @@ export class PageManager {
                 return data.id;
             }).indexOf(id);
             if (del) {
-                glitter.pageConfig[index].deleteResource();
+                glitter.pageConfig[index].deleteResource(true);
                 glitter.$(`#page` + glitter.pageConfig[index].id).remove();
                 glitter.$(`#` + glitter.pageConfig[index].id).remove();
                 glitter.pageConfig.splice(index, 1);
@@ -291,6 +291,12 @@ background: transparent;background: ${config.backGroundColor};display: none;posi
         }
     }
     ;
+    static innerDialog = (html, tag) => {
+        const glitter = Glitter.glitter;
+        glitter.openDiaLog(new URL('./dialog_inner.js', import.meta.url).href, tag, {
+            getView: html
+        });
+    };
     static openDiaLog(url, tag, obj, option = {}) {
         const glitter = Glitter.glitter;
         if (glitter.waitChangePage || PageManager.clock.stop() < 300) {

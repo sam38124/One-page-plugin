@@ -3,7 +3,6 @@ import {Glitter} from "../glitterBundle/Glitter.js";
 import {GVC} from "../glitterBundle/GVController.js";
 import {TriggerEvent} from "../glitterBundle/plugins/trigger-event.js";
 import {Editor} from "../editor.js";
-import {appConfig} from "../config.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {

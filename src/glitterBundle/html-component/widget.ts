@@ -250,7 +250,8 @@ export const widgetComponent = {
                                                                         dd.name = text
                                                                         widget.refreshComponent()
                                                                     }
-                                                                }) + glitter.htmlGenerate.editeInput({
+                                                                }) + 
+                                                                glitter.htmlGenerate.editeInput({
                                                                     gvc: gvc,
                                                                     title: `Value`,
                                                                     default: dd.value,
@@ -457,7 +458,6 @@ export const widgetComponent = {
                         title: '特徵值',
                         array: widget.data.attr.map((dd: any, index: number) => {
                             // TriggerEvent.editer(gvc, widget, widget.data)
-                            dd.type = dd.type ?? "par"
                             dd.attr = dd.attr ?? ""
                             return {
                                 title: dd.attr ?? `特徵:${index + 1}`,

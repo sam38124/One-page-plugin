@@ -35,6 +35,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             subContent: '手機版底部導覽列．',
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./official/footer.js', import.meta.url)),
-        }
+        },
+        arrayItem: {
+            title: '陣列元件',
+            subContent: '陣列元件產生．',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./official/array_item.js', import.meta.url)),
+        },
     };
 });
