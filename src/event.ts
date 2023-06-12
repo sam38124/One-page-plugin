@@ -313,7 +313,12 @@ ${Editor.h3("選擇頁面")}
                 event: () => {
 
                     return new Promise<any>(async (resolve, reject) => {
-                        resolve(await (eval(object.code)))
+                        try {
+                            resolve(await (eval(object.code)))
+                        }catch (e){
+                            console.log(object.code)
+                        }
+
                     })
                 },
             };
