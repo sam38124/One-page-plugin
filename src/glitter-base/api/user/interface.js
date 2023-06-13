@@ -9,7 +9,7 @@ TriggerEvent.create(import.meta.url, {
             return {
                 editor: () => {
                     object.loginEvent = object.loginEvent ?? {};
-                    return TriggerEvent.editer(gvc, widget, object.registerEvent, {
+                    return TriggerEvent.editer(gvc, widget, object.loginEvent, {
                         hover: false,
                         option: [],
                         title: "登入成功後的觸發事件"
@@ -36,7 +36,7 @@ TriggerEvent.create(import.meta.url, {
                             GlobalUser.userInfo = r.response;
                             GlobalUser.updateUserData = JSON.parse(JSON.stringify(r.response));
                             TriggerEvent.trigger({
-                                gvc, widget, clickEvent: object.registerEvent, subData, element
+                                gvc, widget, clickEvent: object.loginEvent, subData, element
                             });
                         }
                     });

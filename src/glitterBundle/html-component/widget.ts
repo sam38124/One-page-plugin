@@ -35,6 +35,11 @@ export const widgetComponent = {
                             }
                         }
                     })
+                    if(widget.data.elem === 'a' && ((window.parent as any).editerData !== undefined)){
+                        option=option.filter((dd:any)=>{
+                            return dd.key !== 'href'
+                        })
+                    }
                     if (widget.data.elem === 'img') {
                         option.push({key: 'src', value: widget.data.inner})
                     } else if (widget.data.elem === 'input') {
@@ -42,14 +47,14 @@ export const widgetComponent = {
                     }
                     return {
                         elem: widget.data.elem,
-                        class: glitter.htmlGenerate.styleEditor(widget.data).class() + ` glitterTag${widget.hashTag}`,
-                        style: glitter.htmlGenerate.styleEditor(widget.data).style() + `   ${hoverID.indexOf(widget.id) !== -1 ? `border: 4px solid dodgerblue;border-radius: 5px;box-sizing: border-box;` : ``}`,
+                        class: glitter.htmlGenerate.styleEditor(widget.data,gvc,widget as any,subData).class() + ` glitterTag${widget.hashTag} ${hoverID.indexOf(widget.id) !== -1 ? ` selectComponentHover` : ``}`,
+                        style: glitter.htmlGenerate.styleEditor(widget.data,gvc,widget as any,subData).style() ,
                         option: option.concat(subData.option),
                     }
                 }
                 if (widget.type === 'container') {
                     const glitter = (window as any).glitter
-                    const htmlGenerate = new glitter.htmlGenerate(widget.data.setting, hoverID);
+                    const htmlGenerate = new glitter.htmlGenerate(widget.data.setting, hoverID,subData);
                     return htmlGenerate.render(gvc, {}, getCreateOption())
                 }
                 if ((widget.data.dataFrom === "code")) {
@@ -91,7 +96,7 @@ export const widgetComponent = {
                     return {
                         bind: id,
                         view: () => {
-                            console.log('render')
+                            // console.log(`finishNotifyID:${id}-${widget.data.inner}`)
                             switch (widget.data.elem) {
                                 case 'select':
                                     formData[widget.data.key] = widget.data.inner
@@ -121,32 +126,35 @@ export const widgetComponent = {
                                 case 'img':
                                 case 'input':
                                     return ``
-
                                 default:
                                     return widget.data.inner
                             }
                         },
                         divCreate: getCreateOption,
                         onCreate: () => {
-                            if (hoverID.indexOf(widget.id) !== -1) {
-                                gvc.glitter.$('html').get(0).scrollTo({
-                                    top: 0,
-                                    left: 0,
-                                    behavior: 'instant',
-                                });
-                                const scrollTOP =
-                                    gvc.glitter.$('#' + gvc.id(id)).offset().top -
-                                    gvc.glitter.$('html').offset().top +
-                                    gvc.glitter.$('html').scrollTop();
-                                gvc.glitter
-                                    .$('html')
-                                    .get(0)
-                                    .scrollTo({
-                                        top: scrollTOP - gvc.glitter.$('html').height() / 2,
+                            setTimeout(()=>{
+                                if (hoverID.indexOf(widget.id) !== -1) {
+                                    gvc.glitter.$('html').get(0).scrollTo({
+                                        top: 0,
                                         left: 0,
                                         behavior: 'instant',
                                     });
-                            }
+
+                                    const scrollTOP =
+                                        gvc.getBindViewElem(id).offset().top -
+                                        gvc.glitter.$('html').offset().top +
+                                        gvc.glitter.$('html').scrollTop();
+                                    gvc.glitter
+                                        .$('html')
+                                        .get(0)
+                                        .scrollTo({
+                                            top: scrollTOP - gvc.glitter.$('html').height() / 2,
+                                            left: 0,
+                                            behavior: 'instant',
+                                        });
+                                }
+                            },200)
+
                         },
                         onInitial: () => {
                         }
@@ -169,7 +177,7 @@ export const widgetComponent = {
                                     if (['link', 'style'].indexOf(widget.data.elem) !== -1) {
                                         return ``
                                     }else{
-                                        return glitter.htmlGenerate.styleEditor(widget.data).editor(gvc, () => {
+                                        return glitter.htmlGenerate.styleEditor(widget.data,gvc,widget as any,subData).editor(gvc, () => {
                                             widget.refreshComponent()
                                         }, '元素設計樣式')
                                     }
@@ -458,6 +466,7 @@ export const widgetComponent = {
                         title: '特徵值',
                         array: widget.data.attr.map((dd: any, index: number) => {
                             // TriggerEvent.editer(gvc, widget, widget.data)
+                            dd.type=dd.type ?? 'par'
                             dd.attr = dd.attr ?? ""
                             return {
                                 title: dd.attr ?? `特徵:${index + 1}`,

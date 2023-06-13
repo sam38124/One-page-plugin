@@ -134,7 +134,7 @@ export class PageManager {
                     },
                     createResource: () => {
                     },
-                    backGroundColor: option.backGroundColor ?? 'white',
+                    backGroundColor: option.backGroundColor ?? 'transparent',
                     type: GVCType.Page,
                     animation: option.animation ?? glitter.animation.none
                 }
@@ -205,7 +205,6 @@ background: ${config!.backGroundColor};display: none;z-index: 9999;overflow: hid
 
     public static setAnimation(page: PageConfig) {
         const glitter = Glitter.glitter;
-
         // glitter.$('html').scrollTop(0);
         function closePreviousPage() {
             //Only remove page view
@@ -274,7 +273,7 @@ background: ${config!.backGroundColor};display: none;z-index: 9999;overflow: hid
                     },
                     createResource: () => {
                     },
-                    backGroundColor: option.backGroundColor ?? 'white',
+                    backGroundColor: option.backGroundColor ?? 'transparent',
                     type: GVCType.Page,
                     animation: option.animation ?? glitter.defaultSetting.pageAnimation
                 }
@@ -321,7 +320,7 @@ background: transparent;background: ${config!.backGroundColor};display: none;pos
     };
     public static innerDialog=(html:(gvc:GVC)=>string,tag:string)=>{
         const glitter = Glitter.glitter;
-        glitter.openDiaLog(new URL('./dialog_inner.js',import.meta.url).href, tag, {
+        glitter.openDiaLog(new URL('../dialog/dialog_inner.js',import.meta.url).href, tag, {
             getView:html
         })
     }
