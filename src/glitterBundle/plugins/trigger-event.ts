@@ -2,6 +2,7 @@ import {HtmlJson} from "./plugin-creater.js"
 import {GVC} from "../GVController.js";
 import {ShareDialog} from "../../dialog/ShareDialog.js";
 import {Glitter} from "../Glitter.js";
+import {Editor} from "../../editor.js";
 
 export class TriggerEvent {
     public static getUrlParameter(url: string, sParam: string) {
@@ -198,102 +199,225 @@ export class TriggerEvent {
     } = {hover: false, option: []}) {
         gvc.glitter.share.clickEvent = gvc.glitter.share.clickEvent ?? {}
         const glitter = gvc.glitter
-        const selectID = glitter.getUUID()
-//         return `<div class="mt-2 border border-white p-2">
-//  <h3 class="m-0" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
-// <button class="border border-white ">觸發事件</button>
-// </div>`
+        let arrayEvent:any[]=[]
+        // alert(`obj--`+JSON.stringify(obj))
+        if(Array.isArray(obj.clickEvent)){
+            arrayEvent=obj.clickEvent
+        }else if (obj.clickEvent!==undefined){
+            arrayEvent=[JSON.parse(JSON.stringify(obj))]
+        }
+
+        obj.clickEvent=arrayEvent
         return `<div class="mt-2 border border-white p-2">
  <h3 class="m-0" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
- ${
-            gvc.bindView(() => {
+${ Editor.arrayItem({
+            originalArray:arrayEvent,
+            gvc: gvc,
+            title: '事件集',
+            array: arrayEvent.map((obj: any, index: number) => {
                 return {
-                    bind: selectID,
-                    view: () => {
-                        var select = false
-                        return `<select class="form-select m-0 mt-2" onchange="${gvc.event((e) => {
-                            if (e.value === 'undefined') {
-                                obj.clickEvent = undefined
-                            } else {
-                                obj.clickEvent = JSON.parse(e.value)
-                                obj.clickEvent.src = TriggerEvent.getUrlParameter(obj.clickEvent.src, 'resource') ?? obj.clickEvent.src
-                            }
-                            gvc.notifyDataChange(selectID)
-                        })}">
+                    title: `第${index+1}個觸發事件`,
+                    expand: obj,
+                    innerHtml:()=>{
+                        const selectID = glitter.getUUID()
+                        return   gvc.bindView(() => {
+                            return {
+                                bind: selectID,
+                                view: () => {
+                                    var select = false
+                                    return `<select class="form-select m-0 mt-2" onchange="${gvc.event((e) => {
+                                        if (e.value === 'undefined') {
+                                            obj.clickEvent = undefined
+                                        } else {
+                                            obj.clickEvent = JSON.parse(e.value)
+                                            obj.clickEvent.src = TriggerEvent.getUrlParameter(obj.clickEvent.src, 'resource') ?? obj.clickEvent.src
+                                        }
+                                        gvc.notifyDataChange(selectID)
+                                    })}">
                         
                         ${gvc.map(Object.keys(glitter.share?.clickEvent || {}).filter((dd) => {
-                            return TriggerEvent.getUrlParameter(dd, "resource") !== undefined
-                        }).map((key) => {
-                            const value = glitter.share.clickEvent[key]
-                            return gvc.map(Object.keys(value).map((v2) => {
-                                if (option.option.length > 0) {
-                                    if (option.option.indexOf(v2) === -1) {
-                                        return ``
+                                        return TriggerEvent.getUrlParameter(dd, "resource") !== undefined
+                                    }).map((key) => {
+                                        const value = glitter.share.clickEvent[key]
+                                        return gvc.map(Object.keys(value).map((v2) => {
+                                            if (option.option.length > 0) {
+                                                if (option.option.indexOf(v2) === -1) {
+                                                    return ``
+                                                }
+                                            }
+                                            const value2 = value[v2]
+                                            const selected = JSON.stringify({
+                                                src: TriggerEvent.getUrlParameter(key, 'resource') ?? obj.clickEvent.src,
+                                                route: v2
+                                            }) === JSON.stringify(obj.clickEvent)
+                                            select = selected || select
+                                            return `<option value='${JSON.stringify({
+                                                src: key,
+                                                route: v2
+                                            })}' ${(selected) ? `selected` : ``}>${value2.title}</option>`
+                                        }))
+                                    }))
                                     }
-                                }
-                                const value2 = value[v2]
-                                const selected = JSON.stringify({
-                                    src: TriggerEvent.getUrlParameter(key, 'resource') ?? obj.clickEvent.src,
-                                    route: v2
-                                }) === JSON.stringify(obj.clickEvent)
-                                select = selected || select
-                                return `<option value='${JSON.stringify({
-                                    src: key,
-                                    route: v2
-                                })}' ${(selected) ? `selected` : ``}>${value2.title}</option>`
-                            }))
-                        }))
-                        }
 <option value="undefined"  ${(!select) ? `selected` : ``}>未定義</option>
 </select>
 ${gvc.bindView(() => {
-                            const id = glitter.getUUID()
-                            setTimeout(()=>{
-                                gvc.notifyDataChange(id)
-                            },200)
-                            return {
-                                bind: id,
-                                view: () => {
-                                    try {
-                                        if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
-                                            return ``
-                                        }
-                                        return glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)][obj.clickEvent.route].fun(gvc, widget, obj).editor()
-                                    } catch (e) {
-                                        return ``
-                                    }
-                                },
-                                divCreate: {},
-                                onCreate: () => {
-                                    glitter.share.clickEvent = glitter.share.clickEvent ?? {}
-                                    try {
-                                        if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {-
-                                            glitter.addMtScript([
-                                                {
-                                                    src: glitter.htmlGenerate.resourceHook(obj.clickEvent.src),
-                                                    type: 'module'
+                                        const id = glitter.getUUID()
+                                        setTimeout(()=>{
+                                            gvc.notifyDataChange(id)
+                                        },200)
+                                        return {
+                                            bind: id,
+                                            view: () => {
+                                                try {
+                                                    if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
+                                                        return ``
+                                                    }
+                                                    return glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)][obj.clickEvent.route].fun(gvc, widget, obj).editor()
+                                                } catch (e) {
+                                                    return ``
                                                 }
-                                            ], () => {
-                                                setTimeout(()=>{
-                                                    gvc.notifyDataChange(id)
-                                                },200)
-                                               
-                                            }, () => {
-                                                console.log(`loadingError:` + obj.clickEvent.src)
-                                            })
-                                        }
-                                    } catch (e) {
-                                    }
+                                            },
+                                            divCreate: {},
+                                            onCreate: () => {
+                                                glitter.share.clickEvent = glitter.share.clickEvent ?? {}
+                                                try {
+                                                    if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {-
+                                                        glitter.addMtScript([
+                                                            {
+                                                                src: glitter.htmlGenerate.resourceHook(obj.clickEvent.src),
+                                                                type: 'module'
+                                                            }
+                                                        ], () => {
+                                                            setTimeout(()=>{
+                                                                gvc.notifyDataChange(id)
+                                                            },200)
 
-                                }
-                            }
-                        })}
+                                                        }, () => {
+                                                            console.log(`loadingError:` + obj.clickEvent.src)
+                                                        })
+                                                    }
+                                                } catch (e) {
+                                                }
+
+                                            }
+                                        }
+                                    })}
 `
-                    },
-                    divCreate: {}
-                }
-            })
-        }
-</div> `
+                                },
+                                divCreate: {}
+                            }
+                        })
+                    }  ,
+                    minus: gvc.event(() => {
+                        arrayEvent.splice(index, 1);
+                        widget.refreshComponent();
+                    }),
+                };
+            }),
+            expand: obj,
+            plus: {
+                title: '添加區塊',
+                event: gvc.event(() => {
+                    arrayEvent.push({});
+                    widget.refreshComponent();
+                }),
+            },
+            refreshComponent:()=>{
+                widget.refreshComponent()
+            }
+        })}
+</div>`
+//         return `<div class="mt-2 border border-white p-2">
+//  <h3 class="m-0" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
+//  ${
+//             gvc.bindView(() => {
+//                 return {
+//                     bind: selectID,
+//                     view: () => {
+//                         var select = false
+//                         return `<select class="form-select m-0 mt-2" onchange="${gvc.event((e) => {
+//                             if (e.value === 'undefined') {
+//                                 obj.clickEvent = undefined
+//                             } else {
+//                                 obj.clickEvent = JSON.parse(e.value)
+//                                 obj.clickEvent.src = TriggerEvent.getUrlParameter(obj.clickEvent.src, 'resource') ?? obj.clickEvent.src
+//                             }
+//                             gvc.notifyDataChange(selectID)
+//                         })}">
+//
+//                         ${gvc.map(Object.keys(glitter.share?.clickEvent || {}).filter((dd) => {
+//                             return TriggerEvent.getUrlParameter(dd, "resource") !== undefined
+//                         }).map((key) => {
+//                             const value = glitter.share.clickEvent[key]
+//                             return gvc.map(Object.keys(value).map((v2) => {
+//                                 if (option.option.length > 0) {
+//                                     if (option.option.indexOf(v2) === -1) {
+//                                         return ``
+//                                     }
+//                                 }
+//                                 const value2 = value[v2]
+//                                 const selected = JSON.stringify({
+//                                     src: TriggerEvent.getUrlParameter(key, 'resource') ?? obj.clickEvent.src,
+//                                     route: v2
+//                                 }) === JSON.stringify(obj.clickEvent)
+//                                 select = selected || select
+//                                 return `<option value='${JSON.stringify({
+//                                     src: key,
+//                                     route: v2
+//                                 })}' ${(selected) ? `selected` : ``}>${value2.title}</option>`
+//                             }))
+//                         }))
+//                         }
+// <option value="undefined"  ${(!select) ? `selected` : ``}>未定義</option>
+// </select>
+// ${gvc.bindView(() => {
+//                             const id = glitter.getUUID()
+//                             setTimeout(()=>{
+//                                 gvc.notifyDataChange(id)
+//                             },200)
+//                             return {
+//                                 bind: id,
+//                                 view: () => {
+//                                     try {
+//                                         if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
+//                                             return ``
+//                                         }
+//                                         return glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)][obj.clickEvent.route].fun(gvc, widget, obj).editor()
+//                                     } catch (e) {
+//                                         return ``
+//                                     }
+//                                 },
+//                                 divCreate: {},
+//                                 onCreate: () => {
+//                                     glitter.share.clickEvent = glitter.share.clickEvent ?? {}
+//                                     try {
+//                                         if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {-
+//                                             glitter.addMtScript([
+//                                                 {
+//                                                     src: glitter.htmlGenerate.resourceHook(obj.clickEvent.src),
+//                                                     type: 'module'
+//                                                 }
+//                                             ], () => {
+//                                                 setTimeout(()=>{
+//                                                     gvc.notifyDataChange(id)
+//                                                 },200)
+//
+//                                             }, () => {
+//                                                 console.log(`loadingError:` + obj.clickEvent.src)
+//                                             })
+//                                         }
+//                                     } catch (e) {
+//                                     }
+//
+//                                 }
+//                             }
+//                         })}
+// `
+//                     },
+//                     divCreate: {}
+//                 }
+//             })
+//         }
+// </div> `
     }
 }

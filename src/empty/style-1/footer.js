@@ -120,18 +120,17 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                         widget.data.outro.title = text;
                                         widget.refreshComponent();
                                     },
-                                })}` +
-                                    `
+                                })}` + `
                                 ${glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: '左大標敘文',
-                                        default: widget.data.outro.desc,
-                                        placeHolder: '請輸入左大標下方的描述文',
-                                        callback: (text) => {
-                                            widget.data.outro.desc = text;
-                                            widget.refreshComponent();
-                                        },
-                                    })}
+                                    gvc: gvc,
+                                    title: '左大標敘文',
+                                    default: widget.data.outro.desc,
+                                    placeHolder: '請輸入左大標下方的描述文',
+                                    callback: (text) => {
+                                        widget.data.outro.desc = text;
+                                        widget.refreshComponent();
+                                    },
+                                })}
                                 ` +
                                     Editor.arrayItem({
                                         originalArray: widget.data.outro,

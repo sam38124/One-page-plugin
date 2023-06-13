@@ -32,7 +32,6 @@ TriggerEvent.create(import.meta.url, {
                                 text: "帳號或密碼輸入錯誤!"
                             })
                         } else {
-
                             gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {}
                             gvc.glitter.share.public_api.GlobalUser = GlobalUser
                             GlobalUser.token = r.response.token

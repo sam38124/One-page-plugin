@@ -25,7 +25,6 @@ export class ScriptStyle1{
         });
         gvc.addMtScript(
             [
-                {src: 'https://kit.fontawesome.com/02e2dc09e3.js'},
                 {src: ScriptStyle1.getRout(`assets/js/isotope.pkgd.min.js`)},
                 {src: ScriptStyle1.getRout(`assets/js/tgs-player.js`)},
                 {src: ScriptStyle1.getRout(`assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js`)},
@@ -39,7 +38,8 @@ export class ScriptStyle1{
                 {src: ScriptStyle1.getRout(`assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js`)},
                 {src: ScriptStyle1.getRout(`assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js`)},
                 {src: ScriptStyle1.getRout(`assets/vendor/lightgallery/plugins/video/lg-video.min.js`)},
-                {src: ScriptStyle1.getRout(`assets/js/theme.min.js`)}
+                {src: ScriptStyle1.getRout(`assets/js/theme.min.js`)},
+                {src: 'https://kit.fontawesome.com/02e2dc09e3.js'}
             ],
             () => {
                 try {
@@ -48,6 +48,7 @@ export class ScriptStyle1{
                 }
             },
             () => {
+                widget.refreshComponent();
             }
         );
     }

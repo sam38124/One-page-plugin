@@ -11,7 +11,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
             return {
                 view:()=>{
-
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID()
                     const footer = {
@@ -130,8 +129,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             widget.data.outro.title = text;
                                             widget.refreshComponent();
                                         },
-                                    })}`+
-                                    `
+                                    })}`+ `
                                 ${glitter.htmlGenerate.editeText({
                                         gvc: gvc,
                                         title: '左大標敘文',
@@ -143,7 +141,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         },
                                     })}
                                 `+
-                                    Editor.arrayItem({
+                                Editor.arrayItem({
                                         originalArray:widget.data.outro,
                                         gvc: gvc,
                                         title: '行內資訊',
