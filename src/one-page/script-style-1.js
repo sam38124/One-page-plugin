@@ -11,6 +11,7 @@ export class ScriptStyle1 {
         ScriptStyle1.hi = true;
         window.root = document.getElementsByTagName('html')[0];
         gvc.addStyleLink([
+            ScriptStyle1.getRout('../fontawsome/css/all.css'),
             ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.min.css'),
             ScriptStyle1.getRout('assets/vendor/swiper/swiper-bundle.min.css'),
             'https://unpkg.com/aos@next/dist/aos.css',
@@ -35,8 +36,7 @@ export class ScriptStyle1 {
             { src: ScriptStyle1.getRout(`assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js`) },
             { src: ScriptStyle1.getRout(`assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js`) },
             { src: ScriptStyle1.getRout(`assets/vendor/lightgallery/plugins/video/lg-video.min.js`) },
-            { src: ScriptStyle1.getRout(`assets/js/theme.min.js`) },
-            { src: 'https://kit.fontawesome.com/02e2dc09e3.js' }
+            { src: ScriptStyle1.getRout(`assets/js/theme.min.js`) }
         ], () => {
             try {
                 widget.refreshComponent();
