@@ -20,12 +20,11 @@ export class TriggerEvent {
         const url = new URL(relative, original);
         url.searchParams.set("original", original);
         return (gvc, widget, obj, subData, element) => {
-            var _a, _b, _c;
             const editViewId = glitter.getUUID();
-            glitter.share.componentData = (_a = glitter.share.componentData) !== null && _a !== void 0 ? _a : {};
+            glitter.share.componentData = glitter.share.componentData ?? {};
             let val = glitter.share.componentData[url.href];
-            glitter.share.componentCallback = (_b = glitter.share.componentCallback) !== null && _b !== void 0 ? _b : {};
-            glitter.share.componentCallback[url.href] = (_c = glitter.share.componentCallback[url.href]) !== null && _c !== void 0 ? _c : [];
+            glitter.share.componentCallback = glitter.share.componentCallback ?? {};
+            glitter.share.componentCallback[url.href] = glitter.share.componentCallback[url.href] ?? [];
             glitter.share.componentCallback[url.href].push((dd) => {
                 glitter.share.componentData[url.href] = dd;
                 gvc.notifyDataChange(editViewId);
@@ -109,9 +108,8 @@ export class TriggerEvent {
         return val;
     }
     static create(url, event) {
-        var _a;
         const glitter = window.glitter;
-        glitter.share.clickEvent = (_a = glitter.share.clickEvent) !== null && _a !== void 0 ? _a : {};
+        glitter.share.clickEvent = glitter.share.clickEvent ?? {};
         glitter.share.clickEvent[url] = event;
     }
     static trigger(oj) {
@@ -121,7 +119,6 @@ export class TriggerEvent {
         async function run(event) {
             console.log(`eventRun:${JSON.stringify(event)}`);
             return new Promise(async (resolve, reject) => {
-                var _a;
                 async function pass() {
                     try {
                         setTimeout(() => {
@@ -134,7 +131,7 @@ export class TriggerEvent {
                         resolve(false);
                     }
                 }
-                oj.gvc.glitter.share.clickEvent = (_a = oj.gvc.glitter.share.clickEvent) !== null && _a !== void 0 ? _a : {};
+                oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {};
                 if (!oj.gvc.glitter.share.clickEvent[event.clickEvent.src]) {
                     await new Promise((resolve, reject) => {
                         oj.gvc.glitter.addMtScript([
@@ -185,13 +182,11 @@ export class TriggerEvent {
         });
     }
     static editer(gvc, widget, obj, option = { hover: false, option: [] }) {
-        var _a;
         return `
 <div class="w-100">
 <button class="btn btn-warning border-white mt-2 w-100 text-dark" onclick="${gvc.event(() => {
-            var _a;
             const tag = gvc.glitter.getUUID();
-            gvc.glitter.share.clickEvent = (_a = gvc.glitter.share.clickEvent) !== null && _a !== void 0 ? _a : {};
+            gvc.glitter.share.clickEvent = gvc.glitter.share.clickEvent ?? {};
             const glitter = gvc.glitter;
             let arrayEvent = [];
             if (obj.clickEvent !== undefined && Array.isArray(obj.clickEvent)) {
@@ -229,26 +224,23 @@ ${Editor.arrayItem({
                                                 return {
                                                     bind: selectID,
                                                     view: () => {
-                                                        var _a;
                                                         var select = false;
                                                         return `<select class="form-select m-0 mt-2" onchange="${gvc.event((e) => {
-                                                            var _a;
                                                             if (e.value === 'undefined') {
                                                                 obj.clickEvent = undefined;
                                                             }
                                                             else {
                                                                 obj.clickEvent = JSON.parse(e.value);
-                                                                obj.clickEvent.src = (_a = TriggerEvent.getUrlParameter(obj.clickEvent.src, 'resource')) !== null && _a !== void 0 ? _a : obj.clickEvent.src;
+                                                                obj.clickEvent.src = TriggerEvent.getUrlParameter(obj.clickEvent.src, 'resource') ?? obj.clickEvent.src;
                                                             }
                                                             gvc.notifyDataChange(selectID);
                                                         })}">
                         
-                        ${gvc.map(Object.keys(((_a = glitter.share) === null || _a === void 0 ? void 0 : _a.clickEvent) || {}).filter((dd) => {
+                        ${gvc.map(Object.keys(glitter.share?.clickEvent || {}).filter((dd) => {
                                                             return TriggerEvent.getUrlParameter(dd, "resource") !== undefined;
                                                         }).map((key) => {
                                                             const value = glitter.share.clickEvent[key];
                                                             return gvc.map(Object.keys(value).map((v2) => {
-                                                                var _a;
                                                                 if (option.option.length > 0) {
                                                                     if (option.option.indexOf(v2) === -1) {
                                                                         return ``;
@@ -256,7 +248,7 @@ ${Editor.arrayItem({
                                                                 }
                                                                 const value2 = value[v2];
                                                                 const selected = JSON.stringify({
-                                                                    src: (_a = TriggerEvent.getUrlParameter(key, 'resource')) !== null && _a !== void 0 ? _a : obj.clickEvent.src,
+                                                                    src: TriggerEvent.getUrlParameter(key, 'resource') ?? obj.clickEvent.src,
                                                                     route: v2
                                                                 }) === JSON.stringify(obj.clickEvent);
                                                                 select = selected || select;
@@ -288,8 +280,7 @@ ${gvc.bindView(() => {
                                                                 },
                                                                 divCreate: {},
                                                                 onCreate: () => {
-                                                                    var _a;
-                                                                    glitter.share.clickEvent = (_a = glitter.share.clickEvent) !== null && _a !== void 0 ? _a : {};
+                                                                    glitter.share.clickEvent = glitter.share.clickEvent ?? {};
                                                                     try {
                                                                         if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
                                                                             -glitter.addMtScript([
@@ -350,7 +341,7 @@ ${gvc.bindView(() => {
                     };
                 });
             }, tag);
-        })}">${(_a = option.title) !== null && _a !== void 0 ? _a : "觸發事件"}</button>
+        })}">${option.title ?? "觸發事件"}</button>
 </div>
 
 `;

@@ -4,378 +4,41 @@ import { GVCType, PageManager, DefaultSetting } from "./module/PageManager.js";
 import { AppearType } from "./module/Enum.js";
 import { HtmlGenerate } from "./module/Html_generate.js";
 export class Glitter {
-    constructor(window) {
-        var _a;
-        this.gvcType = GVCType;
-        this.deviceTypeEnum = AppearType;
-        this.animation = Animation;
-        this.defaultSetting = new DefaultSetting({
-            pageBgColor: "white",
-            pageAnimation: this.animation.none,
-            dialogAnimation: this.animation.none,
-            pageLoading: () => {
-            },
-            pageLoadingFinish: () => {
-            }
-        });
-        this.htmlGenerate = HtmlGenerate;
-        this.webUrl = '';
-        this.goBackStack = [];
-        this.parameter = { styleList: [], styleLinks: [] };
-        this.callBackId = 0;
-        this.callBackList = new Map();
-        this.debugMode = false;
-        this.publicBeans = {};
-        this.share = {};
-        this.deviceType = this.deviceTypeEnum.Web;
-        this.modelJsList = [];
-        this.pageIndex = 0;
-        this.getBoundingClientRect = {};
-        this.changePageCallback = [];
-        this.pageConfig = [];
-        this.waitChangePage = false;
-        this.elementCallback = {};
-        this.hidePageView = PageManager.hidePageView;
-        this.showPageView = PageManager.showPageView;
-        this.setHome = PageManager.setHome;
-        this.setLoadingView = PageManager.setLoadingView;
-        this.changePageListener = PageManager.changePageListener;
-        this.showLoadingView = PageManager.showLoadingView;
-        this.changeWait = PageManager.changeWait;
-        this.setAnimation = PageManager.setAnimation;
-        this.changePage = PageManager.changePage;
-        this.removePage = PageManager.removePage;
-        this.openDiaLog = PageManager.openDiaLog;
-        this.innerDialog = PageManager.innerDialog;
-        this.closeDiaLog = PageManager.closeDiaLog;
-        this.hideLoadingView = PageManager.hideLoadingView;
-        this.goBack = PageManager.goBack;
-        this.goMenu = PageManager.goMenu;
-        this.addChangePageListener = PageManager.addChangePageListener;
-        this.ut = {
-            glitter: this,
-            clock() {
-                return {
-                    start: new Date(),
-                    stop: function () {
-                        return ((new Date()).getTime() - (this.start).getTime());
-                    },
-                    zeroing: function () {
-                        this.start = new Date();
-                    }
-                };
-            },
-            dateFormat(date, fmt) {
-                const o = {
-                    "M+": date.getMonth() + 1,
-                    "d+": date.getDate(),
-                    "h+": date.getHours(),
-                    "m+": date.getMinutes(),
-                    "s+": date.getSeconds(),
-                    "q+": Math.floor((date.getMonth() + 3) / 3),
-                    "S": date.getMilliseconds()
-                };
-                if (/(y+)/.test(fmt))
-                    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
-                for (var k in o)
-                    if (new RegExp("(" + k + ")").test(fmt))
-                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-                return fmt;
-            },
-            copyText(text) {
-                if (!document.getElementById("imageSelect")) {
-                    this.glitter.$('body').append(`<input type="text"   style="display: none" id="copyText" multiple>`);
-                }
-                this.glitter.$('#copyText').val(text);
-                this.glitter.$('#copyText').show();
-                this.glitter.$('#copyText').select();
-                document.execCommand("Copy");
-                this.glitter.$('#copyText').hide();
-            },
-            toJson(data, defaultData) {
-                const glitter = this.glitter;
-                if (data === undefined) {
-                    return defaultData;
-                }
-                else if (typeof data !== 'string') {
-                    return data;
-                }
-                try {
-                    var dd = JSON.parse(data.replace(/\n/g, "\\n").replace(/\t/g, "\\t"));
-                    if ((typeof dd) !== (typeof defaultData)) {
-                        return defaultData;
-                    }
-                    else {
-                        return dd !== null && dd !== void 0 ? dd : defaultData;
-                    }
-                }
-                catch (e) {
-                    glitter.deBugMessage(e);
-                    return defaultData;
-                }
-            },
-            downloadFile(href) {
-                const link = document.createElement('a');
-                link.href = href;
-                link.setAttribute('download', 'image.jpg');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            },
-            frSize(sizeMap, def) {
-                var _a, _b, _c, _d, _e;
-                var wi = $('html').width();
-                var sm = ((_a = sizeMap.sm) !== null && _a !== void 0 ? _a : def);
-                var me = ((_b = sizeMap.me) !== null && _b !== void 0 ? _b : sm);
-                var lg = ((_c = sizeMap.lg) !== null && _c !== void 0 ? _c : me);
-                var xl = ((_d = sizeMap.xl) !== null && _d !== void 0 ? _d : lg);
-                var xxl = ((_e = sizeMap.xxl) !== null && _e !== void 0 ? _e : xl);
-                if (wi < 576) {
-                    return def;
-                }
-                else if ((wi >= 576 && wi < 768)) {
-                    return sm;
-                }
-                else if ((wi >= 768 && wi < 992)) {
-                    return me;
-                }
-                else if ((wi >= 992 && wi < 1200)) {
-                    return lg;
-                }
-                else if ((wi >= 1200 && wi < 1400)) {
-                    return xl;
-                }
-                else if ((wi >= 1400)) {
-                    return xxl;
-                }
-            },
-            chooseMediaCallback(option) {
-                const $ = this.glitter.$;
-                $('#imageSelect').remove();
-                if (!document.getElementById("imageSelect")) {
-                    $('body').append(`<input type="file" accept="${option.accept}"  style="display: none" id="imageSelect" ${(option.single) ? `` : `multiple`}>`);
-                    $('#imageSelect').change(function (e) {
-                        let files = $('#imageSelect').get(0).files;
-                        let imageMap = [];
-                        for (let a = 0; a < files.length; a++) {
-                            let reader = new FileReader();
-                            reader.readAsDataURL(files[a]);
-                            reader.onload = function getFileInfo(evt) {
-                                imageMap = imageMap.concat({
-                                    file: files[a],
-                                    data: evt.target.result,
-                                    type: option.accept,
-                                    name: files[a].name,
-                                    extension: files[a].name.split('.').pop()
-                                });
-                                if (imageMap.length === files.length) {
-                                    option.callback(imageMap);
-                                }
-                            };
-                        }
-                    });
-                }
-                $('#imageSelect').val(undefined);
-                $('#imageSelect').click();
-            }
-        };
-        this.utText = {
-            filterNumber(number) {
-                return number.replace(/[^0-9]/ig, "");
-            },
-            removeTag(str) {
-                try {
-                    return str.replace(/<[^>]+>/g, "");
-                }
-                catch (e) {
-                    return str;
-                }
-            },
-            addTextChangeListener(e, callback) {
-                e.bind('input porpertychange', function () {
-                    callback(e);
-                });
-            },
-            urlify(text, open) {
-                return text.replace(/(https?:\/\/[^\s]+)/g, function (url) {
-                    if (open) {
-                        return open(url);
-                    }
-                    else {
-                        return `<a style="color: dodgerblue;cursor:pointer;border-bottom: 1px solid dodgerblue;"  onclick="glitter.openNewTab('${url}')">${url}</a>`;
-                    }
-                }).replace(/(http?:\/\/[^\s]+)/g, function (url) {
-                    if (open) {
-                        return open(url);
-                    }
-                    else {
-                        return `<a style="color: dodgerblue;cursor:pointer;border-bottom: 1px solid dodgerblue;"  onclick="glitter.openNewTab('${url}')">${url}</a>`;
-                    }
-                });
-            },
-            isEmpty(data) {
-                return ((data === '') || (data === undefined));
-            },
-            emptyToDefault(data, defaultData) {
-                if (((data === '') || (data === undefined))) {
-                    return defaultData;
-                }
-                else {
-                    return data;
-                }
-            },
-        };
-        this.utRandom = {
-            getRandom(items) {
-                return items[Math.floor(Math.random() * items.length)];
-            },
-            getRandomInt(min, max) {
-                return (min + Math.floor(Math.random() * (max - min)));
-            }
-        };
-        this.scroll = {
-            glitter: this,
-            addScrollListener(e, obj) {
-                const glitter = this.glitter;
-                e.scroll(function () {
-                    var map = {
-                        scrollTop: glitter.$(e)[0].scrollTop,
-                        scrollHeight: glitter.$(e)[0].scrollHeight,
-                        windowHeight: glitter.$(e).height()
-                    };
-                    if (map.scrollTop + map.windowHeight >= map.scrollHeight) {
-                        if (obj.scrollBtn !== undefined) {
-                            obj.scrollBtn();
-                        }
-                    }
-                    if (map.scrollTop === 0) {
-                        if (obj.scrollTp !== undefined) {
-                            obj.scrollTp();
-                        }
-                    }
-                    if (obj.position !== undefined) {
-                        obj.position(map.scrollTop);
-                    }
-                });
-            },
-            isScrollBtn(e) {
-                var map = {
-                    scrollTop: e[0].scrollTop,
-                    scrollHeight: e[0].scrollHeight,
-                    windowHeight: e.height()
-                };
-                return map.scrollTop + map.windowHeight >= map.scrollHeight - 1;
-            },
-            isScrollTp(e) {
-                var map = {
-                    scrollTop: e[0].scrollTop,
-                    scrollHeight: e[0].scrollHeight,
-                    windowHeight: e.height()
-                };
-                return map.scrollTop === 0;
-            },
-            scrollToBtn(e) {
-                var map = {
-                    scrollTop: e[0].scrollTop,
-                    scrollHeight: e[0].scrollHeight,
-                    windowHeight: e.height()
-                };
-                e.scrollTop(map.scrollHeight - map.windowHeight);
-            },
-            scrollToFixed(scrollContainer, rowTop, y) {
-                var toggle = false;
-                scrollContainer.scroll(function () {
-                    function open() {
-                        rowTop.addClass('position-fixed');
-                        rowTop.css('width', rowTop.parent().width());
-                        rowTop.parent().css('padding-top', `${rowTop.height()}px`);
-                        rowTop.css('top', y + 'px');
-                    }
-                    function close() {
-                        rowTop.removeClass('position-fixed');
-                        rowTop.css('width', '100%');
-                        rowTop.parent().css('padding-top', '0px');
-                    }
-                    var cut = (rowTop.parent().offset().top - scrollContainer.scrollTop());
-                    if (cut < y && (!toggle)) {
-                        open();
-                        toggle = true;
-                    }
-                    else if (cut > y && (toggle)) {
-                        close();
-                        toggle = false;
-                    }
-                });
-            }
-        };
-        this.windowUtil = {
-            es: undefined,
-            glitter: this,
-            get e() {
-                return this.es;
-            },
-            get nowWindowHeight() {
-                return this.e.innerHeight;
-            },
-            windowHeightChangeListener: [],
-            addWindowHeightChangeListener(callback) {
-                this.windowHeightChangeListener.push(callback);
-            },
-            getBrowserFrom() {
-                var sUserAgent = navigator.userAgent.toLowerCase();
-                var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
-                var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
-                var bIsMidp = sUserAgent.match(/midp/i) == "midp";
-                var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
-                var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
-                var bIsAndroid = sUserAgent.match(/android/i) == "android";
-                var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
-                var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
-                if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-                    if (bIsIpad || bIsIphoneOs) {
-                        return "ios";
-                    }
-                    else if (bIsAndroid) {
-                        return "android";
-                    }
-                    else {
-                        return "phone";
-                    }
-                }
-                else {
-                    return "pc";
-                }
-            },
-            getBrowserDeviceType() {
-                const glitter = this;
-                const a = navigator.userAgent;
-                const isAndroid = a.indexOf('Android') > -1 || a.indexOf('Adr') > -1;
-                const isiOS = !!a.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-                if (isAndroid) {
-                    return "android";
-                }
-                if (isiOS) {
-                    if (glitter.getBrowserFrom() === "pc") {
-                        return "mac";
-                    }
-                    else {
-                        return "iphone";
-                    }
-                }
-                return "desktop";
-            },
-            reload() {
-                this.e.reload();
-            }
-        };
-        this.$ = window.$;
-        this.location = window.location;
-        this.windowUtil.es = window;
-        this.window = window;
-        this.document = window.document;
-        Glitter.glitter = this;
-        Glitter.glitter.share.htmlExtension = (_a = Glitter.glitter.share.htmlExtension) !== null && _a !== void 0 ? _a : {};
-    }
+    static glitter;
+    gvcType = GVCType;
+    deviceTypeEnum = AppearType;
+    animation = Animation;
+    defaultSetting = new DefaultSetting({
+        pageBgColor: "white",
+        pageAnimation: this.animation.none,
+        dialogAnimation: this.animation.none,
+        pageLoading: () => {
+        },
+        pageLoadingFinish: () => {
+        }
+    });
+    htmlGenerate = HtmlGenerate;
+    window;
+    $;
+    document;
+    webUrl = '';
+    goBackStack = [];
+    parameter = { styleList: [], styleLinks: [] };
+    callBackId = 0;
+    callBackList = new Map();
+    location;
+    debugMode = false;
+    publicBeans = {};
+    share = {};
+    deviceType = this.deviceTypeEnum.Web;
+    modelJsList = [];
+    pageIndex = 0;
+    getBoundingClientRect = {};
+    changePageCallback = [];
+    pageConfig = [];
+    nowPageConfig;
+    waitChangePage = false;
+    elementCallback = {};
     get baseUrl() {
         var getUrl = window.location;
         return getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
@@ -400,6 +63,23 @@ export class Glitter {
         }
         return uuid;
     }
+    hidePageView = PageManager.hidePageView;
+    showPageView = PageManager.showPageView;
+    setHome = PageManager.setHome;
+    setLoadingView = PageManager.setLoadingView;
+    changePageListener = PageManager.changePageListener;
+    showLoadingView = PageManager.showLoadingView;
+    changeWait = PageManager.changeWait;
+    setAnimation = PageManager.setAnimation;
+    changePage = PageManager.changePage;
+    removePage = PageManager.removePage;
+    openDiaLog = PageManager.openDiaLog;
+    innerDialog = PageManager.innerDialog;
+    closeDiaLog = PageManager.closeDiaLog;
+    hideLoadingView = PageManager.hideLoadingView;
+    goBack = PageManager.goBack;
+    goMenu = PageManager.goMenu;
+    addChangePageListener = PageManager.addChangePageListener;
     parseCookie() {
         var cookieObj = {};
         var cookieAry = this.document.cookie.split(';');
@@ -441,7 +121,6 @@ export class Glitter {
     }
     ;
     runJsInterFace(functionName, data, callBack, option = {}) {
-        var _a;
         const glitter = this;
         let id = this.callBackId += 1;
         this.callBackList.set(id, callBack);
@@ -450,7 +129,7 @@ export class Glitter {
             callBackId: id,
             data: data
         };
-        switch ((_a = option.defineType) !== null && _a !== void 0 ? _a : glitter.deviceType) {
+        switch (option.defineType ?? glitter.deviceType) {
             case glitter.deviceTypeEnum.Web: {
                 if (option.webFunction) {
                     let data = option.webFunction(map, callBack);
@@ -605,24 +284,22 @@ export class Glitter {
     }
     ;
     addMtScript(urlArray, success, error, option) {
-        var _a;
-        Glitter.glitter.share.scriptMemory = (_a = Glitter.glitter.share.scriptMemory) !== null && _a !== void 0 ? _a : [];
+        Glitter.glitter.share.scriptMemory = Glitter.glitter.share.scriptMemory ?? [];
         const glitter = this;
         let index = 0;
         function addScript() {
-            var _a, _b, _c, _d, _e, _f;
             if (index === urlArray.length) {
                 success();
                 return;
             }
             var scritem = urlArray[index];
-            if (Glitter.glitter.share.scriptMemory.indexOf(((_a = scritem.src) !== null && _a !== void 0 ? _a : scritem)) !== -1) {
+            if (Glitter.glitter.share.scriptMemory.indexOf((scritem.src ?? scritem)) !== -1) {
                 index++;
                 addScript();
                 return;
             }
             else {
-                Glitter.glitter.share.scriptMemory.push(((_b = scritem.src) !== null && _b !== void 0 ? _b : scritem));
+                Glitter.glitter.share.scriptMemory.push((scritem.src ?? scritem));
             }
             let script = document.createElement('script');
             try {
@@ -654,14 +331,14 @@ export class Glitter {
                 }
                 else if (scritem.type !== undefined) {
                     script.setAttribute('type', scritem.type);
-                    script.setAttribute('src', (_c = scritem.src) !== null && _c !== void 0 ? _c : undefined);
+                    script.setAttribute('src', scritem.src ?? undefined);
                     script.setAttribute('crossorigin', true);
-                    script.setAttribute('id', (_d = scritem.id) !== null && _d !== void 0 ? _d : undefined);
+                    script.setAttribute('id', scritem.id ?? undefined);
                     document.getElementsByTagName("head")[0].appendChild(script);
                 }
                 else {
-                    script.setAttribute('src', (_e = scritem.src) !== null && _e !== void 0 ? _e : scritem);
-                    script.setAttribute('id', (_f = scritem.id) !== null && _f !== void 0 ? _f : undefined);
+                    script.setAttribute('src', scritem.src ?? scritem);
+                    script.setAttribute('id', scritem.id ?? undefined);
                     script.setAttribute('crossorigin', true);
                     document.getElementsByTagName("head")[0].appendChild(script);
                 }
@@ -789,6 +466,261 @@ export class Glitter {
             });
         }
     }
+    ut = {
+        glitter: this,
+        clock() {
+            return {
+                start: new Date(),
+                stop: function () {
+                    return ((new Date()).getTime() - (this.start).getTime());
+                },
+                zeroing: function () {
+                    this.start = new Date();
+                }
+            };
+        },
+        dateFormat(date, fmt) {
+            const o = {
+                "M+": date.getMonth() + 1,
+                "d+": date.getDate(),
+                "h+": date.getHours(),
+                "m+": date.getMinutes(),
+                "s+": date.getSeconds(),
+                "q+": Math.floor((date.getMonth() + 3) / 3),
+                "S": date.getMilliseconds()
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        },
+        copyText(text) {
+            if (!document.getElementById("imageSelect")) {
+                this.glitter.$('body').append(`<input type="text"   style="display: none" id="copyText" multiple>`);
+            }
+            this.glitter.$('#copyText').val(text);
+            this.glitter.$('#copyText').show();
+            this.glitter.$('#copyText').select();
+            document.execCommand("Copy");
+            this.glitter.$('#copyText').hide();
+        },
+        toJson(data, defaultData) {
+            const glitter = this.glitter;
+            if (data === undefined) {
+                return defaultData;
+            }
+            else if (typeof data !== 'string') {
+                return data;
+            }
+            try {
+                var dd = JSON.parse(data.replace(/\n/g, "\\n").replace(/\t/g, "\\t"));
+                if ((typeof dd) !== (typeof defaultData)) {
+                    return defaultData;
+                }
+                else {
+                    return dd ?? defaultData;
+                }
+            }
+            catch (e) {
+                glitter.deBugMessage(e);
+                return defaultData;
+            }
+        },
+        downloadFile(href) {
+            const link = document.createElement('a');
+            link.href = href;
+            link.setAttribute('download', 'image.jpg');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        },
+        frSize(sizeMap, def) {
+            var wi = $('html').width();
+            var sm = (sizeMap.sm ?? def);
+            var me = (sizeMap.me ?? sm);
+            var lg = (sizeMap.lg ?? me);
+            var xl = (sizeMap.xl ?? lg);
+            var xxl = (sizeMap.xxl ?? xl);
+            if (wi < 576) {
+                return def;
+            }
+            else if ((wi >= 576 && wi < 768)) {
+                return sm;
+            }
+            else if ((wi >= 768 && wi < 992)) {
+                return me;
+            }
+            else if ((wi >= 992 && wi < 1200)) {
+                return lg;
+            }
+            else if ((wi >= 1200 && wi < 1400)) {
+                return xl;
+            }
+            else if ((wi >= 1400)) {
+                return xxl;
+            }
+        },
+        chooseMediaCallback(option) {
+            const $ = this.glitter.$;
+            $('#imageSelect').remove();
+            if (!document.getElementById("imageSelect")) {
+                $('body').append(`<input type="file" accept="${option.accept}"  style="display: none" id="imageSelect" ${(option.single) ? `` : `multiple`}>`);
+                $('#imageSelect').change(function (e) {
+                    let files = $('#imageSelect').get(0).files;
+                    let imageMap = [];
+                    for (let a = 0; a < files.length; a++) {
+                        let reader = new FileReader();
+                        reader.readAsDataURL(files[a]);
+                        reader.onload = function getFileInfo(evt) {
+                            imageMap = imageMap.concat({
+                                file: files[a],
+                                data: evt.target.result,
+                                type: option.accept,
+                                name: files[a].name,
+                                extension: files[a].name.split('.').pop()
+                            });
+                            if (imageMap.length === files.length) {
+                                option.callback(imageMap);
+                            }
+                        };
+                    }
+                });
+            }
+            $('#imageSelect').val(undefined);
+            $('#imageSelect').click();
+        }
+    };
+    utText = {
+        filterNumber(number) {
+            return number.replace(/[^0-9]/ig, "");
+        },
+        removeTag(str) {
+            try {
+                return str.replace(/<[^>]+>/g, "");
+            }
+            catch (e) {
+                return str;
+            }
+        },
+        addTextChangeListener(e, callback) {
+            e.bind('input porpertychange', function () {
+                callback(e);
+            });
+        },
+        urlify(text, open) {
+            return text.replace(/(https?:\/\/[^\s]+)/g, function (url) {
+                if (open) {
+                    return open(url);
+                }
+                else {
+                    return `<a style="color: dodgerblue;cursor:pointer;border-bottom: 1px solid dodgerblue;"  onclick="glitter.openNewTab('${url}')">${url}</a>`;
+                }
+            }).replace(/(http?:\/\/[^\s]+)/g, function (url) {
+                if (open) {
+                    return open(url);
+                }
+                else {
+                    return `<a style="color: dodgerblue;cursor:pointer;border-bottom: 1px solid dodgerblue;"  onclick="glitter.openNewTab('${url}')">${url}</a>`;
+                }
+            });
+        },
+        isEmpty(data) {
+            return ((data === '') || (data === undefined));
+        },
+        emptyToDefault(data, defaultData) {
+            if (((data === '') || (data === undefined))) {
+                return defaultData;
+            }
+            else {
+                return data;
+            }
+        },
+    };
+    utRandom = {
+        getRandom(items) {
+            return items[Math.floor(Math.random() * items.length)];
+        },
+        getRandomInt(min, max) {
+            return (min + Math.floor(Math.random() * (max - min)));
+        }
+    };
+    scroll = {
+        glitter: this,
+        addScrollListener(e, obj) {
+            const glitter = this.glitter;
+            e.scroll(function () {
+                var map = {
+                    scrollTop: glitter.$(e)[0].scrollTop,
+                    scrollHeight: glitter.$(e)[0].scrollHeight,
+                    windowHeight: glitter.$(e).height()
+                };
+                if (map.scrollTop + map.windowHeight >= map.scrollHeight) {
+                    if (obj.scrollBtn !== undefined) {
+                        obj.scrollBtn();
+                    }
+                }
+                if (map.scrollTop === 0) {
+                    if (obj.scrollTp !== undefined) {
+                        obj.scrollTp();
+                    }
+                }
+                if (obj.position !== undefined) {
+                    obj.position(map.scrollTop);
+                }
+            });
+        },
+        isScrollBtn(e) {
+            var map = {
+                scrollTop: e[0].scrollTop,
+                scrollHeight: e[0].scrollHeight,
+                windowHeight: e.height()
+            };
+            return map.scrollTop + map.windowHeight >= map.scrollHeight - 1;
+        },
+        isScrollTp(e) {
+            var map = {
+                scrollTop: e[0].scrollTop,
+                scrollHeight: e[0].scrollHeight,
+                windowHeight: e.height()
+            };
+            return map.scrollTop === 0;
+        },
+        scrollToBtn(e) {
+            var map = {
+                scrollTop: e[0].scrollTop,
+                scrollHeight: e[0].scrollHeight,
+                windowHeight: e.height()
+            };
+            e.scrollTop(map.scrollHeight - map.windowHeight);
+        },
+        scrollToFixed(scrollContainer, rowTop, y) {
+            var toggle = false;
+            scrollContainer.scroll(function () {
+                function open() {
+                    rowTop.addClass('position-fixed');
+                    rowTop.css('width', rowTop.parent().width());
+                    rowTop.parent().css('padding-top', `${rowTop.height()}px`);
+                    rowTop.css('top', y + 'px');
+                }
+                function close() {
+                    rowTop.removeClass('position-fixed');
+                    rowTop.css('width', '100%');
+                    rowTop.parent().css('padding-top', '0px');
+                }
+                var cut = (rowTop.parent().offset().top - scrollContainer.scrollTop());
+                if (cut < y && (!toggle)) {
+                    open();
+                    toggle = true;
+                }
+                else if (cut > y && (toggle)) {
+                    close();
+                    toggle = false;
+                }
+            });
+        }
+    };
     setCookie(key, value) {
         let oneYear = 2592000 * 12;
         this.document.cookie = `${key}=${value}; max-age=${oneYear}; path=/`;
@@ -801,5 +733,74 @@ export class Glitter {
             let list = this.document.cookie.split('; ');
             list.map((l) => (this.document.cookie = `${l.split('=')[0]}=''; max-age=-99999999; path=/`));
         }
+    }
+    windowUtil = {
+        es: undefined,
+        glitter: this,
+        get e() {
+            return this.es;
+        },
+        get nowWindowHeight() {
+            return this.e.innerHeight;
+        },
+        windowHeightChangeListener: [],
+        addWindowHeightChangeListener(callback) {
+            this.windowHeightChangeListener.push(callback);
+        },
+        getBrowserFrom() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+            var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+            var bIsAndroid = sUserAgent.match(/android/i) == "android";
+            var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+            var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+                if (bIsIpad || bIsIphoneOs) {
+                    return "ios";
+                }
+                else if (bIsAndroid) {
+                    return "android";
+                }
+                else {
+                    return "phone";
+                }
+            }
+            else {
+                return "pc";
+            }
+        },
+        getBrowserDeviceType() {
+            const glitter = this;
+            const a = navigator.userAgent;
+            const isAndroid = a.indexOf('Android') > -1 || a.indexOf('Adr') > -1;
+            const isiOS = !!a.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+            if (isAndroid) {
+                return "android";
+            }
+            if (isiOS) {
+                if (glitter.getBrowserFrom() === "pc") {
+                    return "mac";
+                }
+                else {
+                    return "iphone";
+                }
+            }
+            return "desktop";
+        },
+        reload() {
+            this.e.reload();
+        }
+    };
+    constructor(window) {
+        this.$ = window.$;
+        this.location = window.location;
+        this.windowUtil.es = window;
+        this.window = window;
+        this.document = window.document;
+        Glitter.glitter = this;
+        Glitter.glitter.share.htmlExtension = Glitter.glitter.share.htmlExtension ?? {};
     }
 }

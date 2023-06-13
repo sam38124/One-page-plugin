@@ -35,11 +35,10 @@ export class Plugin {
         const glitter = window.glitter;
         url.searchParams.set("original", original);
         return (gvc, widget, setting, hoverID, subData) => {
-            var _a, _b, _c;
-            glitter.share.componentData = (_a = glitter.share.componentData) !== null && _a !== void 0 ? _a : {};
+            glitter.share.componentData = glitter.share.componentData ?? {};
             let val = glitter.share.componentData[url.href];
-            glitter.share.componentCallback = (_b = glitter.share.componentCallback) !== null && _b !== void 0 ? _b : {};
-            glitter.share.componentCallback[url.href] = (_c = glitter.share.componentCallback[url.href]) !== null && _c !== void 0 ? _c : [];
+            glitter.share.componentCallback = glitter.share.componentCallback ?? {};
+            glitter.share.componentCallback[url.href] = glitter.share.componentCallback[url.href] ?? [];
             glitter.share.componentCallback[url.href].push((dd) => {
                 glitter.share.componentData[url.href] = dd;
                 widget.refreshComponent();
@@ -91,18 +90,16 @@ export class Plugin {
         return true;
     }
     static initialConfig(name) {
-        var _a, _b, _c;
         const glitter = window.glitter;
-        glitter.lowCodeAPP = (_a = glitter.lowCodeAPP) !== null && _a !== void 0 ? _a : {};
-        glitter.lowCodeAPP[name] = (_b = glitter.lowCodeAPP[name]) !== null && _b !== void 0 ? _b : {};
-        glitter.lowCodeAPP[name].config = (_c = glitter.lowCodeAPP[name].config) !== null && _c !== void 0 ? _c : {};
+        glitter.lowCodeAPP = glitter.lowCodeAPP ?? {};
+        glitter.lowCodeAPP[name] = glitter.lowCodeAPP[name] ?? {};
+        glitter.lowCodeAPP[name].config = glitter.lowCodeAPP[name].config ?? {};
     }
     static getAppConfig(name, defaultData) {
         const glitter = window.glitter;
         Plugin.initialConfig(name);
         Object.keys(defaultData).map((dd) => {
-            var _a;
-            defaultData[dd] = (_a = glitter.lowCodeAPP[name].config[dd]) !== null && _a !== void 0 ? _a : defaultData[dd];
+            defaultData[dd] = glitter.lowCodeAPP[name].config[dd] ?? defaultData[dd];
         });
         return defaultData;
     }
