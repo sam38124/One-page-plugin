@@ -7,11 +7,6 @@ export class ScriptStyle1{
         return new URL('./' + link, import.meta.url).href;
     }
     public static initialScript(gvc: any, widget: HtmlJson) {
-        if (ScriptStyle1.hi) {
-            return;
-        }
-        ScriptStyle1.hi = true;
-        (window as any).root = document.getElementsByTagName('html')[0];
         gvc.addStyleLink([
             ScriptStyle1.getRout('../fontawsome/css/all.css'),
             ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.min.css'),
@@ -24,6 +19,11 @@ export class ScriptStyle1{
             (window as any).root.classList.remove('light-mode');
             (window as any).root.classList.add(ScriptStyle1.style)
         });
+        if (ScriptStyle1.hi) {
+            return;
+        }
+        ScriptStyle1.hi = true;
+        (window as any).root = document.getElementsByTagName('html')[0];
         gvc.addMtScript(
             [
                 {src: ScriptStyle1.getRout(`assets/js/isotope.pkgd.min.js`)},
