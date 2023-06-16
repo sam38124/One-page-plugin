@@ -318,7 +318,7 @@ background: transparent;background: ${config!.backGroundColor};display: none;pos
             this.hidePageView(pg.id, true);
         }
     };
-    public static innerDialog=(html:(gvc:GVC)=>string,tag:string)=>{
+    public static innerDialog=(html:(gvc:GVC)=>string|Promise<string>,tag:string)=>{
         const glitter = Glitter.glitter;
         glitter.openDiaLog(new URL('../dialog/dialog_inner.js',import.meta.url).href, tag, {
             getView:html

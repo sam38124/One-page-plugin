@@ -7,36 +7,34 @@ export const post = TriggerEvent.createSingleEvent(import.meta.url, (glitter) =>
             const glitter = window.glitter;
             return {
                 editor: () => {
-                    return ``;
+                    return gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: "表單位址",
+                            default: object.formKey,
+                            placeHolder: '請輸入表單索引位址',
+                            callback: (text) => {
+                                object.formKey = text;
+                                widget.refreshComponent();
+                            }
+                        })
+                    ]);
                 },
                 event: () => {
-                    const dialog = new ShareDialog(gvc.glitter);
-                    dialog.dataLoading({ visible: true });
-                    ApiPost.post({
-                        "postData": subData.data
-                    })?.then((r) => {
-                        dialog.dataLoading({ visible: false });
-                        if (!r.result) {
-                            dialog.errorMessage({
-                                text: "發佈失敗!",
-                                callback: () => {
-                                    if (subData.callback) {
-                                        subData.callback(false);
-                                    }
-                                }
-                            });
-                        }
-                        else {
-                            dialog.successMessage({
-                                text: "發佈成功!",
-                                callback: () => {
-                                    if (subData.callback) {
-                                        subData.callback(true);
-                                        location.reload();
-                                    }
-                                }
-                            });
-                        }
+                    return new Promise((resolve, reject) => {
+                        const dialog = new ShareDialog(gvc.glitter);
+                        dialog.dataLoading({ visible: true });
+                        ApiPost.post({
+                            "postData": subData.data
+                        })?.then((r) => {
+                            dialog.dataLoading({ visible: false });
+                            if (!r.result) {
+                                resolve(false);
+                            }
+                            else {
+                                resolve(true);
+                            }
+                        });
                     });
                 }
             };

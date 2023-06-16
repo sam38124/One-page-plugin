@@ -16,7 +16,8 @@ init((gvc, glitter, gBundle) => {
             gBundle.data.class = data;
         },
         get styleList() {
-            gBundle.data.styleList = gBundle.data.styleList ?? [];
+            var _a;
+            gBundle.data.styleList = (_a = gBundle.data.styleList) !== null && _a !== void 0 ? _a : [];
             return gBundle.data.styleList;
         },
         set styleList(data) {
@@ -33,7 +34,8 @@ init((gvc, glitter, gBundle) => {
         <h3 class="modal-title fs-4" >設計樣式</h3>
         <i class="fa-solid fa-xmark text-dark position-absolute " style="font-size:20px;transform: translateY(-50%);right: 20px;top: 50%;cursor: pointer;"
         onclick="${gvc.event(() => {
-                glitter.closeDiaLog(gvc.parameter.pageConfig?.tag);
+                var _a;
+                glitter.closeDiaLog((_a = gvc.parameter.pageConfig) === null || _a === void 0 ? void 0 : _a.tag);
             })}"></i>
 </div>    
 <div class="w-100 p-3">
@@ -79,9 +81,10 @@ ${gvc.bindView(() => {
                         view: () => {
                             return `<div class="alert-success alert ">
 ${design.styleList.map((dd, index) => {
-                                let title = (styleAttr.find((d2) => {
+                                var _a, _b;
+                                let title = (_b = ((_a = styleAttr.find((d2) => {
                                     return dd.tag === d2.tag;
-                                }) ?? {}).title ?? "尚未設定";
+                                })) !== null && _a !== void 0 ? _a : {}).title) !== null && _b !== void 0 ? _b : "尚未設定";
                                 return `
     ${EditorElem.toggleExpand({
                                     gvc: gvc, title: EditorElem.minusTitle(title, gvc.event(() => {
@@ -93,9 +96,10 @@ ${design.styleList.map((dd, index) => {
 </div>
 <div class="btn-group dropdown w-100" style="">
   ${(() => {
-                                            let title = (styleAttr.find((d2) => {
+                                            var _a, _b;
+                                            let title = (_b = ((_a = styleAttr.find((d2) => {
                                                 return dd.tag === d2.tag;
-                                            }) ?? {}).title ?? "";
+                                            })) !== null && _a !== void 0 ? _a : {}).title) !== null && _b !== void 0 ? _b : "";
                                             const id = glitter.getUUID();
                                             const id2 = glitter.getUUID();
                                             return `
@@ -110,10 +114,11 @@ ${gvc.bindView(() => {
                                                                 $('#' + gvc.id(id)).removeClass(`show`);
                                                             }, 300);
                                                         })}" oninput="${gvc.event((e) => {
+                                                            var _a;
                                                             title = e.value;
-                                                            dd.tag = (styleAttr.find((d2) => {
+                                                            dd.tag = ((_a = styleAttr.find((d2) => {
                                                                 return d2.title == e.value;
-                                                            }) ?? {}).tag;
+                                                            })) !== null && _a !== void 0 ? _a : {}).tag;
                                                             gvc.notifyDataChange(styleContainer);
                                                             gvc.notifyDataChange(id);
                                                         })}" value="${title}">`;
@@ -178,8 +183,9 @@ ${EditorElem.plusBtn("添加特徵", gvc.event((e, event) => {
                     };
                 })}
                 <button class="w-100 btn btn-primary" onclick="${gvc.event(() => {
+                    var _a;
                     gBundle.callback();
-                    glitter.closeDiaLog(gvc.parameter.pageConfig?.tag);
+                    glitter.closeDiaLog((_a = gvc.parameter.pageConfig) === null || _a === void 0 ? void 0 : _a.tag);
                 })}">
                 儲存
 </button>

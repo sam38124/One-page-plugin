@@ -97,11 +97,11 @@ TriggerEvent.create(import.meta.url, {
                             } else {
                                 GlobalUser.token = r.response.token
                                 GlobalUser.userInfo = json.userData
-                                setTimeout(()=>{
+                                setTimeout(() => {
                                     TriggerEvent.trigger({
                                         gvc, widget, clickEvent: object.registerEvent, subData, element
                                     })
-                                },1000)
+                                }, 1000)
 
                             }
                         })
@@ -120,7 +120,7 @@ TriggerEvent.create(import.meta.url, {
                 event: () => {
                     gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {}
                     gvc.glitter.share.public_api.GlobalUser = GlobalUser
-                    new Promise((resolve, reject) => {
+                    return new Promise((resolve, reject) => {
                         ApiUser.getUserData(GlobalUser.token)?.then((r) => {
                             if (!r.result) {
                                 GlobalUser.token = ''
@@ -145,7 +145,7 @@ TriggerEvent.create(import.meta.url, {
                 },
                 event: () => {
                     gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {}
-                    new Promise((resolve, reject) => {
+                    return new Promise((resolve, reject) => {
                         ApiUser.updateUserData(GlobalUser.updateUserData)?.then((r) => {
                             const dialog = new ShareDialog(gvc.glitter)
                             if (!r.result) {
@@ -181,7 +181,7 @@ TriggerEvent.create(import.meta.url, {
                     return ``
                 },
                 event: () => {
-                    GlobalUser.token=''
+                    GlobalUser.token = ''
                     location.reload()
                 },
             };
@@ -190,31 +190,31 @@ TriggerEvent.create(import.meta.url, {
     checkLogin: {
         title: '官方事件-用戶-登入判斷',
         fun: (gvc, widget, object, subData, element) => {
-            widget.data.loginUserEvent=widget.data.loginUserEvent??{}
+            widget.data.loginUserEvent = widget.data.loginUserEvent ?? {}
             return {
                 editor: () => {
-                    return  `<div class="border border-white m-2 p-2">
+                    return `<div class="border border-white m-2 p-2">
 ${TriggerEvent.editer(gvc, widget, widget.data.loginUserEvent, {
                         option: [],
-                        title:"已登入用戶的事件",
+                        title: "已登入用戶的事件",
                         hover: false
                     })}
 </div>
 <div class="border border-white m-2 p-2">
 ${TriggerEvent.editer(gvc, widget, widget.data, {
                         option: [],
-                        title:"未登入用戶的事件",
+                        title: "未登入用戶的事件",
                         hover: false
                     })}
 </div>
 `
                 },
                 event: () => {
-                    if(!GlobalUser.token){
+                    if (!GlobalUser.token) {
                         TriggerEvent.trigger({
                             gvc, widget, clickEvent: widget.data,
                         })
-                    }else{
+                    } else {
                         TriggerEvent.trigger({
                             gvc, widget, clickEvent: widget.data.loginUserEvent,
                         });
@@ -222,7 +222,39 @@ ${TriggerEvent.editer(gvc, widget, widget.data, {
                 },
             };
         },
-    }
+    },
+    getUserData: {
+        title: '官方事件-用戶-取得用戶資料',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    return gvc.glitter.htmlGenerate.editeText({
+                        gvc: gvc,
+                        title: "用戶ID",
+                        default: object.code ?? "",
+                        placeHolder: "請輸入程式代碼或者參數",
+                        callback: (text) => {
+                            object.code = text
+                        }
+                    });
+                },
+                event: () => {
+
+                    let userID = ''
+                    try {
+                        userID = eval(object.code)
+                    } catch (e) {
+                        userID = object.code
+                    }
+                    return new Promise((resolve, reject) => {
+                        ApiUser.getPublicUserData(userID)?.then((r) => {
+                            resolve(r.response)
+                        })
+                    })
+                },
+            };
+        },
+    },
 });
 
 

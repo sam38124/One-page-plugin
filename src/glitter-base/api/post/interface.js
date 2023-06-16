@@ -1,6 +1,9 @@
 import { TriggerEvent } from "../../../glitterBundle/plugins/trigger-event.js";
+import { Editor } from "../../../editor.js";
 import { ShareDialog } from "../../../dialog/ShareDialog.js";
+import { ApiPost } from "../../route/post.js";
 import { post } from "./post-data.js";
+import { getData } from "./get-data.js";
 TriggerEvent.create(import.meta.url, {
     post: {
         title: '官方事件-內容-發布內容',
@@ -12,24 +15,28 @@ TriggerEvent.create(import.meta.url, {
                         glitter.htmlGenerate.editeInput({
                             gvc: gvc,
                             title: "表單位址",
-                            default: widget.data.formKey,
+                            default: object.formKey,
                             placeHolder: '請輸入表單索引位址',
                             callback: (text) => {
-                                widget.data.formKey = text;
+                                object.formKey = text;
                                 widget.refreshComponent();
                             }
                         })
                     ]);
                 },
                 event: () => {
-                    post.fun(gvc, {}, {}, {
-                        data: gvc.getBundle()[widget.data.formKey],
-                        callback: (response) => {
+                    return new Promise((resolve, reject) => {
+                        post.fun(gvc, {}, {}, {
+                            data: gvc.getBundle()[object.formKey]
+                        }).event().then((response) => {
                             if (response) {
-                                glitter.closeDiaLog();
+                                resolve(true);
                             }
-                        }
-                    }).event();
+                            else {
+                                resolve(false);
+                            }
+                        });
+                    });
                 },
             };
         },
@@ -92,5 +99,214 @@ TriggerEvent.create(import.meta.url, {
                 },
             };
         },
-    }
+    },
+    get: {
+        title: '官方事件-內容-取得內容',
+        fun: (gvc, widget, object, subData, element) => {
+            const glitter = window.glitter;
+            let vm = {
+                data: [],
+                query: [],
+                page: 0,
+                limit: 10,
+                count: 0,
+                datasource: []
+            };
+            widget.data.searchText = widget.data.searchText ?? `{
+                data: [],
+                query: [],
+                page: 0,
+                limit: 10,
+                count: 0,
+                datasource: []
+            }`;
+            widget.data.search = widget.data.search ?? "s";
+            function getArrayItem(data) {
+                data.query = data.query ?? [];
+                data.queryExpand = data.queryExpand ?? {};
+                return Editor.arrayItem({
+                    originalArray: data.query,
+                    gvc: gvc,
+                    title: '搜索條件',
+                    array: data.query.map((data, index) => {
+                        return {
+                            title: data.key ?? `項目:${index + 1}`,
+                            expand: data,
+                            innerHtml: gvc.map([
+                                glitter.htmlGenerate.editeText({
+                                    gvc: gvc,
+                                    title: 'Key',
+                                    default: data.key ?? "",
+                                    placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                    callback: (text) => {
+                                        data.key = text;
+                                        widget.refreshComponent();
+                                    }
+                                }),
+                                glitter.htmlGenerate.editeText({
+                                    gvc: gvc,
+                                    title: 'Value',
+                                    default: data.value ?? "",
+                                    placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                    callback: (text) => {
+                                        data.value = text;
+                                        widget.refreshComponent();
+                                    }
+                                }),
+                                Editor.select({
+                                    gvc: gvc,
+                                    title: '資料類型',
+                                    def: data.dataType ?? "text",
+                                    array: [
+                                        { title: "文字", value: "text" },
+                                        { title: "數字", value: "number" }
+                                    ],
+                                    callback: (text) => {
+                                        data.dataType = text;
+                                        widget.refreshComponent();
+                                    }
+                                }),
+                                Editor.select({
+                                    gvc: gvc,
+                                    title: '比較值',
+                                    def: data.type ?? "text",
+                                    array: [
+                                        { title: "內容關聯", value: "relative_post" },
+                                        { title: ">", value: ">" },
+                                        { title: "=", value: "=" },
+                                        { title: "<", value: "<" },
+                                        { title: "<=", value: "<=" }
+                                    ],
+                                    callback: (text) => {
+                                        data.type = text;
+                                        widget.refreshComponent();
+                                    }
+                                }),
+                                (() => {
+                                    if (data.type === 'relative_post') {
+                                        data.query = data.query ?? [];
+                                        return getArrayItem(data);
+                                    }
+                                    else {
+                                        return ``;
+                                    }
+                                })()
+                            ]),
+                            minus: gvc.event(() => {
+                                data.query.splice(index, 1);
+                                widget.refreshComponent();
+                            }),
+                        };
+                    }),
+                    expand: data.queryExpand,
+                    plus: {
+                        title: '添加區塊',
+                        event: gvc.event(() => {
+                            data.query.push({});
+                            widget.refreshComponent();
+                        }),
+                    },
+                    refreshComponent: () => {
+                        widget.refreshComponent();
+                    }
+                });
+            }
+            return {
+                editor: () => {
+                    return gvc.bindView(() => {
+                        const id = glitter.getUUID();
+                        return {
+                            bind: id,
+                            view: () => {
+                                return gvc.map([
+                                    getArrayItem(widget.data)
+                                ]);
+                            },
+                            divCreate: {}
+                        };
+                    });
+                },
+                event: () => {
+                    function getQuery(dd) {
+                        if (dd.dataType === 'number') {
+                            dd.value = parseInt(dd.value, 10);
+                        }
+                        if (dd.query) {
+                            dd.query = dd.query.map((d2) => {
+                                return getQuery(d2);
+                            });
+                        }
+                        let key = dd.key;
+                        let value = dd.value;
+                        try {
+                            key = eval(dd.key);
+                        }
+                        catch (e) {
+                        }
+                        try {
+                            value = eval(dd.value);
+                        }
+                        catch (e) {
+                        }
+                        return { key: key, value: value, type: dd.type, query: dd.query };
+                    }
+                    JSON.parse(JSON.stringify(widget.data.query)).map((dd) => {
+                        vm.query.push(getQuery(dd));
+                    });
+                    return new Promise((resolve, reject) => {
+                        getData.fun(gvc, {}, {}, {
+                            page: vm.page,
+                            limit: vm.limit,
+                            query: vm.query,
+                            datasource: vm.datasource,
+                            callback: (response) => {
+                                vm.data = response.data;
+                                vm.count = response.count;
+                                resolve(vm);
+                            }
+                        }).event();
+                    });
+                },
+            };
+        },
+    },
+    put: {
+        title: '官方事件-內容-更新內容',
+        fun: (gvc, widget, object, subData, element) => {
+            const glitter = window.glitter;
+            return {
+                editor: () => {
+                    return gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: "表單位址",
+                            default: object.formKey,
+                            placeHolder: '請輸入表單索引位址',
+                            callback: (text) => {
+                                object.formKey = text;
+                                widget.refreshComponent();
+                            }
+                        })
+                    ]);
+                },
+                event: () => {
+                    return new Promise((resolve, reject) => {
+                        const dialog = new ShareDialog(gvc.glitter);
+                        dialog.dataLoading({ visible: true });
+                        ApiPost.put({
+                            "postData": gvc.getBundle()[object.formKey]
+                        })?.then((r) => {
+                            dialog.dataLoading({ visible: false });
+                            if (!r.result) {
+                                resolve(false);
+                            }
+                            else {
+                                resolve(true);
+                            }
+                        });
+                    });
+                },
+            };
+        },
+    },
 });

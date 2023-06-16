@@ -123,7 +123,7 @@ TriggerEvent.create(import.meta.url, {
                 event: () => {
                     gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {};
                     gvc.glitter.share.public_api.GlobalUser = GlobalUser;
-                    new Promise((resolve, reject) => {
+                    return new Promise((resolve, reject) => {
                         ApiUser.getUserData(GlobalUser.token)?.then((r) => {
                             if (!r.result) {
                                 GlobalUser.token = '';
@@ -148,7 +148,7 @@ TriggerEvent.create(import.meta.url, {
                 },
                 event: () => {
                     gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {};
-                    new Promise((resolve, reject) => {
+                    return new Promise((resolve, reject) => {
                         ApiUser.updateUserData(GlobalUser.updateUserData)?.then((r) => {
                             const dialog = new ShareDialog(gvc.glitter);
                             if (!r.result) {
@@ -227,5 +227,37 @@ ${TriggerEvent.editer(gvc, widget, widget.data, {
                 },
             };
         },
-    }
+    },
+    getUserData: {
+        title: '官方事件-用戶-取得用戶資料',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    return gvc.glitter.htmlGenerate.editeText({
+                        gvc: gvc,
+                        title: "用戶ID",
+                        default: object.code ?? "",
+                        placeHolder: "請輸入程式代碼或者參數",
+                        callback: (text) => {
+                            object.code = text;
+                        }
+                    });
+                },
+                event: () => {
+                    let userID = '';
+                    try {
+                        userID = eval(object.code);
+                    }
+                    catch (e) {
+                        userID = object.code;
+                    }
+                    return new Promise((resolve, reject) => {
+                        ApiUser.getPublicUserData(userID)?.then((r) => {
+                            resolve(r.response);
+                        });
+                    });
+                },
+            };
+        },
+    },
 });

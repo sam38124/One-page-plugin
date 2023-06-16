@@ -48,28 +48,31 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                     "Content-Type": "application/json"
                                 }
                             }).then((d2) => {
-                                if (!d2.result) {
-                                    fal += 1;
-                                    if (fal < 20) {
-                                        setTimeout(() => {
-                                            getData();
-                                        }, 200);
+                                try {
+                                    if (!d2.result) {
+                                        fal += 1;
+                                        if (fal < 20) {
+                                            setTimeout(() => {
+                                                getData();
+                                            }, 200);
+                                        }
+                                    }
+                                    else {
+                                        data = d2.response.result[0];
+                                        try {
+                                            subData.callback(data);
+                                        }
+                                        catch (e) {
+                                        }
+                                        resolve(new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc, undefined, subData.createOption ?? {}));
                                     }
                                 }
-                                else {
-                                    data = d2.response.result[0];
-                                    try {
-                                        subData.callback(data);
-                                    }
-                                    catch (e) {
-                                    }
-                                    resolve(new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc, undefined, subData.createOption ?? {}));
+                                catch (e) {
+                                    resolve('');
                                 }
                             });
                         }
-                        setTimeout(() => {
-                            getData();
-                        }, 10);
+                        getData();
                     });
                 },
                 editor: () => {

@@ -24,6 +24,16 @@ export class ApiUser {
             }
         });
     }
+    static getPublicUserData(id) {
+        return BaseApi.create({
+            "url": getBaseUrl() + `/api-public/v1/user/userdata?userID=${id}`,
+            "type": "GET",
+            "headers": {
+                "g-app": getConfig().config.appName,
+                "Content-Type": "application/json"
+            }
+        });
+    }
     static updateUserData(json) {
         return BaseApi.create({
             "url": getBaseUrl() + `/api-public/v1/user`,

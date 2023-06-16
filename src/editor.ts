@@ -399,7 +399,7 @@ export class Editor {
         title: string;
         gvc: any;
         def: string;
-        array: string[];
+        array: string[] ;
         callback: (text: string) => void;
         placeHolder: string;
     }) {
@@ -407,7 +407,7 @@ export class Editor {
         const gvc = obj.gvc;
         const $ = glitter.$;
         return /*html*/ `
-            ${(obj.title) ? Editor.h3(obj.title) : ``}
+            ${(obj.title) ? Editor.h3(obj.title):``}
             <div class="btn-group dropdown w-100">
                 ${(() => {
             const id = glitter.getUUID();
@@ -422,16 +422,17 @@ export class Editor {
                                         style="height: 40px;"
                                         placeholder="${obj.placeHolder}"
                                         onfocus="${obj.gvc.event(() => {
-                            $('#' + obj.gvc.id(id)).addClass(`show`);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         onblur="${gvc.event(() => {
                             setTimeout(() => {
-                                $('#' + gvc.id(id)).removeClass(`show`);
+                                gvc.getBindViewElem(id).removeClass(`show`);
                             }, 300);
                         })}"
                                         oninput="${gvc.event((e: any) => {
                             obj.def = e.value;
                             gvc.notifyDataChange(id);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         value="${obj.def}"
                                         onchange="${gvc.event((e: any) => {
@@ -450,7 +451,7 @@ export class Editor {
                     bind: id,
                     view: () => {
                         return obj.array
-                            .filter((d2: any) => {
+                            .filter((d2:any) => {
                                 return d2.toUpperCase().indexOf(obj.def.toUpperCase()) !== -1;
                             })
                             .map((d3) => {

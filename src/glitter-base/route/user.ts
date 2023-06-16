@@ -27,6 +27,17 @@ export class ApiUser{
             }
         })
     }
+    public static getPublicUserData(id:string){
+
+        return BaseApi.create({
+            "url": getBaseUrl()+`/api-public/v1/user/userdata?userID=${id}`,
+            "type": "GET",
+            "headers": {
+                "g-app":getConfig().config.appName,
+                "Content-Type": "application/json"
+            }
+        })
+    }
     public static updateUserData(json:any){
         return BaseApi.create({
             "url": getBaseUrl()+`/api-public/v1/user`,

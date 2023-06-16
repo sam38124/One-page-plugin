@@ -86,75 +86,85 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
         defaultData: {},
         render: (gvc, widget, setting, hoverID, subData) => {
             widget.data.formExpand = widget.data.formExpand ?? {};
-            widget.data.formList = subData.formList ?? widget.data.formList ?? [];
-            subData = subData ?? {};
-            let readonly = subData.readonly;
-            subData = subData.formData ?? {};
+            widget.data.subDataRewrite = widget.data.subDataRewrite ?? "true";
+            if (widget.data.subDataRewrite === 'true') {
+                widget.data.formList = subData.formList ?? widget.data.formList ?? [];
+            }
+            else {
+                subData = {};
+                widget.data.formList = widget.data.formList ?? [];
+            }
+            let readonly = false;
+            if (widget.data.subDataRewrite === 'true') {
+                readonly = subData.readonly;
+                subData = subData.formData ?? {};
+            }
             widget.data.btnList = widget.data.btnList ?? [];
             widget.data.btnListExpand = widget.data.btnListExpand ?? {};
             widget.data.formFrom = widget.data.formFrom ?? {};
             gvc.getBundle()[widget.data.formKey ?? "formData"] = subData;
-            let refreshTimer = 0;
+            let editFinish = false;
             const id = glitter.getUUID();
             return {
                 view: () => {
                     let loading = true;
                     let haveGroup = [];
-                    function generateForm(formList, formData, appendGroup) {
-                        return formList.map((data) => {
-                            if (data.group && !appendGroup) {
-                                if (haveGroup.indexOf(data.group) === -1) {
-                                    haveGroup.push(data.group);
-                                    return Editor.toggleExpand({
-                                        gvc: gvc, title: data.group, data: data, innerText: () => {
-                                            return `<div class="row">${generateForm(formList.filter((dd) => {
-                                                return data.group === dd.group;
-                                            }), formData, data.group)}</div>`;
-                                        }, color: `#4c6ac9`,
-                                        class: `border-white`,
-                                        style: ``
-                                    }) + `<div class="mb-2"></div>`;
+                    let text = ``;
+                    async function generateForm(formList, formData, appendGroup) {
+                        return new Promise(async (resolve, reject) => {
+                            let gmap = [];
+                            for (const data of formList) {
+                                if (data.group && !appendGroup) {
+                                    if (haveGroup.indexOf(data.group) === -1) {
+                                        haveGroup.push(data.group);
+                                        return Editor.toggleExpand({
+                                            gvc: gvc, title: data.group, data: data, innerText: () => {
+                                                return `<div class="row">${generateForm(formList.filter((dd) => {
+                                                    return data.group === dd.group;
+                                                }), formData, data.group)}</div>`;
+                                            }, color: `#4c6ac9`,
+                                            class: `border-white`,
+                                            style: ``
+                                        }) + `<div class="mb-2"></div>`;
+                                    }
+                                    else {
+                                        return ``;
+                                    }
+                                }
+                                if (data.type !== 'arrayItem') {
+                                    formData[data.key] = (formData[data.key] == undefined) ? ((() => {
+                                        try {
+                                            return eval(data.def);
+                                        }
+                                        catch (e) {
+                                            return data.def;
+                                        }
+                                    })() ?? "") : formData[data.key];
+                                    if (data.type === 'number') {
+                                        formData[data.key] = formData[data.key] ?? 0;
+                                    }
                                 }
                                 else {
-                                    return ``;
+                                    formData[data.key] = (formData[data.key] == undefined) ? [] : formData[data.key];
                                 }
-                            }
-                            if (data.type !== 'arrayItem') {
-                                formData[data.key] = (formData[data.key] == undefined) ? ((() => {
-                                    try {
-                                        return eval(data.def);
-                                    }
-                                    catch (e) {
-                                        return data.def;
-                                    }
-                                })() ?? '') : formData[data.key];
-                                if (data.type === 'number') {
-                                    formData[data.key] = formData[data.key] ?? 0;
-                                }
-                            }
-                            else {
-                                formData[data.key] = (formData[data.key] == undefined) ? [] : formData[data.key];
-                            }
-                            return `
-                  <div class="col-sm-${data.col} col-${data.colm}">
-                  <div class="position-relative ${(data.type === 'arrayItem' || data.type === 'custom') ? `` : `mb-2`}" >
-                    <label  class="form-label fs-base ${(data.type === 'arrayItem' || data.type === 'custom' || data.type === 'hideData') ? `d-none` : ``}"  >${(data.requirement === 'true') ? `<span class="text-danger ms-2"> * </span>${data.label}` : data.label}</label>
-                    ${(() => {
+                                let ctext = '';
                                 switch (data.type) {
                                     case 'checkbox':
-                                        return checkbox.render(gvc, widget, setting, hoverID, {
+                                        ctext = checkbox.render(gvc, widget, setting, hoverID, {
                                             data: data,
                                             formData: formData,
                                             readonly: readonly
                                         }).view();
+                                        break;
                                     case 'select':
-                                        return selectComponent.render(gvc, widget, setting, hoverID, {
+                                        ctext = selectComponent.render(gvc, widget, setting, hoverID, {
                                             data: data,
                                             formData: formData,
                                             readonly: readonly
                                         }).view();
+                                        break;
                                     case 'textArea':
-                                        return glitter.htmlGenerate.editeText({
+                                        ctext = glitter.htmlGenerate.editeText({
                                             gvc: gvc,
                                             title: '',
                                             default: formData[data.key] ?? "",
@@ -163,8 +173,9 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
                                                 formData[data.key] = text;
                                             }
                                         });
+                                        break;
                                     case 'imageUpload':
-                                        return Editor.uploadImage({
+                                        ctext = Editor.uploadImage({
                                             gvc: gvc,
                                             title: ``,
                                             def: formData[data.key] ?? "",
@@ -174,8 +185,10 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
                                             },
                                             readonly: data.states === '1'
                                         });
+                                        break;
                                     case 'arrayItem':
-                                        return Editor.arrayItem({
+                                        formData[data.key] = formData[data.key] ?? [];
+                                        ctext = Editor.arrayItem({
                                             originalArray: formData[data.key],
                                             gvc: gvc,
                                             title: data.label,
@@ -208,17 +221,19 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
                                             class: `border-white`,
                                             readonly: data.states === '1' || readonly
                                         }) + `<div class="my-2 " style=""></div>`;
+                                        break;
                                     case 'custom':
-                                        return component.render(gvc, {
+                                        ctext = (await component.render(gvc, {
                                             data: data,
                                             refreshComponent: widget.refreshComponent
                                         }, setting, hoverID, {
                                             data: data,
                                             formData: formData,
                                             readonly: readonly
-                                        }).view();
+                                        }).view());
+                                        break;
                                     case 'cal':
-                                        return `<input type="${data.type}" id="${data.key}"
+                                        ctext = `<input type="${data.type}" id="${data.key}"
    value="${(() => {
                                             try {
                                                 return eval(data.def);
@@ -227,32 +242,55 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
                                                 return ``;
                                             }
                                         })()}" class="form-control form-control-lg" style="font-size:15px;" readonly>`;
+                                        break;
                                     case 'placeSelect':
-                                        return placeSelect.render(gvc, widget, setting, hoverID, {
+                                        ctext = placeSelect.render(gvc, widget, setting, hoverID, {
                                             formData: formData
                                         }).view();
+                                        break;
                                     case 'hideData':
-                                        return ``;
+                                        ctext = ``;
+                                        break;
                                     default:
-                                        return `<input type="${data.type}" id="${data.key}"
+                                        ctext = `<input type="${data.type}" id="${data.key}"
    value="${formData[data.key] ?? ""}" class="form-control form-control-lg" style="font-size:15px;" onchange="${gvc.event((e) => {
                                             formData[data.key] = e.value;
                                             e.value = e.value || 0;
                                             if (data.type === 'number') {
                                                 formData[data.key] = parseInt(e.value);
                                             }
-                                            gvc.notifyDataChange(id);
+                                            loadData();
                                         })}" ${(data.states === '1' || readonly) ? `readonly` : ``}>`;
                                 }
-                            })()}
+                                gmap.push(`
+                  <div class="col-sm-${data.col} col-${data.colm}">
+                  <div class="position-relative ${(data.type === 'arrayItem' || data.type === 'custom') ? `` : `mb-2`}" >
+                    <label  class="form-label fs-base ${(data.type === 'arrayItem' || data.type === 'custom' || data.type === 'hideData') ? `d-none` : ``}"  >${(data.requirement === 'true') ? `<span class="text-danger ms-2"> * </span>${data.label}` : data.label}</label>
+                    ${ctext}
                   </div>
                 </div>
-                                `;
-                        }).join('');
+                                `);
+                                if (data.requirement === 'true' && editFinish) {
+                                    if (typeof formData[data.key] === 'object') {
+                                        editFinish = (formData[data.key].length !== 0);
+                                    }
+                                    else {
+                                        editFinish = (formData[data.key] !== '') && (formData[data.key] !== undefined);
+                                    }
+                                }
+                            }
+                            resolve(gmap.join(''));
+                        });
                     }
-                    return gvc.bindView(() => {
+                    subData.checkFinish = (callback) => {
+                        editFinish = true;
+                        generateForm(widget.data.formList, subData).then(() => {
+                            callback(editFinish);
+                        });
+                    };
+                    function loadData() {
                         async function getData() {
-                            await new Promise((resolve, reject) => {
+                            return new Promise(async (resolve, reject) => {
                                 if (widget.data.formFrom.clickEvent) {
                                     TriggerEvent.trigger({
                                         gvc, widget, clickEvent: widget.data.formFrom, subData: {
@@ -260,21 +298,21 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
                                                 if (data) {
                                                     subData = data;
                                                 }
-                                                resolve(true);
-                                                gvc.notifyDataChange(id);
                                             }
                                         }
                                     });
                                 }
-                                else {
-                                    resolve(true);
-                                }
+                                text = await generateForm(widget.data.formList, subData);
+                                resolve(true);
                             });
                         }
                         getData().then(() => {
                             loading = false;
                             gvc.notifyDataChange(id);
                         });
+                    }
+                    return gvc.bindView(() => {
+                        loadData();
                         return {
                             bind: id,
                             view: () => {
@@ -283,7 +321,7 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
                                 }
                                 return `
                    <div class="row" >
-                      ${generateForm(widget.data.formList, subData)}
+                      ${text}
                       ${(readonly) ? `
                       <div class="w-100 h-100 position-absolute top-0 left-0"></div>
                       ` : ``}
@@ -453,16 +491,23 @@ ${widget.data.btnList.map((dd) => {
                         });
                     }
                     return `<div class="mt-2"></div>` + gvc.map([
-                        glitter.htmlGenerate.editeInput({
-                            gvc: gvc,
-                            title: "表單KEY值",
-                            default: widget.data.formKey ?? "",
-                            placeHolder: "請輸入資料存取標籤",
-                            callback: (text) => {
-                                widget.data.formKey = text;
-                                widget.refreshComponent();
+                        (() => {
+                            if (widget.data.formIndex === 'false') {
+                                return ``;
                             }
-                        }),
+                            else {
+                                return glitter.htmlGenerate.editeInput({
+                                    gvc: gvc,
+                                    title: "表單KEY值",
+                                    default: widget.data.formKey ?? "",
+                                    placeHolder: "請輸入資料存取標籤",
+                                    callback: (text) => {
+                                        widget.data.formKey = text;
+                                        widget.refreshComponent();
+                                    }
+                                });
+                            }
+                        })(),
                         Editor.select({
                             title: "是否設定資料索引",
                             gvc: gvc,
@@ -473,6 +518,19 @@ ${widget.data.btnList.map((dd) => {
                             ],
                             callback: (text) => {
                                 widget.data.formIndex = text;
+                                widget.refreshComponent();
+                            }
+                        }),
+                        Editor.select({
+                            title: "是否可依據subData改寫表單",
+                            gvc: gvc,
+                            def: widget.data.subDataRewrite ?? "true",
+                            array: [
+                                { title: "是", value: "true" },
+                                { title: "否", value: "false" }
+                            ],
+                            callback: (text) => {
+                                widget.data.subDataRewrite = text;
                                 widget.refreshComponent();
                             }
                         }),

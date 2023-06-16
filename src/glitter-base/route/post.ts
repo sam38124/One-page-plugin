@@ -21,6 +21,21 @@ export class ApiPost {
         })
     }
 
+    public static put(json: {
+        "postData": any
+    }) {
+        return BaseApi.create({
+            "url": getBaseUrl() + `/api-public/v1/post`,
+            "type": "PUT",
+            "headers": {
+                "Content-Type": "application/json",
+                "g-app": getConfig().config.appName,
+                "Authorization": GlobalUser.token
+            },
+            data: JSON.stringify(json)
+        })
+    }
+
     public static get(json: {
         page: number,
         limit: number,

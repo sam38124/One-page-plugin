@@ -15,6 +15,18 @@ export class ApiPost {
             data: JSON.stringify(json)
         });
     }
+    static put(json) {
+        return BaseApi.create({
+            "url": getBaseUrl() + `/api-public/v1/post`,
+            "type": "PUT",
+            "headers": {
+                "Content-Type": "application/json",
+                "g-app": getConfig().config.appName,
+                "Authorization": GlobalUser.token
+            },
+            data: JSON.stringify(json)
+        });
+    }
     static get(json) {
         json.datasource = json.datasource ?? [];
         return BaseApi.create({

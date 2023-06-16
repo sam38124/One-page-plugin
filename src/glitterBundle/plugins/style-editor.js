@@ -14,7 +14,8 @@ glitter.htmlGenerate.share.styleEditor = {
     }
 };
 function styleValue(obj) {
-    obj.widget.css.style[obj.tag] = obj.widget.css.style[obj.tag] ?? [];
+    var _a;
+    obj.widget.css.style[obj.tag] = (_a = obj.widget.css.style[obj.tag]) !== null && _a !== void 0 ? _a : [];
     return;
 }
 export {};

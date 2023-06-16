@@ -36,7 +36,7 @@ export function getPostForm(formList:any){
             "colm": "12",
             "type": "placeSelect",
             "label": "服務地區",
-            "requirement": "true",
+            "requirement": "false",
             "formExpand": {"expand": true},
             "selectType": "manual"
         }, {

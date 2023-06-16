@@ -9,6 +9,7 @@ import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 import {getPostForm} from "../global/form.js";
 
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
+
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData) => {
@@ -18,12 +19,14 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             widget.data.seeEvent=widget.data.seeEvent??{}
             widget.data.query=widget.data.query ?? []
             widget.data.queryExpand=widget.data.queryExpand??{}
+            glitter.share.refreshService = (() => {
+                widget.refreshComponent()
+            })
             return {
                 view: () => {
+
                     const ps = new PageSplit(gvc);
-                    glitter.share.refreshService = (() => {
-                        widget.refreshComponent()
-                    })
+
                     const vm: {
                         loading: boolean,
                         data: any,
@@ -105,9 +108,9 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                     JSON.parse(JSON.stringify(widget.data.query)).map((dd:any)=>{
                         vm.query.push(getQuery(dd))
                     })
-
                     vm.query.push({key: 'type', value: 'post_case', type: "="})
                     loadData()
+                    console.log(`query---`+JSON.stringify(vm.query))
                     return `
 <div class="${glitter.htmlGenerate.styleEditor(widget.data.containerStyle).class()}  " style="${glitter.htmlGenerate.styleEditor(widget.data.containerStyle).style()}">
 ${gvc.bindView(() => {
@@ -193,6 +196,7 @@ ${(() => {
     <div class="d-flex w-100 align-items-end">
     <a  class="btn btn-sm btn-primary ms-auto" style="font-size:14px;"
     onclick="${gvc.event(()=>{
+                                            glitter.share.postCaseData=d2.content
                                             glitter.setUrlParameter('caseID',d2.id)
                                             TriggerEvent.trigger({
                                                 gvc, widget, clickEvent:widget.data.seeEvent,subData: {
