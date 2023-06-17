@@ -134,14 +134,15 @@ TriggerEvent.create(import.meta.url, {
                 datasource: []
             }`
             widget.data.search = widget.data.search ?? "s"
-            function getArrayItem(data:any){
-                data.query=data.query??[]
-                data.queryExpand=data.queryExpand??{}
+            const id = glitter.getUUID()
+            function getArrayItem(data2:any){
+                data2.query=data2.query??[]
+                data2.queryExpand=data2.queryExpand??{}
                 return  Editor.arrayItem({
-                    originalArray:data.query,
+                    originalArray:data2.query,
                     gvc: gvc,
                     title: '搜索條件',
-                    array: data.query.map((data: any, index: number) => {
+                    array: data2.query.map((data: any, index: number) => {
                         return {
                             title: data.key ?? `項目:${index+1}`,
                             expand: data,
@@ -153,7 +154,7 @@ TriggerEvent.create(import.meta.url, {
                                     placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
                                     callback:(text:string)=>{
                                         data.key = text;
-                                        widget.refreshComponent();
+                                        gvc.notifyDataChange(id);
                                     }
                                 }),
                                 glitter.htmlGenerate.editeText({
@@ -163,7 +164,7 @@ TriggerEvent.create(import.meta.url, {
                                     placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
                                     callback:(text:string)=>{
                                         data.value= text;
-                                        widget.refreshComponent();
+                                        gvc.notifyDataChange(id);
                                     }
                                 }),
                                 Editor.select({
@@ -176,7 +177,7 @@ TriggerEvent.create(import.meta.url, {
                                     ],
                                     callback:(text)=>{
                                         data.dataType= text;
-                                        widget.refreshComponent();
+                                        gvc.notifyDataChange(id);
                                     }
                                 }),
                                 Editor.select({
@@ -192,7 +193,7 @@ TriggerEvent.create(import.meta.url, {
                                     ],
                                     callback:(text)=>{
                                         data.type= text;
-                                        widget.refreshComponent();
+                                        gvc.notifyDataChange(id);
                                     }
                                 }),
                                 (()=>{
@@ -205,30 +206,30 @@ TriggerEvent.create(import.meta.url, {
                                 })()
                             ]),
                             minus: gvc.event(() => {
-                                data.query.splice(index, 1);
-                                widget.refreshComponent();
+                                data2.query.splice(index, 1);
+
+                                gvc.notifyDataChange(id);
                             }),
                         };
                     }),
-                    expand: data.queryExpand,
+                    expand: data2.queryExpand,
                     plus: {
                         title: '添加區塊',
                         event: gvc.event(() => {
-                            data.query.push({
+                            data2.query.push({
 
                             });
-                            widget.refreshComponent();
+                            gvc.notifyDataChange(id);
                         }),
                     },
                     refreshComponent:()=>{
-                        widget.refreshComponent()
+                        gvc.notifyDataChange(id);
                     }
                 })
             }
             return {
                 editor: () => {
                     return gvc.bindView(() => {
-                        const id = glitter.getUUID()
                         return {
                             bind: id,
                             view: () => {
@@ -242,9 +243,6 @@ TriggerEvent.create(import.meta.url, {
                 },
                 event: () => {
                     function getQuery(dd:any){
-                        if(dd.dataType==='number'){
-                            dd.value=parseInt(dd.value,10)
-                        }
                         if(dd.query){
                             dd.query=dd.query.map((d2:any)=>{
                                 return getQuery(d2)
@@ -257,11 +255,16 @@ TriggerEvent.create(import.meta.url, {
                         }catch (e){
 
                         }
+
                         try {
                             value=eval(dd.value)
                         }catch (e){
 
                         }
+                        if(dd.dataType==='number'){
+                            value=parseInt(value,10)
+                        }
+
                         return {key: key, value: value, type: dd.type,query:dd.query}
                     }
                     JSON.parse(JSON.stringify(widget.data.query)).map((dd:any)=>{

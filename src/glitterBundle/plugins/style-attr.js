@@ -8,12 +8,11 @@ export const styleAttr = [
                 <span class="fw-bold">範例:</span>100% ,100px,100em
             </div>
             ${['height', 'min-height', 'max-height', 'width', 'min-width', 'max-width'].map((dd, index) => {
-                var _a;
                 const k = ["高", "最小高度", "最大高度", "寬", "最小寬度", "最大寬度"][index];
                 return glitter.htmlGenerate.editeInput({
                     gvc: gvc,
                     title: `${k}`,
-                    default: (_a = data[dd]) !== null && _a !== void 0 ? _a : "",
+                    default: data[dd] ?? "",
                     placeHolder: `輸入${k}`,
                     callback: (text) => {
                         data[dd] = text;
@@ -30,12 +29,11 @@ export const styleAttr = [
                 <span class="fw-bold">範例:</span>10px,10em,10pt,10%
             </div>
             ${['margin-left', 'margin-right', 'margin-top', 'margin-bottom'].map((dd, index) => {
-                var _a;
                 const k = ["左", "右", "上", "下"][index];
                 return glitter.htmlGenerate.editeInput({
                     gvc: gvc,
                     title: `${k}側外距`,
-                    default: (_a = data[dd]) !== null && _a !== void 0 ? _a : "",
+                    default: data[dd] ?? "",
                     placeHolder: `輸入${k}側外距`,
                     callback: (text) => {
                         data[dd] = text;
@@ -52,12 +50,11 @@ export const styleAttr = [
             <span class="fw-bold">範例:</span>10px,10em,10pt,10%
 </div>
             ${['padding-left', 'padding-right', 'padding-top', 'padding-bottom'].map((dd, index) => {
-                var _a;
                 const k = ["左", "右", "上", "下"][index];
                 return glitter.htmlGenerate.editeInput({
                     gvc: gvc,
                     title: `${k}側內距`,
-                    default: (_a = data[dd]) !== null && _a !== void 0 ? _a : "",
+                    default: data[dd] ?? "",
                     placeHolder: `輸入${k}側內距`,
                     callback: (text) => {
                         data[dd] = text;
@@ -68,14 +65,13 @@ export const styleAttr = [
     },
     {
         tag: "font", title: "字體設定", innerHtml: (gvc, data) => {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
             const glitter = window.glitter;
             return `<div class="alert alert-primary mt-2">
             <span class="fw-bold">範例:</span>10px,10em,10pt,10%
             </div>` + glitter.htmlGenerate.editeInput({
                 gvc: gvc,
                 title: `字體大小`,
-                default: (_a = data["font-size"]) !== null && _a !== void 0 ? _a : "",
+                default: data["font-size"] ?? "",
                 placeHolder: `輸入字體大小`,
                 callback: (text) => {
                     data["font-size"] = text;
@@ -85,7 +81,7 @@ export const styleAttr = [
             </div><div class="mb-2" style="width: 100%;height: 1px;background-color: white;"></div>` + glitter.htmlGenerate.editeInput({
                 gvc: gvc,
                 title: `字體`,
-                default: (_b = data["font-family"]) !== null && _b !== void 0 ? _b : "",
+                default: data["font-family"] ?? "",
                 placeHolder: `輸入字體需求`,
                 callback: (text) => {
                     data["font-family"] = text;
@@ -95,7 +91,7 @@ export const styleAttr = [
             </div><div class="mb-2" style="width: 100%;height: 1px;background-color: white;"></div>` + glitter.htmlGenerate.editeInput({
                 gvc: gvc,
                 title: `字體粗細`,
-                default: (_c = data["font-weight"]) !== null && _c !== void 0 ? _c : "",
+                default: data["font-weight"] ?? "",
                 placeHolder: `輸入字體粗細`,
                 callback: (text) => {
                     data["font-weight"] = text;
@@ -105,7 +101,7 @@ export const styleAttr = [
             </div><div class="mb-2" style="width: 100%;height: 1px;background-color: white;"></div>` + glitter.htmlGenerate.editeInput({
                 gvc: gvc,
                 title: `對齊方式`,
-                default: (_d = data["text-align"]) !== null && _d !== void 0 ? _d : "",
+                default: data["text-align"] ?? "",
                 placeHolder: `輸入如何對齊`,
                 callback: (text) => {
                     data["text-align"] = text;
@@ -115,7 +111,7 @@ export const styleAttr = [
             </div><div class="mb-2" style="width: 100%;height: 1px;background-color: white;"></div>` + glitter.htmlGenerate.editeInput({
                 gvc: gvc,
                 title: `文字效果`,
-                default: (_e = data["text-decoration"]) !== null && _e !== void 0 ? _e : "",
+                default: data["text-decoration"] ?? "",
                 placeHolder: `輸入字體粗細`,
                 callback: (text) => {
                     data["text-decoration"] = text;
@@ -125,7 +121,7 @@ export const styleAttr = [
             </div><div class="mb-2" style="width: 100%;height: 1px;background-color: white;"></div>` + glitter.htmlGenerate.editeInput({
                 gvc: gvc,
                 title: `字距`,
-                default: (_f = data["letter-spacing"]) !== null && _f !== void 0 ? _f : "",
+                default: data["letter-spacing"] ?? "",
                 placeHolder: `輸入字距`,
                 callback: (text) => {
                     data["letter-spacing"] = text;
@@ -135,7 +131,7 @@ export const styleAttr = [
             <div class="mb-2" style="width: 100%;height: 1px;background-color: white;"></div>` + glitter.htmlGenerate.editeInput({
                 gvc: gvc,
                 title: `行高`,
-                default: (_g = data["line-height"]) !== null && _g !== void 0 ? _g : "",
+                default: data["line-height"] ?? "",
                 placeHolder: `輸入行高`,
                 callback: (text) => {
                     data["line-height"] = text;
@@ -145,7 +141,7 @@ export const styleAttr = [
             </div><div class="mb-2" style="width: 100%;height: 1px;background-color: white;"></div>` + glitter.htmlGenerate.editeInput({
                 gvc: gvc,
                 title: `大小寫轉換`,
-                default: (_h = data["text-transform"]) !== null && _h !== void 0 ? _h : "",
+                default: data["text-transform"] ?? "",
                 placeHolder: `統一uppercase、lowercase、capitalize或none`,
                 callback: (text) => {
                     data["text-transform"] = text;
@@ -175,7 +171,6 @@ export const styleAttr = [
     },
     {
         tag: "background", title: "背景設定", innerHtml: (gvc, data) => {
-            var _a;
             const glitter = window.glitter;
             return gvc.map([EditorElem.select({
                     title: 'Attachment',
@@ -205,7 +200,7 @@ export const styleAttr = [
                     }
                 }) +
                     `
-            <input id="palette" value="${(_a = data["background-color"]) !== null && _a !== void 0 ? _a : ""}" type="background-color" style="margin-top:10px;" onchange="${gvc.event((e) => {
+            <input id="palette" value="${data["background-color"] ?? ""}" type="background-color" style="margin-top:10px;" onchange="${gvc.event((e) => {
                         data["background-color"] = e.value;
                     })}">
             `, EditorElem.select({
@@ -255,9 +250,8 @@ export const styleAttr = [
     },
     {
         tag: "background-image", title: "背景圖片", innerHtml: (gvc, data) => {
-            var _a, _b;
-            data["background-image"] = (_a = data["background-image"]) !== null && _a !== void 0 ? _a : "";
-            data["background-repeat"] = (_b = data["background-repeat"]) !== null && _b !== void 0 ? _b : "repeat";
+            data["background-image"] = data["background-image"] ?? "";
+            data["background-repeat"] = data["background-repeat"] ?? "repeat";
             return gvc.bindView(() => {
                 const id = gvc.glitter.getUUID();
                 return {
@@ -290,9 +284,8 @@ export const styleAttr = [
     },
     {
         tag: "color", title: "顏色", innerHtml: (gvc, data) => {
-            var _a, _b;
             const glitter = window.glitter;
-            data["color"] = (_a = data["color"]) !== null && _a !== void 0 ? _a : "black";
+            data["color"] = data["color"] ?? "black";
             return ` <div class="alert alert-primary mt-2">
             <span class="fw-bold">範例:</span> black,white,#000000,rgb(0,0,0)
 </div>` + glitter.htmlGenerate.editeInput({
@@ -305,7 +298,7 @@ export const styleAttr = [
                 }
             }) +
                 `
-            <input id="palette" value="${(_b = data["color"]) !== null && _b !== void 0 ? _b : "black"}" type="color" style="margin-top:10px;" onchange="${gvc.event((e) => {
+            <input id="palette" value="${data["color"] ?? "black"}" type="color" style="margin-top:10px;" onchange="${gvc.event((e) => {
                     data["color"] = e.value;
                 })}">
             `;
@@ -375,12 +368,11 @@ export const styleAttr = [
             <span class="fw-bold">範例:</span>10px,10em,10pt,10%
 </div>
             ${['border-top-left-radius', 'border-top-right-radius', 'border-bottom-left-radius', 'border-bottom-right-radius'].map((dd, index) => {
-                var _a;
                 const k = ["左上", "右上", "左下", "右下"][index];
                 return glitter.htmlGenerate.editeInput({
                     gvc: gvc,
                     title: `${k}側圓角`,
-                    default: (_a = data[dd]) !== null && _a !== void 0 ? _a : "",
+                    default: data[dd] ?? "",
                     placeHolder: `輸入${k}側圓角`,
                     callback: (text) => {
                         data[dd] = text;
@@ -391,9 +383,8 @@ export const styleAttr = [
     },
     {
         tag: "aspect-ratio", title: "畫面比例", innerHtml: (gvc, data) => {
-            var _a;
             const glitter = window.glitter;
-            data["aspect-ratio"] = (_a = data["aspect-ratio"]) !== null && _a !== void 0 ? _a : "auto";
+            data["aspect-ratio"] = data["aspect-ratio"] ?? "auto";
             return ` <div class="alert alert-primary mt-2">
             <span class="fw-bold">範例:</span>1/1 , 0.5 , auto
 </div>` + glitter.htmlGenerate.editeInput({
@@ -409,9 +400,8 @@ export const styleAttr = [
     },
     {
         tag: "box-sizing", title: "box-sizing", innerHtml: (gvc, data) => {
-            var _a;
             const glitter = window.glitter;
-            data["box-sizing"] = (_a = data["box-sizing"]) !== null && _a !== void 0 ? _a : "content-box";
+            data["box-sizing"] = data["box-sizing"] ?? "content-box";
             return ` <div class="alert alert-primary mt-2">
             <span class="fw-bold">範例:</span>Content-box,Border-box 
 </div>` + glitter.htmlGenerate.editeInput({
@@ -427,9 +417,8 @@ export const styleAttr = [
     },
     {
         tag: "display", title: "display排版", innerHtml: (gvc, data) => {
-            var _a;
             const glitter = window.glitter;
-            data["display"] = (_a = data["display"]) !== null && _a !== void 0 ? _a : "none";
+            data["display"] = data["display"] ?? "none";
             return `<div class="alert alert-primary mt-2">
             <span class="fw-bold">範例:</span>none,block,inline,inline-block,flex,grid
             </div>` + EditorElem.select({
@@ -536,9 +525,8 @@ export const styleAttr = [
     },
     {
         tag: "object-fit", title: "內部元素大小", innerHtml: (gvc, data) => {
-            var _a;
             const glitter = window.glitter;
-            data["object-fit"] = (_a = data["object-fit"]) !== null && _a !== void 0 ? _a : "none";
+            data["object-fit"] = data["object-fit"] ?? "none";
             return ` <div class="alert alert-primary mt-2">
             <span class="fw-bold">範例:</span>fill,cover,contain,none,scale-down, 
             </div>` + EditorElem.select({
@@ -554,9 +542,8 @@ export const styleAttr = [
     },
     {
         tag: "object-position", title: "內部元素位置", innerHtml: (gvc, data) => {
-            var _a;
             const glitter = window.glitter;
-            data["object-position"] = (_a = data["object-position"]) !== null && _a !== void 0 ? _a : "center";
+            data["object-position"] = data["object-position"] ?? "center";
             return ` <div class="alert alert-primary mt-2">
             <span class="fw-bold">範例:</span>center , top , bottom , left , right , top left , bottom right 
             </div>` + glitter.htmlGenerate.editeInput({
@@ -631,12 +618,11 @@ export const styleAttr = [
                             let returnHTML = ``;
                             return `
                             ${['left', 'right', 'top', 'bottom'].map((dd, index) => {
-                                var _a;
                                 const k = ["左", "右", "上", "下"][index];
                                 return glitter.htmlGenerate.editeInput({
                                     gvc: gvc,
                                     title: `${k}方距離，同個方向只會取前者(左or右 上or下)`,
-                                    default: (_a = data[dd]) !== null && _a !== void 0 ? _a : "",
+                                    default: data[dd] ?? "",
                                     placeHolder: `輸入${k}側距離`,
                                     callback: (text) => {
                                         data[dd] = text;
@@ -663,9 +649,8 @@ export const styleAttr = [
     },
     {
         tag: "Box Shadow", title: "容器陰影", innerHtml: (gvc, data) => {
-            var _a;
             const glitter = window.glitter;
-            data["box-shadow"] = (_a = data["box-shadow"]) !== null && _a !== void 0 ? _a : "";
+            data["box-shadow"] = data["box-shadow"] ?? "";
             return ` <div class="alert alert-primary mt-2">
             <span class="fw-bold">範例:</span>0 1px 2px 0 rgb(0 0 0 / 0.05);
 </div>` + glitter.htmlGenerate.editeInput({
@@ -681,9 +666,8 @@ export const styleAttr = [
     },
     {
         tag: "Opacity", title: "透明度", innerHtml: (gvc, data) => {
-            var _a;
             const glitter = window.glitter;
-            data["opacity"] = (_a = data["opacity"]) !== null && _a !== void 0 ? _a : "";
+            data["opacity"] = data["opacity"] ?? "";
             return ` <div class="alert alert-primary mt-2">
             <span class="fw-bold">範例:</span>0~1 , 0.05 , 0.5
 </div>` + glitter.htmlGenerate.editeInput({

@@ -216,8 +216,8 @@ ${Editor.h3("選擇頁面")}
                             },
                             {
                                 webFunction(data: any, callback: (data: any) => void): any {
-                                    gvc.glitter.openNewTab(object.link);
-                                    // gvc.glitter.location.href=object.link
+                                    // gvc.glitter.openNewTab(object.link);
+                                    gvc.glitter.location.href=object.link
                                 },
                             }
                         );
@@ -320,6 +320,7 @@ ${Editor.h3("選擇頁面")}
                     });
                 },
                 event: () => {
+
                     return new Promise<any>(async (resolve, reject) => {
 
                         try {

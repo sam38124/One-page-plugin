@@ -147,7 +147,7 @@ export const template = Plugin.createComponent(import.meta.url, (glitter, editMo
                                 try {
                                     const imagesLoaded = window.imagesLoaded;
                                     setTimeout((() => {
-                                        imagesLoaded(document.querySelector('#' + gvc.id(id)), function (instance) {
+                                        imagesLoaded(document.querySelector(`[gvc-id="${gvc.id(id)}"]`), function (instance) {
                                             $(".isot").isotope({ filter: ':not("*")' }), $(".isot").isotope({ filter: "*" });
                                         });
                                     }), 200);

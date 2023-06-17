@@ -197,7 +197,7 @@ ${Editor.h3("選擇頁面")}
                         }, (data) => {
                         }, {
                             webFunction(data, callback) {
-                                gvc.glitter.openNewTab(object.link);
+                                gvc.glitter.location.href = object.link;
                             },
                         });
                     }

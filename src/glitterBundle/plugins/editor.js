@@ -322,9 +322,8 @@ export class Editor {
             }));
     }
     static toggleExpand(obj) {
-        var _a;
         const glitter = window.glitter;
-        obj.data.expand = (_a = obj.data.expand) !== null && _a !== void 0 ? _a : false;
+        obj.data.expand = obj.data.expand ?? false;
         return `${obj.gvc.bindView(() => {
             const id = glitter.getUUID();
             return {

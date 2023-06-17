@@ -48,5 +48,10 @@ Plugin.create(import.meta.url, (glitter: Glitter, editMode: boolean) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./official/array_item.js', import.meta.url)),
         },
+        code:{
+            title:"代碼區塊",
+            subContent:"設定所需執行的代碼事件．",
+            render: Plugin.setComponent(import.meta.url, new URL('./official/code.js', import.meta.url)),
+        },
     }
 })

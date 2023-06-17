@@ -10,9 +10,10 @@ export const component = Plugin.createComponent(import.meta.url, (glitter: Glitt
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData) => {
             widget.data.list = widget.data.list ?? []
 
+
             return {
                 view: () => {
-                    return new Promise((resolve, reject)=>{
+                    return new Promise(async (resolve, reject)=>{
                         let data: any = undefined
                         const saasConfig = (window as any).saasConfig
                         let fal = 0
@@ -62,11 +63,9 @@ export const component = Plugin.createComponent(import.meta.url, (glitter: Glitt
                                         }
                                     } else {
                                         data = d2.response.result[0]
-                                        try {
-                                            subData.callback(data)
-                                        } catch (e) {
-                                        }
-                                        resolve(new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc,undefined,subData.createOption ?? {}))
+                                        subData=subData??{}
+                                        resolve(new glitter.htmlGenerate(data.config, [], JSON.parse(JSON.stringify(subData))).render(gvc,undefined,subData.createOption ?? {}))
+
                                     }
                                 }catch (e) {
                                     resolve('')
@@ -75,7 +74,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter: Glitt
 
                             })
                         }
-                        getData()
+                       await getData()
                     })
                     // return gvc.bindView(() => {
                     //     const id = glitter.getUUID()

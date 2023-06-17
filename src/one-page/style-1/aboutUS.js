@@ -124,7 +124,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 class: `jarallax dark-mode bg-dark py-xxl-5`, style: `height:100%;`
                             }, onCreate: () => {
                                 try {
-                                    const swiper = new Swiper(`#${gvc.id(id)} .swiper`, {
+                                    const swiper = new Swiper(`[gvc-id="${gvc.id(id)}"] .swiper`, {
                                         spaceBetween: 12,
                                         loop: true,
                                         pagination: {

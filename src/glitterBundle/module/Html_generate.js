@@ -154,12 +154,13 @@ ${obj.gvc.bindView({
             style: ``
         }, createOption) => {
             gvc.glitter.share.loaginR = (gvc.glitter.share.loaginR ?? 0) + 1;
-            const container = gvc.glitter.getUUID();
+            const container = `` + gvc.glitter.getUUID();
             gvc.glitter.defaultSetting.pageLoading();
             let htmlList = [];
             let waitAddScript = [];
             function getPageData() {
                 htmlList = [];
+                const subData2 = subdata;
                 async function add(set) {
                     for (const a of set) {
                         if ((a.type !== 'widget') && !gvc.glitter.share.htmlExtension[gvc.glitter.htmlGenerate.resourceHook(a.js)]) {
@@ -364,7 +365,7 @@ ${obj.gvc.bindView({
                                     }
                                     try {
                                         gvc.glitter.share.htmlExtension[gvc.glitter.htmlGenerate.resourceHook(dd.js)][dd.type]
-                                            .render(gvc, dd, setting, hover, subdata);
+                                            .render(gvc, dd, setting, hover, subData2);
                                         loadingFinish();
                                     }
                                     catch (e) {

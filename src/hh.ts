@@ -3,6 +3,7 @@ import {init} from "./glitterBundle/GVController.js";
 
 init((gvc, glitter, gBundle) => {
     (() => {
+        // alert(JSON.stringify(response.data))
         ``
         // console.log(`expireInfo:${JSON.stringify(response)}`);
         const b = {

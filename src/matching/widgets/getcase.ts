@@ -196,6 +196,7 @@ ${(() => {
     <div class="d-flex w-100 align-items-end">
     <a  class="btn btn-sm btn-primary ms-auto" style="font-size:14px;"
     onclick="${gvc.event(()=>{
+      
                                             glitter.share.postCaseData=d2.content
                                             glitter.setUrlParameter('caseID',d2.id)
                                             TriggerEvent.trigger({

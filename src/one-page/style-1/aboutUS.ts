@@ -129,7 +129,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             }, onCreate: () => {
                                 try{
                                     //@ts-ignore
-                                    const swiper = new Swiper(`#${gvc.id(id)} .swiper`, {
+                                    const swiper = new Swiper(`[gvc-id="${gvc.id(id)}"] .swiper`, {
                                         spaceBetween: 12,
                                         loop: true,
                                         pagination: {

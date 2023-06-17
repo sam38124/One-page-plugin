@@ -8,7 +8,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
             widget.data.list = widget.data.list ?? [];
             return {
                 view: () => {
-                    return new Promise((resolve, reject) => {
+                    return new Promise(async (resolve, reject) => {
                         let data = undefined;
                         const saasConfig = window.saasConfig;
                         let fal = 0;
@@ -59,12 +59,8 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                     }
                                     else {
                                         data = d2.response.result[0];
-                                        try {
-                                            subData.callback(data);
-                                        }
-                                        catch (e) {
-                                        }
-                                        resolve(new glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc, undefined, subData.createOption ?? {}));
+                                        subData = subData ?? {};
+                                        resolve(new glitter.htmlGenerate(data.config, [], JSON.parse(JSON.stringify(subData))).render(gvc, undefined, subData.createOption ?? {}));
                                     }
                                 }
                                 catch (e) {
@@ -72,7 +68,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                 }
                             });
                         }
-                        getData();
+                        await getData();
                     });
                 },
                 editor: () => {

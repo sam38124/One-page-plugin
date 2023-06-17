@@ -29,8 +29,11 @@ export const array_item = Plugin.createComponent(import.meta.url, (glitter, edit
                                 });
                             }
                             for (const a of data) {
-                                a.createOption = subData.createOption;
-                                view.push(await component.render(gvc, widget, setting, hoverID, a).view());
+                                const b = JSON.parse(JSON.stringify(a));
+                                b.createOption = subData.createOption;
+                                console.log(`logg----${JSON.stringify(b)}`);
+                                const dd = await component.render(gvc, widget, setting, hoverID, b).view();
+                                view.push(dd);
                             }
                             const data2 = view.join('') || (await component.render(gvc, widget.data.empty, setting, hoverID, subData).view());
                             resolve(data2);
