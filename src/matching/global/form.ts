@@ -90,6 +90,7 @@ export function getPostForm(formList:any){
             "requirement": "true"
         }
     ]
+
     formList=formList.filter((dd:any)=>{
         return !global_form.find((d2)=>{
             return d2.key === dd.key

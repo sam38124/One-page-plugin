@@ -15,6 +15,7 @@ export const getData = TriggerEvent.createSingleEvent(import.meta.url, (glitter)
                         page: object.page ?? subData.page,
                         limit: object.limit ?? subData.limit,
                         query: object.query ?? subData.query ?? [],
+                        selectOnly: object.selectOnly ?? subData.selectOnly ?? [],
                         datasource: object.datasource ?? subData.datasource ?? [],
                     })?.then((r) => {
                         if (!r.result) {

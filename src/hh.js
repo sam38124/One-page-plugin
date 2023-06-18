@@ -2,6 +2,14 @@ import { init } from "./glitterBundle/GVController.js";
 init((gvc, glitter, gBundle) => {
     (() => {
         ``;
+        glitter.getUrlParameter('selectChildItem');
+        if (gvc.getBundle().star === undefined) {
+            return `color:yellow;`;
+        }
+        else {
+            return `color:grey;`;
+        }
+        gvc.getBundle().star = 1;
         const b = {
             "postFrom": 282040580,
             "formData": {

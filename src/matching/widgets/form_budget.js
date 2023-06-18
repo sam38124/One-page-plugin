@@ -9,7 +9,6 @@ export const form_budget = Plugin.createComponent(import.meta.url, (glitter, edi
                     const data = subData.data;
                     const formData = subData.formData;
                     const readonly = subData.readonly;
-                    console.log(JSON.stringify(data));
                     return `
                    <label class="form-label fs-base mb-n2"><span class="text-danger ms-2"> * </span>我的預算</label>
              <div class="mb-2">

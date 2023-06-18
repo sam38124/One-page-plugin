@@ -22,11 +22,11 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
             glitter.share.refreshService = (() => {
                 widget.refreshComponent()
             })
+
             return {
                 view: () => {
 
                     const ps = new PageSplit(gvc);
-
                     const vm: {
                         loading: boolean,
                         data: any,
@@ -46,7 +46,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         count: 0,
                         datasource:[]
                     };
-
                     function loadData() {
                         (getData.fun(gvc, {} as any, {}, {
                             page: vm.page,
@@ -61,7 +60,6 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                             }
                         }) as any).event()
                     }
-
                     if(widget.data.dataFrom==='searchCase'){
                         const selectCity = glitter.getUrlParameter('selectCity')
                         const selectPlace = glitter.getUrlParameter('selectPlace')
@@ -137,19 +135,19 @@ ${gvc.bindView(() => {
                                     const servData = gvc.glitter.share.service.find((dd: any) => {
                                         return dd.id === d2.content.serviceID
                                     })
+                                 
                                     if (servData) {
-                                        d2.content
                                         servData.formList = servData.formList ?? []
                                         return `
 <div class="col-12 col-sm-4 col-xl-3 col-lg-4 p-0 mt-2 ${glitter.htmlGenerate.styleEditor(widget.data.cardStyle).class()}" style="${glitter.htmlGenerate.styleEditor(widget.data.cardStyle).style()}">
 <div class="card shadow m-0 m-sm-2" style="">
-<div class="p-2"><span class="badge bg-danger position-absolute">急件</span></div>
+<div class="p-2"><span class="badge bg-danger position-absolute d-none">急件</span></div>
 ${(() => {
                                             const budget = servData.formList.find((dd: any) => {
                                                 return dd.key === 'budget'
                                             })
                                             if (budget && d2.content[budget.key] !== "-1") {
-                                                return `<h3 style="color:orangered;top:10px;right:10px;font-size:18px;" class="position-absolute">$${`${d2.content[budget.key]}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+                                                return `<h3 style="color:orangered;top:10px;right:10px;font-size:18px;" class="position-absolute">$${`${parseInt(d2.content[budget.key],10).toLocaleString()}`}
 </h3>`
                                             } else {
                                                 return `<h3 style="color:orangered;top:10px;right:10px;font-size:18px;" class="position-absolute">專家報價

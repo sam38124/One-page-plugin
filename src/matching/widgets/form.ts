@@ -91,186 +91,180 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
         defaultData: {},
         render: (gvc, widget, setting, hoverID, subData) => {
             widget.data.formExpand = widget.data.formExpand ?? {}
-            widget.data.subDataRewrite = widget.data.subDataRewrite ?? "true"
-            if (widget.data.subDataRewrite === 'true') {
-                widget.data.formList = subData.formList ?? widget.data.formList ?? []
-            } else {
-                subData = {}
-                widget.data.formList = widget.data.formList ?? []
-            }
-
+            widget.data.formList = widget.data.formList ?? []
             let readonly = false
-            if (widget.data.subDataRewrite === 'true') {
-                readonly = subData.readonly
-                subData = subData.formData ?? {}
-
-            }
+            subData = subData.carryForm ?? subData ?? {}
             widget.data.btnList = widget.data.btnList ?? []
             widget.data.btnListExpand = widget.data.btnListExpand ?? {}
             widget.data.formFrom = widget.data.formFrom ?? {}
 
-            gvc.getBundle()[widget.data.formKey ?? "formData"] = subData
             let editFinish = false
-
             const id = glitter.getUUID()
 
             return {
                 view: () => {
-                    let loading = true
-                    let haveGroup: any = []
-                    let text = ``
 
-                    async function generateForm(formList: any, formData: any, appendGroup?: string): Promise<string> {
-                        return new Promise<string>(async (resolve, reject) => {
-                            let gmap: any = []
-                            for (const data of formList) {
-                                if (data.group && !appendGroup) {
-                                    if (haveGroup.indexOf(data.group) === -1) {
-                                        haveGroup.push(data.group)
-                                        return Editor.toggleExpand({
-                                            gvc: gvc, title: data.group, data: data, innerText: () => {
-                                                return `<div class="row">${
-                                                    generateForm(formList.filter((dd: any) => {
-                                                        return data.group === dd.group
-                                                    }), formData, data.group)
-                                                }</div>`
-                                            }, color: `#4c6ac9`,
-                                            class: `border-white`,
-                                            style: ``
-                                        }) + `<div class="mb-2"></div>`
-                                    } else {
-                                        return ``
-                                    }
-                                }
-                                if (data.type !== 'arrayItem') {
-                                    formData[data.key] = (formData[data.key] == undefined) ? ((() => {
-                                        try {
-                                            return eval(data.def)
-                                        } catch (e) {
-                                            return data.def
+                    return new Promise(async (resolve, reject) => {
+                        if (widget.data.getFrom === 'true') {
+                            widget.data.formList=await TriggerEvent.trigger({gvc:gvc,widget:widget,clickEvent:widget.data.formListPlace,subData})
+                            subData=await TriggerEvent.trigger({gvc:gvc,widget:widget,clickEvent:widget.data.formListData,subData})
+                        }
+                        gvc.getBundle()[widget.data.formKey ?? "formData"] = subData
+                        let loading = true
+                        let haveGroup: any = []
+                        let text = ``
+
+                        async function generateForm(formList: any, formData: any, appendGroup?: string): Promise<string> {
+                            return new Promise<string>(async (resolve, reject) => {
+                                let gmap: any = []
+                                for (const data of formList) {
+                                    if (data.group && !appendGroup) {
+                                        if (haveGroup.indexOf(data.group) === -1) {
+                                            haveGroup.push(data.group)
+                                            return Editor.toggleExpand({
+                                                gvc: gvc, title: data.group, data: data, innerText: () => {
+                                                    return `<div class="row">${
+                                                        generateForm(formList.filter((dd: any) => {
+                                                            return data.group === dd.group
+                                                        }), formData, data.group)
+                                                    }</div>`
+                                                }, color: `#4c6ac9`,
+                                                class: `border-white`,
+                                                style: ``
+                                            }) + `<div class="mb-2"></div>`
+                                        } else {
+                                            return ``
                                         }
-                                    })() ?? "") : formData[data.key]
-                                    if (data.type === 'number') {
-                                        formData[data.key] = formData[data.key] ?? 0
                                     }
-                                } else {
-                                    formData[data.key] = (formData[data.key] == undefined) ? [] : formData[data.key]
-                                }
-                                let ctext: any = ''
-                                switch (data.type) {
-                                    case 'checkbox':
-                                        ctext = checkbox.render(gvc, widget, setting, hoverID, {
-                                            data: data,
-                                            formData: formData,
-                                            readonly: readonly
-                                        }).view()
-                                        break
-                                    case 'select':
-                                        ctext = selectComponent.render(gvc, widget, setting, hoverID, {
-                                            data: data,
-                                            formData: formData,
-                                            readonly: readonly
-                                        }).view()
-                                        break
-                                    case 'textArea':
-                                        ctext = glitter.htmlGenerate.editeText({
-                                            gvc: gvc,
-                                            title: '',
-                                            default: formData[data.key] ?? "",
-                                            placeHolder: "",
-                                            callback: (text) => {
-                                                formData[data.key] = text
-                                            }
-                                        })
-                                        break
-                                    case 'imageUpload':
-                                        ctext = Editor.uploadImage({
-                                            gvc: gvc,
-                                            title: ``,
-                                            def: formData[data.key] ?? "",
-                                            callback: (e) => {
-                                                subData[data.key] = e
-                                                formData[data.key] = e
-                                            },
-                                            readonly: data.states === '1'
-                                        })
-                                        break
-                                    case 'arrayItem':
-                                        formData[data.key] = formData[data.key] ?? [];
-                                        ctext = Editor.arrayItem({
-                                            originalArray: formData[data.key],
-                                            gvc: gvc,
-                                            title: data.label,
-                                            array: formData[data.key].map((dd: any, index: number) => {
-                                                return {
-                                                    title: `${data.index ?? '項目'}:${index + 1}`,
-                                                    expand: dd,
-                                                    innerHtml: (() => {
-                                                        return `<div class="row" >${generateForm(JSON.parse(JSON.stringify(data.elemList)), dd)}</div>`
-                                                    }),
-                                                    minus: gvc.event(() => {
-                                                        formData[data.key].splice(index, 1);
-                                                        widget.refreshComponent();
-                                                    }),
-                                                };
-                                            }),
-                                            expand: data,
-                                            plus: {
-                                                title: data.addBt,
-                                                event: gvc.event(() => {
-                                                    formData[data.key].push({});
-                                                    widget.refreshComponent();
-                                                }),
-                                            },
-                                            refreshComponent: () => {
-                                                widget.refreshComponent()
-                                            },
-                                            color1: '#2c2c2c',
-                                            color2: "#404954",
-                                            class: `border-white`,
-                                            readonly: data.states === '1' || readonly
-                                        }) + `<div class="my-2 " style=""></div>`
-                                        break
-                                    case 'custom':
-                                        ctext = (await component.render(gvc, {
-                                            data: data,
-                                            refreshComponent: widget.refreshComponent
-                                        } as any, setting, hoverID, {
-                                            data: data,
-                                            formData: formData,
-                                            readonly: readonly
-                                        }).view())
-                                        break
-                                    case 'cal':
-                                        ctext = `<input type="${data.type}" id="${data.key}"
-   value="${(() => {
+                                    if (data.type !== 'arrayItem') {
+                                        formData[data.key] = (formData[data.key] == undefined) ? ((() => {
                                             try {
                                                 return eval(data.def)
                                             } catch (e) {
-                                                return ``
+                                                return data.def
                                             }
-                                        })()}" class="form-control form-control-lg" style="font-size:15px;" readonly>`
-                                        break
-                                    case 'placeSelect':
-                                        ctext = placeSelect.render(gvc, widget, setting, hoverID, {
-                                            formData: formData
-                                        }).view()
-                                        break
-                                    case 'hideData':
-                                        ctext = ``
-                                        break
-                                    default:
-                                        ctext = `<input type="${data.type}" id="${data.key}"
+                                        })() ?? "") : formData[data.key]
+                                        if (data.type === 'number') {
+                                            formData[data.key] = formData[data.key] ?? 0
+                                        }
+                                    } else {
+                                        formData[data.key] = (formData[data.key] == undefined) ? [] : formData[data.key]
+                                    }
+                                    let ctext: any = ''
+                                    switch (data.type) {
+                                        case 'checkbox':
+                                            ctext = checkbox.render(gvc, widget, setting, hoverID, {
+                                                data: data,
+                                                formData: formData,
+                                                readonly: readonly
+                                            }).view()
+                                            break
+                                        case 'select':
+                                            ctext = selectComponent.render(gvc, widget, setting, hoverID, {
+                                                data: data,
+                                                formData: formData,
+                                                readonly: readonly
+                                            }).view()
+                                            break
+                                        case 'textArea':
+                                            ctext = glitter.htmlGenerate.editeText({
+                                                gvc: gvc,
+                                                title: '',
+                                                default: formData[data.key] ?? "",
+                                                placeHolder: "",
+                                                callback: (text) => {
+                                                    formData[data.key] = text
+                                                }
+                                            })
+                                            break
+                                        case 'imageUpload':
+                                            ctext = Editor.uploadImage({
+                                                gvc: gvc,
+                                                title: ``,
+                                                def: formData[data.key] ?? "",
+                                                callback: (e) => {
+                                                    subData[data.key] = e
+                                                    formData[data.key] = e
+                                                },
+                                                readonly: data.states === '1'
+                                            })
+                                            break
+                                        case 'arrayItem':
+                                            formData[data.key] = formData[data.key] ?? [];
+                                            ctext = Editor.arrayItem({
+                                                originalArray: formData[data.key],
+                                                gvc: gvc,
+                                                title: data.label,
+                                                array: formData[data.key].map((dd: any, index: number) => {
+                                                    return {
+                                                        title: `${data.index ?? '項目'}:${index + 1}`,
+                                                        expand: dd,
+                                                        innerHtml: (() => {
+                                                            return `<div class="row" >${generateForm(JSON.parse(JSON.stringify(data.elemList)), dd)}</div>`
+                                                        }),
+                                                        minus: gvc.event(() => {
+                                                            formData[data.key].splice(index, 1);
+                                                            widget.refreshComponent();
+                                                        }),
+                                                    };
+                                                }),
+                                                expand: data,
+                                                plus: {
+                                                    title: data.addBt,
+                                                    event: gvc.event(() => {
+                                                        formData[data.key].push({});
+                                                        widget.refreshComponent();
+                                                    }),
+                                                },
+                                                refreshComponent: () => {
+                                                    widget.refreshComponent()
+                                                },
+                                                color1: '#2c2c2c',
+                                                color2: "#404954",
+                                                class: `border-white`,
+                                                readonly: data.states === '1' || readonly
+                                            }) + `<div class="my-2 " style=""></div>`
+                                            break
+                                        case 'custom':
+
+                                            ctext = (await component.render(gvc, {
+                                                data: data,
+                                                refreshComponent: widget.refreshComponent
+                                            } as any, setting, hoverID, {
+                                                data: data,
+                                                formData: formData,
+                                                readonly: readonly
+                                            }).view())
+                                            break
+                                        case 'cal':
+                                            ctext = `<input type="${data.type}" id="${data.key}"
+   value="${(() => {
+                                                try {
+                                                    return eval(data.def)
+                                                } catch (e) {
+                                                    return ``
+                                                }
+                                            })()}" class="form-control form-control-lg" style="font-size:15px;" readonly>`
+                                            break
+                                        case 'placeSelect':
+                                            ctext = placeSelect.render(gvc, widget, setting, hoverID, {
+                                                formData: formData
+                                            }).view()
+                                            break
+                                        case 'hideData':
+                                            ctext = ``
+                                            break
+                                        default:
+                                            ctext = `<input type="${data.type}" id="${data.key}"
    value="${formData[data.key] ?? ""}" class="form-control form-control-lg" style="font-size:15px;" onchange="${gvc.event((e) => {
-                                            formData[data.key] = e.value
-                                            e.value = e.value || 0
-                                            if (data.type === 'number') {
-                                                formData[data.key] = parseInt(e.value)
-                                            }
-                                            loadData()
-                                        })}" ${(data.states === '1' || readonly) ? `readonly` : ``}>`;
-                                }
-                                gmap.push(`
+                                                formData[data.key] = e.value
+                                                e.value = e.value || 0
+                                                if (data.type === 'number') {
+                                                    formData[data.key] = parseInt(e.value)
+                                                }
+                                            })}" ${(data.states === '1' || readonly) ? `readonly` : ``}>`;
+                                    }
+                                    gmap.push(`
                   <div class="col-sm-${data.col} col-${data.colm}">
                   <div class="position-relative ${(data.type === 'arrayItem' || data.type === 'custom') ? `` : `mb-2`}" >
                     <label  class="form-label fs-base ${(data.type === 'arrayItem' || data.type === 'custom' || data.type === 'hideData') ? `d-none` : ``}"  >${(data.requirement === 'true') ? `<span class="text-danger ms-2"> * </span>${data.label}` : data.label}</label>
@@ -278,60 +272,60 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                   </div>
                 </div>
                                 `)
-                                if (data.requirement === 'true' && editFinish) {
-                                    if(typeof formData[data.key] === 'object'){
-                                        editFinish=(formData[data.key].length !== 0)
-                                    }else{
-                                        editFinish = (formData[data.key] !== '') && (formData[data.key] !== undefined)
+                                    if (data.requirement === 'true' && editFinish) {
+                                        if (typeof formData[data.key] === 'object') {
+                                            editFinish = (formData[data.key].length !== 0)
+                                        } else {
+                                            editFinish = (formData[data.key] !== '') && (formData[data.key] !== undefined)
+                                        }
                                     }
                                 }
-                            }
-                            resolve(gmap.join(''))
-                        })
-                    }
-
-                    subData.checkFinish = (callback: (boolean: boolean) => void) => {
-                        editFinish = true
-                        generateForm(widget.data.formList, subData).then(() => {
-                            callback(editFinish)
-                        })
-                    }
-
-                    function loadData() {
-                        async function getData() {
-                            return new Promise(async (resolve, reject) => {
-                                if (widget.data.formFrom.clickEvent) {
-                                    TriggerEvent.trigger({
-                                        gvc, widget, clickEvent: widget.data.formFrom, subData: {
-                                            callback: (data: any) => {
-                                                if (data) {
-                                                    subData = data
-
-                                                }
-                                            }
-                                        }
-                                    });
-                                }
-                                text = await generateForm(widget.data.formList, subData)
-                                resolve(true)
+                                resolve(gmap.join(''))
                             })
                         }
 
-                        getData().then(() => {
-                            loading = false
-                            gvc.notifyDataChange(id)
-                        })
-                    }
+                        subData.checkFinish = (callback: (boolean: boolean) => void) => {
+                            editFinish = true
+                            generateForm(widget.data.formList, subData).then(() => {
+                                callback(editFinish)
+                            })
+                        }
 
-                    return gvc.bindView(() => {
-                        loadData()
-                        return {
-                            bind: id,
-                            view: () => {
-                                if (loading) {
-                                    return ``
-                                }
-                                return `
+                        function loadData() {
+                            async function getData() {
+                                return new Promise(async (resolve, reject) => {
+                                    if (widget.data.formFrom.clickEvent) {
+                                        TriggerEvent.trigger({
+                                            gvc, widget, clickEvent: widget.data.formFrom, subData: {
+                                                callback: (data: any) => {
+                                                    if (data) {
+                                                        subData = data
+
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                    text = await generateForm(widget.data.formList, subData)
+                                    resolve(true)
+                                })
+                            }
+
+                            getData().then(() => {
+                                loading = false
+                                gvc.notifyDataChange(id)
+                            })
+                        }
+
+                        resolve(gvc.bindView(() => {
+                            loadData()
+                            return {
+                                bind: id,
+                                view: () => {
+                                    if (loading) {
+                                        return ``
+                                    }
+                                    return `
                    <div class="row" >
                       ${text}
                       ${(readonly) ? `
@@ -341,20 +335,21 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
 <div class="w-100 d-flex ">
 <div class="flex-fill"></div>
 ${widget.data.btnList.map((dd: any) => {
-                                    return `<button class="btn btn-warning ms-auto ${glitter.htmlGenerate.styleEditor(dd).class()}" onclick="${gvc.event(() => {
-                                        TriggerEvent.trigger({
-                                            gvc: gvc, widget: widget, clickEvent: dd, subData: subData
-                                        })
-                                    })}" style="${glitter.htmlGenerate.styleEditor(dd).style()}">${dd.name}</button>`
-                                }).join('')}
+                                        return `<button class="btn btn-warning ms-auto ${glitter.htmlGenerate.styleEditor(dd).class()}" onclick="${gvc.event(() => {
+                                            TriggerEvent.trigger({
+                                                gvc: gvc, widget: widget, clickEvent: dd, subData: subData
+                                            })
+                                        })}" style="${glitter.htmlGenerate.styleEditor(dd).style()}">${dd.name}</button>`
+                                    }).join('')}
 </div>
 
                     `
-                            },
-                            divCreate: {},
-                            onCreate: () => {
+                                },
+                                divCreate: {},
+                                onCreate: () => {
+                                }
                             }
-                        }
+                        }))
                     })
 
                 },
@@ -505,50 +500,46 @@ ${widget.data.btnList.map((dd: any) => {
                     }
 
                     return `<div class="mt-2"></div>` + gvc.map([
+                        glitter.htmlGenerate.editeInput({
+                            gvc: gvc,
+                            title: `表單存取值 `,
+                            default: widget.data.formKey ?? "",
+                            placeHolder: `取值範例:[gvc.getBundle()['key']]`,
+                            callback: (text) => {
+                                widget.data.formKey = text
+                                widget.refreshComponent()
+                            }
+                        }),
+                        Editor.select({
+                            title: "表單取得",
+                            gvc: gvc,
+                            def: widget.data.getFrom ?? "false",
+                            array: [
+                                {title: "動態", value: "true"},
+                                {title: "靜態", value: "false"}
+                            ],
+                            callback: (text) => {
+                                widget.data.getFrom = text
+                                widget.refreshComponent()
+                            }
+                        }),
                         (() => {
-                            if (widget.data.formIndex === 'false') {
-                                return ``
-                            } else {
-                                return glitter.htmlGenerate.editeInput({
-                                    gvc: gvc,
-                                    title: "表單KEY值",
-                                    default: widget.data.formKey ?? "",
-                                    placeHolder: "請輸入資料存取標籤",
-                                    callback: (text) => {
-                                        widget.data.formKey = text
-                                        widget.refreshComponent()
-                                    }
+                            if (widget.data.getFrom === 'true') {
+                                widget.data.formListPlace = widget.data.formListPlace ?? {}
+                                widget.data.formListData = widget.data.formListData ?? {}
+                                return TriggerEvent.editer(gvc, widget, widget.data.formListPlace, {
+                                    hover: true,
+                                    option: [],
+                                    title: "表單格式獲取"
+                                }) + TriggerEvent.editer(gvc, widget, widget.data.formListData, {
+                                    hover: true,
+                                    option: [],
+                                    title: "表單資料獲取"
                                 })
+                            } else {
+                                return getFormEditor(widget.data.formList);
                             }
-
-                        })(),
-                        Editor.select({
-                            title: "是否設定資料索引",
-                            gvc: gvc,
-                            def: widget.data.formIndex ?? "false",
-                            array: [
-                                {title: "是", value: "true"},
-                                {title: "否", value: "false"}
-                            ],
-                            callback: (text) => {
-                                widget.data.formIndex = text
-                                widget.refreshComponent()
-                            }
-                        }),
-                        Editor.select({
-                            title: "是否可依據subData改寫表單",
-                            gvc: gvc,
-                            def: widget.data.subDataRewrite ?? "true",
-                            array: [
-                                {title: "是", value: "true"},
-                                {title: "否", value: "false"}
-                            ],
-                            callback: (text) => {
-                                widget.data.subDataRewrite = text
-                                widget.refreshComponent()
-                            }
-                        }),
-                        getFormEditor(widget.data.formList)
+                        })()
                     ])
 
                 }

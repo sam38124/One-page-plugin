@@ -35,7 +35,7 @@ export class Plugin {
     static setComponent(original, url) {
         const glitter = window.glitter;
         url.searchParams.set("original", original);
-        return (gvc, widget, setting, hoverID, subData) => {
+        return (gvc, widget, setting, hoverID, subData, htmlGenerate) => {
             glitter.share.componentData = glitter.share.componentData ?? {};
             let val = glitter.share.componentData[url.href];
             function startSync(callback) {

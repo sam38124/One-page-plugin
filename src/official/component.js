@@ -4,7 +4,7 @@ import { Editor } from "../editor.js";
 import { TriggerEvent } from "../glitterBundle/plugins/trigger-event.js";
 export const component = Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
-        render: (gvc, widget, setting, hoverID, subData) => {
+        render: (gvc, widget, setting, hoverID, subData, htmlGenerate) => {
             widget.data.list = widget.data.list ?? [];
             return {
                 view: () => {
@@ -12,33 +12,50 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                         let data = undefined;
                         const saasConfig = window.saasConfig;
                         let fal = 0;
-                        subData.parentConfig = widget;
                         async function getData() {
                             let tag = widget.data.tag;
+                            let carryData = widget.data.carryData;
                             for (const b of widget.data.list) {
                                 b.evenet = b.evenet ?? {};
-                                if (b.triggerType === 'trigger') {
-                                    const result = await new Promise((resolve, reject) => {
-                                        (TriggerEvent.trigger({
-                                            gvc: gvc,
-                                            widget: widget,
-                                            clickEvent: b.evenet,
-                                            subData
-                                        })).then((data) => {
-                                            resolve(data);
+                                try {
+                                    if (b.triggerType === 'trigger') {
+                                        const result = await new Promise((resolve, reject) => {
+                                            (TriggerEvent.trigger({
+                                                gvc: gvc,
+                                                widget: widget,
+                                                clickEvent: b.evenet,
+                                                subData
+                                            })).then((data) => {
+                                                resolve(data);
+                                            });
                                         });
-                                    });
-                                    if (result) {
-                                        tag = b.tag;
-                                        break;
+                                        if (result) {
+                                            tag = b.tag;
+                                            carryData = b.carryData;
+                                            break;
+                                        }
+                                    }
+                                    else {
+                                        if ((await eval(b.code)) === true) {
+                                            tag = b.tag;
+                                            carryData = b.carryData;
+                                            break;
+                                        }
                                     }
                                 }
-                                else {
-                                    if ((await eval(b.code)) === true) {
-                                        tag = b.tag;
-                                        break;
-                                    }
+                                catch (e) {
                                 }
+                            }
+                            let sub = subData ?? {};
+                            try {
+                                sub.carryData = await TriggerEvent.trigger({
+                                    gvc: gvc,
+                                    clickEvent: carryData,
+                                    widget: widget,
+                                    subData: subData
+                                });
+                            }
+                            catch (e) {
                             }
                             BaseApi.create({
                                 "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}&tag=${tag}`,
@@ -59,8 +76,8 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                     }
                                     else {
                                         data = d2.response.result[0];
-                                        subData = subData ?? {};
-                                        resolve(new glitter.htmlGenerate(data.config, [], JSON.parse(JSON.stringify(subData))).render(gvc, undefined, subData.createOption ?? {}));
+                                        let createOption = (htmlGenerate ?? {}).createOption ?? {};
+                                        resolve(new glitter.htmlGenerate(data.config, [], subData).render(gvc, undefined, createOption ?? {}));
                                     }
                                 }
                                 catch (e) {
@@ -93,6 +110,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                     function setPage(pd) {
                         let group = [];
                         let selectGroup = '';
+                        pd.carryData = pd.carryData ?? {};
                         let id = glitter.getUUID();
                         data.dataList.map((dd) => {
                             if (dd.tag === pd.tag) {
@@ -168,10 +186,11 @@ export const component = Plugin.createComponent(import.meta.url, (glitter, editM
                                             pd.tag = text;
                                         },
                                     }) + (() => {
-                                        if (data2) {
-                                            return ``;
-                                        }
-                                        return ``;
+                                        return TriggerEvent.editer(gvc, widget, pd.carryData, {
+                                            hover: true,
+                                            option: [],
+                                            title: "夾帶的資料-[ 存放於subData.carryData中 ]"
+                                        });
                                     })();
                                 },
                                 divCreate: {}

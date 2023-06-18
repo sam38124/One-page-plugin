@@ -37,8 +37,8 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             render: Plugin.setComponent(import.meta.url, new URL('./official/footer.js', import.meta.url)),
         },
         arrayItem: {
-            title: '陣列元件',
-            subContent: '陣列元件產生．',
+            title: '多項列表元件',
+            subContent: '透過陣列資料產生多個同類行的元件．',
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./official/array_item.js', import.meta.url)),
         },

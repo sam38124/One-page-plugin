@@ -501,8 +501,9 @@ ${widget.data.bigItem.map((dd: any, index: number) => {
 background:50%/cover no-repeat url('${dd.bg}');
    " onclick="${gvc.event(()=>{
                                     glitter.setUrlParameter("selectBidItem",dd.id);
-                                    gvc.notifyDataChange(id)
-                                    glitter.share.refreshService()
+                                    // gvc.notifyDataChange(id)
+                                    // glitter.share.refreshService()
+                                    gvc.recreateView()
                                 })}">
 <div  class="position-absolute w-100 h-100 bg-dark  top-0 rounded glitterTagundefined" style="opacity:${(selectBidItem === dd.id) ? `25` : `70`}%;"></div>
 <span  class="text-white glitterTagundefined" style="z-index:1;font-size:25px;font-weight:500;" onclick="">${dd.title}</span>
@@ -523,8 +524,9 @@ ${(() => {
                                         return `<span style="cursor:pointer;" onclick="${gvc.event((e,event)=>{
                                             selectChild=dd.id
                                             glitter.setUrlParameter('selectChildItem',selectChild)
-                                            gvc.notifyDataChange(id)
-                                            glitter.share.refreshService()
+                                            // gvc.notifyDataChange(id)
+                                            // glitter.share.refreshService()
+                                            gvc.recreateView()
                                         })}">${dd.title}</span>`
                                     }
                                 }).join('')
@@ -540,8 +542,9 @@ ${(() => {
                                 glitter.setUrlParameter('selectCity', e.value)
                                 glitter.setUrlParameter('selectPlace',"不拘")
                                 selectCity = e.value
-                                gvc.notifyDataChange(id)
-                                glitter.share.refreshService()
+                                // gvc.notifyDataChange(id)
+                                // glitter.share.refreshService()
+                                gvc.recreateView()
                             })}">
 <option >不拘</option>
 ${
@@ -557,8 +560,9 @@ ${
 <select class="form-select" style="font-size:14px;" onchange="${gvc.event((e, event) => {
                                 glitter.setUrlParameter('selectPlace', e.value)
                                 selectPlace = e.value
-                                gvc.notifyDataChange(id)
-                                glitter.share.refreshService()
+                                // gvc.notifyDataChange(id)
+                                // glitter.share.refreshService()
+                                gvc.recreateView()
                             })}">
 <option >不拘</option>
 ${
@@ -577,7 +581,8 @@ ${
 <input class="w-100 form-control" onchange="${gvc.event((e,event)=>{
                                 budget=e.value
                                 glitter.setUrlParameter('budget', e.value)
-                                glitter.share.refreshService()
+                                // glitter.share.refreshService()
+                                gvc.recreateView()
                             })}" placeholder="請輸入預算" value="${glitter.getUrlParameter('budget') ?? ""}">
 </div>
 </div>

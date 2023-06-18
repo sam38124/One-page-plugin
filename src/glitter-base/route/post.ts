@@ -40,11 +40,12 @@ export class ApiPost {
         page: number,
         limit: number,
         query: { key: string, value: any, type: string | 'relative_post' | 'relative_user',query?:any }[],
+        selectOnly:{ key: string, value: any, type: string}[],
         datasource?: string[]
     }) {
         json.datasource = json.datasource ?? []
         return BaseApi.create({
-            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}&limit=${json.limit}&query=${JSON.stringify(json.query)}&datasource=${JSON.stringify(json.datasource)}`,
+            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}&limit=${json.limit}&query=${JSON.stringify(json.query)}&datasource=${JSON.stringify(json.datasource)}&selectOnly=${JSON.stringify(json.selectOnly)}`,
             "type": "GET",
             "headers": {
                 "Content-Type": "application/json",

@@ -25,15 +25,17 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                 return dd.id === selectChild;
                             });
                             small.formList = getPostForm(small.formList);
-                            formModel = form.render(gvc, {
-                                data: small,
-                                refreshComponent: () => {
-                                    gvc.notifyDataChange(id);
-                                }
-                            }, [], [], {
-                                formData: formData
+                            new Promise(async (resolve, reject) => {
+                                formModel = await form.render(gvc, {
+                                    data: small,
+                                    refreshComponent: () => {
+                                        gvc.notifyDataChange(id);
+                                    }
+                                }, [], [], {
+                                    carryForm: formData
+                                }).view();
+                                gvc.notifyDataChange(id);
                             });
-                            gvc.notifyDataChange(id);
                         });
                         formData.serviceID = glitter.getUrlParameter('selectChildItem');
                         let viewType = "selectService";
@@ -68,7 +70,7 @@ ${select_widget}
                                         if (!formModel) {
                                             return ``;
                                         }
-                                        return `<div class="p-2">${formModel.view()} 
+                                        return `<div class="p-2">${(formModel)} 
 <div class="d-flex  align-items-end justify-content-end">
 <button class="btn-warning text-dark btn mt-2" onclick="${gvc.event((e, event) => {
                                             formData.checkFinish((response) => {

@@ -30,7 +30,7 @@ export class ApiPost {
     static get(json) {
         json.datasource = json.datasource ?? [];
         return BaseApi.create({
-            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}&limit=${json.limit}&query=${JSON.stringify(json.query)}&datasource=${JSON.stringify(json.datasource)}`,
+            "url": getBaseUrl() + `/api-public/v1/post?page=${json.page}&limit=${json.limit}&query=${JSON.stringify(json.query)}&datasource=${JSON.stringify(json.datasource)}&selectOnly=${JSON.stringify(json.selectOnly)}`,
             "type": "GET",
             "headers": {
                 "Content-Type": "application/json",

@@ -217,7 +217,7 @@ ${Editor.h3("選擇頁面")}
                             {
                                 webFunction(data: any, callback: (data: any) => void): any {
                                     // gvc.glitter.openNewTab(object.link);
-                                    gvc.glitter.location.href=object.link
+                                    gvc.glitter.location.href = object.link
                                 },
                             }
                         );
@@ -228,11 +228,12 @@ ${Editor.h3("選擇頁面")}
     },
     dialog: {
         title: 'Glitter-彈出頁面區塊',
-        fun: (gvc, widget, object, subData) => {
+        fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
                     const id = gvc.glitter.getUUID()
                     const glitter = gvc.glitter
+                    widget.data.coverData = widget.data.coverData ?? {}
 
                     function recursive() {
                         if (GlobalData.data.pageList.length === 0) {
@@ -246,11 +247,13 @@ ${Editor.h3("選擇頁面")}
                     }
 
                     recursive();
+
                     return gvc.bindView(() => {
                         return {
                             bind: id,
                             view: () => {
-                                return `<select
+
+                                return [`<select
                                             class="form-select form-control mt-2"
                                             onchange="${gvc.event((e) => {
                                     object.link = (window as any).$(e).val();
@@ -262,7 +265,11 @@ ${Editor.h3("選擇頁面")}
                                                     ${dd.group}-${dd.name}
                                                 </option>`;
                                 })}
-                                        </select>`
+                                        </select>`, TriggerEvent.editer(gvc, widget, widget.data.coverData, {
+                                    hover: true,
+                                    option: [],
+                                    title: "夾帶資料-[將存於新頁面的gvc.getBundle().carryData之中]"
+                                })].join('')
                             },
                             divCreate: {}
                         }
@@ -270,11 +277,17 @@ ${Editor.h3("選擇頁面")}
                 },
                 event: () => {
                     subData = subData ?? {}
-                    return new Promise(async (resolve, reject)=>{
 
+                    return new Promise(async (resolve, reject) => {
+                        const data = await TriggerEvent.trigger({
+                            gvc, widget, clickEvent: widget.data.coverData, subData
+                        })
                         gvc.glitter.innerDialog((gvc: GVC) => {
-                            return  new Promise<string>(async (resolve, reject)=>{
-                                const view= await component.render(gvc, ({
+
+                            gvc.getBundle().carryData = data
+                            return new Promise<string>(async (resolve, reject) => {
+
+                                const view = await component.render(gvc, ({
                                     data: {
                                         tag: object.link
                                     }
@@ -322,18 +335,17 @@ ${Editor.h3("選擇頁面")}
                 event: () => {
 
                     return new Promise<any>(async (resolve, reject) => {
-
                         try {
-                            const a=(eval(object.code))
-                            if(a.then){
-                                a.then((data:any)=>{
+                            const a = (eval(object.code))
+                            if (a.then) {
+                                a.then((data: any) => {
                                     resolve(data)
                                 })
-                            }else{
+                            } else {
                                 resolve(a)
                             }
-                        }catch (e){
-                            resolve(false)
+                        } catch (e) {
+                            resolve(   object.errorCode ?? false)
                         }
 
                     })
@@ -344,6 +356,7 @@ ${Editor.h3("選擇頁面")}
     drawer: {
         title: 'Glitter-打開抽屜',
         fun: (gvc, widget, object, subData, element) => {
+
             return {
                 editor: () => {
                     const id = gvc.glitter.getUUID()
@@ -378,7 +391,11 @@ ${Editor.h3("選擇頁面")}
                                                     ${dd.group}-${dd.name}
                                                 </option>`;
                                 })}
-                                        </select>`
+                                        </select>
+${gvc.glitter.htmlGenerate.styleEditor(object, gvc).editor(gvc, () => {
+                                    widget.refreshComponent()
+                                }, "背景樣式")}
+`
                             },
                             divCreate: {}
                         }
@@ -387,48 +404,50 @@ ${Editor.h3("選擇頁面")}
                 event: () => {
                     let fal = 0
                     let data: any = undefined
-
-
                     async function getData() {
-                     return new Promise(async (resolve, reject)=>{
-                         const saasConfig = (window as any).saasConfig
-                         BaseApi.create({
-                             "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}&tag=${object.link}`,
-                             "type": "GET",
-                             "timeout": 0,
-                             "headers": {
-                                 "Content-Type": "application/json"
-                             }
-                         }).then((d2) => {
-                             if (!d2.result) {
-                                 fal += 1
-                                 if (fal < 20) {
-                                     setTimeout(() => {
-                                         getData()
-                                     }, 200)
-                                 }
-                             } else {
-                                 data = d2.response.result[0]
-resolve(data)
-                             }
-
-                         })
-                     })
-                    }
-                    getData().then((data:any)=>{
-                        const id = gvc.glitter.getUUID()
-                        gvc.glitter.setDrawer(gvc.bindView(() => {
-                            return {
-                                bind: id,
-                                view: () => {
-                                    if (!data) {
-                                        return ``
+                        return new Promise(async (resolve, reject) => {
+                            const saasConfig = (window as any).saasConfig
+                            BaseApi.create({
+                                "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}&tag=${object.link}`,
+                                "type": "GET",
+                                "timeout": 0,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                }
+                            }).then((d2) => {
+                                if (!d2.result) {
+                                    fal += 1
+                                    if (fal < 20) {
+                                        setTimeout(() => {
+                                            getData()
+                                        }, 200)
                                     }
-                                    return new (window as any).glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
-                                },
-                                divCreate: {}
-                            }
-                        }), () => {
+                                } else {
+                                    data = d2.response.result[0]
+                                    resolve(data)
+                                }
+
+                            })
+                        })
+                    }
+                    getData().then((data: any) => {
+                        const id = gvc.glitter.getUUID()
+                        gvc.glitter.setDrawer(`<div class="w-100 h-100 ${gvc.glitter.htmlGenerate.styleEditor(object, gvc).class()}"
+style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
+>${
+                            gvc.bindView(() => {
+                                return {
+                                    bind: id,
+                                    view: () => {
+                                        if (!data) {
+                                            return ``
+                                        }
+                                        return new (window as any).glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
+                                    },
+                                    divCreate: {}
+                                }
+                            })
+                        }</div>`, () => {
                             gvc.glitter.openDrawer()
                         })
                     })

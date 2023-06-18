@@ -207,11 +207,12 @@ ${Editor.h3("選擇頁面")}
     },
     dialog: {
         title: 'Glitter-彈出頁面區塊',
-        fun: (gvc, widget, object, subData) => {
+        fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
                     const id = gvc.glitter.getUUID();
                     const glitter = gvc.glitter;
+                    widget.data.coverData = widget.data.coverData ?? {};
                     function recursive() {
                         if (GlobalData.data.pageList.length === 0) {
                             GlobalData.data.run();
@@ -228,19 +229,23 @@ ${Editor.h3("選擇頁面")}
                         return {
                             bind: id,
                             view: () => {
-                                return `<select
+                                return [`<select
                                             class="form-select form-control mt-2"
                                             onchange="${gvc.event((e) => {
-                                    object.link = window.$(e).val();
-                                })}"
+                                        object.link = window.$(e).val();
+                                    })}"
                                         >
                                             ${GlobalData.data.pageList.map((dd) => {
-                                    object.link = object.link ?? dd.tag;
-                                    return `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
+                                        object.link = object.link ?? dd.tag;
+                                        return `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
                                                     ${dd.group}-${dd.name}
                                                 </option>`;
-                                })}
-                                        </select>`;
+                                    })}
+                                        </select>`, TriggerEvent.editer(gvc, widget, widget.data.coverData, {
+                                        hover: true,
+                                        option: [],
+                                        title: "夾帶資料-[將存於新頁面的gvc.getBundle().carryData之中]"
+                                    })].join('');
                             },
                             divCreate: {}
                         };
@@ -249,7 +254,11 @@ ${Editor.h3("選擇頁面")}
                 event: () => {
                     subData = subData ?? {};
                     return new Promise(async (resolve, reject) => {
+                        const data = await TriggerEvent.trigger({
+                            gvc, widget, clickEvent: widget.data.coverData, subData
+                        });
                         gvc.glitter.innerDialog((gvc) => {
+                            gvc.getBundle().carryData = data;
                             return new Promise(async (resolve, reject) => {
                                 const view = await component.render(gvc, {
                                     data: {
@@ -306,7 +315,7 @@ ${Editor.h3("選擇頁面")}
                             }
                         }
                         catch (e) {
-                            resolve(false);
+                            resolve(object.errorCode ?? false);
                         }
                     });
                 },
@@ -349,7 +358,11 @@ ${Editor.h3("選擇頁面")}
                                                     ${dd.group}-${dd.name}
                                                 </option>`;
                                 })}
-                                        </select>`;
+                                        </select>
+${gvc.glitter.htmlGenerate.styleEditor(object, gvc).editor(gvc, () => {
+                                    widget.refreshComponent();
+                                }, "背景樣式")}
+`;
                             },
                             divCreate: {}
                         };
@@ -386,7 +399,9 @@ ${Editor.h3("選擇頁面")}
                     }
                     getData().then((data) => {
                         const id = gvc.glitter.getUUID();
-                        gvc.glitter.setDrawer(gvc.bindView(() => {
+                        gvc.glitter.setDrawer(`<div class="w-100 h-100 ${gvc.glitter.htmlGenerate.styleEditor(object, gvc).class()}"
+style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
+>${gvc.bindView(() => {
                             return {
                                 bind: id,
                                 view: () => {
@@ -397,7 +412,7 @@ ${Editor.h3("選擇頁面")}
                                 },
                                 divCreate: {}
                             };
-                        }), () => {
+                        })}</div>`, () => {
                             gvc.glitter.openDrawer();
                         });
                     });
