@@ -3,7 +3,7 @@ import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
 import {EditorElem} from "../../glitterBundle/plugins/editor-elem.js";
 import {Editor} from "../../editor.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+
 
 const servicePlace = [
     {

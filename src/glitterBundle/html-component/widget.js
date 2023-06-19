@@ -2,17 +2,15 @@ import { TriggerEvent } from "../plugins/trigger-event.js";
 import { Editor } from "./editor.js";
 export const widgetComponent = {
     render: (gvc, widget, setting, hoverID, subData, htmlGenerate) => {
-        var _a, _b, _c;
         const glitter = gvc.glitter;
-        widget.data.elem = (_a = widget.data.elem) !== null && _a !== void 0 ? _a : "h3";
-        widget.data.inner = (_b = widget.data.inner) !== null && _b !== void 0 ? _b : "";
-        widget.data.attr = (_c = widget.data.attr) !== null && _c !== void 0 ? _c : [];
+        widget.data.elem = widget.data.elem ?? "h3";
+        widget.data.inner = widget.data.inner ?? "";
+        widget.data.attr = widget.data.attr ?? [];
         const id = htmlGenerate.widgetComponentID;
-        subData = subData !== null && subData !== void 0 ? subData : {};
+        subData = subData ?? {};
         let formData = subData;
         return {
             view: () => {
-                var _a;
                 let re = false;
                 function getCreateOption() {
                     let option = widget.data.attr.map((dd) => {
@@ -61,7 +59,7 @@ export const widgetComponent = {
                     if (widget.data.elem !== 'select') {
                         widget.data.inner = '';
                     }
-                    widget.data.innerEvenet = (_a = widget.data.innerEvenet) !== null && _a !== void 0 ? _a : {};
+                    widget.data.innerEvenet = widget.data.innerEvenet ?? {};
                     TriggerEvent.trigger({
                         gvc: gvc,
                         widget: widget,
@@ -77,7 +75,6 @@ export const widgetComponent = {
                     });
                 }
                 return gvc.bindView(() => {
-                    var _a;
                     const vm = {
                         callback: () => {
                             gvc.notifyDataChange(id);
@@ -85,7 +82,7 @@ export const widgetComponent = {
                         data: []
                     };
                     if (widget.data.elem === 'select' && widget.data.selectType === 'api') {
-                        widget.data.selectAPI = (_a = widget.data.selectAPI) !== null && _a !== void 0 ? _a : {};
+                        widget.data.selectAPI = widget.data.selectAPI ?? {};
                         TriggerEvent.trigger({
                             gvc: gvc, widget: widget, clickEvent: widget.data.selectAPI, subData: vm
                         });
@@ -98,8 +95,7 @@ export const widgetComponent = {
                                     formData[widget.data.key] = widget.data.inner;
                                     if (widget.data.selectType === 'api') {
                                         return vm.data.map((dd) => {
-                                            var _a;
-                                            formData[widget.data.key] = (_a = formData[widget.data.key]) !== null && _a !== void 0 ? _a : dd.value;
+                                            formData[widget.data.key] = formData[widget.data.key] ?? dd.value;
                                             if (dd.visible === 'invisible' && (dd.value !== formData[widget.data.key])) {
                                                 return ``;
                                             }
@@ -112,11 +108,10 @@ export const widgetComponent = {
                                     }
                                     else {
                                         return widget.data.selectList.map((dd) => {
-                                            var _a;
                                             if (dd.visible === 'invisible' && (dd.value !== formData[widget.data.key])) {
                                                 return ``;
                                             }
-                                            formData[widget.data.key] = (_a = formData[widget.data.key]) !== null && _a !== void 0 ? _a : dd.value;
+                                            formData[widget.data.key] = formData[widget.data.key] ?? dd.value;
                                             return `<option value="${dd.value}" ${dd.value === formData[widget.data.key] ? `selected` : ``}>
                                 ${dd.name}
                             </option>`;
@@ -158,10 +153,9 @@ export const widgetComponent = {
                 });
             },
             editor: () => {
-                var _a, _b, _c;
-                widget.type = (_a = widget.type) !== null && _a !== void 0 ? _a : "elem";
-                widget.data.elemExpand = (_b = widget.data.elemExpand) !== null && _b !== void 0 ? _b : {};
-                widget.data.atrExpand = (_c = widget.data.atrExpand) !== null && _c !== void 0 ? _c : {};
+                widget.type = widget.type ?? "elem";
+                widget.data.elemExpand = widget.data.elemExpand ?? {};
+                widget.data.atrExpand = widget.data.atrExpand ?? {};
                 return gvc.map([
                     `<div class="mt-2"></div>`,
                     Editor.toggleExpand({
@@ -169,7 +163,6 @@ export const widgetComponent = {
                         title: '元件設定',
                         data: widget.data.elemExpand,
                         innerText: () => {
-                            var _a;
                             return gvc.map([
                                 (() => {
                                     if (['link', 'style'].indexOf(widget.data.elem) !== -1) {
@@ -215,14 +208,13 @@ export const widgetComponent = {
                                     placeHolder: "請輸入元素標籤"
                                 }),
                                 (() => {
-                                    var _a, _b, _c, _d, _e, _f, _g;
                                     if (widget.type === 'container') {
                                         return ``;
                                     }
                                     switch (widget.data.elem) {
                                         case 'select':
-                                            widget.data.selectList = (_a = widget.data.selectList) !== null && _a !== void 0 ? _a : [];
-                                            widget.data.selectType = (_b = widget.data.selectType) !== null && _b !== void 0 ? _b : 'manual';
+                                            widget.data.selectList = widget.data.selectList ?? [];
+                                            widget.data.selectType = widget.data.selectType ?? 'manual';
                                             const list = widget.data.selectList;
                                             let html = Editor.select({
                                                 title: '資料來源',
@@ -244,8 +236,7 @@ export const widgetComponent = {
                                                     title: "選項集合",
                                                     originalArray: widget.data.selectList,
                                                     array: widget.data.selectList.map((dd, index) => {
-                                                        var _a, _b;
-                                                        dd.visible = (_a = dd.visible) !== null && _a !== void 0 ? _a : 'visible';
+                                                        dd.visible = dd.visible ?? 'visible';
                                                         return {
                                                             title: dd.name || `區塊:${index + 1}`,
                                                             expand: dd,
@@ -272,7 +263,7 @@ export const widgetComponent = {
                                                                 `${Editor.select({
                                                                     title: "參數可見度",
                                                                     gvc: gvc,
-                                                                    def: (_b = dd.visible) !== null && _b !== void 0 ? _b : 'visible',
+                                                                    def: dd.visible ?? 'visible',
                                                                     array: [
                                                                         { title: '隱藏', value: "invisible" },
                                                                         { title: '可選', value: "visible" }
@@ -302,9 +293,8 @@ export const widgetComponent = {
                                                         widget.refreshComponent();
                                                     }
                                                 }) + (() => {
-                                                    var _a, _b;
-                                                    widget.data.dataFrom = (_a = widget.data.dataFrom) !== null && _a !== void 0 ? _a : "static";
-                                                    widget.data.innerEvenet = (_b = widget.data.innerEvenet) !== null && _b !== void 0 ? _b : {};
+                                                    widget.data.dataFrom = widget.data.dataFrom ?? "static";
+                                                    widget.data.innerEvenet = widget.data.innerEvenet ?? {};
                                                     return gvc.map([
                                                         Editor.select({
                                                             title: '預設值',
@@ -347,7 +337,7 @@ export const widgetComponent = {
                                                 })())}</div>`;
                                             }
                                             else {
-                                                widget.data.selectAPI = (_c = widget.data.selectAPI) !== null && _c !== void 0 ? _c : {};
+                                                widget.data.selectAPI = widget.data.selectAPI ?? {};
                                                 html += TriggerEvent.editer(gvc, widget, widget.data.selectAPI, {
                                                     hover: true,
                                                     option: [],
@@ -356,8 +346,8 @@ export const widgetComponent = {
                                             }
                                             return `<div class="alert  mt-2 p-2"  style="background-color: #262677;">${html}</div>`;
                                         case 'img':
-                                            widget.data.dataFrom = (_d = widget.data.dataFrom) !== null && _d !== void 0 ? _d : "static";
-                                            widget.data.innerEvenet = (_e = widget.data.innerEvenet) !== null && _e !== void 0 ? _e : {};
+                                            widget.data.dataFrom = widget.data.dataFrom ?? "static";
+                                            widget.data.innerEvenet = widget.data.innerEvenet ?? {};
                                             return gvc.map([
                                                 Editor.select({
                                                     title: '內容取得',
@@ -376,12 +366,11 @@ export const widgetComponent = {
                                                     }
                                                 }),
                                                 (() => {
-                                                    var _a;
                                                     if (widget.data.dataFrom === 'static') {
                                                         return Editor.uploadImage({
                                                             title: '選擇圖片',
                                                             gvc: gvc,
-                                                            def: (_a = widget.data.inner) !== null && _a !== void 0 ? _a : "",
+                                                            def: widget.data.inner ?? "",
                                                             callback: (data) => {
                                                                 widget.data.inner = data;
                                                                 widget.refreshComponent();
@@ -398,8 +387,8 @@ export const widgetComponent = {
                                                 })()
                                             ]);
                                         default:
-                                            widget.data.dataFrom = (_f = widget.data.dataFrom) !== null && _f !== void 0 ? _f : "static";
-                                            widget.data.innerEvenet = (_g = widget.data.innerEvenet) !== null && _g !== void 0 ? _g : {};
+                                            widget.data.dataFrom = widget.data.dataFrom ?? "static";
+                                            widget.data.innerEvenet = widget.data.innerEvenet ?? {};
                                             return gvc.map([
                                                 (() => {
                                                     if (['link'].indexOf(widget.data.elem) !== -1) {
@@ -456,7 +445,7 @@ export const widgetComponent = {
                                 glitter.htmlGenerate.editeText({
                                     gvc: gvc,
                                     title: "備註",
-                                    default: (_a = widget.data.note) !== null && _a !== void 0 ? _a : "",
+                                    default: widget.data.note ?? "",
                                     placeHolder: "請輸入元件備註內容",
                                     callback: (text) => {
                                         widget.data.note = text;
@@ -470,11 +459,10 @@ export const widgetComponent = {
                         gvc: gvc,
                         title: '特徵值',
                         array: widget.data.attr.map((dd, index) => {
-                            var _a, _b, _c;
-                            dd.type = (_a = dd.type) !== null && _a !== void 0 ? _a : 'par';
-                            dd.attr = (_b = dd.attr) !== null && _b !== void 0 ? _b : "";
+                            dd.type = dd.type ?? 'par';
+                            dd.attr = dd.attr ?? "";
                             return {
-                                title: (_c = dd.attr) !== null && _c !== void 0 ? _c : `特徵:${index + 1}`,
+                                title: dd.attr ?? `特徵:${index + 1}`,
                                 expand: dd,
                                 innerHtml: (() => {
                                     return gvc.map([
@@ -521,13 +509,12 @@ export const widgetComponent = {
                                             }
                                         })(),
                                         (() => {
-                                            var _a, _b;
                                             if (dd.type === 'par') {
                                                 if (['script', 'img'].indexOf(widget.data.elem) !== -1 && (dd.attr === 'src')) {
                                                     return Editor.uploadFile({
                                                         title: "資源路徑",
                                                         gvc: gvc,
-                                                        def: (_a = dd.value) !== null && _a !== void 0 ? _a : '',
+                                                        def: dd.value ?? '',
                                                         callback: (text) => {
                                                             dd.value = text;
                                                             widget.refreshComponent();
@@ -538,7 +525,7 @@ export const widgetComponent = {
                                                     return glitter.htmlGenerate.editeInput({
                                                         gvc: gvc,
                                                         title: '參數內容',
-                                                        default: (_b = dd.value) !== null && _b !== void 0 ? _b : "",
+                                                        default: dd.value ?? "",
                                                         placeHolder: "輸入參數內容",
                                                         callback: (text) => {
                                                             dd.value = text;

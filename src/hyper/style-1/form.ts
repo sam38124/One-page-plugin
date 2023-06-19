@@ -3,7 +3,7 @@ import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
 import {ScriptStyle1} from "../script-style-1.js";
 import {Editor} from "../../editor.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+
 import {component} from "../../official/component.js";
 import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 

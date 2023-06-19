@@ -180,7 +180,6 @@ ${Editor.h3("選擇頁面")}
                                             tag: object.link,
                                             option: {
                                                 animation: gvc.glitter.animation.fade,
-
                                             }
                                         }
                                     );
@@ -193,7 +192,7 @@ ${Editor.h3("選擇頁面")}
                                             tag: object.link,
                                             goBack: true,
                                             option: {
-                                                animation: gvc.glitter.animation.fade
+                                                animation: gvc.glitter.animation.rightToLeft
                                             }
                                         }
                                     );
