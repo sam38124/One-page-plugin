@@ -101,7 +101,6 @@ export class TriggerEvent {
                     }, 100);
                 }
                 fal += 1;
-                console.log('error' + url);
             }
         }
         tryLoop();
@@ -132,23 +131,28 @@ export class TriggerEvent {
                         resolve(true);
                     }
                     catch (e) {
-                        console.log(e);
-                        resolve(false);
+                        returnData = event.errorCode ?? "";
+                        resolve(true);
                     }
                 }
-                oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {};
-                if (!oj.gvc.glitter.share.clickEvent[event.clickEvent.src]) {
-                    await new Promise((resolve, reject) => {
-                        oj.gvc.glitter.addMtScript([
-                            { src: `${glitter.htmlGenerate.resourceHook(event.clickEvent.src)}`, type: 'module' }
-                        ], () => {
-                            pass();
-                        }, () => {
-                            resolve(false);
+                try {
+                    oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {};
+                    if (!oj.gvc.glitter.share.clickEvent[event.clickEvent.src]) {
+                        await new Promise((resolve, reject) => {
+                            oj.gvc.glitter.addMtScript([
+                                { src: `${glitter.htmlGenerate.resourceHook(event.clickEvent.src)}`, type: 'module' }
+                            ], () => {
+                                pass();
+                            }, () => {
+                                resolve(false);
+                            });
                         });
-                    });
+                    }
+                    else {
+                        pass();
+                    }
                 }
-                else {
+                catch (e) {
                     pass();
                 }
             });
@@ -332,17 +336,18 @@ ${Editor.arrayItem({
                                                         })()}</div>
 ${(() => {
                                                             obj.dataPlaceExpand = obj.dataPlaceExpand ?? {};
+                                                            obj.errorPlaceExpand = obj.errorPlaceExpand ?? {};
                                                             return `<div class="mt-2 border-white rounded" style="border-width:3px;">
 ${Editor.toggleExpand({
                                                                 gvc: gvc,
-                                                                title: "<span class='text-black' style=''>資料儲存位置[留空則不儲存]</span>",
+                                                                title: "<span class='text-black' style=''>返回事件</span>",
                                                                 data: obj.dataPlaceExpand,
                                                                 innerText: () => {
                                                                     return glitter.htmlGenerate.editeText({
                                                                         gvc: gvc,
                                                                         title: "",
                                                                         default: obj.dataPlace ?? "",
-                                                                        placeHolder: `請輸入返回資料的儲存位置:
+                                                                        placeHolder: `執行事件或儲存返回資料:
 範例:
  (()=>{
    //將資料儲存於當前頁面．
@@ -359,7 +364,25 @@ ${Editor.toggleExpand({
                                                                 class: ` `,
                                                                 style: `background:#65379B;border:2px solid white;`,
                                                             })}
-</div>`;
+</div>` + `<div class="mt-2 border-white rounded" style="border-width:3px;">${Editor.toggleExpand({
+                                                                gvc: gvc,
+                                                                title: "<span class='text-black' style=''>異常返回值</span>",
+                                                                data: obj.errorPlaceExpand,
+                                                                innerText: () => {
+                                                                    return glitter.htmlGenerate.editeInput({
+                                                                        gvc: gvc,
+                                                                        title: "",
+                                                                        default: obj.errorCode ?? "",
+                                                                        placeHolder: `請輸入參數值`,
+                                                                        callback: (text) => {
+                                                                            obj.errorCode = text;
+                                                                            widget.refreshComponent();
+                                                                        }
+                                                                    });
+                                                                },
+                                                                class: ` `,
+                                                                style: `background:#65379B;border:2px solid white;`,
+                                                            })}</div>`;
                                                         })()}
 
 `;

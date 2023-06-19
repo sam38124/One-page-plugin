@@ -192,7 +192,9 @@ ${Editor.h3("選擇頁面")}
                                             tag: object.link,
                                             goBack: true,
                                             option: {
-                                                animation: gvc.glitter.animation.rightToLeft
+                                                animation: gvc.glitter.ut.frSize({
+                                                    sm:gvc.glitter.animation.fade
+                                                },gvc.glitter.animation.rightToLeft)
                                             }
                                         }
                                     );

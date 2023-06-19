@@ -61,7 +61,7 @@ const template = (gvc, widget, setting, hoverID) => {
             ScriptStyle1.initialScript(gvc, widget);
             const id = glitter.getUUID();
             return gvc.bindView(() => {
-                let filter = "*";
+                let filter = (template.tag.length > 0) ? template.tag[0].className : "*";
                 return {
                     bind: id,
                     view: () => {
@@ -109,11 +109,7 @@ const template = (gvc, widget, setting, hoverID) => {
                     <a class="card card-portfolio card-hover bg-transparent border-0 shadow">
                       <div
                         class="card-img-overlay d-flex flex-column align-items-center justify-content-center rounded-3"
-                        onclick="${gvc.event(() => {
-                                    TriggerEvent.trigger({
-                                        gvc, widget, clickEvent: p,
-                                    });
-                                })}"
+                        
                         style="cursor:pointer"
                       >
                         <span class="position-absolute top-0 start-0 w-100 h-100 opacity-75  rounded-3" style="background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);"></span>
@@ -333,11 +329,6 @@ ${Editor.h3('項目列表')}
                                             widget.refreshComponent();
                                         }
                                     }),
-                                    TriggerEvent.editer(gvc, widget, data, {
-                                        hover: true,
-                                        option: [],
-                                        title: "點擊事件"
-                                    }),
                                     TriggerEvent.editer(gvc, widget, data.preView, {
                                         hover: true,
                                         option: [],
@@ -346,7 +337,7 @@ ${Editor.h3('項目列表')}
                                     TriggerEvent.editer(gvc, widget, data.create, {
                                         hover: true,
                                         option: [],
-                                        title: "點擊事件"
+                                        title: "創建事件"
                                     })
                                 ]);
                             }
