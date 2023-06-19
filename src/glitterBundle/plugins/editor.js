@@ -322,8 +322,9 @@ export class Editor {
             }));
     }
     static toggleExpand(obj) {
+        var _a;
         const glitter = window.glitter;
-        obj.data.expand = obj.data.expand ?? false;
+        obj.data.expand = (_a = obj.data.expand) !== null && _a !== void 0 ? _a : false;
         return `${obj.gvc.bindView(() => {
             const id = glitter.getUUID();
             return {
@@ -332,7 +333,7 @@ export class Editor {
                     if (obj.data.expand) {
                         return `<div class="w-100  rounded p-2 ${obj.class}" style="background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);${obj.style};">
                             <div
-                                class="d-flex p-0 align-items-center mb-2 w-100 text-white"
+                                class="d-flex  align-items-center mb-2 w-100 text-white  "
                                 onclick="${obj.gvc.event(() => {
                             obj.data.expand = !obj.data.expand;
                             obj.gvc.notifyDataChange(id);
@@ -343,6 +344,7 @@ export class Editor {
                                 <div class="flex-fill"></div>
                                 <div style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-white"></i></div>
                             </div>
+                             <div class="w-100 bg-white my-2" style="height:1px;"></div>
                             ${(typeof obj.innerText === 'string') ? obj.innerText : obj.innerText()}
                         </div>`;
                     }
@@ -393,16 +395,17 @@ export class Editor {
                                         style="height: 40px;"
                                         placeholder="${obj.placeHolder}"
                                         onfocus="${obj.gvc.event(() => {
-                            $('#' + obj.gvc.id(id)).addClass(`show`);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         onblur="${gvc.event(() => {
                             setTimeout(() => {
-                                $('#' + gvc.id(id)).removeClass(`show`);
+                                gvc.getBindViewElem(id).removeClass(`show`);
                             }, 300);
                         })}"
                                         oninput="${gvc.event((e) => {
                             obj.def = e.value;
                             gvc.notifyDataChange(id);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         value="${obj.def}"
                                         onchange="${gvc.event((e) => {
@@ -429,6 +432,7 @@ export class Editor {
                                                 class="dropdown-item"
                                                 onclick="${gvc.event(() => {
                                 obj.def = d3;
+                                gvc.notifyDataChange(id2);
                                 obj.callback(obj.def);
                             })}"
                                             >

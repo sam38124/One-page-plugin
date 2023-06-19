@@ -287,8 +287,9 @@ export class Editor {
             }));
     }
     static toggleExpand(obj) {
+        var _a;
         const glitter = window.glitter;
-        obj.data.expand = obj.data.expand ?? false;
+        obj.data.expand = (_a = obj.data.expand) !== null && _a !== void 0 ? _a : false;
         return `${obj.gvc.bindView(() => {
             const id = glitter.getUUID();
             return {
@@ -395,6 +396,7 @@ export class Editor {
                                                 class="dropdown-item"
                                                 onclick="${gvc.event(() => {
                                 obj.def = d3;
+                                gvc.notifyDataChange(id2);
                                 obj.callback(obj.def);
                             })}"
                                             >

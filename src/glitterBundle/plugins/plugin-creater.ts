@@ -26,14 +26,7 @@ export class Plugin {
     public static create(url: string, fun: (
         glitter: Glitter, editMode: boolean) => {
         [name: string]: {
-            defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData?: any,htmlGenerate?:any) => {
-                view: () => (Promise<string> | string),
-                editor: () => Promise<string> | string
-            })
-        }
-    }): ({
-        [name: string]: {
-            defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData?: any,htmlGenerate?:any) => {
+            defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData?: any) => {
                 view: () => (Promise<string> | string),
                 editor: () => Promise<string> | string
             })
@@ -41,12 +34,12 @@ export class Plugin {
     }) {
         const glitter = (window as any).glitter
         glitter.share.htmlExtension[url] = fun(glitter, (window.parent as any).editerData !== undefined)
-        return glitter.share.htmlExtension[url]
+
     }
 
     public static createComponent(url: string, fun: (
         glitter: Glitter, editMode: boolean) => {
-        defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData?: any,htmlGenerate?:any) => {
+        defaultData?: any, render: ((gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData?: any) => {
             view: () => (Promise<string> | string),
             editor: () => Promise<string> | string
         })
@@ -78,16 +71,15 @@ export class Plugin {
         return val;
     }
 
-    public static setComponent(original: string, url: URL): (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData?: any,htmlGenerate?:any) => {
+    public static setComponent(original: string, url: URL): (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData?: any) => {
         view: () => (Promise<string> | string),
         editor: () => Promise<string> | string
     } {
         const glitter = (window as any).glitter
         url.searchParams.set("original", original)
-        return (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData?: any,htmlGenerate?:any) => {
+        return (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData?: any) => {
             glitter.share.componentData = glitter.share.componentData ?? {}
             let val: any = glitter.share.componentData[url.href]
-
             function startSync(callback: () => void) {
                 if (val) {
                     callback()
@@ -118,11 +110,11 @@ export class Plugin {
                 view: () => {
                     return new Promise<string>((resolve, reject) => {
                         startSync(() => {
-                            const data = val.render(gvc, widget, setting, hoverID, subData).view()
-                            if (typeof data === 'string') {
+                            const data=val.render(gvc, widget, setting, hoverID, subData).view()
+                            if(typeof data==='string'){
                                 resolve(data)
-                            } else {
-                                data.then((res: string) => {
+                            }else{
+                                data.then((res:string)=>{
                                     resolve(res)
                                 })
                             }
@@ -132,11 +124,11 @@ export class Plugin {
                 editor: () => {
                     return new Promise<string>((resolve, reject) => {
                         startSync(() => {
-                            const data = val.render(gvc, widget, setting, hoverID, subData).editor()
-                            if (typeof data === 'string') {
+                            const data=val.render(gvc, widget, setting, hoverID, subData).editor()
+                            if(typeof data==='string'){
                                 resolve(data)
-                            } else {
-                                data.then((res: string) => {
+                            }else{
+                                data.then((res:string)=>{
                                     resolve(res)
                                 })
                             }

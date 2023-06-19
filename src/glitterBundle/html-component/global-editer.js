@@ -2,15 +2,16 @@ import { TriggerEvent } from "../plugins/trigger-event.js";
 import { Editor } from "./editor.js";
 export const globalEditer = {
     render: (gvc, widget, setting, hoverID, subData) => {
+        var _a, _b, _c, _d;
         const glitter = gvc.glitter;
-        widget.data.elem = widget.data.elem ?? "h3";
-        widget.data.inner = widget.data.inner ?? "";
-        widget.data.attr = widget.data.attr ?? [];
+        widget.data.elem = (_a = widget.data.elem) !== null && _a !== void 0 ? _a : "h3";
+        widget.data.inner = (_b = widget.data.inner) !== null && _b !== void 0 ? _b : "";
+        widget.data.attr = (_c = widget.data.attr) !== null && _c !== void 0 ? _c : [];
         const id = subData.widgetComponentID;
-        subData = subData ?? {};
+        subData = subData !== null && subData !== void 0 ? subData : {};
         let formData = subData;
         if ((widget.data.dataFrom === "code")) {
-            widget.data.innerEvenet = widget.data.innerEvenet ?? {};
+            widget.data.innerEvenet = (_d = widget.data.innerEvenet) !== null && _d !== void 0 ? _d : {};
             TriggerEvent.trigger({
                 gvc: gvc,
                 widget: widget,
@@ -28,9 +29,10 @@ export const globalEditer = {
                 return {};
             },
             editor: () => {
-                widget.type = widget.type ?? "elem";
-                widget.data.elemExpand = widget.data.elemExpand ?? [];
-                widget.data.atrExpand = widget.data.atrExpand ?? {};
+                var _a, _b, _c;
+                widget.type = (_a = widget.type) !== null && _a !== void 0 ? _a : "elem";
+                widget.data.elemExpand = (_b = widget.data.elemExpand) !== null && _b !== void 0 ? _b : [];
+                widget.data.atrExpand = (_c = widget.data.atrExpand) !== null && _c !== void 0 ? _c : {};
                 return gvc.map([
                     `<div class="mt-2"></div>`,
                     Editor.toggleExpand({
@@ -55,10 +57,11 @@ export const globalEditer = {
                                     placeHolder: "請輸入元素標籤"
                                 }),
                                 (() => {
+                                    var _a, _b, _c, _d, _e, _f, _g;
                                     switch (widget.data.elem) {
                                         case 'select':
-                                            widget.data.selectList = widget.data.selectList ?? [];
-                                            widget.data.selectType = widget.data.selectType ?? 'manual';
+                                            widget.data.selectList = (_a = widget.data.selectList) !== null && _a !== void 0 ? _a : [];
+                                            widget.data.selectType = (_b = widget.data.selectType) !== null && _b !== void 0 ? _b : 'manual';
                                             const list = widget.data.selectList;
                                             let html = Editor.select({
                                                 title: '資料來源',
@@ -80,7 +83,8 @@ export const globalEditer = {
                                                     title: "選項集合",
                                                     originalArray: widget.data.selectList,
                                                     array: widget.data.selectList.map((dd, index) => {
-                                                        dd.visible = dd.visible ?? 'visible';
+                                                        var _a, _b;
+                                                        dd.visible = (_a = dd.visible) !== null && _a !== void 0 ? _a : 'visible';
                                                         return {
                                                             title: dd.name || `區塊:${index + 1}`,
                                                             expand: dd,
@@ -106,7 +110,7 @@ export const globalEditer = {
                                                                 `${Editor.select({
                                                                     title: "參數可見度",
                                                                     gvc: gvc,
-                                                                    def: dd.visible ?? 'visible',
+                                                                    def: (_b = dd.visible) !== null && _b !== void 0 ? _b : 'visible',
                                                                     array: [
                                                                         { title: '隱藏', value: "invisible" },
                                                                         { title: '可選', value: "visible" }
@@ -136,8 +140,9 @@ export const globalEditer = {
                                                         widget.refreshComponent();
                                                     }
                                                 }) + (() => {
-                                                    widget.data.dataFrom = widget.data.dataFrom ?? "static";
-                                                    widget.data.innerEvenet = widget.data.innerEvenet ?? {};
+                                                    var _a, _b;
+                                                    widget.data.dataFrom = (_a = widget.data.dataFrom) !== null && _a !== void 0 ? _a : "static";
+                                                    widget.data.innerEvenet = (_b = widget.data.innerEvenet) !== null && _b !== void 0 ? _b : {};
                                                     return gvc.map([
                                                         Editor.select({
                                                             title: '預設值',
@@ -180,7 +185,7 @@ export const globalEditer = {
                                                 })())}</div>`;
                                             }
                                             else {
-                                                widget.data.selectAPI = widget.data.selectAPI ?? {};
+                                                widget.data.selectAPI = (_c = widget.data.selectAPI) !== null && _c !== void 0 ? _c : {};
                                                 html += TriggerEvent.editer(gvc, widget, widget.data.selectAPI, {
                                                     hover: true,
                                                     option: [],
@@ -189,8 +194,8 @@ export const globalEditer = {
                                             }
                                             return `<div class="alert  mt-2 p-2"  style="background-color: #262677;">${html}</div>`;
                                         case 'img':
-                                            widget.data.dataFrom = widget.data.dataFrom ?? "static";
-                                            widget.data.innerEvenet = widget.data.innerEvenet ?? {};
+                                            widget.data.dataFrom = (_d = widget.data.dataFrom) !== null && _d !== void 0 ? _d : "static";
+                                            widget.data.innerEvenet = (_e = widget.data.innerEvenet) !== null && _e !== void 0 ? _e : {};
                                             return gvc.map([
                                                 Editor.select({
                                                     title: '內容取得',
@@ -209,11 +214,12 @@ export const globalEditer = {
                                                     }
                                                 }),
                                                 (() => {
+                                                    var _a;
                                                     if (widget.data.dataFrom === 'static') {
                                                         return Editor.uploadImage({
                                                             title: '選擇圖片',
                                                             gvc: gvc,
-                                                            def: widget.data.inner ?? "",
+                                                            def: (_a = widget.data.inner) !== null && _a !== void 0 ? _a : "",
                                                             callback: (data) => {
                                                                 widget.data.inner = data;
                                                                 widget.refreshComponent();
@@ -230,8 +236,8 @@ export const globalEditer = {
                                                 })()
                                             ]);
                                         default:
-                                            widget.data.dataFrom = widget.data.dataFrom ?? "static";
-                                            widget.data.innerEvenet = widget.data.innerEvenet ?? {};
+                                            widget.data.dataFrom = (_f = widget.data.dataFrom) !== null && _f !== void 0 ? _f : "static";
+                                            widget.data.innerEvenet = (_g = widget.data.innerEvenet) !== null && _g !== void 0 ? _g : {};
                                             return gvc.map([
                                                 Editor.select({
                                                     title: '內容取得',
@@ -281,10 +287,11 @@ export const globalEditer = {
                         gvc: gvc,
                         title: '特徵值',
                         array: widget.data.attr.map((dd, index) => {
-                            dd.type = dd.type ?? "par";
-                            dd.attr = dd.attr ?? "";
+                            var _a, _b, _c;
+                            dd.type = (_a = dd.type) !== null && _a !== void 0 ? _a : "par";
+                            dd.attr = (_b = dd.attr) !== null && _b !== void 0 ? _b : "";
                             return {
-                                title: dd.attr ?? `特徵:${index + 1}`,
+                                title: (_c = dd.attr) !== null && _c !== void 0 ? _c : `特徵:${index + 1}`,
                                 expand: dd,
                                 innerHtml: (() => {
                                     return gvc.map([
@@ -331,11 +338,12 @@ export const globalEditer = {
                                             }
                                         })(),
                                         (() => {
+                                            var _a;
                                             if (dd.type === 'par') {
                                                 return glitter.htmlGenerate.editeText({
                                                     gvc: gvc,
                                                     title: '參數編輯',
-                                                    default: dd.value ?? "",
+                                                    default: (_a = dd.value) !== null && _a !== void 0 ? _a : "",
                                                     placeHolder: "輸入參數內容",
                                                     callback: (text) => {
                                                         dd.value = text;

@@ -4,7 +4,6 @@ export class Plugin {
     static create(url, fun) {
         const glitter = window.glitter;
         glitter.share.htmlExtension[url] = fun(glitter, window.parent.editerData !== undefined);
-        return glitter.share.htmlExtension[url];
     }
     static createComponent(url, fun) {
         const glitter = window.glitter;
@@ -35,16 +34,18 @@ export class Plugin {
     static setComponent(original, url) {
         const glitter = window.glitter;
         url.searchParams.set("original", original);
-        return (gvc, widget, setting, hoverID, subData, htmlGenerate) => {
-            glitter.share.componentData = glitter.share.componentData ?? {};
+        return (gvc, widget, setting, hoverID, subData) => {
+            var _a;
+            glitter.share.componentData = (_a = glitter.share.componentData) !== null && _a !== void 0 ? _a : {};
             let val = glitter.share.componentData[url.href];
             function startSync(callback) {
+                var _a, _b;
                 if (val) {
                     callback();
                     return;
                 }
-                glitter.share.componentCallback = glitter.share.componentCallback ?? {};
-                glitter.share.componentCallback[url.href] = glitter.share.componentCallback[url.href] ?? [];
+                glitter.share.componentCallback = (_a = glitter.share.componentCallback) !== null && _a !== void 0 ? _a : {};
+                glitter.share.componentCallback[url.href] = (_b = glitter.share.componentCallback[url.href]) !== null && _b !== void 0 ? _b : [];
                 glitter.share.componentCallback[url.href].push((dd) => {
                     val = glitter.share.componentData[url.href];
                     glitter.share.componentData[url.href] = dd;
@@ -114,16 +115,18 @@ export class Plugin {
         return true;
     }
     static initialConfig(name) {
+        var _a, _b, _c;
         const glitter = window.glitter;
-        glitter.lowCodeAPP = glitter.lowCodeAPP ?? {};
-        glitter.lowCodeAPP[name] = glitter.lowCodeAPP[name] ?? {};
-        glitter.lowCodeAPP[name].config = glitter.lowCodeAPP[name].config ?? {};
+        glitter.lowCodeAPP = (_a = glitter.lowCodeAPP) !== null && _a !== void 0 ? _a : {};
+        glitter.lowCodeAPP[name] = (_b = glitter.lowCodeAPP[name]) !== null && _b !== void 0 ? _b : {};
+        glitter.lowCodeAPP[name].config = (_c = glitter.lowCodeAPP[name].config) !== null && _c !== void 0 ? _c : {};
     }
     static getAppConfig(name, defaultData) {
         const glitter = window.glitter;
         Plugin.initialConfig(name);
         Object.keys(defaultData).map((dd) => {
-            defaultData[dd] = glitter.lowCodeAPP[name].config[dd] ?? defaultData[dd];
+            var _a;
+            defaultData[dd] = (_a = glitter.lowCodeAPP[name].config[dd]) !== null && _a !== void 0 ? _a : defaultData[dd];
         });
         return defaultData;
     }

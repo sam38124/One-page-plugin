@@ -13,8 +13,8 @@ window.addEventListener('resize', function () {
         }
     }
 });
-function listenElementChange() {
-    const targetElement = document.querySelector('#glitterPage');
+function listenElementChange(id) {
+    const targetElement = document.querySelector(`#${id}`);
     const observer = new MutationObserver(function (mutationsList) {
         for (let mutation of mutationsList) {
             if (mutation.addedNodes.length > 0) {
@@ -27,9 +27,10 @@ function listenElementChange() {
     observer.observe(targetElement, { childList: true, subtree: true });
 }
 function traverseHTML(element) {
+    var _a;
     let result = {};
     result.tag = element.tagName;
-    var attributes = element.attributes ?? [];
+    var attributes = (_a = element.attributes) !== null && _a !== void 0 ? _a : [];
     if (attributes.length > 0) {
         result.attributes = {};
         for (var i = 0; i < attributes.length; i++) {
@@ -74,7 +75,9 @@ glitter.$(document).ready(function () {
     else if (navigator.userAgent === 'iosGlitter') {
         glitter.deviceType = glitter.deviceTypeEnum.Ios;
     }
-    listenElementChange();
+    listenElementChange(`glitterPage`);
+    listenElementChange(`Navigation`);
+    glitter.closeDrawer();
     Entry.onCreate(glitter);
 });
 function glitterInitial() {

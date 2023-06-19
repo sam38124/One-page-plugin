@@ -179,7 +179,8 @@ ${Editor.h3("選擇頁面")}
                                             data: {},
                                             tag: object.link,
                                             option: {
-                                                animation: gvc.glitter.animation.fade
+                                                animation: gvc.glitter.animation.fade,
+
                                             }
                                         }
                                     );
