@@ -119,8 +119,8 @@ TriggerEvent.create(import.meta.url, {
                         },
                         data: JSON.stringify(json)
                     }).then((d2) => {
-                        shareDialog.dataLoading({ visible: false });
                         setTimeout(() => {
+                            shareDialog.dataLoading({ visible: false });
                             if (d2.result) {
                                 User.setToken(d2.response.token);
                                 TriggerEvent.trigger({
