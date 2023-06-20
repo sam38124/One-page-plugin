@@ -169,6 +169,7 @@ ${Editor.h3("選擇頁面")}
                                             animation: gvc.glitter.animation.fade,
                                         }
                                     });
+                                    resolve(true);
                                 }
                                 else {
                                     gvc.glitter.htmlGenerate.changePage({
@@ -183,6 +184,7 @@ ${Editor.h3("選擇頁面")}
                                             }, gvc.glitter.animation.rightToLeft)
                                         }
                                     });
+                                    resolve(true);
                                 }
                             });
                         });
@@ -192,16 +194,20 @@ ${Editor.h3("選擇頁面")}
                         const element = document.getElementsByClassName(`glitterTag${object.link}`)[0];
                         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
                         window.scrollTo({ top: y, behavior: "smooth" });
+                        return true;
                     }
                     else {
                         gvc.glitter.runJsInterFace('openWeb', {
                             url: object.link,
                         }, (data) => {
+                            return true;
                         }, {
                             webFunction(data, callback) {
                                 gvc.glitter.location.href = object.link;
+                                return true;
                             },
                         });
+                        return true;
                     }
                 },
             };
