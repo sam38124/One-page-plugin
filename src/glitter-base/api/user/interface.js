@@ -50,10 +50,15 @@ TriggerEvent.create(import.meta.url, {
             return {
                 editor: () => {
                     object.registerEvent = object.registerEvent ?? {};
+                    object.verifyEvent = object.verifyEvent ?? {};
                     return TriggerEvent.editer(gvc, widget, object.registerEvent, {
                         hover: false,
                         option: [],
                         title: "註冊成功後的觸發事件"
+                    }) + TriggerEvent.editer(gvc, widget, object.verifyEvent, {
+                        hover: false,
+                        option: [],
+                        title: "認證頁面跳轉"
                     });
                 },
                 event: () => {
@@ -99,13 +104,25 @@ TriggerEvent.create(import.meta.url, {
                                 });
                             }
                             else {
-                                GlobalUser.token = r.response.token;
-                                GlobalUser.userInfo = json.userData;
-                                setTimeout(() => {
-                                    TriggerEvent.trigger({
-                                        gvc, widget, clickEvent: object.registerEvent, subData, element
+                                if (r.response.type === 'normal') {
+                                    GlobalUser.token = r.response.token;
+                                    GlobalUser.userInfo = json.userData;
+                                    setTimeout(() => {
+                                        TriggerEvent.trigger({
+                                            gvc, widget, clickEvent: object.registerEvent, subData, element
+                                        });
+                                    }, 1000);
+                                }
+                                else {
+                                    dialog.successMessage({
+                                        text: `認證信已發送，請前往郵件認證您的信箱並進行登入`,
+                                        callback: () => {
+                                            TriggerEvent.trigger({
+                                                gvc, widget, clickEvent: object.verifyEvent, subData, element
+                                            });
+                                        }
                                     });
-                                }, 1000);
+                                }
                             }
                         });
                     }

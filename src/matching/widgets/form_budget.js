@@ -27,10 +27,16 @@ export const form_budget = Plugin.createComponent(import.meta.url, (glitter, edi
                                 formData[data.key] = "3000";
                             }
                             widget.refreshComponent();
-                        }
+                        },
+                        option: [
+                            {
+                                key: (data.readonly) ? `disabled` : ``,
+                                value: ''
+                            }
+                        ]
                     })}
               ${(formData[data.key] === "-1") ? `` : `
-              ${glitter.htmlGenerate.editeInput({
+              ${Editor.editeInput({
                         gvc: gvc,
                         title: ` <label class="form-label fs-base mb-n2"><span class="text-danger ms-2"> * </span>輸入預算</label>`,
                         default: formData[data.key],
@@ -42,7 +48,13 @@ export const form_budget = Plugin.createComponent(import.meta.url, (glitter, edi
                             }
                             widget.refreshComponent();
                         },
-                        type: 'number'
+                        type: 'number',
+                        option: [
+                            {
+                                key: (data.readonly) ? `readonly` : ``,
+                                value: ''
+                            }
+                        ]
                     })}
               `}
 </div>

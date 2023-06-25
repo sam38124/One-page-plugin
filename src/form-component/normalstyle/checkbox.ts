@@ -21,22 +21,26 @@ export const checkbox = Plugin.createComponent(import.meta.url, (glitter: Glitte
                         return {
                             bind: id,
                             view: () => {
-                                console.log(formData)
                                 return data.selectList.map((dd: any, index: number) => {
+                                    data.boxType=data.boxType || 'single'
                                     return /*html*/ `<div class="form-check">
   <input id="${id}${index}" class="form-check-input" type="checkbox" value="" onchange="${gvc.event((e, event) => {
-                                        if (data.boxType === 'single') {
-                                            formData[data.key] = []
-                                        } else {
-                                            formData[data.key] = formData[data.key].filter((d2: any) => {
-                                                return d2!==dd.value
-                                            })
+                                        if(!data.readonly){
+                                            if (data.boxType === 'single') {
+                                                formData[data.key] = []
+                                            } else {
+                                                formData[data.key] = formData[data.key].filter((d2: any) => {
+                                                    return d2!==dd.value
+                                                })
+                                            }
+                                            if (e.checked) {
+                                                formData[data.key].push(dd.value)
+                                            }
                                         }
-                                        if (e.checked) {
-                                            formData[data.key].push(dd.value)
-                                        }
+                                       
+                                      
                                         gvc.notifyDataChange(id)
-                                    })}" ${(formData[data.key].indexOf(dd.value)!==-1) ? `checked` : ``}>
+                                    })}" ${(formData[data.key].indexOf(dd.value)!==-1) ? `checked` : ``} >
   <label class="form-check-label" style="font-size:16px;font-weight:500;" for="${id}${index}">
     ${dd.name}
   </label>

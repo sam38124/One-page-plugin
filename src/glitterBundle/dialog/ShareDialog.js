@@ -1,11 +1,13 @@
 export class ShareDialog {
+    dataLoading = (obj) => {
+    };
+    errorMessage = (obj) => {
+    };
+    successMessage = (obj) => {
+    };
+    checkYesOrNot;
+    policy;
     constructor(glitter) {
-        this.dataLoading = (obj) => {
-        };
-        this.errorMessage = (obj) => {
-        };
-        this.successMessage = (obj) => {
-        };
         this.dataLoading = (obj) => {
             if (obj.visible) {
                 glitter.openDiaLog('glitterBundle/dialog/dialog.js', 'dataLoading', { type: 'dataLoading', obj: obj });

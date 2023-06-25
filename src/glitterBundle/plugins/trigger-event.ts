@@ -152,6 +152,8 @@ export class TriggerEvent {
                 async function pass() {
                     try {
                         const gvc = oj.gvc
+                        const subData=oj.subData
+                        const widget=oj.widget
                         setTimeout(() => {
                             resolve(true)
                         }, 4000)

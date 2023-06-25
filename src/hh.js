@@ -1,6 +1,11 @@
 import { init } from "./glitterBundle/GVController.js";
 init((gvc, glitter, gBundle) => {
     (() => {
+        if ([].find((dd) => {
+            return gvc.getBundle()['identify'][dd] === '';
+        })) {
+        }
+        alert(JSON.stringify(gvc.getBundle()['identify']));
         ``;
         glitter.getUrlParameter('selectChildItem');
         if (gvc.getBundle().star === undefined) {

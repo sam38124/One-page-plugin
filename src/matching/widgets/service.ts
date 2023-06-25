@@ -501,12 +501,10 @@ ${widget.data.bigItem.map((dd: any, index: number) => {
 background:50%/cover no-repeat url('${dd.bg}');
    " onclick="${gvc.event(()=>{
                                     glitter.setUrlParameter("selectBidItem",dd.id);
-                                    // gvc.notifyDataChange(id)
-                                    // glitter.share.refreshService()
                                     gvc.recreateView()
                                 })}">
 <div  class="position-absolute w-100 h-100 bg-dark  top-0 rounded glitterTagundefined" style="opacity:${(selectBidItem === dd.id) ? `25` : `70`}%;"></div>
-<span  class="text-white glitterTagundefined" style="z-index:1;font-size:25px;font-weight:500;" onclick="">${dd.title}</span>
+<span  class="text-white glitterTagundefined m-2" style="z-index:1;font-size:25px;font-weight:500;white-space:normal;" onclick="">${dd.title}</span>
 </div>`
                             }).join('')}
 </div>

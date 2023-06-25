@@ -130,7 +130,7 @@ export class HtmlGenerate {
         type?: string
     }) {
         obj.title = obj.title ?? ""
-        return `<h3 class="text-dark mt-2" style="font-size: 16px;margin-bottom: 10px;" >${obj.title}</h3>
+        return `${obj.title && `<h3 class="text-dark mt-2" style="font-size: 16px;margin-bottom: 10px;" >${obj.title}</h3>`}
 <input class="form-control mb-2" type="${obj.type ?? 'text'}" placeholder="${obj.placeHolder}" onchange="${obj.gvc.event((e) => {
             obj.callback(e.value);
         })}" value="${obj.default ?? ''}">`;
@@ -141,7 +141,6 @@ export class HtmlGenerate {
         obj.title = obj.title ?? ""
         const id = obj.gvc.glitter.getUUID()
         return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 text-dark d-flex align-items-center  ${(!obj.title) ? `d-none` : ``}">${obj.title}</h3>
-
 ${obj.gvc.bindView({
             bind: id,
             view: () => {

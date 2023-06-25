@@ -159,14 +159,19 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
                                             }).view();
                                             break;
                                         case 'textArea':
-                                            ctext = glitter.htmlGenerate.editeText({
+                                            let option = [];
+                                            if (data.readonly) {
+                                                option.push({ key: 'readonly', value: data.readonly });
+                                            }
+                                            ctext = Editor.editeText({
                                                 gvc: gvc,
                                                 title: '',
                                                 default: formData[data.key] ?? "",
                                                 placeHolder: "",
                                                 callback: (text) => {
                                                     formData[data.key] = text;
-                                                }
+                                                },
+                                                option: option
                                             });
                                             break;
                                         case 'imageUpload':
@@ -254,7 +259,7 @@ export const form = Plugin.createComponent(import.meta.url, (glitter, editMode) 
                                                 if (data.type === 'number') {
                                                     formData[data.key] = parseInt(e.value);
                                                 }
-                                            })}" ${(data.states === '1' || readonly) ? `readonly` : ``}>`;
+                                            })}" ${(data.states === '1' || data.readonly) ? `readonly` : ``}>`;
                                     }
                                     gmap.push(`
                   <div class="col-sm-${data.col} col-${data.colm}">
@@ -393,75 +398,77 @@ ${widget.data.btnList.map((dd) => {
                                                     dd.type = text;
                                                     widget.refreshComponent();
                                                 },
-                                            }) + Editor.select({
-                                                title: `是否必填`,
-                                                gvc: gvc,
-                                                def: dd.requirement,
-                                                array: [{ title: "是", value: "true" }, { title: "否", value: "false" }],
-                                                callback: (text) => {
-                                                    dd.requirement = text;
-                                                    widget.refreshComponent();
-                                                },
-                                            }) + (() => {
-                                                switch (dd.type) {
-                                                    case 'checkbox':
-                                                        return checkbox.render(gvc, widget, setting, hoverID, {
-                                                            dd: dd,
-                                                        }).editor();
-                                                    case 'select':
-                                                        return selectComponent.render(gvc, widget, setting, hoverID, {
-                                                            dd: dd,
-                                                        }).editor();
-                                                    case 'arrayItem':
-                                                        dd.elemList = dd.elemList ?? [];
-                                                        return glitter.htmlGenerate.editeInput({
-                                                            gvc: gvc,
-                                                            title: '索引標題',
-                                                            default: dd.index,
-                                                            placeHolder: '請輸入索引標題',
-                                                            callback: (text) => {
-                                                                dd.index = text;
-                                                                widget.refreshComponent();
-                                                            },
-                                                        }) + glitter.htmlGenerate.editeInput({
-                                                            gvc: gvc,
-                                                            title: '添加按鈕標題',
-                                                            default: dd.addBt,
-                                                            placeHolder: '請輸入添加按鈕標題',
-                                                            callback: (text) => {
-                                                                dd.addBt = text;
-                                                                widget.refreshComponent();
-                                                            },
-                                                        }) + getFormEditor(dd.elemList);
-                                                    case 'custom':
-                                                        return component.render(gvc, {
-                                                            data: dd,
-                                                            refreshComponent: widget.refreshComponent
-                                                        }, setting, hoverID, subData).editor();
-                                                    case 'cal':
-                                                        return glitter.htmlGenerate.editeText({
-                                                            gvc: gvc,
-                                                            title: '計算式',
-                                                            default: dd.def,
-                                                            placeHolder: '請輸入計算式',
-                                                            callback: (text) => {
-                                                                dd.def = text;
-                                                                widget.refreshComponent();
-                                                            },
-                                                        });
-                                                    default:
-                                                        return glitter.htmlGenerate.editeText({
-                                                            gvc: gvc,
-                                                            title: '預設值',
-                                                            default: dd.def,
-                                                            placeHolder: '請輸入預設值',
-                                                            callback: (text) => {
-                                                                dd.def = text;
-                                                                widget.refreshComponent();
-                                                            },
-                                                        });
-                                                }
-                                            })(),
+                                            }) +
+                                                Editor.select({
+                                                    title: `是否必填`,
+                                                    gvc: gvc,
+                                                    def: dd.requirement,
+                                                    array: [{ title: "是", value: "true" }, { title: "否", value: "false" }],
+                                                    callback: (text) => {
+                                                        dd.requirement = text;
+                                                        widget.refreshComponent();
+                                                    },
+                                                }) +
+                                                (() => {
+                                                    switch (dd.type) {
+                                                        case 'checkbox':
+                                                            return checkbox.render(gvc, widget, setting, hoverID, {
+                                                                dd: dd,
+                                                            }).editor();
+                                                        case 'select':
+                                                            return selectComponent.render(gvc, widget, setting, hoverID, {
+                                                                dd: dd,
+                                                            }).editor();
+                                                        case 'arrayItem':
+                                                            dd.elemList = dd.elemList ?? [];
+                                                            return glitter.htmlGenerate.editeInput({
+                                                                gvc: gvc,
+                                                                title: '索引標題',
+                                                                default: dd.index,
+                                                                placeHolder: '請輸入索引標題',
+                                                                callback: (text) => {
+                                                                    dd.index = text;
+                                                                    widget.refreshComponent();
+                                                                },
+                                                            }) + glitter.htmlGenerate.editeInput({
+                                                                gvc: gvc,
+                                                                title: '添加按鈕標題',
+                                                                default: dd.addBt,
+                                                                placeHolder: '請輸入添加按鈕標題',
+                                                                callback: (text) => {
+                                                                    dd.addBt = text;
+                                                                    widget.refreshComponent();
+                                                                },
+                                                            }) + getFormEditor(dd.elemList);
+                                                        case 'custom':
+                                                            return component.render(gvc, {
+                                                                data: dd,
+                                                                refreshComponent: widget.refreshComponent
+                                                            }, setting, hoverID, subData).editor();
+                                                        case 'cal':
+                                                            return glitter.htmlGenerate.editeText({
+                                                                gvc: gvc,
+                                                                title: '計算式',
+                                                                default: dd.def,
+                                                                placeHolder: '請輸入計算式',
+                                                                callback: (text) => {
+                                                                    dd.def = text;
+                                                                    widget.refreshComponent();
+                                                                },
+                                                            });
+                                                        default:
+                                                            return glitter.htmlGenerate.editeText({
+                                                                gvc: gvc,
+                                                                title: '預設值',
+                                                                default: dd.def,
+                                                                placeHolder: '請輸入預設值',
+                                                                callback: (text) => {
+                                                                    dd.def = text;
+                                                                    widget.refreshComponent();
+                                                                },
+                                                            });
+                                                    }
+                                                })(),
                                         ]);
                                     }),
                                     minus: gvc.event(() => {
@@ -508,6 +515,16 @@ ${widget.data.btnList.map((dd) => {
                                 widget.data.getFrom = text;
                                 widget.refreshComponent();
                             }
+                        }),
+                        Editor.select({
+                            title: `是否設定表單索引`,
+                            gvc: gvc,
+                            def: widget.data.formIndex ?? 'false',
+                            array: [{ title: '是', value: 'true' }, { title: '否', value: 'false' }],
+                            callback: (text) => {
+                                widget.data.formIndex = text;
+                                widget.refreshComponent();
+                            },
                         }),
                         (() => {
                             if (widget.data.getFrom === 'true') {

@@ -128,6 +128,7 @@ TriggerEvent.create(import.meta.url, {
                         })
                         return;
                     }
+
                     shareDialog.dataLoading({visible: true})
                     BaseApi.create({
                         "url": saasConfig.config.url + `/api/v1/user/register`,

@@ -194,6 +194,7 @@ TriggerEvent.create(import.meta.url, {
                                         {title:"<",value:"<"},
                                         {title:"<=",value:"<="},
                                         {title:">=",value:">="},
+                                        {title:"!=",value:"!="},
                                         {title:"like",value:""}
                                     ],
                                     callback:(text)=>{
@@ -244,26 +245,6 @@ TriggerEvent.create(import.meta.url, {
                             title: data.key ?? `項目:${index+1}`,
                             expand: data,
                             innerHtml:gvc.map([
-                                glitter.htmlGenerate.editeText({
-                                    gvc : gvc,
-                                    title : 'Key',
-                                    default : data.key  ?? "",
-                                    placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
-                                    callback:(text:string)=>{
-                                        data.key = text;
-                                        gvc.notifyDataChange(id);
-                                    }
-                                }),
-                                glitter.htmlGenerate.editeText({
-                                    gvc : gvc,
-                                    title : 'Value',
-                                    default : data.value  ?? "",
-                                    placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
-                                    callback:(text:string)=>{
-                                        data.value= text;
-                                        gvc.notifyDataChange(id);
-                                    }
-                                }),
                                 Editor.select({
                                     gvc : gvc,
                                     title : '類型',
@@ -272,9 +253,30 @@ TriggerEvent.create(import.meta.url, {
                                         {title:"列舉欄位名稱",value:"enum"},
                                         {title:"數量",value:"count"},
                                         {title:"加總",value:"SUM"},
+                                        {title:"平均值",value:"AVG"},
                                     ],
                                     callback:(text)=>{
                                         data.type= text;
+                                        gvc.notifyDataChange(id);
+                                    }
+                                }),
+                                (data.type==='count') ? ``:glitter.htmlGenerate.editeText({
+                                    gvc : gvc,
+                                    title : '搜索索引',
+                                    default : data.key  ?? "",
+                                    placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                    callback:(text:string)=>{
+                                        data.key = text;
+                                        gvc.notifyDataChange(id);
+                                    }
+                                }),
+                                (data.type==='count') ? ``: glitter.htmlGenerate.editeText({
+                                    gvc : gvc,
+                                    title : '搜索名稱',
+                                    default : data.value  ?? "",
+                                    placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                    callback:(text:string)=>{
+                                        data.value= text;
                                         gvc.notifyDataChange(id);
                                     }
                                 })
@@ -352,10 +354,11 @@ TriggerEvent.create(import.meta.url, {
                     widget.data.selectOnly=widget.data.selectOnly??[]
                     JSON.parse(JSON.stringify(widget.data.selectOnly)).map((dd:any)=>{
                         const q=getQuery(dd)
-                        if(q.key!==undefined&&q.key!==''){
-                            vm.selectOnly.push(getQuery(dd))
+                        if(q.type==='count' || (q.key!==undefined&&(q.key!==''))){
+                            vm.selectOnly.push(q)
                         }
                     })
+
                     return new Promise<any>((resolve, reject) => {
                         (getData.fun(gvc, {} as any, {}, {
                             page: vm.page,

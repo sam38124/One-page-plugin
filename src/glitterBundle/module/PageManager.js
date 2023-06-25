@@ -1,10 +1,13 @@
 import { Glitter } from '../Glitter.js';
 export class DefaultSetting {
+    pageBgColor;
+    pageAnimation;
+    dialogAnimation;
+    pageLoading = () => {
+    };
+    pageLoadingFinish = () => {
+    };
     constructor(obj) {
-        this.pageLoading = () => {
-        };
-        this.pageLoadingFinish = () => {
-        };
         this.pageLoading = obj.pageLoading;
         this.pageLoadingFinish = obj.pageLoadingFinish;
         this.pageBgColor = obj.pageBgColor;
@@ -18,8 +21,21 @@ export var GVCType;
     GVCType[GVCType["Dialog"] = 1] = "Dialog";
 })(GVCType || (GVCType = {}));
 export class PageConfig {
+    id;
+    obj;
+    goBack;
+    src;
+    tag;
+    createResource;
+    deleteResource;
+    type;
+    animation;
+    backGroundColor;
+    scrollTop = 0;
+    getElement() {
+        return Glitter.glitter.$(`#page${this.id}`);
+    }
     constructor(par) {
-        this.scrollTop = 0;
         this.tag = par.tag;
         this.id = par.id;
         this.obj = par.obj;
@@ -30,9 +46,6 @@ export class PageConfig {
         this.type = par.type;
         this.animation = par.animation;
         this.backGroundColor = par.backGroundColor;
-    }
-    getElement() {
-        return Glitter.glitter.$(`#page${this.id}`);
     }
 }
 export class PageManager {
@@ -77,7 +90,6 @@ export class PageManager {
         Glitter.glitter.$('#loadingView').hide();
     }
     static setHome(url, tag, obj, option = {}) {
-        var _a, _b;
         const glitter = Glitter.glitter;
         if (glitter.waitChangePage || PageManager.clock.stop() < 300) {
             setTimeout(() => {
@@ -103,9 +115,9 @@ export class PageManager {
                 },
                 createResource: () => {
                 },
-                backGroundColor: (_a = option.backGroundColor) !== null && _a !== void 0 ? _a : 'transparent',
+                backGroundColor: option.backGroundColor ?? 'transparent',
                 type: GVCType.Page,
-                animation: (_b = option.animation) !== null && _b !== void 0 ? _b : glitter.animation.none
+                animation: option.animation ?? glitter.animation.none
             });
             $('#glitterPage').append(`<div id="page${config.id}" style="min-width: 100vw;min-height: 100vh;left: 0;top: 0;width:100vw;
 background: ${config.backGroundColor};display: none;z-index: 9999;overflow: hidden;">
@@ -168,6 +180,8 @@ background: ${config.backGroundColor};display: none;z-index: 9999;overflow: hidd
         Glitter.glitter.$('#loadingView').show();
     }
     ;
+    static changeWait = function () {
+    };
     static setAnimation(page) {
         const glitter = Glitter.glitter;
         function closePreviousPage() {
@@ -202,8 +216,16 @@ background: ${config.backGroundColor};display: none;z-index: 9999;overflow: hidd
             }, 100);
         });
     }
+    static clock = {
+        start: new Date(),
+        stop: function () {
+            return ((new Date()).getTime() - (this.start).getTime());
+        },
+        zeroing: function () {
+            this.start = new Date();
+        }
+    };
     static changePage(url, tag, goBack, obj, option = {}) {
-        var _a, _b;
         const glitter = Glitter.glitter;
         if (glitter.waitChangePage || PageManager.clock.stop() < 300) {
             setTimeout(() => {
@@ -224,9 +246,9 @@ background: ${config.backGroundColor};display: none;z-index: 9999;overflow: hidd
                 },
                 createResource: () => {
                 },
-                backGroundColor: (_a = option.backGroundColor) !== null && _a !== void 0 ? _a : 'transparent',
+                backGroundColor: option.backGroundColor ?? 'transparent',
                 type: GVCType.Page,
-                animation: (_b = option.animation) !== null && _b !== void 0 ? _b : glitter.defaultSetting.pageAnimation
+                animation: option.animation ?? glitter.defaultSetting.pageAnimation
             });
             $('#glitterPage').append(`<div  id="page${config.id}" style="
 min-width: 100vw; min-height: 100vh;  z-index: 9999; overflow: hidden;width:100vw;
@@ -269,8 +291,13 @@ background: transparent;background: ${config.backGroundColor};display: none;posi
         }
     }
     ;
+    static innerDialog = (html, tag) => {
+        const glitter = Glitter.glitter;
+        glitter.openDiaLog(new URL('../dialog/dialog_inner.js', import.meta.url).href, tag, {
+            getView: html
+        });
+    };
     static openDiaLog(url, tag, obj, option = {}) {
-        var _a, _b;
         const glitter = Glitter.glitter;
         const config = new PageConfig({
             id: glitter.getUUID(),
@@ -282,9 +309,9 @@ background: transparent;background: ${config.backGroundColor};display: none;posi
             },
             createResource: () => {
             },
-            backGroundColor: (_a = option.backGroundColor) !== null && _a !== void 0 ? _a : 'transparent',
+            backGroundColor: option.backGroundColor ?? 'transparent',
             type: GVCType.Dialog,
-            animation: (_b = option.animation) !== null && _b !== void 0 ? _b : glitter.defaultSetting.dialogAnimation
+            animation: option.animation ?? glitter.defaultSetting.dialogAnimation
         });
         $('#glitterPage').append(`<div id="page${config.id}" style="min-width: 100vw;min-height: 100vh;left: 0;top: 0;
 background: ${config.backGroundColor};display: none;z-index: 9999;overflow: hidden;position: fixed;width:100vw;height: 100vh;" >
@@ -382,20 +409,3 @@ background: ${config.backGroundColor};display: none;z-index: 9999;overflow: hidd
         Glitter.glitter.changePageCallback.push(callback);
     }
 }
-PageManager.changeWait = function () {
-};
-PageManager.clock = {
-    start: new Date(),
-    stop: function () {
-        return ((new Date()).getTime() - (this.start).getTime());
-    },
-    zeroing: function () {
-        this.start = new Date();
-    }
-};
-PageManager.innerDialog = (html, tag) => {
-    const glitter = Glitter.glitter;
-    glitter.openDiaLog(new URL('../dialog/dialog_inner.js', import.meta.url).href, tag, {
-        getView: html
-    });
-};

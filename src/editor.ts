@@ -1,5 +1,8 @@
 import {ShareDialog} from './dialog/ShareDialog.js';
 import {ScriptStyle1} from "./one-page/script-style-1.js";
+import {GVC} from "./glitterBundle/GVController.js";
+//@ts-ignore
+import autosize from "./glitterBundle/plugins/autosize.js";
 
 export class Editor {
     public static uploadImage(obj: { title: string; gvc: any; def: string; callback: (data: string) => void; readonly?: boolean }) {
@@ -13,7 +16,7 @@ export class Editor {
                 view: () => {
                     return `<input
                     class="flex-fill form-control "
-                    placeholder="請輸入圖片連結"
+                    placeholder="請輸入或上傳圖片連結"
                     value="${obj.def}"
                     onchange="${obj.gvc.event((e: any) => {
                         obj.callback(e.value);
@@ -399,7 +402,7 @@ export class Editor {
         title: string;
         gvc: any;
         def: string;
-        array: string[] ;
+        array: string[];
         callback: (text: string) => void;
         placeHolder: string;
     }) {
@@ -407,7 +410,7 @@ export class Editor {
         const gvc = obj.gvc;
         const $ = glitter.$;
         return /*html*/ `
-            ${(obj.title) ? Editor.h3(obj.title):``}
+            ${(obj.title) ? Editor.h3(obj.title) : ``}
             <div class="btn-group dropdown w-100">
                 ${(() => {
             const id = glitter.getUUID();
@@ -451,7 +454,7 @@ export class Editor {
                     bind: id,
                     view: () => {
                         return obj.array
-                            .filter((d2:any) => {
+                            .filter((d2: any) => {
                                 return d2.toUpperCase().indexOf(obj.def.toUpperCase()) !== -1;
                             })
                             .map((d3) => {
@@ -489,27 +492,39 @@ export class Editor {
         def: string;
         array: string[] | { title: string; value: string }[];
         callback: (text: string) => void;
+        option?: { key: string, value: string }[]
     }) {
+        const glitter = obj.gvc.glitter
         return /*html*/ `
-            ${Editor.h3(obj.title)}
-            <select
-                class="form-select"
-                onchange="${obj.gvc.event((e: any) => {
-            obj.callback(e.value);
-        })}"
-            >
-                ${obj.array
-            .map((dd) => {
-                if (typeof dd === 'object') {
-                    return /*html*/ `<option value="${dd.value}" ${dd.value === obj.def ? `selected` : ``}>
+            ${obj.title && Editor.h3(obj.title)}
+            ${obj.gvc.bindView(() => {
+            const id = glitter.getUUID()
+            return {
+                bind: id,
+                view: () => {
+                    return obj.array
+                        .map((dd) => {
+                            if (typeof dd === 'object') {
+                                return /*html*/ `<option value="${dd.value}" ${dd.value === obj.def ? `selected` : ``}>
                                 ${dd.title}
                             </option>`;
-                } else {
-                    return /*html*/ `<option value="${dd}" ${dd === obj.def ? `selected` : ``}>${dd}</option>`;
+                            } else {
+                                return /*html*/ `<option value="${dd}" ${dd === obj.def ? `selected` : ``}>${dd}</option>`;
+                            }
+                        })
+                        .join('')
+                },
+                divCreate: {
+                    elem:`select`,
+                   option:[
+                       {key:`class`,value:`form-select`},
+                       {key:`onchange`,value:obj.gvc.event((e: any) => {
+                               obj.callback(e.value);
+                           })}, 
+                   ].concat(obj.option ?? [])
                 }
-            })
-            .join('')}
-            </select>
+            }
+        })}
         `;
     }
 
@@ -569,6 +584,65 @@ export class Editor {
             })
         );
     }
+
+    public static editeText(obj: { gvc: GVC; title: string; default: string; placeHolder: string; callback: (text: string) => void, option?: { key: string, value: string }[] }) {
+        obj.title = obj.title ?? ""
+        const id = obj.gvc.glitter.getUUID()
+        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 text-dark d-flex align-items-center  ${(!obj.title) ? `d-none` : ``}">${obj.title}</h3>
+${obj.gvc.bindView({
+            bind: id,
+            view: () => {
+                return obj.default ?? ''
+            },
+            divCreate: {
+                elem: `textArea`,
+                style: `max-height:400px!important;min-height:100px;`,
+                class: `form-control`, option: [
+                    {key: 'placeholder', value: obj.placeHolder},
+                    {
+                        key: 'onchange', value: obj.gvc.event((e) => {
+                            obj.callback(e.value);
+                        })
+                    }
+                ].concat(obj.option ?? [])
+            },
+            onCreate: () => {
+                //@ts-ignore
+                autosize($('#' + obj.gvc.id(id)))
+            }
+        })}`;
+    }
+    public static editeInput(obj: {
+        gvc: GVC; title: string; default: string; placeHolder: string; callback: (text: string) => void,
+        type?: string,option?:{key:string,value:string}[]
+    }) {
+        obj.title = obj.title ?? ""
+        return `<h3 class="text-dark mt-2" style="font-size: 16px;margin-bottom: 10px;" >${obj.title}</h3>
+${
+            obj.gvc.bindView(()=>{
+                const id=obj.gvc.glitter.getUUID()
+                return {
+                    bind:id,
+                    view:()=>{
+                        return ``
+                    },
+                    divCreate:{
+                        elem:`input`,
+                        option:[
+                            {key:`value`,value:obj.default ?? ''},
+                            {key:`placeholder`,value:obj.placeHolder},
+                            {key:`type`,value:obj.type ?? 'text'},
+                            {key:`class`,value:`form-control mb-2`},
+                            {key:`onchange`,value:obj.gvc.event((e) => {
+                                    obj.callback(e.value);
+                                })},
+                        ].concat(obj.option ?? [])
+                    }
+                }
+            })
+        }`;
+    }
+
 }
 
 export class Element {

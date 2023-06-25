@@ -167,14 +167,19 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                             }).view()
                                             break
                                         case 'textArea':
-                                            ctext = glitter.htmlGenerate.editeText({
+                                            let option:any=[]
+                                            if(data.readonly){
+                                                option.push( {key:'readonly',value:data.readonly})
+                                            }
+                                            ctext = Editor.editeText({
                                                 gvc: gvc,
                                                 title: '',
                                                 default: formData[data.key] ?? "",
                                                 placeHolder: "",
                                                 callback: (text) => {
                                                     formData[data.key] = text
-                                                }
+                                                },
+                                                option:option
                                             })
                                             break
                                         case 'imageUpload':
@@ -262,7 +267,7 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                                 if (data.type === 'number') {
                                                     formData[data.key] = parseInt(e.value)
                                                 }
-                                            })}" ${(data.states === '1' || readonly) ? `readonly` : ``}>`;
+                                            })}" ${(data.states === '1' || data.readonly) ? `readonly` : ``}>`;
                                     }
                                     gmap.push(`
                   <div class="col-sm-${data.col} col-${data.colm}">
@@ -354,6 +359,7 @@ ${widget.data.btnList.map((dd: any) => {
 
                 },
                 editor: () => {
+
                     function getFormEditor(array: any) {
                         return Editor.arrayItem({
                             originalArray: array,
@@ -405,7 +411,8 @@ ${widget.data.btnList.map((dd: any) => {
                                                     dd.type = text;
                                                     widget.refreshComponent();
                                                 },
-                                            }) + Editor.select({
+                                            }) +
+                                            Editor.select({
                                                 title: `是否必填`,
                                                 gvc: gvc,
                                                 def: dd.requirement,
@@ -414,7 +421,8 @@ ${widget.data.btnList.map((dd: any) => {
                                                     dd.requirement = text;
                                                     widget.refreshComponent();
                                                 },
-                                            }) + (() => {
+                                            }) +
+                                            (() => {
                                                 switch (dd.type) {
                                                     case 'checkbox':
                                                         return checkbox.render(gvc, widget, setting, hoverID, {
@@ -522,6 +530,16 @@ ${widget.data.btnList.map((dd: any) => {
                                 widget.data.getFrom = text
                                 widget.refreshComponent()
                             }
+                        }),
+                        Editor.select({
+                            title: `是否設定表單索引`,
+                            gvc: gvc,
+                            def: widget.data.formIndex ?? 'false',
+                            array: [{title:'是',value:'true'},{title:'否',value:'false'}],
+                            callback: (text) => {
+                                widget.data.formIndex = text;
+                                widget.refreshComponent();
+                            },
                         }),
                         (() => {
                             if (widget.data.getFrom === 'true') {

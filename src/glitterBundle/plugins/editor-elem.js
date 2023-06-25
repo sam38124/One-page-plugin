@@ -269,8 +269,7 @@ export class EditorElem {
             }));
     }
     static toggleExpand(obj) {
-        var _a;
-        const color = (_a = obj.color) !== null && _a !== void 0 ? _a : `#4144b0;`;
+        const color = obj.color ?? `#4144b0;`;
         const glitter = window.glitter;
         return `${obj.gvc.bindView(() => {
             const id = glitter.getUUID();

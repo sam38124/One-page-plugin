@@ -3,6 +3,14 @@ import {init} from "./glitterBundle/GVController.js";
 
 init((gvc, glitter, gBundle) => {
     (() => {
+        //gvc.getBundle()['postCount']
+        if([].find((dd)=>{
+            return gvc.getBundle()['identify'][dd]===''
+        })){
+
+        }
+
+       alert(JSON.stringify(gvc.getBundle()['identify']));
         // alert(JSON.stringify(response.data))
         ``
 glitter.getUrlParameter('selectChildItem')
