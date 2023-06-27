@@ -5,34 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93bccc46-e194-44b4-921c-fc21039b8956" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/matching/backend/verify_company.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/matching/backend/verify_user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/testModule.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/user/login_config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/user/login_config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/user/login_config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/user/login_config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitter-base/api/post/interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/api/post/interface.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitter-base/api/post/interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/api/post/interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitter-base/api/user/interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/api/user/interface.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitter-base/api/user/interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/api/user/interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitter-base/route/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/route/post.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitter-base/route/post.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/route/post.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitter-base/route/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/route/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitter-base/route/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/route/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/Glitter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/Glitter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/Glitter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/Glitter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hh.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hh.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hh.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/events.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/events.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/events.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/events.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/global/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/global/form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/global/form.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/global/form.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/widgets/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/widgets/form.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/form.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/widgets/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/widgets/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +56,7 @@
       <recent name="$PROJECT_DIR$/src/glitterBundle/plugins" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.build:tscAuto">
+  <component name="RunManager" selected="npm.start">
     <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -112,8 +89,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build:tscAuto" />
         <item itemvalue="npm.start" />
+        <item itemvalue="npm.build:tscAuto" />
         <item itemvalue="npm.create" />
       </list>
     </recent_temporary>
@@ -128,7 +105,8 @@
       <updated>1686930561455</updated>
       <workItem from="1686930567069" duration="122572000" />
       <workItem from="1687745202574" duration="2896000" />
-      <workItem from="1687826890047" duration="11983000" />
+      <workItem from="1687826890047" duration="16803000" />
+      <workItem from="1687881718660" duration="2298000" />
     </task>
     <servers />
   </component>
@@ -500,6 +478,7 @@
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/backend-plugin.js" />
         <option value="$PROJECT_DIR$/src/matching/backend/verify_user.js" />
         <option value="$PROJECT_DIR$/src/matching/backend/verify_company.js" />
+        <option value="$PROJECT_DIR$/src/testModule.js" />
       </list>
     </option>
   </component>
