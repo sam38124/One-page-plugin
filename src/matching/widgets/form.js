@@ -409,6 +409,16 @@ ${widget.data.btnList.map((dd) => {
                                                         widget.refreshComponent();
                                                     },
                                                 }) +
+                                                Editor.select({
+                                                    title: `唯讀`,
+                                                    gvc: gvc,
+                                                    def: dd.readonly ?? "false",
+                                                    array: [{ title: "是", value: "true" }, { title: "否", value: "false" }],
+                                                    callback: (text) => {
+                                                        dd.readonly = text === 'true';
+                                                        widget.refreshComponent();
+                                                    },
+                                                }) +
                                                 (() => {
                                                     switch (dd.type) {
                                                         case 'checkbox':

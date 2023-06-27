@@ -53,6 +53,8 @@ ${TriggerEvent.editer(gvc, widget, widget.data, {
                                 gvc.glitter.share.service = [];
                                 data.response.result[0].config[0].data.bigItem.map((dd) => {
                                     dd.child.map((d2) => {
+                                        d2.bigItemId = dd.id;
+                                        d2.bidTitle = dd.title;
                                         gvc.glitter.share.service.push(d2);
                                     });
                                 });

@@ -97,13 +97,11 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
             widget.data.btnList = widget.data.btnList ?? []
             widget.data.btnListExpand = widget.data.btnListExpand ?? {}
             widget.data.formFrom = widget.data.formFrom ?? {}
-
             let editFinish = false
             const id = glitter.getUUID()
 
             return {
                 view: () => {
-
                     return new Promise(async (resolve, reject) => {
                         if (widget.data.getFrom === 'true') {
                             widget.data.formList=await TriggerEvent.trigger({gvc:gvc,widget:widget,clickEvent:widget.data.formListPlace,subData})
@@ -422,6 +420,17 @@ ${widget.data.btnList.map((dd: any) => {
                                                     widget.refreshComponent();
                                                 },
                                             }) +
+                                            Editor.select({
+                                                title: `唯讀`,
+                                                gvc: gvc,
+                                                def: dd.readonly ?? "false",
+                                                array: [{title: "是", value: "true"}, {title: "否", value: "false"}],
+                                                callback: (text) => {
+                                                    dd.readonly = text==='true';
+
+                                                    widget.refreshComponent();
+                                                },
+                                            })+
                                             (() => {
                                                 switch (dd.type) {
                                                     case 'checkbox':

@@ -555,7 +555,6 @@ ${servicePlace.find((dd) => {
                                 return `<option value="${dd.title}" ${(selectPlace === dd.title) ? `selected` : ``}>${dd.title}</option>`;
                             })}</select>
 </div>
-
 <div class="col-3 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
 客戶預算
 </div>
@@ -565,6 +564,30 @@ ${servicePlace.find((dd) => {
                                 glitter.setUrlParameter('budget', e.value);
                                 gvc.recreateView();
                             })}" placeholder="請輸入預算" value="${glitter.getUrlParameter('budget') ?? ""}">
+</div>
+<div class="col-3 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
+案件搜尋
+</div>
+<div class="col-9 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
+${Editor.searchInput({
+                                title: ``,
+                                gvc: gvc,
+                                def: "",
+                                array: gvc.glitter.share.service.map((dd) => {
+                                    return `${dd.bidTitle}-${dd.title}`;
+                                }),
+                                callback: (text) => {
+                                    const val = gvc.glitter.share.service.find((dd) => {
+                                        return `${dd.bidTitle}-${dd.title}` === text;
+                                    });
+                                    if (val) {
+                                        glitter.setUrlParameter('selectBidItem', val.bigItemId);
+                                        glitter.setUrlParameter('selectChildItem', val.id);
+                                        gvc.recreateView();
+                                    }
+                                },
+                                placeHolder: "請輸入關鍵字"
+                            })}
 </div>
 </div>
 </div>`;
@@ -639,7 +662,10 @@ ${servicePlace.find((dd) => {
                                             plus: {
                                                 title: '添加區塊',
                                                 event: gvc.event(() => {
-                                                    lineData.child.push({ title: "服務子項目", id: `${(new Date()).getTime()}` });
+                                                    lineData.child.push({
+                                                        title: "服務子項目",
+                                                        id: `${(new Date()).getTime()}`
+                                                    });
                                                     widget.refreshComponent();
                                                 }),
                                             },

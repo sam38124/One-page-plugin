@@ -5,48 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93bccc46-e194-44b4-921c-fc21039b8956" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/backend/user/login_config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/backend-plugin.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/matching/backend/verify_company.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/matching/backend/verify_user.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/editor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/form-component/normalstyle/checkbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/form-component/normalstyle/checkbox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/form-component/normalstyle/checkbox.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/form-component/normalstyle/checkbox.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/user/login_config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/user/login_config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/user/login_config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/user/login_config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/glitter-base/api/post/interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/api/post/interface.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/glitter-base/api/post/interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/api/post/interface.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/glitter-base/api/user/interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/api/user/interface.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/glitter-base/api/user/interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/api/user/interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitter/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter/event.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/GVController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/GVController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitter-base/route/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/route/post.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitter-base/route/post.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/route/post.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitter-base/route/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/route/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitter-base/route/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitter-base/route/user.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/glitterBundle/Glitter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/Glitter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/GlitterInitial.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/dialog/ShareDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/dialog/ShareDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/dialog/dialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/dialog/dialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/funnel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/funnel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/html-component/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/html-component/editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Animation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/Html_generate.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/module/PageManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/editor-elem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/style-attr.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/style-editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/glitterBundle/Glitter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/glitterBundle/Glitter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hh.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hh.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hh.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/matching/events.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/events.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/matching/events.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/events.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/matching/global/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/global/form.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/matching/global/form.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/global/form.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/matching/widgets/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/form.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/matching/widgets/form.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/form.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/widgets/form_budget.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/form_budget.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/matching/widgets/form_budget.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/form_budget.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/matching/widgets/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/service.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/matching/widgets/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/matching/widgets/service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,16 +47,39 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2RiuP8RpmtYUSrYDCQaQKAafsnw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/src/matching/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/matching/backend" />
       <recent name="$PROJECT_DIR$/src/glitterBundle/plugins" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.start">
+  <component name="RunManager" selected="npm.build:tscAuto">
     <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -117,7 +126,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1686930561455</updated>
-      <workItem from="1686930567069" duration="105978000" />
+      <workItem from="1686930567069" duration="122572000" />
+      <workItem from="1687745202574" duration="2896000" />
+      <workItem from="1687826890047" duration="11983000" />
     </task>
     <servers />
   </component>
@@ -487,6 +498,8 @@
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/trigger-event.js" />
         <option value="$PROJECT_DIR$/src/backend/user/login_config.js" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/backend-plugin.js" />
+        <option value="$PROJECT_DIR$/src/matching/backend/verify_user.js" />
+        <option value="$PROJECT_DIR$/src/matching/backend/verify_company.js" />
       </list>
     </option>
   </component>

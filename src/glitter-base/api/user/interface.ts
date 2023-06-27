@@ -138,6 +138,10 @@ TriggerEvent.create(import.meta.url, {
                     gvc.glitter.share.public_api = gvc.glitter.share.public_api ?? {}
                     gvc.glitter.share.public_api.GlobalUser = GlobalUser
                     return new Promise((resolve, reject) => {
+                        if(gvc.glitter.getUrlParameter('token')){
+                            GlobalUser.token=gvc.glitter.getUrlParameter('token')
+                            gvc.glitter.setUrlParameter('token',undefined)
+                        }
                         ApiUser.getUserData(GlobalUser.token)?.then((r) => {
                             if (!r.result) {
                                 GlobalUser.token = ''
@@ -267,6 +271,95 @@ ${TriggerEvent.editer(gvc, widget, widget.data, {
                         ApiUser.getPublicUserData(userID)?.then((r) => {
                             resolve(r.response)
                         })
+                    })
+                },
+            };
+        },
+    },
+    forgetPwd: {
+        title: '官方事件-用戶-忘記密碼',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    object.pwdResource=object.pwdResource??{}
+                    return  TriggerEvent.editer(gvc, widget, object.pwdResource, {
+                        hover: false,
+                        option: [],
+                        title: "取得信箱資料"
+                    })
+                },
+                event: () => {
+                    return new Promise(async (resolve, reject)=>{
+                        const data=await TriggerEvent.trigger({
+                            gvc:gvc,widget:widget,clickEvent:object.pwdResource
+                        })
+                        if(data){
+                            ApiUser.forgetPwd(data as string)?.then((r) => {
+                                resolve(r.response.result)
+                                const dialog = new ShareDialog(gvc.glitter)
+                                if(!r.response.result){
+                                    dialog.errorMessage({text:`此信箱尚未進行註冊．`})
+                                }
+                            })
+                        }
+
+                    })
+                },
+            };
+        },
+    },
+    resetPwd: {
+        title: '官方事件-用戶-重設密碼',
+        fun: (gvc, widget, object, subData, element) => {
+            object.resetPwd=object.resetPwd??{}
+            object.resetSuccess=object.resetSuccess??{}
+            return {
+                editor: () => {
+                    return  [TriggerEvent.editer(gvc, widget, object.resetPwd, {
+                        hover: false,
+                        option: [],
+                        title: "取得舊密碼和新密碼"
+                    }),TriggerEvent.editer(gvc, widget, object.resetSuccess, {
+                        hover: false,
+                        option: [],
+                        title: "重設成功跳轉"
+                    })].join('')
+                },
+                event: () => {
+
+                    return new Promise(async (resolve, reject)=>{
+                        const data=await TriggerEvent.trigger({
+                            gvc:gvc,widget:widget,clickEvent:object.resetPwd
+                        }) as any
+                        const dialog = new ShareDialog(gvc.glitter)
+                        if(data.cPwd!==data.newPwd){
+                            dialog.errorMessage({text:`請再次確認密碼．`})
+                        }else{
+                            ApiUser.resetPwd(data.oldPwd,data.newPwd)?.then((r) => {
+                                resolve(r.response.result)
+                                const dialog = new ShareDialog(gvc.glitter)
+                                if(!r.result || !r.response.result){
+                                    dialog.errorMessage({text:`密碼輸入錯誤．`})
+                                }else{
+                                    TriggerEvent.trigger({
+                                        gvc:gvc,
+                                        widget:widget,
+                                        clickEvent:object.resetSuccess
+                                    })
+                                }
+                            })
+                        }
+                        // alert(JSON.stringify(data))
+                        // if(data){
+                        //     ApiUser.forgetPwd(data as string)?.then((r) => {
+                        //         resolve(r.response.result)
+                        //         const dialog = new ShareDialog(gvc.glitter)
+                        //         if(!r.response.result){
+                        //             dialog.errorMessage({text:`此信箱尚未進行註冊．`})
+                        //         }
+                        //     })
+                        // }
+
                     })
                 },
             };

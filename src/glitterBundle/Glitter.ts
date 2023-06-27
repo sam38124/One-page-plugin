@@ -234,14 +234,15 @@ export class Glitter {
         }
     }
 
-    public setUrlParameter(tag: string, value: string) {
-        var search = this.setSearchParam(this.removeSearchParam(window.location.search, tag), tag, value)
+    public setUrlParameter(tag: string, value?: string) {
+
+        var search = (value!==undefined) ? this.setSearchParam(this.removeSearchParam(window.location.search, tag), tag, value):
+            this.removeSearchParam(window.location.search, tag)
         try {
             window.history.pushState({}, document.title, search);
         } catch (e) {
         }
     }
-
     public setDrawer(src: string, callback: () => void) {
         const gliter = this;
         this.$("#Navigation").html(src);

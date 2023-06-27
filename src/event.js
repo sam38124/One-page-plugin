@@ -2,7 +2,7 @@ import { TriggerEvent } from './glitterBundle/plugins/trigger-event.js';
 import { Editor } from './editor.js';
 import { component } from "./official/component.js";
 import { BaseApi } from "./api/base.js";
-class GlobalData {
+export class GlobalData {
     static data = {
         pageList: [],
         isRunning: false,
@@ -17,7 +17,7 @@ class GlobalData {
                     GlobalData.data.pageList = data.response.result.map((dd) => {
                         dd.page_config = dd.page_config ?? {};
                         return dd;
-                    });
+                    }).sort((a, b) => `${a.group}-${a.name}`.localeCompare(`${b.group}-${b.name}`));
                 }
                 else {
                     GlobalData.data.isRunning = false;
@@ -29,7 +29,7 @@ class GlobalData {
 }
 TriggerEvent.create(import.meta.url, {
     link: {
-        title: 'Glitter-連結跳轉',
+        title: '官方事件-觸發-頁面跳轉',
         fun: (gvc, widget, object) => {
             return {
                 editor: () => {
@@ -214,7 +214,7 @@ ${Editor.h3("選擇頁面")}
         },
     },
     dialog: {
-        title: 'Glitter-彈出頁面區塊',
+        title: '官方事件-觸發-彈跳視窗',
         fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
@@ -282,7 +282,7 @@ ${Editor.h3("選擇頁面")}
         }
     },
     test: {
-        title: 'Glitter-點擊測試',
+        title: '官方事件-觸發-點擊測試',
         fun: (gvc, widget, object) => {
             return {
                 editor: () => {
@@ -295,7 +295,7 @@ ${Editor.h3("選擇頁面")}
         },
     },
     code: {
-        title: 'Glitter-代碼區塊',
+        title: '官方事件-觸發-代碼區塊',
         fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
@@ -331,7 +331,7 @@ ${Editor.h3("選擇頁面")}
         },
     },
     drawer: {
-        title: 'Glitter-打開抽屜',
+        title: '官方事件-觸發-打開抽屜',
         fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {

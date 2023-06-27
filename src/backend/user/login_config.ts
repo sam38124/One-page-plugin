@@ -1,6 +1,7 @@
 import {BackendPlugin} from "../../glitterBundle/plugins/backend-plugin.js";
 import {Editor} from "../../editor.js";
 import {ShareDialog} from "../../dialog/ShareDialog.js";
+import {GlobalData} from "../../event.js";
 
 
 BackendPlugin.createPlugin((gvc) => {
@@ -58,22 +59,115 @@ BackendPlugin.createPlugin((gvc) => {
                                 gvc.notifyDataChange(id)
                             }
                         })
-                    },
-                    {
-                        title: `認證跳轉`, html: gvc.glitter.htmlGenerate.editeInput({
-                            gvc: gvc, title: ``, default: vm.data.link ?? "", placeHolder: "請輸入跳轉連結",
-                            callback: (text) => {
-                                vm.data.link = text
-                                gvc.notifyDataChange(id)
-                            }
-                        })
                     }
                 ]
-                return `<h3 class="border-bottom pb-3">
-登入設定
-</h3>
-<div class="w-100  row m-0">
+
+                const verify = [
+                    {
+                        title: `認證成功`, html: gvc.bindView(() => {
+                            const id = gvc.glitter.getUUID();
+                            function recursive() {
+                                if (GlobalData.data.pageList.length === 0) {
+                                    GlobalData.data.run();
+                                    setTimeout(() => {
+                                        recursive();
+                                    }, 200);
+                                } else {
+                                    gvc.notifyDataChange(id);
+                                }
+                            }
+                            recursive();
+                            setTimeout(() => {
+                                gvc.notifyDataChange(id)
+                            }, 1000)
+                            return {
+                                bind: id,
+                                view: () => {
+                                    return /*html*/ `
+
+<select
+                                            class="form-select form-control mt-2"
+                                            onchange="${gvc.event((e) => {
+                                        console.log((window as any).$(e).val())
+                                        vm.data.link=e.value
+                                    })}"
+                                        >
+                                            ${GlobalData.data.pageList.map((dd: any) => {
+                                        vm.data.link=vm.data.link??dd.tag
+                                        return /*html*/ `<option value="${dd.tag}" ${vm.data.link === dd.tag ? `selected` : ``}>
+                                                    ${dd.group}-${dd.name}
+                                                </option>`;
+                                    })}
+                                        </select>`;
+                                },
+                                divCreate: {class:`flex-fill`},
+                            };
+                        })
+                    },
+                    {
+                        title: `忘記密碼`, html:   gvc.bindView(() => {
+                            const id = gvc.glitter.getUUID();
+                            function recursive() {
+                                if (GlobalData.data.pageList.length === 0) {
+                                    GlobalData.data.run();
+                                    setTimeout(() => {
+                                        recursive();
+                                    }, 200);
+                                } else {
+                                    gvc.notifyDataChange(id);
+                                }
+                            }
+                            recursive();
+                            setTimeout(() => {
+                                gvc.notifyDataChange(id)
+                            }, 1000)
+                            return {
+                                bind: id,
+                                view: () => {
+                                    return /*html*/ `
+
+<select
+                                            class="form-select form-control mt-2"
+                                            onchange="${gvc.event((e) => {
+                                        console.log((window as any).$(e).val())
+                                        vm.data.forget=e.value
+                                    })}"
+                                        >
+                                            ${GlobalData.data.pageList.map((dd: any) => {
+                                        vm.data.forget=vm.data.forget??dd.tag
+                                        return /*html*/ `<option value="${dd.tag}" ${vm.data.forget === dd.tag ? `selected` : ``}>
+                                                    ${dd.group}-${dd.name}
+                                                </option>`;
+                                    })}
+                                        </select>`;
+                                },
+                                divCreate: {class:`flex-fill`},
+                            };
+                        })
+                        // gvc.glitter.htmlGenerate.editeInput({
+                        //     gvc: gvc, title: ``, default: vm.data.forget ?? "", placeHolder: "請輸入跳轉連結",
+                        //     callback: (text) => {
+                        //         vm.data.forget = text
+                        //         gvc.notifyDataChange(id)
+                        //     }
+                        // })
+                    }
+                ]
+                return `<h3 class=" pb-3">登入設定</h3>
+<div class="w-100 row m-0">
 ${form.map((dd) => {
+                    return `<div class="col-sm-6 col-12">
+<div class="w-100 d-flex align-items-center justify-content-center p-2">
+<h3 style="font-size: 16px;min-width: 80px;white-space:nowrap;" class="m-0 me-2">${dd.title}</h3>
+${dd.html}
+</div>
+</div>`
+                }).join('')}
+</div>
+<div class="w-100 border my-3"></div>
+<h3 class=" pb-3">頁面跳轉設定</h3>
+<div class="w-100 row m-0">
+${verify.map((dd) => {
                     return `<div class="col-sm-6 col-12">
 <div class="w-100 d-flex align-items-center justify-content-center p-2">
 <h3 style="font-size: 16px;min-width: 80px;white-space:nowrap;" class="m-0 me-2">${dd.title}</h3>

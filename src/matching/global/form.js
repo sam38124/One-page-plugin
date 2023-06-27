@@ -53,6 +53,14 @@ export function getPostForm(formList) {
             "requirement": "true",
             "label": "聯絡電話",
             "formExpand": { "expand": true }
+        }, {
+            "col": "12",
+            "key": "line_id",
+            "colm": "12",
+            "type": "text",
+            "requirement": "true",
+            "label": "line ID",
+            "formExpand": { "expand": true }
         },
         {
             "col": "12",

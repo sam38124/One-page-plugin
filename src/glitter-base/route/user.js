@@ -34,6 +34,34 @@ export class ApiUser {
             }
         });
     }
+    static forgetPwd(email) {
+        return BaseApi.create({
+            "url": getBaseUrl() + `/api-public/v1/user/forget`,
+            "type": "POST",
+            "headers": {
+                "g-app": getConfig().config.appName,
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify({
+                email: email
+            })
+        });
+    }
+    static resetPwd(pwd, newPwd) {
+        return BaseApi.create({
+            "url": getBaseUrl() + `/api-public/v1/user/resetPwd`,
+            "type": "PUT",
+            "headers": {
+                "g-app": getConfig().config.appName,
+                "Content-Type": "application/json",
+                "Authorization": GlobalUser.token
+            },
+            data: JSON.stringify({
+                pwd: pwd,
+                newPwd: newPwd
+            })
+        });
+    }
     static updateUserData(json) {
         return BaseApi.create({
             "url": getBaseUrl() + `/api-public/v1/user`,

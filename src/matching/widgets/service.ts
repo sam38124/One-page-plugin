@@ -450,7 +450,7 @@ const servicePlace = [
         ]
     },
 ]
-export const service=Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
+export const service = Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
         defaultData: {},
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[], subData) => {
@@ -463,44 +463,44 @@ export const service=Plugin.createComponent(import.meta.url, (glitter: Glitter, 
                         bind: id,
                         view: () => {
                             let selectCity = glitter.getUrlParameter('selectCity')
-                            let selectPlace=glitter.getUrlParameter('selectPlace')
-                            let selectBidItem=glitter.getUrlParameter('selectBidItem')
-                            let selectChild=glitter.getUrlParameter('selectChildItem')
-                            if(!widget.data.bigItem.find((dd:any)=>{
-                                return dd.id===selectBidItem
-                            })){
-                                selectBidItem=widget.data.bigItem[0].id
+                            let selectPlace = glitter.getUrlParameter('selectPlace')
+                            let selectBidItem = glitter.getUrlParameter('selectBidItem')
+                            let selectChild = glitter.getUrlParameter('selectChildItem')
+                            if (!widget.data.bigItem.find((dd: any) => {
+                                return dd.id === selectBidItem
+                            })) {
+                                selectBidItem = widget.data.bigItem[0].id
                             }
-                            const serviceList= widget.data.bigItem.find((dd:any)=>{
-                                return dd.id===selectBidItem
+                            const serviceList = widget.data.bigItem.find((dd: any) => {
+                                return dd.id === selectBidItem
                             }).child ?? []
-                            if(!serviceList.find((dd:any)=>{
-                                return dd.id===selectChild
-                            })){
-                                selectChild=serviceList[0].id
+                            if (!serviceList.find((dd: any) => {
+                                return dd.id === selectChild
+                            })) {
+                                selectChild = serviceList[0].id
                             }
-                            let budget=undefined
+                            let budget = undefined
                             if (!servicePlace.find((dd) => {
                                 return dd.title === selectCity
                             })) {
                                 selectCity = undefined
                             }
-                            !selectCity || glitter.setUrlParameter('selectCity',selectCity)
-                            !selectPlace || glitter.setUrlParameter('selectPlace',selectPlace)
-                            glitter.setUrlParameter('selectBidItem',selectBidItem)
-                            glitter.setUrlParameter('selectChildItem',selectChild)
-                            const gridCol=glitter.ut.frSize({
-                                sm:`col-2`
-                            },'col-3')
+                            !selectCity || glitter.setUrlParameter('selectCity', selectCity)
+                            !selectPlace || glitter.setUrlParameter('selectPlace', selectPlace)
+                            glitter.setUrlParameter('selectBidItem', selectBidItem)
+                            glitter.setUrlParameter('selectChildItem', selectChild)
+                            const gridCol = glitter.ut.frSize({
+                                sm: `col-2`
+                            }, 'col-3')
                             return `<div  class="${glitter.ut.frSize({
-                                sm:`container `
-                            },'p-0')}" style="box-sizing: border-box;" >
+                                sm: `container `
+                            }, 'p-0')}" style="box-sizing: border-box;" >
 <div  class="p-2 border w-100 d-flex  glitterTagundefined" style="overflow-x: auto; white-space: nowrap;  display: inline-block; gap:10px;" >
 ${widget.data.bigItem.map((dd: any, index: number) => {
                                 return `<div  class="rounded position-relative d-flex flex-column align-items-center justify-content-center glitterTagundefined" style="min-width:200px;height:125px;
 background:50%/cover no-repeat url('${dd.bg}');
-   " onclick="${gvc.event(()=>{
-                                    glitter.setUrlParameter("selectBidItem",dd.id);
+   " onclick="${gvc.event(() => {
+                                    glitter.setUrlParameter("selectBidItem", dd.id);
                                     gvc.recreateView()
                                 })}">
 <div  class="position-absolute w-100 h-100 bg-dark  top-0 rounded glitterTagundefined" style="opacity:${(selectBidItem === dd.id) ? `25` : `70`}%;"></div>
@@ -514,14 +514,14 @@ background:50%/cover no-repeat url('${dd.bg}');
 </div>
 <div class="d-flex flex-wrap col-sm-10 col-9" style="gap:10px;padding:10px;">
 ${(() => {
-    
-                                return serviceList.map((dd:any,index:number) => {
-                                    if(selectChild===dd.id){
+
+                                return serviceList.map((dd: any, index: number) => {
+                                    if (selectChild === dd.id) {
                                         return `<span style="cursor:pointer;color:orangered;border-bottom:1px solid orangered;">${dd.title}</span>`
-                                    }else{
-                                        return `<span style="cursor:pointer;" onclick="${gvc.event((e,event)=>{
-                                            selectChild=dd.id
-                                            glitter.setUrlParameter('selectChildItem',selectChild)
+                                    } else {
+                                        return `<span style="cursor:pointer;" onclick="${gvc.event((e, event) => {
+                                            selectChild = dd.id
+                                            glitter.setUrlParameter('selectChildItem', selectChild)
                                             // gvc.notifyDataChange(id)
                                             // glitter.share.refreshService()
                                             gvc.recreateView()
@@ -531,14 +531,14 @@ ${(() => {
                             })()}
 </div>
 </div>
-<div class="row m-0 ${(subData.hide_place) ? `d-none`:``}" style="width:100%;">
+<div class="row m-0 ${(subData.hide_place) ? `d-none` : ``}" style="width:100%;">
 <div class="${gridCol} d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
 服務縣市
 </div>
 <div class="col-9 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
 <select class="form-select" style="font-size:14px;cursor:pointer;" onchange="${gvc.event((e, event) => {
                                 glitter.setUrlParameter('selectCity', e.value)
-                                glitter.setUrlParameter('selectPlace',"不拘")
+                                glitter.setUrlParameter('selectPlace', "不拘")
                                 selectCity = e.value
                                 // gvc.notifyDataChange(id)
                                 // glitter.share.refreshService()
@@ -547,7 +547,7 @@ ${(() => {
 <option >不拘</option>
 ${
                                 servicePlace.map((dd) => {
-                                    return `<option value="${dd.title}" ${(selectCity===dd.title) ? `selected`:``} style="cursor:pointer;">${dd.title}</option>`
+                                    return `<option value="${dd.title}" ${(selectCity === dd.title) ? `selected` : ``} style="cursor:pointer;">${dd.title}</option>`
                                 })
                             }</select>
 </div>
@@ -564,24 +564,47 @@ ${
                             })}">
 <option >不拘</option>
 ${
-                                servicePlace.find((dd:any)=>{
-                                    return dd.title===selectCity
-                                })?.city.map((dd:any)=>{
-                                    return `<option value="${dd.title}" ${(selectPlace===dd.title) ? `selected`:``}>${dd.title}</option>`  
+                                servicePlace.find((dd: any) => {
+                                    return dd.title === selectCity
+                                })?.city.map((dd: any) => {
+                                    return `<option value="${dd.title}" ${(selectPlace === dd.title) ? `selected` : ``}>${dd.title}</option>`
                                 })
                             }</select>
 </div>
-
 <div class="col-3 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
 客戶預算
 </div>
 <div class="col-9 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
-<input class="w-100 form-control" onchange="${gvc.event((e,event)=>{
-                                budget=e.value
+<input class="w-100 form-control" onchange="${gvc.event((e, event) => {
+                                budget = e.value
                                 glitter.setUrlParameter('budget', e.value)
                                 // glitter.share.refreshService()
                                 gvc.recreateView()
                             })}" placeholder="請輸入預算" value="${glitter.getUrlParameter('budget') ?? ""}">
+</div>
+<div class="col-3 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;background:whitesmoke;">
+案件搜尋
+</div>
+<div class="col-9 col-sm-2 d-flex align-items-center justify-content-center border" style="font-weight:500;height:50px;">
+${Editor.searchInput({
+                                title: ``,
+                                gvc: gvc,
+                                def: "",
+                                array: gvc.glitter.share.service.map((dd: any) => {
+                                    return `${dd.bidTitle}-${dd.title}`
+                                }),
+                                callback: (text) => {
+                                    const val=gvc.glitter.share.service.find((dd:any)=>{
+                                        return `${dd.bidTitle}-${dd.title}`===text
+                                    })
+                                    if(val){
+                                        glitter.setUrlParameter('selectBidItem', val.bigItemId)
+                                        glitter.setUrlParameter('selectChildItem', val.id)
+                                        gvc.recreateView()
+                                    }
+                                },
+                                placeHolder:"請輸入關鍵字"
+                            })}
 </div>
 </div>
 </div>`
@@ -603,7 +626,7 @@ ${
                             gvc: gvc,
                             title: '服務大項',
                             array: widget.data.bigItem.map((lineData: any, index: number) => {
-                                lineData.child=lineData.child??[]
+                                lineData.child = lineData.child ?? []
                                 return {
                                     title: lineData.title ?? `項目:${index}`,
                                     expand: lineData,
@@ -628,12 +651,12 @@ ${
                                             },
                                         }),
                                         Editor.arrayItem({
-                                            originalArray:lineData.child,
+                                            originalArray: lineData.child,
                                             gvc: gvc,
                                             title: '服務子項目',
                                             array: lineData.child.map((dd: any, index: number) => {
                                                 return {
-                                                    title: (dd.title ?? `子項目:${index+1}`),
+                                                    title: (dd.title ?? `子項目:${index + 1}`),
                                                     expand: dd,
                                                     innerHtml: gvc.map([
                                                         glitter.htmlGenerate.editeInput({
@@ -646,9 +669,9 @@ ${
                                                                 widget.refreshComponent();
                                                             },
                                                         }),
-                                                        `<button class="btn btn-warning text-dark w-100" onclick="${gvc.event(()=>{
-                                                            glitter.openDiaLog(new URL('../dialog/setform.js',import.meta.url).href,"setForm",{
-                                                                data:dd
+                                                        `<button class="btn btn-warning text-dark w-100" onclick="${gvc.event(() => {
+                                                            glitter.openDiaLog(new URL('../dialog/setform.js', import.meta.url).href, "setForm", {
+                                                                data: dd
                                                             })
                                                         })}">設定表單</button>`
                                                     ]),
@@ -662,11 +685,14 @@ ${
                                             plus: {
                                                 title: '添加區塊',
                                                 event: gvc.event(() => {
-                                                    lineData.child.push({title:"服務子項目",id:`${(new Date()).getTime()}`});
+                                                    lineData.child.push({
+                                                        title: "服務子項目",
+                                                        id: `${(new Date()).getTime()}`
+                                                    });
                                                     widget.refreshComponent();
                                                 }),
                                             },
-                                            refreshComponent:()=>{
+                                            refreshComponent: () => {
                                                 widget.refreshComponent()
                                             }
                                         })
@@ -685,7 +711,7 @@ ${
                                         title: '清潔',
                                         bg: `https://liondesign-prd.s3.amazonaws.com/file/guest/1685366469901-Screen Shot 2023-05-29 at 9.20.47 PM.png`,
                                         smItem: '',
-                                        id:`${(new Date).getTime()}`
+                                        id: `${(new Date).getTime()}`
                                     });
                                     widget.refreshComponent();
                                 }),

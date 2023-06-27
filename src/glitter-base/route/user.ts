@@ -28,7 +28,6 @@ export class ApiUser{
         })
     }
     public static getPublicUserData(id:string){
-
         return BaseApi.create({
             "url": getBaseUrl()+`/api-public/v1/user/userdata?userID=${id}`,
             "type": "GET",
@@ -36,6 +35,34 @@ export class ApiUser{
                 "g-app":getConfig().config.appName,
                 "Content-Type": "application/json"
             }
+        })
+    }
+    public static forgetPwd(email:string){
+        return BaseApi.create({
+            "url": getBaseUrl()+`/api-public/v1/user/forget`,
+            "type": "POST",
+            "headers": {
+                "g-app":getConfig().config.appName,
+                "Content-Type": "application/json"
+            },
+            data:JSON.stringify({
+                email:email
+            })
+        })
+    }
+    public static resetPwd(pwd:string,newPwd:string){
+        return BaseApi.create({
+            "url": getBaseUrl()+`/api-public/v1/user/resetPwd`,
+            "type": "PUT",
+            "headers": {
+                "g-app":getConfig().config.appName,
+                "Content-Type": "application/json",
+                "Authorization":GlobalUser.token
+            },
+            data:JSON.stringify({
+                pwd:pwd,
+                newPwd:newPwd
+            })
         })
     }
     public static updateUserData(json:any){

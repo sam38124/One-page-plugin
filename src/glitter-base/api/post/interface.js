@@ -113,7 +113,7 @@ TriggerEvent.create(import.meta.url, {
                 count: 0,
                 datasource: []
             };
-            widget.data.searchText = widget.data.searchText ?? `{
+            object.searchText = object.searchText ?? `{
                 data: [],
                 query: [],
                 page: 0,
@@ -121,7 +121,7 @@ TriggerEvent.create(import.meta.url, {
                 count: 0,
                 datasource: []
             }`;
-            widget.data.search = widget.data.search ?? "s";
+            object.search = object.search ?? "s";
             const id = glitter.getUUID();
             function getArrayItem(data2) {
                 data2.query = data2.query ?? [];
@@ -291,8 +291,8 @@ TriggerEvent.create(import.meta.url, {
                             bind: id,
                             view: () => {
                                 return gvc.map([
-                                    getArrayItem(widget.data),
-                                    getSearchItem(widget.data)
+                                    getArrayItem(object),
+                                    getSearchItem(object)
                                 ]);
                             },
                             divCreate: {}
@@ -323,14 +323,14 @@ TriggerEvent.create(import.meta.url, {
                         }
                         return { key: key, value: value, type: dd.type, query: dd.query };
                     }
-                    JSON.parse(JSON.stringify(widget.data.query)).map((dd) => {
+                    JSON.parse(JSON.stringify(object.query)).map((dd) => {
                         const q = getQuery(dd);
                         if (q.key !== undefined && q.key !== '') {
                             vm.query.push(getQuery(dd));
                         }
                     });
-                    widget.data.selectOnly = widget.data.selectOnly ?? [];
-                    JSON.parse(JSON.stringify(widget.data.selectOnly)).map((dd) => {
+                    object.selectOnly = object.selectOnly ?? [];
+                    JSON.parse(JSON.stringify(object.selectOnly)).map((dd) => {
                         const q = getQuery(dd);
                         if (q.type === 'count' || (q.key !== undefined && (q.key !== ''))) {
                             vm.selectOnly.push(q);
