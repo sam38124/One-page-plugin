@@ -96,7 +96,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
               <div class="kv2-text">
                 <h1 data-aos="fade-down" data-aos-delay="400" data-aos-duration="1000">${keyVision2.r.title}</h1>
                 <h2 data-aos="fade-up" data-aos-delay="600" data-aos-duration="1000">「${keyVision2.r.desc}」</h2>
-                <div class="row ps-5" data-aos="fade-left" data-aos-delay="800" data-aos-duration="1000">
+                <div class="row ps-5" >
                   <div class="col-12 col-lg-6 kv-2-word">
                     <h3>${keyVision2.r.text}</h3>
                     <button
