@@ -110,10 +110,10 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                             onCreate: () => {
                                 try{
                                     //@ts-ignore
-                                    const swiper = new Swiper(`#${gvc.id(cl)} .swiper`, {
+                                    const swiper = new Swiper(`[gvc-id="${gvc.id(cl)}"] .swiper`, {
                                         slidesPerView: 2,
                                         pagination: {
-                                            el: `#${gvc.id(cl)} .swiper-pagination`,
+                                            el: `[gvc-id="${gvc.id(cl)}"] .swiper-pagination`,
                                             clickable: true,
                                         },
                                         breakpoints: {

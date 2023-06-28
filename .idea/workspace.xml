@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="93bccc46-e194-44b4-921c-fc21039b8956" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/one-page/style-1/topBanner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1/topBanner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +103,7 @@
       <workItem from="1686930567069" duration="122572000" />
       <workItem from="1687745202574" duration="2896000" />
       <workItem from="1687826890047" duration="16803000" />
-      <workItem from="1687881718660" duration="5323000" />
+      <workItem from="1687881718660" duration="6248000" />
     </task>
     <servers />
   </component>
