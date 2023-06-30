@@ -2,15 +2,26 @@ import { TriggerEvent } from "../glitterBundle/plugins/trigger-event.js";
 import { GlobalUser } from "../glitter-base/global/global-user.js";
 TriggerEvent.create(import.meta.url, {
     postCase: {
-        title: '媒合平台-發布案子',
+        title: '事件-登入判斷',
         fun: (gvc, widget, object, subData, element) => {
+            widget.data.loginUserEvent = widget.data.loginUserEvent ?? {};
             return {
                 editor: () => {
-                    return TriggerEvent.editer(gvc, widget, widget.data, {
+                    return `<div class="border border-white m-2 p-2">
+${TriggerEvent.editer(gvc, widget, widget.data.loginUserEvent, {
                         option: [],
-                        title: "未登入的事件",
+                        title: "已登入用戶的事件",
                         hover: false
-                    });
+                    })}
+</div>
+<div class="border border-white m-2 p-2">
+${TriggerEvent.editer(gvc, widget, widget.data, {
+                        option: [],
+                        title: "未登入用戶的事件",
+                        hover: false
+                    })}
+</div>
+`;
                 },
                 event: () => {
                     if (!GlobalUser.token) {
@@ -19,7 +30,9 @@ TriggerEvent.create(import.meta.url, {
                         });
                     }
                     else {
-                        window.glitter.openDiaLog(new URL('dialog/postform.js', import.meta.url).href, "postform", {});
+                        TriggerEvent.trigger({
+                            gvc, widget, clickEvent: widget.data.loginUserEvent,
+                        });
                     }
                 },
             };
@@ -40,6 +53,8 @@ TriggerEvent.create(import.meta.url, {
                                 gvc.glitter.share.service = [];
                                 data.response.result[0].config[0].data.bigItem.map((dd) => {
                                     dd.child.map((d2) => {
+                                        d2.bigItemId = dd.id;
+                                        d2.bidTitle = dd.title;
                                         gvc.glitter.share.service.push(d2);
                                     });
                                 });

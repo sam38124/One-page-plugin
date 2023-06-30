@@ -6,6 +6,8 @@ export const getData=TriggerEvent.createSingleEvent(import.meta.url, (glitter) =
     return {
         fun: (gvc, widget, object, subData) => {
             const glitter = (window as any).glitter;
+
+            // alert(JSON.stringify(glitter.share.postCaseData))
             return {
                 editor: () => {
                     return ``
@@ -15,7 +17,9 @@ export const getData=TriggerEvent.createSingleEvent(import.meta.url, (glitter) =
                     ApiPost.get({
                         page:object.page ?? subData.page,
                         limit:object.limit ?? subData.limit,
-                        query:object.query ?? subData.query ?? []
+                        query:object.query ?? subData.query ?? [],
+                        selectOnly:object.selectOnly ?? subData.selectOnly ?? [],
+                        datasource:object.datasource ?? subData.datasource ?? [],
                     })?.then((r) => {
                         if (!r.result) {
                             dialog.errorMessage({

@@ -12,6 +12,12 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             subContent: '模板建立頁面．',
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./glitter/createApp.js', import.meta.url)),
+        },
+        createAppV2: {
+            title: '模板建立V2',
+            subContent: '模板建立V2．',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./glitter/createAppV2.js', import.meta.url)),
         }
     };
 });

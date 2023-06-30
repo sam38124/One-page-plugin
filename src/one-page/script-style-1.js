@@ -5,24 +5,23 @@ export class ScriptStyle1 {
         return new URL('./' + link, import.meta.url).href;
     }
     static initialScript(gvc, widget) {
+        window.root = document.getElementsByTagName('html')[0];
         if (ScriptStyle1.hi) {
             return;
         }
         ScriptStyle1.hi = true;
-        window.root = document.getElementsByTagName('html')[0];
-        gvc.addStyleLink([
+        gvc.glitter.addStyleLink([
+            ScriptStyle1.getRout('../fontawsome/css/all.css'),
             ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.min.css'),
             ScriptStyle1.getRout('assets/vendor/swiper/swiper-bundle.min.css'),
             'https://unpkg.com/aos@next/dist/aos.css',
             ScriptStyle1.getRout('assets/css/theme.min.css'),
             ScriptStyle1.getRout('app.css'),
-        ]).then(() => {
-            window.root.classList.remove('dark-mode');
-            window.root.classList.remove('light-mode');
-            window.root.classList.add(ScriptStyle1.style);
-        });
-        gvc.addMtScript([
-            { src: 'https://kit.fontawesome.com/02e2dc09e3.js' },
+        ]);
+        window.root.classList.remove('dark-mode');
+        window.root.classList.remove('light-mode');
+        window.root.classList.add(ScriptStyle1.style);
+        gvc.glitter.addMtScript([
             { src: ScriptStyle1.getRout(`assets/js/isotope.pkgd.min.js`) },
             { src: ScriptStyle1.getRout(`assets/js/tgs-player.js`) },
             { src: ScriptStyle1.getRout(`assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js`) },
@@ -44,6 +43,7 @@ export class ScriptStyle1 {
             catch (e) {
             }
         }, () => {
+            widget.refreshComponent();
         });
     }
     static swapArr(arr, index1, index2) {

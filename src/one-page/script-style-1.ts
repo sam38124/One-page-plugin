@@ -7,25 +7,25 @@ export class ScriptStyle1{
         return new URL('./' + link, import.meta.url).href;
     }
     public static initialScript(gvc: any, widget: HtmlJson) {
+        (window as any).root = document.getElementsByTagName('html')[0];
+
         if (ScriptStyle1.hi) {
             return;
         }
         ScriptStyle1.hi = true;
-        (window as any).root = document.getElementsByTagName('html')[0];
-        gvc.addStyleLink([
+        gvc.glitter.addStyleLink([
+            ScriptStyle1.getRout('../fontawsome/css/all.css'),
             ScriptStyle1.getRout('assets/vendor/boxicons/css/boxicons.min.css'),
             ScriptStyle1.getRout('assets/vendor/swiper/swiper-bundle.min.css'),
             'https://unpkg.com/aos@next/dist/aos.css',
             ScriptStyle1.getRout('assets/css/theme.min.css'),
             ScriptStyle1.getRout('app.css'),
-        ]).then(()=>{
-            (window as any).root.classList.remove('dark-mode');
-            (window as any).root.classList.remove('light-mode');
-            (window as any).root.classList.add(ScriptStyle1.style)
-        });
-        gvc.addMtScript(
+        ]);
+        (window as any).root.classList.remove('dark-mode');
+        (window as any).root.classList.remove('light-mode');
+        (window as any).root.classList.add(ScriptStyle1.style)
+        gvc.glitter.addMtScript(
             [
-                {src: 'https://kit.fontawesome.com/02e2dc09e3.js'},
                 {src: ScriptStyle1.getRout(`assets/js/isotope.pkgd.min.js`)},
                 {src: ScriptStyle1.getRout(`assets/js/tgs-player.js`)},
                 {src: ScriptStyle1.getRout(`assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js`)},
@@ -48,8 +48,10 @@ export class ScriptStyle1{
                 }
             },
             () => {
+                widget.refreshComponent();
             }
         );
+
     }
     public static  swapArr(arr: any, index1: number, index2: number) {
         const data = arr[index1];

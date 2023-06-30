@@ -358,17 +358,17 @@ export class Editor {
                                         style="height: 40px;"
                                         placeholder="${obj.placeHolder}"
                                         onfocus="${obj.gvc.event(() => {
-                            $('#' + obj.gvc.id(id)).addClass(`show`);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         onblur="${gvc.event(() => {
                             setTimeout(() => {
-                                $('#' + gvc.id(id)).removeClass(`show`);
+                                gvc.getBindViewElem(id).removeClass(`show`);
                             }, 300);
                         })}"
                                         oninput="${gvc.event((e) => {
                             obj.def = e.value;
                             gvc.notifyDataChange(id);
-                            $('#' + obj.gvc.id(id)).addClass(`show`);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         value="${obj.def}"
                                         onchange="${gvc.event((e) => {
@@ -395,6 +395,7 @@ export class Editor {
                                                 class="dropdown-item"
                                                 onclick="${gvc.event(() => {
                                 obj.def = d3;
+                                gvc.notifyDataChange(id2);
                                 obj.callback(obj.def);
                             })}"
                                             >

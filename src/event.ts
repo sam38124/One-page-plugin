@@ -2,8 +2,10 @@ import {TriggerEvent} from './glitterBundle/plugins/trigger-event.js';
 import {Editor} from './editor.js';
 import {template} from "./one-page/style-1/template.js";
 import {component} from "./official/component.js";
+import {BaseApi} from "./api/base.js";
+import {GVC} from "./glitterBundle/GVController.js";
 
-class GlobalData {
+export class GlobalData {
     public static data = {
         pageList: [],
         isRunning: false,
@@ -21,7 +23,7 @@ class GlobalData {
                     GlobalData.data.pageList = data.response.result.map((dd: any) => {
                         dd.page_config = dd.page_config ?? {};
                         return dd;
-                    });
+                    }).sort((a: any, b: any) => `${a.group}-${a.name}`.localeCompare(`${b.group}-${b.name}`));
                 } else {
                     GlobalData.data.isRunning = false;
                     GlobalData.data.run();
@@ -33,12 +35,13 @@ class GlobalData {
 
 TriggerEvent.create(import.meta.url, {
     link: {
-        title: 'Glitter-連結跳轉',
+        title: '官方事件-觸發-頁面跳轉',
         fun: (gvc, widget, object) => {
             return {
                 editor: () => {
                     return gvc.bindView(() => {
                         const id = gvc.glitter.getUUID();
+
                         function recursive() {
                             if (GlobalData.data.pageList.length === 0) {
                                 GlobalData.data.run();
@@ -49,21 +52,22 @@ TriggerEvent.create(import.meta.url, {
                                 gvc.notifyDataChange(id);
                             }
                         }
+
                         recursive();
-                         setTimeout(()=>{
-                             gvc.notifyDataChange(id)
-                         },1000)
+                        setTimeout(() => {
+                            gvc.notifyDataChange(id)
+                        }, 1000)
                         return {
                             bind: id,
                             view: () => {
-                                if(![
+                                if (![
                                     {title: '內部連結', value: 'inlink'},
                                     {title: '外部連結', value: 'outlink'},
                                     {title: 'HashTag', value: 'hashTag'},
-                                ].find((dd)=>{
+                                ].find((dd) => {
                                     return dd.value === object.link_change_type
-                                })){
-                                    object.link_change_type='inlink'
+                                })) {
+                                    object.link_change_type = 'inlink'
                                 }
                                 return /*html*/ ` ${Editor.h3('跳轉方式')}
                                     <select
@@ -87,17 +91,20 @@ TriggerEvent.create(import.meta.url, {
                                     </select>
                                     ${(() => {
                                     if (object.link_change_type === 'inlink') {
-                                        object.stackControl=object.stackControl??"home"
+                                        object.stackControl = object.stackControl ?? "home"
                                         return /*html*/ `
 ${Editor.select({
                                             title: '堆棧控制',
                                             gvc: gvc,
                                             def: object.stackControl,
                                             callback: (text: string) => {
-                                                object.stackControl=text
+                                                object.stackControl = text
                                                 widget.refreshComponent();
                                             },
-                                            array: [{title:'設為首頁',value:"home"},{title:'頁面跳轉',value:"page"}],
+                                            array: [{title: '設為首頁', value: "home"}, {
+                                                title: '頁面跳轉',
+                                                value: "page"
+                                            }],
                                         })}
 ${Editor.h3("選擇頁面")}
 <select
@@ -144,7 +151,7 @@ ${Editor.h3("選擇頁面")}
                     });
                 },
                 event: () => {
-                    object.link_change_type=object.link_change_type??object.type
+                    object.link_change_type = object.link_change_type ?? object.type
                     /**
                      * 網頁直接跳轉連結，如為APP則打開WEBVIEW
                      * */
@@ -164,7 +171,7 @@ ${Editor.h3("選擇頁面")}
                                     location.href = url.href;
                                     return
                                 }
-                                if(object.stackControl==='home'){
+                                if (object.stackControl === 'home') {
                                     gvc.glitter.htmlGenerate.setHome(
                                         {
                                             page_config: data.response.result[0].page_config,
@@ -172,11 +179,12 @@ ${Editor.h3("選擇頁面")}
                                             data: {},
                                             tag: object.link,
                                             option: {
-                                                animation: gvc.glitter.animation.fade
+                                                animation: gvc.glitter.animation.fade,
                                             }
                                         }
                                     );
-                                }else{
+                                    resolve(true)
+                                } else {
                                     gvc.glitter.htmlGenerate.changePage(
                                         {
                                             page_config: data.response.result[0].page_config,
@@ -185,13 +193,15 @@ ${Editor.h3("選擇頁面")}
                                             tag: object.link,
                                             goBack: true,
                                             option: {
-                                                animation: gvc.glitter.animation.fade
+                                                animation: gvc.glitter.ut.frSize({
+                                                    sm: gvc.glitter.animation.fade
+                                                }, gvc.glitter.animation.rightToLeft)
                                             }
                                         }
                                     );
+                                    resolve(true)
                                 }
                             })
-
                         })
                         // location.href=
                     } else if (object.link_change_type === 'hashTag') {
@@ -199,33 +209,165 @@ ${Editor.h3("選擇頁面")}
                         const element: any = document.getElementsByClassName(`glitterTag${object.link}`)[0];
                         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
                         window.scrollTo({top: y, behavior: "smooth"});
+                        return true
                     } else {
+
                         gvc.glitter.runJsInterFace(
                             'openWeb',
                             {
                                 url: object.link,
                             },
                             (data) => {
+                                return true
                             },
                             {
                                 webFunction(data: any, callback: (data: any) => void): any {
-                                    gvc.glitter.openNewTab(object.link);
-                                    // gvc.glitter.location.href=object.link
+                                    // gvc.glitter.openNewTab(object.link);
+                                    gvc.glitter.location.href = object.link
+                                    return true
                                 },
                             }
                         );
+                        return true
                     }
                 },
             };
         },
     },
     dialog: {
-        title: 'Glitter-彈出頁面區塊',
-        fun: (gvc, widget, object, subData) => {
+        title: '官方事件-觸發-彈跳視窗',
+        fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
                     const id = gvc.glitter.getUUID()
                     const glitter = gvc.glitter
+                    widget.data.coverData = widget.data.coverData ?? {}
+
+                    function recursive() {
+                        if (GlobalData.data.pageList.length === 0) {
+                            GlobalData.data.run();
+                            setTimeout(() => {
+                                recursive();
+                            }, 200);
+                        } else {
+                            gvc.notifyDataChange(id);
+                        }
+                    }
+
+                    recursive();
+
+                    return gvc.bindView(() => {
+                        return {
+                            bind: id,
+                            view: () => {
+
+                                return [`<select
+                                            class="form-select form-control mt-2"
+                                            onchange="${gvc.event((e) => {
+                                    object.link = (window as any).$(e).val();
+                                })}"
+                                        >
+                                            ${GlobalData.data.pageList.map((dd: any) => {
+                                    object.link = object.link ?? dd.tag;
+                                    return /*html*/ `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
+                                                    ${dd.group}-${dd.name}
+                                                </option>`;
+                                })}
+                                        </select>`, TriggerEvent.editer(gvc, widget, widget.data.coverData, {
+                                    hover: true,
+                                    option: [],
+                                    title: "夾帶資料-[將存於新頁面的gvc.getBundle().carryData之中]"
+                                })].join('')
+                            },
+                            divCreate: {}
+                        }
+                    })
+                },
+                event: () => {
+                    subData = subData ?? {}
+
+                    return new Promise(async (resolve, reject) => {
+                        const data = await TriggerEvent.trigger({
+                            gvc, widget, clickEvent: widget.data.coverData, subData
+                        })
+                        gvc.glitter.innerDialog((gvc: GVC) => {
+
+                            gvc.getBundle().carryData = data
+                            return new Promise<string>(async (resolve, reject) => {
+
+                                const view = await component.render(gvc, ({
+                                    data: {
+                                        tag: object.link
+                                    }
+                                } as any), ([] as any), [], subData).view()
+                                resolve(view)
+                            })
+
+                        }, gvc.glitter.getUUID())
+                    })
+
+
+                }
+            }
+        }
+    },
+    test: {
+        title: '官方事件-觸發-點擊測試',
+        fun: (gvc, widget, object) => {
+            return {
+                editor: () => {
+                    return ``;
+                },
+                event: () => {
+                    alert('test');
+                },
+            };
+        },
+    },
+    code: {
+        title: '官方事件-觸發-代碼區塊',
+        fun: (gvc, widget, object, subData, element) => {
+
+            return {
+                editor: () => {
+                    return gvc.glitter.htmlGenerate.editeText({
+                        gvc: gvc,
+                        title: "代碼區塊",
+                        default: object.code ?? "",
+                        placeHolder: "請輸入代碼區塊",
+                        callback: (text) => {
+                            object.code = text
+                        }
+                    });
+                },
+                event: () => {
+
+                    return new Promise<any>(async (resolve, reject) => {
+                        try {
+                            const a = (eval(object.code))
+                            if (a.then) {
+                                a.then((data: any) => {
+                                    resolve(data)
+                                })
+                            } else {
+                                resolve(a)
+                            }
+                        } catch (e) {
+                            resolve(object.errorCode ?? false)
+                        }
+
+                    })
+                },
+            };
+        },
+    },
+    drawer: {
+        title: '官方事件-觸發-打開抽屜',
+        fun: (gvc, widget, object, subData, element) => {
+
+            return {
+                editor: () => {
+                    const id = gvc.glitter.getUUID()
 
                     function recursive() {
                         if (GlobalData.data.pageList.length === 0) {
@@ -243,100 +385,99 @@ ${Editor.h3("選擇頁面")}
                         return {
                             bind: id,
                             view: () => {
-                                return `<select
+                                return `${Editor.h3("選擇頁面")}
+                       <select
                                             class="form-select form-control mt-2"
                                             onchange="${gvc.event((e) => {
-                                        object.link = (window as any).$(e).val();
-                                    })}"
+                                    console.log((window as any).$(e).val())
+                                    object.link = (window as any).$(e).val();
+                                })}"
                                         >
                                             ${GlobalData.data.pageList.map((dd: any) => {
-                                        object.link = object.link ?? dd.tag;
-                                        return /*html*/ `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
+                                    object.link = object.link ?? dd.tag;
+                                    return /*html*/ `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
                                                     ${dd.group}-${dd.name}
                                                 </option>`;
-                                    })}
-                                        </select>` +
-                                    glitter.htmlGenerate.editeInput(
-                                        {
-                                            gvc: gvc,
-                                            title: '標題',
-                                            default: object.title ?? "",
-                                            placeHolder: "",
-                                            callback: (text) => {
-                                                object.title = text
-                                            }
-                                        }
-                                    )
+                                })}
+                                        </select>
+${gvc.glitter.htmlGenerate.styleEditor(object, gvc).editor(gvc, () => {
+                                    widget.refreshComponent()
+                                }, "背景樣式")}
+`
                             },
                             divCreate: {}
                         }
                     })
                 },
                 event: () => {
-                    const id = gvc.glitter.getUUID()
-                    if (document.getElementById(id)) {
-                        $(`#${id}`).remove()
+                    let fal = 0
+                    let data: any = undefined
+
+                    async function getData() {
+                        return new Promise(async (resolve, reject) => {
+                            const saasConfig = (window as any).saasConfig
+                            BaseApi.create({
+                                "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}&tag=${object.link}`,
+                                "type": "GET",
+                                "timeout": 0,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                }
+                            }).then((d2) => {
+                                if (!d2.result) {
+                                    fal += 1
+                                    if (fal < 20) {
+                                        setTimeout(() => {
+                                            getData()
+                                        }, 200)
+                                    }
+                                } else {
+                                    data = d2.response.result[0]
+                                    resolve(data)
+                                }
+
+                            })
+                        })
                     }
-                    $('body').append(`
-<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-hidden="true" style="">
-<div class="modal-dialog modal-dialog-centered modal-lg" style="">
-     <div class="modal-content">
-            <div class="modal-header ">
-            <h4 class="modal-title" id="myCenterModalLabel">${object.title}</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-</div>
-<section class="position-relative  pt-0" >
-       ${component.render(gvc, ({
-                        data: {
-                            tag: object.link
-                        }
-                    } as any), ([] as any), [], subData).view()}
-      </section>
-            </div>
-</div>
-</div>
-`);
-                    ($(`#${id}`) as any).modal('show')
+
+                    getData().then((data: any) => {
+                        const id = gvc.glitter.getUUID()
+                        gvc.glitter.setDrawer(`<div class="w-100 h-100 ${gvc.glitter.htmlGenerate.styleEditor(object, gvc).class()}"
+style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
+>${
+                            gvc.bindView(() => {
+                                return {
+                                    bind: id,
+                                    view: () => {
+                                        if (!data) {
+                                            return ``
+                                        }
+                                        return new (window as any).glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
+                                    },
+                                    divCreate: {}
+                                }
+                            })
+                        }</div>`, () => {
+                            gvc.glitter.openDrawer()
+                        })
+                    })
+
+                },
+            };
+        },
+    },
+    addImage: {
+        title: `添加圖片`,
+        fun: (gvc, widget, obj, subData, element) => {
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    gvc.glitter.openDiaLog(new URL(`./dialog/image-preview.ts`, import.meta.url).href, "", {})
                 }
             }
         }
-    },
-    test: {
-        title: 'Glitter-點擊測試',
-        fun: (gvc, widget, object) => {
-            return {
-                editor: () => {
-                    return ``;
-                },
-                event: () => {
-                    alert('test');
-                },
-            };
-        },
-    },
-    code: {
-        title: 'Glitter-代碼區塊',
-        fun: (gvc, widget, object, subData, element) => {
-            return {
-                editor: () => {
-                    return gvc.glitter.htmlGenerate.editeText({
-                        gvc: gvc,
-                        title: "代碼區塊",
-                        default: object.code ?? "",
-                        placeHolder: "請輸入代碼區塊",
-                        callback: (text) => {
-                            object.code = text
-                        }
-                    });
-                },
-                event: () => {
-
-                    return new Promise<any>(async (resolve, reject) => {
-                        resolve(await (eval(object.code)))
-                    })
-                },
-            };
-        },
     }
 });
 

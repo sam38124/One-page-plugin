@@ -7,7 +7,7 @@ export class PageSplit {
         this.pageSplit = (countPage, nowPage, callback, gotoInput) => {
             const generator = (n) => {
                 return `<li class="page-item" style="">
-                    <a class="page-link" style="cursor:pointer" onclick="${gvc.event(() => callback(n))}">${n}</a>
+                    <a class="page-link" style="cursor:pointer;z-index:0;" onclick="${gvc.event(() => callback(n))}">${n}</a>
                 </li>`;
             };
             let vm = {

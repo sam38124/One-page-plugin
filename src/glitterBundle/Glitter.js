@@ -12,8 +12,10 @@ export class Glitter {
         pageBgColor: "white",
         pageAnimation: this.animation.none,
         dialogAnimation: this.animation.none,
-        pageLoading: () => { },
-        pageLoadingFinish: () => { }
+        pageLoading: () => {
+        },
+        pageLoadingFinish: () => {
+        }
     });
     htmlGenerate = HtmlGenerate;
     window;
@@ -36,6 +38,7 @@ export class Glitter {
     pageConfig = [];
     nowPageConfig;
     waitChangePage = false;
+    elementCallback = {};
     get baseUrl() {
         var getUrl = window.location;
         return getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
@@ -71,6 +74,7 @@ export class Glitter {
     changePage = PageManager.changePage;
     removePage = PageManager.removePage;
     openDiaLog = PageManager.openDiaLog;
+    innerDialog = PageManager.innerDialog;
     closeDiaLog = PageManager.closeDiaLog;
     hideLoadingView = PageManager.hideLoadingView;
     goBack = PageManager.goBack;
@@ -205,7 +209,8 @@ export class Glitter {
         }
     }
     setUrlParameter(tag, value) {
-        var search = this.setSearchParam(this.removeSearchParam(window.location.search, tag), tag, value);
+        var search = (value !== undefined) ? this.setSearchParam(this.removeSearchParam(window.location.search, tag), tag, value) :
+            this.removeSearchParam(window.location.search, tag);
         try {
             window.history.pushState({}, document.title, search);
         }
@@ -241,11 +246,17 @@ export class Glitter {
     }
     ;
     closeDrawer() {
-        window.drawer.close();
+        try {
+            window.drawer.close();
+        }
+        catch (e) { }
     }
     ;
     toggleDrawer() {
-        window.drawer.toggle();
+        try {
+            window.drawer.toggle();
+        }
+        catch (e) { }
     }
     ;
     addScript(url, success, error) {
@@ -280,6 +291,7 @@ export class Glitter {
     }
     ;
     addMtScript(urlArray, success, error, option) {
+        Glitter.glitter.share.scriptMemory = Glitter.glitter.share.scriptMemory ?? [];
         const glitter = this;
         let index = 0;
         function addScript() {
@@ -288,16 +300,13 @@ export class Glitter {
                 return;
             }
             var scritem = urlArray[index];
-            var haveURL = false;
-            glitter.$('head').children().map(function (data) {
-                if (glitter.$('head').children().get(data).src === (scritem.src ?? scritem)) {
-                    haveURL = true;
-                }
-            });
-            if (haveURL) {
+            if (Glitter.glitter.share.scriptMemory.indexOf((scritem.src ?? scritem)) !== -1) {
                 index++;
                 addScript();
                 return;
+            }
+            else {
+                Glitter.glitter.share.scriptMemory.push((scritem.src ?? scritem));
             }
             let script = document.createElement('script');
             try {
@@ -434,16 +443,13 @@ export class Glitter {
             glitter.parameter.styleList.push(sl);
         }
     }
-    addStyleLink(data) {
-        const gvc = this;
+    async addStyleLink(data) {
+        const glitter = this;
         var head = document.head;
-        const id = gvc.getUUID();
         function add(filePath) {
-            var haveURL = false;
-            Glitter.glitter.$('head').children().map(function (data) {
-                if (Glitter.glitter.$('head').children().get(data).src === (filePath)) {
-                    haveURL = true;
-                }
+            const id = glitter.getUUID();
+            var haveURL = glitter.parameter.styleLinks.find((dd) => {
+                return dd.src === filePath;
             });
             if (!haveURL) {
                 var link = document.createElement("link");
@@ -451,7 +457,7 @@ export class Glitter {
                 link.rel = "stylesheet";
                 link.href = filePath;
                 link.id = id;
-                gvc.parameter.styleLinks.push({
+                glitter.parameter.styleLinks.push({
                     id: id,
                     src: filePath
                 });
@@ -538,7 +544,7 @@ export class Glitter {
             document.body.removeChild(link);
         },
         frSize(sizeMap, def) {
-            var wi = this.glitter.$('html').width();
+            var wi = $('html').width();
             var sm = (sizeMap.sm ?? def);
             var me = (sizeMap.me ?? sm);
             var lg = (sizeMap.lg ?? me);

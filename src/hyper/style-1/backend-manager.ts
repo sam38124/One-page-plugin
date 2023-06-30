@@ -3,7 +3,7 @@ import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
 import {ScriptStyle1} from "../script-style-1.js";
 import {Editor} from "../../editor.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+
 import {component} from "../../official/component.js";
 import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 
@@ -362,7 +362,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                         widget.refreshComponent()
                                                     },
                                                 }),
-                                                ClickEvent.editer(gvc, widget, dd, {
+                                                TriggerEvent.editer(gvc, widget, dd, {
                                                     hover: false,
                                                     option: [],
                                                     title: "點擊事件"

@@ -1,7 +1,8 @@
 import { TriggerEvent } from './glitterBundle/plugins/trigger-event.js';
 import { Editor } from './editor.js';
 import { component } from "./official/component.js";
-class GlobalData {
+import { BaseApi } from "./api/base.js";
+export class GlobalData {
     static data = {
         pageList: [],
         isRunning: false,
@@ -16,7 +17,7 @@ class GlobalData {
                     GlobalData.data.pageList = data.response.result.map((dd) => {
                         dd.page_config = dd.page_config ?? {};
                         return dd;
-                    });
+                    }).sort((a, b) => `${a.group}-${a.name}`.localeCompare(`${b.group}-${b.name}`));
                 }
                 else {
                     GlobalData.data.isRunning = false;
@@ -28,7 +29,7 @@ class GlobalData {
 }
 TriggerEvent.create(import.meta.url, {
     link: {
-        title: 'Glitter-連結跳轉',
+        title: '官方事件-觸發-頁面跳轉',
         fun: (gvc, widget, object) => {
             return {
                 editor: () => {
@@ -93,7 +94,10 @@ ${Editor.select({
                                                 object.stackControl = text;
                                                 widget.refreshComponent();
                                             },
-                                            array: [{ title: '設為首頁', value: "home" }, { title: '頁面跳轉', value: "page" }],
+                                            array: [{ title: '設為首頁', value: "home" }, {
+                                                    title: '頁面跳轉',
+                                                    value: "page"
+                                                }],
                                         })}
 ${Editor.h3("選擇頁面")}
 <select
@@ -162,9 +166,10 @@ ${Editor.h3("選擇頁面")}
                                         data: {},
                                         tag: object.link,
                                         option: {
-                                            animation: gvc.glitter.animation.fade
+                                            animation: gvc.glitter.animation.fade,
                                         }
                                     });
+                                    resolve(true);
                                 }
                                 else {
                                     gvc.glitter.htmlGenerate.changePage({
@@ -174,9 +179,12 @@ ${Editor.h3("選擇頁面")}
                                         tag: object.link,
                                         goBack: true,
                                         option: {
-                                            animation: gvc.glitter.animation.fade
+                                            animation: gvc.glitter.ut.frSize({
+                                                sm: gvc.glitter.animation.fade
+                                            }, gvc.glitter.animation.rightToLeft)
                                         }
                                     });
+                                    resolve(true);
                                 }
                             });
                         });
@@ -186,28 +194,33 @@ ${Editor.h3("選擇頁面")}
                         const element = document.getElementsByClassName(`glitterTag${object.link}`)[0];
                         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
                         window.scrollTo({ top: y, behavior: "smooth" });
+                        return true;
                     }
                     else {
                         gvc.glitter.runJsInterFace('openWeb', {
                             url: object.link,
                         }, (data) => {
+                            return true;
                         }, {
                             webFunction(data, callback) {
-                                gvc.glitter.openNewTab(object.link);
+                                gvc.glitter.location.href = object.link;
+                                return true;
                             },
                         });
+                        return true;
                     }
                 },
             };
         },
     },
     dialog: {
-        title: 'Glitter-彈出頁面區塊',
-        fun: (gvc, widget, object, subData) => {
+        title: '官方事件-觸發-彈跳視窗',
+        fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
                     const id = gvc.glitter.getUUID();
                     const glitter = gvc.glitter;
+                    widget.data.coverData = widget.data.coverData ?? {};
                     function recursive() {
                         if (GlobalData.data.pageList.length === 0) {
                             GlobalData.data.run();
@@ -224,64 +237,52 @@ ${Editor.h3("選擇頁面")}
                         return {
                             bind: id,
                             view: () => {
-                                return `<select
+                                return [`<select
                                             class="form-select form-control mt-2"
                                             onchange="${gvc.event((e) => {
-                                    object.link = window.$(e).val();
-                                })}"
+                                        object.link = window.$(e).val();
+                                    })}"
                                         >
                                             ${GlobalData.data.pageList.map((dd) => {
-                                    object.link = object.link ?? dd.tag;
-                                    return `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
+                                        object.link = object.link ?? dd.tag;
+                                        return `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
                                                     ${dd.group}-${dd.name}
                                                 </option>`;
-                                })}
-                                        </select>` +
-                                    glitter.htmlGenerate.editeInput({
-                                        gvc: gvc,
-                                        title: '標題',
-                                        default: object.title ?? "",
-                                        placeHolder: "",
-                                        callback: (text) => {
-                                            object.title = text;
-                                        }
-                                    });
+                                    })}
+                                        </select>`, TriggerEvent.editer(gvc, widget, widget.data.coverData, {
+                                        hover: true,
+                                        option: [],
+                                        title: "夾帶資料-[將存於新頁面的gvc.getBundle().carryData之中]"
+                                    })].join('');
                             },
                             divCreate: {}
                         };
                     });
                 },
                 event: () => {
-                    const id = gvc.glitter.getUUID();
-                    if (document.getElementById(id)) {
-                        $(`#${id}`).remove();
-                    }
-                    $('body').append(`
-<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-hidden="true" style="">
-<div class="modal-dialog modal-dialog-centered modal-lg" style="">
-     <div class="modal-content">
-            <div class="modal-header ">
-            <h4 class="modal-title" id="myCenterModalLabel">${object.title}</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-</div>
-<section class="position-relative  pt-0" >
-       ${component.render(gvc, {
-                        data: {
-                            tag: object.link
-                        }
-                    }, [], [], subData).view()}
-      </section>
-            </div>
-</div>
-</div>
-`);
-                    $(`#${id}`).modal('show');
+                    subData = subData ?? {};
+                    return new Promise(async (resolve, reject) => {
+                        const data = await TriggerEvent.trigger({
+                            gvc, widget, clickEvent: widget.data.coverData, subData
+                        });
+                        gvc.glitter.innerDialog((gvc) => {
+                            gvc.getBundle().carryData = data;
+                            return new Promise(async (resolve, reject) => {
+                                const view = await component.render(gvc, {
+                                    data: {
+                                        tag: object.link
+                                    }
+                                }, [], [], subData).view();
+                                resolve(view);
+                            });
+                        }, gvc.glitter.getUUID());
+                    });
                 }
             };
         }
     },
     test: {
-        title: 'Glitter-點擊測試',
+        title: '官方事件-觸發-點擊測試',
         fun: (gvc, widget, object) => {
             return {
                 editor: () => {
@@ -294,7 +295,7 @@ ${Editor.h3("選擇頁面")}
         },
     },
     code: {
-        title: 'Glitter-代碼區塊',
+        title: '官方事件-觸發-代碼區塊',
         fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
@@ -310,10 +311,134 @@ ${Editor.h3("選擇頁面")}
                 },
                 event: () => {
                     return new Promise(async (resolve, reject) => {
-                        resolve(await (eval(object.code)));
+                        try {
+                            const a = (eval(object.code));
+                            if (a.then) {
+                                a.then((data) => {
+                                    resolve(data);
+                                });
+                            }
+                            else {
+                                resolve(a);
+                            }
+                        }
+                        catch (e) {
+                            resolve(object.errorCode ?? false);
+                        }
                     });
                 },
             };
         },
+    },
+    drawer: {
+        title: '官方事件-觸發-打開抽屜',
+        fun: (gvc, widget, object, subData, element) => {
+            return {
+                editor: () => {
+                    const id = gvc.glitter.getUUID();
+                    function recursive() {
+                        if (GlobalData.data.pageList.length === 0) {
+                            GlobalData.data.run();
+                            setTimeout(() => {
+                                recursive();
+                            }, 200);
+                        }
+                        else {
+                            gvc.notifyDataChange(id);
+                        }
+                    }
+                    recursive();
+                    return gvc.bindView(() => {
+                        return {
+                            bind: id,
+                            view: () => {
+                                return `${Editor.h3("選擇頁面")}
+                       <select
+                                            class="form-select form-control mt-2"
+                                            onchange="${gvc.event((e) => {
+                                    console.log(window.$(e).val());
+                                    object.link = window.$(e).val();
+                                })}"
+                                        >
+                                            ${GlobalData.data.pageList.map((dd) => {
+                                    object.link = object.link ?? dd.tag;
+                                    return `<option value="${dd.tag}" ${object.link === dd.tag ? `selected` : ``}>
+                                                    ${dd.group}-${dd.name}
+                                                </option>`;
+                                })}
+                                        </select>
+${gvc.glitter.htmlGenerate.styleEditor(object, gvc).editor(gvc, () => {
+                                    widget.refreshComponent();
+                                }, "背景樣式")}
+`;
+                            },
+                            divCreate: {}
+                        };
+                    });
+                },
+                event: () => {
+                    let fal = 0;
+                    let data = undefined;
+                    async function getData() {
+                        return new Promise(async (resolve, reject) => {
+                            const saasConfig = window.saasConfig;
+                            BaseApi.create({
+                                "url": saasConfig.config.url + `/api/v1/template?appName=${saasConfig.config.appName}&tag=${object.link}`,
+                                "type": "GET",
+                                "timeout": 0,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                }
+                            }).then((d2) => {
+                                if (!d2.result) {
+                                    fal += 1;
+                                    if (fal < 20) {
+                                        setTimeout(() => {
+                                            getData();
+                                        }, 200);
+                                    }
+                                }
+                                else {
+                                    data = d2.response.result[0];
+                                    resolve(data);
+                                }
+                            });
+                        });
+                    }
+                    getData().then((data) => {
+                        const id = gvc.glitter.getUUID();
+                        gvc.glitter.setDrawer(`<div class="w-100 h-100 ${gvc.glitter.htmlGenerate.styleEditor(object, gvc).class()}"
+style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
+>${gvc.bindView(() => {
+                            return {
+                                bind: id,
+                                view: () => {
+                                    if (!data) {
+                                        return ``;
+                                    }
+                                    return new window.glitter.htmlGenerate(data.config, [], subData ?? {}).render(gvc);
+                                },
+                                divCreate: {}
+                            };
+                        })}</div>`, () => {
+                            gvc.glitter.openDrawer();
+                        });
+                    });
+                },
+            };
+        },
+    },
+    addImage: {
+        title: `添加圖片`,
+        fun: (gvc, widget, obj, subData, element) => {
+            return {
+                editor: () => {
+                    return ``;
+                },
+                event: () => {
+                    gvc.glitter.openDiaLog(new URL(`./dialog/image-preview.ts`, import.meta.url).href, "", {});
+                }
+            };
+        }
     }
 });

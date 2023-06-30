@@ -2,7 +2,6 @@ import {HtmlJson, Plugin} from "../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../glitterBundle/Glitter.js";
 import {GVC} from "../glitterBundle/GVController.js";
 import {Editor} from "../editor.js";
-import {ClickEvent} from "../glitterBundle/plugins/click-event.js";
 import {ScriptStyle1} from "./script-style-1.js";
 
 Plugin.create(import.meta.url,(glitter: Glitter, editMode: boolean)=>{

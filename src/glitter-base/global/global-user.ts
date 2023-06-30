@@ -13,7 +13,7 @@ export class GlobalUser {
         (window as any).glitter.setCookie(GlobalUser.getTag('token'), value)
     }
 
-    public static userData: any = {}
+    public static userInfo: any = {}
 
     public static updateUserData: any = {}
 }

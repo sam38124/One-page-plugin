@@ -1,3 +1,4 @@
+import { Editor } from "./editor.js";
 export class TriggerEvent {
     static getUrlParameter(url, sParam) {
         try {
@@ -100,7 +101,6 @@ export class TriggerEvent {
                     }, 100);
                 }
                 fal += 1;
-                console.log('error' + url);
             }
         }
         tryLoop();
@@ -113,150 +113,322 @@ export class TriggerEvent {
     }
     static trigger(oj) {
         const glitter = window.glitter;
-        const event = oj.clickEvent.clickEvent;
+        let arrayEvent = [];
         let returnData = '';
-        async function run() {
+        async function run(event) {
             return new Promise(async (resolve, reject) => {
                 async function pass() {
                     try {
+                        const gvc = oj.gvc;
+                        const subData = oj.subData;
+                        const widget = oj.widget;
                         setTimeout(() => {
                             resolve(true);
                         }, 4000);
-                        returnData = await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.src)][event.route].fun(oj.gvc, oj.widget, oj.clickEvent, oj.subData, oj.element).event();
+                        returnData = await oj.gvc.glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(event.clickEvent.src)][event.clickEvent.route].fun(oj.gvc, oj.widget, event, oj.subData, oj.element).event();
+                        const response = returnData;
+                        if (event.dataPlace) {
+                            eval(event.dataPlace);
+                        }
                         resolve(true);
                     }
                     catch (e) {
-                        resolve(false);
+                        returnData = event.errorCode ?? "";
+                        resolve(true);
                     }
                 }
-                oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {};
-                if (!oj.gvc.glitter.share.clickEvent[event.src]) {
-                    await new Promise((resolve, reject) => {
-                        oj.gvc.glitter.addMtScript([
-                            { src: `${glitter.htmlGenerate.resourceHook(event.src)}`, type: 'module' }
-                        ], () => {
-                            pass();
-                        }, () => {
-                            resolve(false);
+                try {
+                    oj.gvc.glitter.share.clickEvent = oj.gvc.glitter.share.clickEvent ?? {};
+                    if (!oj.gvc.glitter.share.clickEvent[event.clickEvent.src]) {
+                        await new Promise((resolve, reject) => {
+                            oj.gvc.glitter.addMtScript([
+                                { src: `${glitter.htmlGenerate.resourceHook(event.clickEvent.src)}`, type: 'module' }
+                            ], () => {
+                                pass();
+                            }, () => {
+                                resolve(false);
+                            });
                         });
-                    });
+                    }
+                    else {
+                        pass();
+                    }
                 }
-                else {
+                catch (e) {
                     pass();
                 }
             });
         }
+        if (oj.clickEvent !== undefined && Array.isArray(oj.clickEvent.clickEvent)) {
+            arrayEvent = oj.clickEvent.clickEvent;
+        }
+        else if (oj.clickEvent !== undefined) {
+            arrayEvent = [JSON.parse(JSON.stringify(oj.clickEvent))];
+        }
         return new Promise(async (resolve, reject) => {
-            let fal = 10;
-            function check() {
-                run().then((res) => {
-                    if (res || (fal === 0)) {
-                        resolve(returnData);
+            let result = true;
+            for (const a of arrayEvent) {
+                result = await new Promise((resolve, reject) => {
+                    let fal = 10;
+                    function check() {
+                        run(a).then((res) => {
+                            if (res || (fal === 0)) {
+                                resolve(res);
+                            }
+                            else {
+                                setTimeout(() => {
+                                    fal -= 1;
+                                    check();
+                                }, 100);
+                            }
+                        });
                     }
-                    else {
-                        setTimeout(() => {
-                            fal -= 1;
-                            check();
-                        }, 100);
-                    }
+                    check();
                 });
+                if (!result) {
+                    break;
+                }
             }
-            check();
+            resolve(returnData);
         });
     }
     static editer(gvc, widget, obj, option = { hover: false, option: [] }) {
-        gvc.glitter.share.clickEvent = gvc.glitter.share.clickEvent ?? {};
-        const glitter = gvc.glitter;
-        const selectID = glitter.getUUID();
-        return `<div class="mt-2 ${(option.hover) ? `alert ` : ``}">
- <h3 class="m-0" style="font-size: 16px;">${option.title ?? "點擊事件"}</h3>
- ${gvc.bindView(() => {
-            return {
-                bind: selectID,
-                view: () => {
-                    var select = false;
-                    return `<select class="form-select m-0 mt-2" onchange="${gvc.event((e) => {
-                        if (e.value === 'undefined') {
-                            obj.clickEvent = undefined;
-                        }
-                        else {
-                            obj.clickEvent = JSON.parse(e.value);
-                            obj.clickEvent.src = TriggerEvent.getUrlParameter(obj.clickEvent.src, 'resource') ?? obj.clickEvent.src;
-                        }
-                        gvc.notifyDataChange(selectID);
-                    })}">
+        return `
+<div class="w-100">
+<button class="btn btn-warning border-white mt-2 w-100 text-dark" onclick="${gvc.event(() => {
+            const tag = gvc.glitter.getUUID();
+            gvc.glitter.share.clickEvent = gvc.glitter.share.clickEvent ?? {};
+            const glitter = gvc.glitter;
+            let arrayEvent = [];
+            if (obj.clickEvent !== undefined && Array.isArray(obj.clickEvent)) {
+                arrayEvent = obj.clickEvent;
+            }
+            else if (obj.clickEvent !== undefined) {
+                arrayEvent = [JSON.parse(JSON.stringify(obj))];
+            }
+            obj.clickEvent = arrayEvent;
+            window.glitter.innerDialog((gvc) => {
+                return gvc.bindView(() => {
+                    const did = glitter.getUUID();
+                    return {
+                        bind: did,
+                        view: () => {
+                            return ` <div class="w-100 d-flex align-items-center border-bottom justify-content-center position-relative" style="height: 68px;">
+        <h3 class="modal-title fs-4">事件叢集設定</h3>
+        <i class="fa-solid fa-xmark text-dark position-absolute " style="font-size:20px;transform: translateY(-50%);right: 20px;top: 50%;cursor: pointer;"
+        onclick="${gvc.event(() => {
+                                glitter.closeDiaLog(tag);
+                            })}"></i>
+</div>    
+
+<div class="mt-2 border border-white p-2">
+<div class="alert alert-info " style="white-space:normal;">
+透過事件來為您的元件添加觸發事件，包含連結跳轉/內容取得/資料儲存/頁面渲染/動畫事件/內容發布....等，都能透過事件來完成．
+</div>
+${Editor.arrayItem({
+                                originalArray: arrayEvent,
+                                gvc: gvc,
+                                title: '事件集',
+                                array: arrayEvent.map((obj, index) => {
+                                    return {
+                                        title: `第${index + 1}個觸發事件`,
+                                        expand: obj,
+                                        innerHtml: () => {
+                                            const selectID = glitter.getUUID();
+                                            return gvc.bindView(() => {
+                                                return {
+                                                    bind: selectID,
+                                                    view: () => {
+                                                        var select = false;
+                                                        return `<select class="form-select m-0 mt-2" onchange="${gvc.event((e) => {
+                                                            if (e.value === 'undefined') {
+                                                                obj.clickEvent = undefined;
+                                                            }
+                                                            else {
+                                                                obj.clickEvent = JSON.parse(e.value);
+                                                                obj.clickEvent.src = TriggerEvent.getUrlParameter(obj.clickEvent.src, 'resource') ?? obj.clickEvent.src;
+                                                            }
+                                                            gvc.notifyDataChange(selectID);
+                                                        })}">
                         
                         ${gvc.map(Object.keys(glitter.share?.clickEvent || {}).filter((dd) => {
-                        return TriggerEvent.getUrlParameter(dd, "resource") !== undefined;
-                    }).map((key) => {
-                        const value = glitter.share.clickEvent[key];
-                        return gvc.map(Object.keys(value).map((v2) => {
-                            if (option.option.length > 0) {
-                                if (option.option.indexOf(v2) === -1) {
-                                    return ``;
-                                }
-                            }
-                            const value2 = value[v2];
-                            const selected = JSON.stringify({
-                                src: TriggerEvent.getUrlParameter(key, 'resource') ?? obj.clickEvent.src,
-                                route: v2
-                            }) === JSON.stringify(obj.clickEvent);
-                            select = selected || select;
-                            return `<option value='${JSON.stringify({
-                                src: key,
-                                route: v2
-                            })}' ${(selected) ? `selected` : ``}>${value2.title}</option>`;
-                        }));
-                    }))}
+                                                            return TriggerEvent.getUrlParameter(dd, "resource") !== undefined;
+                                                        }).map((key) => {
+                                                            const value = glitter.share.clickEvent[key];
+                                                            return gvc.map(Object.keys(value).map((v2) => {
+                                                                if (option.option.length > 0) {
+                                                                    if (option.option.indexOf(v2) === -1) {
+                                                                        return ``;
+                                                                    }
+                                                                }
+                                                                const value2 = value[v2];
+                                                                const selected = JSON.stringify({
+                                                                    src: TriggerEvent.getUrlParameter(key, 'resource') ?? obj.clickEvent.src,
+                                                                    route: v2
+                                                                }) === JSON.stringify(obj.clickEvent);
+                                                                select = selected || select;
+                                                                return `<option value='${JSON.stringify({
+                                                                    src: key,
+                                                                    route: v2
+                                                                })}' ${(selected) ? `selected` : ``}>${value2.title}</option>`;
+                                                            }));
+                                                        }))}
 <option value="undefined"  ${(!select) ? `selected` : ``}>未定義</option>
 </select>
-${gvc.bindView(() => {
-                        const id = glitter.getUUID();
-                        setTimeout(() => {
-                            gvc.notifyDataChange(id);
-                        }, 200);
-                        return {
-                            bind: id,
-                            view: () => {
-                                try {
-                                    if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
-                                        return ``;
-                                    }
-                                    return glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)][obj.clickEvent.route].fun(gvc, widget, obj).editor();
-                                }
-                                catch (e) {
-                                    return ``;
-                                }
-                            },
-                            divCreate: {},
-                            onCreate: () => {
-                                glitter.share.clickEvent = glitter.share.clickEvent ?? {};
-                                try {
-                                    if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
-                                        -glitter.addMtScript([
-                                            {
-                                                src: glitter.htmlGenerate.resourceHook(obj.clickEvent.src),
-                                                type: 'module'
-                                            }
-                                        ], () => {
-                                            setTimeout(() => {
-                                                gvc.notifyDataChange(id);
-                                            }, 200);
-                                        }, () => {
-                                            console.log(`loadingError:` + obj.clickEvent.src);
-                                        });
-                                    }
-                                }
-                                catch (e) {
-                                }
-                            }
-                        };
-                    })}
+<div class="mt-2">${(() => {
+                                                            obj.pluginExpand = obj.pluginExpand ?? {};
+                                                            return Editor.toggleExpand({
+                                                                gvc: gvc,
+                                                                title: "<span class='text-black' style=''>插件拓展項目</span>",
+                                                                data: obj.pluginExpand,
+                                                                innerText: () => {
+                                                                    return gvc.bindView(() => {
+                                                                        const id = glitter.getUUID();
+                                                                        setTimeout(() => {
+                                                                            gvc.notifyDataChange(id);
+                                                                        }, 200);
+                                                                        return {
+                                                                            bind: id,
+                                                                            view: () => {
+                                                                                try {
+                                                                                    let text = ``;
+                                                                                    if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
+                                                                                        text = ``;
+                                                                                    }
+                                                                                    else {
+                                                                                        text = glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)][obj.clickEvent.route].fun(gvc, widget, obj).editor();
+                                                                                    }
+                                                                                    if (text.replace(/ /g, '') === '') {
+                                                                                        return `<span>此事件無設定拓展項目</span>`;
+                                                                                    }
+                                                                                    return text;
+                                                                                }
+                                                                                catch (e) {
+                                                                                    return ``;
+                                                                                }
+                                                                            },
+                                                                            divCreate: {},
+                                                                            onCreate: () => {
+                                                                                glitter.share.clickEvent = glitter.share.clickEvent ?? {};
+                                                                                try {
+                                                                                    if (!glitter.share.clickEvent[glitter.htmlGenerate.resourceHook(obj.clickEvent.src)]) {
+                                                                                        -glitter.addMtScript([
+                                                                                            {
+                                                                                                src: glitter.htmlGenerate.resourceHook(obj.clickEvent.src),
+                                                                                                type: 'module'
+                                                                                            }
+                                                                                        ], () => {
+                                                                                            setTimeout(() => {
+                                                                                                gvc.notifyDataChange(id);
+                                                                                            }, 200);
+                                                                                        }, () => {
+                                                                                            console.log(`loadingError:` + obj.clickEvent.src);
+                                                                                        });
+                                                                                    }
+                                                                                }
+                                                                                catch (e) {
+                                                                                }
+                                                                            }
+                                                                        };
+                                                                    });
+                                                                },
+                                                                class: ` `,
+                                                                style: `background:#65379B;border:2px solid white;`,
+                                                            });
+                                                        })()}</div>
+${(() => {
+                                                            obj.dataPlaceExpand = obj.dataPlaceExpand ?? {};
+                                                            obj.errorPlaceExpand = obj.errorPlaceExpand ?? {};
+                                                            return `<div class="mt-2 border-white rounded" style="border-width:3px;">
+${Editor.toggleExpand({
+                                                                gvc: gvc,
+                                                                title: "<span class='text-black' style=''>返回事件</span>",
+                                                                data: obj.dataPlaceExpand,
+                                                                innerText: () => {
+                                                                    return glitter.htmlGenerate.editeText({
+                                                                        gvc: gvc,
+                                                                        title: "",
+                                                                        default: obj.dataPlace ?? "",
+                                                                        placeHolder: `執行事件或儲存返回資料:
+範例:
+ (()=>{
+   //將資料儲存於當前頁面．
+   gvc.saveData=response;
+   //將資料儲存於全域變數中
+   glitter.share.saveData=response
+     })()`,
+                                                                        callback: (text) => {
+                                                                            obj.dataPlace = text;
+                                                                            widget.refreshComponent();
+                                                                        }
+                                                                    });
+                                                                },
+                                                                class: ` `,
+                                                                style: `background:#65379B;border:2px solid white;`,
+                                                            })}
+</div>` + `<div class="mt-2 border-white rounded" style="border-width:3px;">${Editor.toggleExpand({
+                                                                gvc: gvc,
+                                                                title: "<span class='text-black' style=''>異常返回值</span>",
+                                                                data: obj.errorPlaceExpand,
+                                                                innerText: () => {
+                                                                    return glitter.htmlGenerate.editeInput({
+                                                                        gvc: gvc,
+                                                                        title: "",
+                                                                        default: obj.errorCode ?? "",
+                                                                        placeHolder: `請輸入參數值`,
+                                                                        callback: (text) => {
+                                                                            obj.errorCode = text;
+                                                                            widget.refreshComponent();
+                                                                        }
+                                                                    });
+                                                                },
+                                                                class: ` `,
+                                                                style: `background:#65379B;border:2px solid white;`,
+                                                            })}</div>`;
+                                                        })()}
+
 `;
-                },
-                divCreate: {}
-            };
-        })}
-</div> `;
+                                                    },
+                                                    divCreate: {}
+                                                };
+                                            });
+                                        },
+                                        minus: gvc.event(() => {
+                                            arrayEvent.splice(index, 1);
+                                            gvc.notifyDataChange(did);
+                                        }),
+                                    };
+                                }),
+                                expand: { expand: true },
+                                plus: {
+                                    title: '添加事件',
+                                    event: gvc.event(() => {
+                                        arrayEvent.push({});
+                                        gvc.notifyDataChange(did);
+                                    }),
+                                },
+                                refreshComponent: () => {
+                                    gvc.recreateView();
+                                }
+                            })}
+</div>
+<div class="d-flex border-top py-2 px-2 justify-content-end">
+<button class="btn btn-warning d-flex align-items-center text-dark" onclick="${gvc.event(() => {
+                                glitter.closeDiaLog(tag);
+                            })}"><i class="fa-solid fa-floppy-disk me-2"></i>儲存</button>
+</div>
+`;
+                        },
+                        divCreate: {
+                            class: `m-auto bg-white shadow rounded overflow-auto`,
+                            style: `max-width: 100%;max-height: calc(100% - 20px);width:700px;`
+                        }
+                    };
+                });
+            }, tag);
+        })}">${option.title ?? "觸發事件"}</button>
+</div>
+
+`;
     }
 }

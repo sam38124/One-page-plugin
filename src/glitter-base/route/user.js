@@ -24,6 +24,44 @@ export class ApiUser {
             }
         });
     }
+    static getPublicUserData(id) {
+        return BaseApi.create({
+            "url": getBaseUrl() + `/api-public/v1/user/userdata?userID=${id}`,
+            "type": "GET",
+            "headers": {
+                "g-app": getConfig().config.appName,
+                "Content-Type": "application/json"
+            }
+        });
+    }
+    static forgetPwd(email) {
+        return BaseApi.create({
+            "url": getBaseUrl() + `/api-public/v1/user/forget`,
+            "type": "POST",
+            "headers": {
+                "g-app": getConfig().config.appName,
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify({
+                email: email
+            })
+        });
+    }
+    static resetPwd(pwd, newPwd) {
+        return BaseApi.create({
+            "url": getBaseUrl() + `/api-public/v1/user/resetPwd`,
+            "type": "PUT",
+            "headers": {
+                "g-app": getConfig().config.appName,
+                "Content-Type": "application/json",
+                "Authorization": GlobalUser.token
+            },
+            data: JSON.stringify({
+                pwd: pwd,
+                newPwd: newPwd
+            })
+        });
+    }
     static updateUserData(json) {
         return BaseApi.create({
             "url": getBaseUrl() + `/api-public/v1/user`,

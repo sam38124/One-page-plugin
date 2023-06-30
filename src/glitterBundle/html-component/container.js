@@ -4,13 +4,16 @@ export const containerComponent = {
         widget.data.setting = widget.data.setting ?? [];
         widget.data.styleEd = widget.data.styleEd ?? {};
         const glitter = window.glitter;
-        const htmlGenerate = new glitter.htmlGenerate(widget.data.setting, hoverID);
         return {
             view: () => {
-                return widgetComponent.render(gvc, widget, setting, hoverID, subData).view();
+                return widgetComponent.render(gvc, widget, setting, hoverID, subData, {
+                    widgetComponentID: gvc.glitter.getUUID()
+                }).view();
             },
             editor: (() => {
-                return widgetComponent.render(gvc, widget, setting, hoverID, subData).editor();
+                return widgetComponent.render(gvc, widget, setting, hoverID, subData, {
+                    widgetComponentID: gvc.glitter.getUUID()
+                }).editor();
             })
         };
     }

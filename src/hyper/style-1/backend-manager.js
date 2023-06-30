@@ -1,7 +1,6 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
 import { ScriptStyle1 } from "../script-style-1.js";
 import { Editor } from "../../editor.js";
-import { ClickEvent } from "../../glitterBundle/plugins/click-event.js";
 import { component } from "../../official/component.js";
 import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
@@ -351,7 +350,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                         widget.refreshComponent();
                                                     },
                                                 }),
-                                                ClickEvent.editer(gvc, widget, dd, {
+                                                TriggerEvent.editer(gvc, widget, dd, {
                                                     hover: false,
                                                     option: [],
                                                     title: "點擊事件"

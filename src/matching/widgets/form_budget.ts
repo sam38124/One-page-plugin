@@ -11,14 +11,14 @@ export const form_budget = Plugin.createComponent(import.meta.url, (glitter: Gli
                     const data = subData.data
                     const formData = subData.formData
                     const readonly = subData.readonly
-console.log(JSON.stringify(data))
+
                     return `
                    <label class="form-label fs-base mb-n2"><span class="text-danger ms-2"> * </span>我的預算</label>
              <div class="mb-2">
               ${Editor.select({
                         title: "",
                         gvc: gvc,
-                        def: (formData[data.key] === "-1") ? `expire`:`nolimit`,
+                        def: (formData[data.key] === "-1") ? `expire` : `nolimit`,
                         array: [
                             {title: "由專家報價", value: "expire"}, {title: "自訂預算", value: "nolimit"}
                         ],
@@ -29,18 +29,34 @@ console.log(JSON.stringify(data))
                                 formData[data.key] = "3000"
                             }
                             widget.refreshComponent()
-                        }
+                        },
+                        option: [
+                            {
+                                key: (data.readonly) ? `disabled` : ``,
+                                value: ''
+                            }
+                        ]
                     })}
-              ${(formData[data.key]==="-1") ? ``:`
-              ${glitter.htmlGenerate.editeInput({
-                        gvc:gvc,
-                        title:` <label class="form-label fs-base mb-n2"><span class="text-danger ms-2"> * </span>輸入預算</label>`,
-                        default:formData[data.key] as string,
-                        placeHolder:"請輸入預算",
-                        callback:(text)=>{
-                            formData[data.key]=text
+              ${(formData[data.key] === "-1") ? `` : `
+              ${Editor.editeInput({
+                        gvc: gvc,
+                        title: ` <label class="form-label fs-base mb-n2"><span class="text-danger ms-2"> * </span>輸入預算</label>`,
+                        default: formData[data.key] as string,
+                        placeHolder: "請輸入預算",
+                        callback: (text) => {
+                            formData[data.key] = text.replace(/\D/g, "")
+                            if (formData[data.key] !== '' && formData[data.key] !== undefined) {
+                                formData[data.key] = parseInt(formData[data.key])
+                            }
                             widget.refreshComponent()
-                        }
+                        },
+                        type: 'number',
+                        option:[
+                            {
+                                key: (data.readonly) ? `readonly` : ``,
+                                value: ''
+                            }
+                        ]
                     })}
               `}
 </div>

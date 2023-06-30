@@ -13,6 +13,60 @@ window.addEventListener('resize', function () {
         }
     }
 });
+function listenElementChange(id) {
+    const targetElement = document.querySelector(`#${id}`);
+    const observer = new MutationObserver(function (mutationsList) {
+        for (let mutation of mutationsList) {
+            if (mutation.addedNodes.length > 0) {
+                for (const b of mutation.addedNodes) {
+                    traverseHTML($(b).get(0));
+                }
+            }
+        }
+    });
+    observer.observe(targetElement, { childList: true, subtree: true });
+}
+function traverseHTML(element) {
+    let result = {};
+    result.tag = element.tagName;
+    var attributes = element.attributes ?? [];
+    if (attributes.length > 0) {
+        result.attributes = {};
+        for (var i = 0; i < attributes.length; i++) {
+            result.attributes[attributes[i].name] = attributes[i].value;
+        }
+    }
+    let children = element.children;
+    if (children && children.length > 0) {
+        result.children = [];
+        for (let j = 0; j < children.length; j++) {
+            result.children.push(traverseHTML(children[j]));
+        }
+    }
+    if ($(element).attr('glem') === 'bindView') {
+        try {
+            $(element).html(glitter.elementCallback[$(element).attr('gvc-id')].getView());
+        }
+        catch (e) {
+        }
+        try {
+            glitter.elementCallback[$(element).attr('gvc-id')].updateAttribute();
+        }
+        catch (e) {
+        }
+        try {
+            glitter.elementCallback[$(element).attr('gvc-id')].onInitial();
+        }
+        catch (e) {
+        }
+        try {
+            glitter.elementCallback[$(element).attr('gvc-id')].onCreate();
+        }
+        catch (e) {
+        }
+    }
+    return result;
+}
 glitter.$(document).ready(function () {
     if (window.GL !== undefined) {
         glitter.deviceType = glitter.deviceTypeEnum.Android;
@@ -20,6 +74,9 @@ glitter.$(document).ready(function () {
     else if (navigator.userAgent === 'iosGlitter') {
         glitter.deviceType = glitter.deviceTypeEnum.Ios;
     }
+    listenElementChange(`glitterPage`);
+    listenElementChange(`Navigation`);
+    glitter.closeDrawer();
     Entry.onCreate(glitter);
 });
 function glitterInitial() {

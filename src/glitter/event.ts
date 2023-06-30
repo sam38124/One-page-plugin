@@ -74,8 +74,8 @@ TriggerEvent.create(import.meta.url, {
                             }
                         )
                     }).then((d2) => {
-                        shareDialog.dataLoading({visible: false})
                         setTimeout(()=>{
+                            shareDialog.dataLoading({visible: false})
                             if (d2.result) {
                                 User.setToken(d2.response.userData.token)
                                 TriggerEvent.trigger({
@@ -128,6 +128,7 @@ TriggerEvent.create(import.meta.url, {
                         })
                         return;
                     }
+
                     shareDialog.dataLoading({visible: true})
                     BaseApi.create({
                         "url": saasConfig.config.url + `/api/v1/user/register`,
@@ -138,8 +139,8 @@ TriggerEvent.create(import.meta.url, {
                         },
                         data: JSON.stringify(json)
                     }).then((d2) => {
-                        shareDialog.dataLoading({visible: false})
                         setTimeout(()=>{
+                            shareDialog.dataLoading({visible: false})
                             if (d2.result) {
                                 User.setToken(d2.response.token)
                                 TriggerEvent.trigger({

@@ -323,7 +323,7 @@ export class EditorElem {
         const gvc = obj.gvc;
         const $ = glitter.$;
         return `
-            ${EditorElem.h3(obj.title)}
+            ${(obj.title) ? EditorElem.h3(obj.title) : ``}
             <div class="btn-group dropdown w-100">
                 ${(() => {
             const id = glitter.getUUID();
@@ -338,23 +338,24 @@ export class EditorElem {
                                         style="height: 40px;"
                                         placeholder="${obj.placeHolder}"
                                         onfocus="${obj.gvc.event(() => {
-                            $('#' + obj.gvc.id(id)).addClass(`show`);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         onblur="${gvc.event(() => {
                             setTimeout(() => {
-                                $('#' + gvc.id(id)).removeClass(`show`);
+                                gvc.getBindViewElem(id).removeClass(`show`);
                             }, 300);
                         })}"
                                         oninput="${gvc.event((e) => {
                             obj.def = e.value;
                             gvc.notifyDataChange(id);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         value="${obj.def}"
                                         onchange="${gvc.event((e) => {
                             obj.def = e.value;
                             setTimeout(() => {
                                 obj.callback(obj.def);
-                            }, 100);
+                            }, 500);
                         })}"
                                     />`;
                     },
@@ -385,7 +386,7 @@ export class EditorElem {
                     },
                     divCreate: {
                         class: `dropdown-menu`,
-                        style: `transform: translateY(40px);`,
+                        style: `transform: translateY(40px);max-height:300px;overflow-y:scroll;`,
                     },
                 };
             })}

@@ -4,6 +4,7 @@ export class Plugin {
     static create(url, fun) {
         const glitter = window.glitter;
         glitter.share.htmlExtension[url] = fun(glitter, window.parent.editerData !== undefined);
+        return glitter.share.htmlExtension[url];
     }
     static createComponent(url, fun) {
         const glitter = window.glitter;
@@ -25,7 +26,7 @@ export class Plugin {
                     }, 100);
                 }
                 fal += 1;
-                console.log('error' + url);
+                glitter.deBugMessage(`error` + url);
             }
         }
         tryLoop();
@@ -34,38 +35,61 @@ export class Plugin {
     static setComponent(original, url) {
         const glitter = window.glitter;
         url.searchParams.set("original", original);
-        return (gvc, widget, setting, hoverID, subData) => {
+        return (gvc, widget, setting, hoverID, subData, htmlGenerate) => {
             glitter.share.componentData = glitter.share.componentData ?? {};
             let val = glitter.share.componentData[url.href];
-            glitter.share.componentCallback = glitter.share.componentCallback ?? {};
-            glitter.share.componentCallback[url.href] = glitter.share.componentCallback[url.href] ?? [];
-            glitter.share.componentCallback[url.href].push((dd) => {
-                glitter.share.componentData[url.href] = dd;
-                widget.refreshComponent();
-            });
-            gvc.glitter.addMtScript([
-                {
-                    src: url,
-                    type: 'module'
+            function startSync(callback) {
+                if (val) {
+                    callback();
+                    return;
                 }
-            ], () => {
-                val = glitter.share.componentData[url.href];
-                console.log('setComponent-->' + url);
-            }, () => { });
+                glitter.share.componentCallback = glitter.share.componentCallback ?? {};
+                glitter.share.componentCallback[url.href] = glitter.share.componentCallback[url.href] ?? [];
+                glitter.share.componentCallback[url.href].push((dd) => {
+                    val = glitter.share.componentData[url.href];
+                    glitter.share.componentData[url.href] = dd;
+                    callback();
+                });
+                gvc.glitter.addMtScript([
+                    {
+                        src: url,
+                        type: 'module'
+                    }
+                ], () => {
+                    glitter.deBugMessage('setComponent-->' + url);
+                }, () => {
+                });
+            }
             return {
                 view: () => {
-                    if (!val) {
-                        return ``;
-                    }
-                    return val.render(gvc, widget, setting, hoverID, subData)
-                        .view();
+                    return new Promise((resolve, reject) => {
+                        startSync(() => {
+                            const data = val.render(gvc, widget, setting, hoverID, subData).view();
+                            if (typeof data === 'string') {
+                                resolve(data);
+                            }
+                            else {
+                                data.then((res) => {
+                                    resolve(res);
+                                });
+                            }
+                        });
+                    });
                 },
                 editor: () => {
-                    if (!val) {
-                        return ``;
-                    }
-                    return val.render(gvc, widget, setting, hoverID, subData)
-                        .editor();
+                    return new Promise((resolve, reject) => {
+                        startSync(() => {
+                            const data = val.render(gvc, widget, setting, hoverID, subData).editor();
+                            if (typeof data === 'string') {
+                                resolve(data);
+                            }
+                            else {
+                                data.then((res) => {
+                                    resolve(res);
+                                });
+                            }
+                        });
+                    });
                 }
             };
         };

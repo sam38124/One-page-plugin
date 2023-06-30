@@ -1,5 +1,6 @@
 import { ShareDialog } from './dialog/ShareDialog.js';
 import { ScriptStyle1 } from "./one-page/script-style-1.js";
+import autosize from "./glitterBundle/plugins/autosize.js";
 export class Editor {
     static uploadImage(obj) {
         const glitter = window.glitter;
@@ -12,7 +13,7 @@ export class Editor {
                 view: () => {
                     return `<input
                     class="flex-fill form-control "
-                    placeholder="請輸入圖片連結"
+                    placeholder="請輸入或上傳圖片連結"
                     value="${obj.def}"
                     onchange="${obj.gvc.event((e) => {
                         obj.callback(e.value);
@@ -394,16 +395,17 @@ export class Editor {
                                         style="height: 40px;"
                                         placeholder="${obj.placeHolder}"
                                         onfocus="${obj.gvc.event(() => {
-                            $('#' + obj.gvc.id(id)).addClass(`show`);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         onblur="${gvc.event(() => {
                             setTimeout(() => {
-                                $('#' + gvc.id(id)).removeClass(`show`);
+                                gvc.getBindViewElem(id).removeClass(`show`);
                             }, 300);
                         })}"
                                         oninput="${gvc.event((e) => {
                             obj.def = e.value;
                             gvc.notifyDataChange(id);
+                            gvc.getBindViewElem(id).addClass(`show`);
                         })}"
                                         value="${obj.def}"
                                         onchange="${gvc.event((e) => {
@@ -452,27 +454,38 @@ export class Editor {
     static returnInnerHtml(obj) {
     }
     static select(obj) {
+        const glitter = obj.gvc.glitter;
         return `
-            ${Editor.h3(obj.title)}
-            <select
-                class="form-select"
-                onchange="${obj.gvc.event((e) => {
-            obj.callback(e.value);
-        })}"
-            >
-                ${obj.array
-            .map((dd) => {
-            if (typeof dd === 'object') {
-                return `<option value="${dd.value}" ${dd.value === obj.def ? `selected` : ``}>
+            ${obj.title && Editor.h3(obj.title)}
+            ${obj.gvc.bindView(() => {
+            const id = glitter.getUUID();
+            return {
+                bind: id,
+                view: () => {
+                    return obj.array
+                        .map((dd) => {
+                        if (typeof dd === 'object') {
+                            return `<option value="${dd.value}" ${dd.value === obj.def ? `selected` : ``}>
                                 ${dd.title}
                             </option>`;
-            }
-            else {
-                return `<option value="${dd}" ${dd === obj.def ? `selected` : ``}>${dd}</option>`;
-            }
-        })
-            .join('')}
-            </select>
+                        }
+                        else {
+                            return `<option value="${dd}" ${dd === obj.def ? `selected` : ``}>${dd}</option>`;
+                        }
+                    })
+                        .join('');
+                },
+                divCreate: {
+                    elem: `select`,
+                    option: [
+                        { key: `class`, value: `form-select` },
+                        { key: `onchange`, value: obj.gvc.event((e) => {
+                                obj.callback(e.value);
+                            }) },
+                    ].concat(obj.option ?? [])
+                }
+            };
+        })}
         `;
     }
     static arrayItem(obj) {
@@ -510,6 +523,57 @@ export class Editor {
                 class: ``,
                 style: `background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
             }));
+    }
+    static editeText(obj) {
+        obj.title = obj.title ?? "";
+        const id = obj.gvc.glitter.getUUID();
+        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 text-dark d-flex align-items-center  ${(!obj.title) ? `d-none` : ``}">${obj.title}</h3>
+${obj.gvc.bindView({
+            bind: id,
+            view: () => {
+                return obj.default ?? '';
+            },
+            divCreate: {
+                elem: `textArea`,
+                style: `max-height:400px!important;min-height:100px;`,
+                class: `form-control`, option: [
+                    { key: 'placeholder', value: obj.placeHolder },
+                    {
+                        key: 'onchange', value: obj.gvc.event((e) => {
+                            obj.callback(e.value);
+                        })
+                    }
+                ].concat(obj.option ?? [])
+            },
+            onCreate: () => {
+                autosize($('#' + obj.gvc.id(id)));
+            }
+        })}`;
+    }
+    static editeInput(obj) {
+        obj.title = obj.title ?? "";
+        return `<h3 class="text-dark mt-2" style="font-size: 16px;margin-bottom: 10px;" >${obj.title}</h3>
+${obj.gvc.bindView(() => {
+            const id = obj.gvc.glitter.getUUID();
+            return {
+                bind: id,
+                view: () => {
+                    return ``;
+                },
+                divCreate: {
+                    elem: `input`,
+                    option: [
+                        { key: `value`, value: obj.default ?? '' },
+                        { key: `placeholder`, value: obj.placeHolder },
+                        { key: `type`, value: obj.type ?? 'text' },
+                        { key: `class`, value: `form-control mb-2` },
+                        { key: `onchange`, value: obj.gvc.event((e) => {
+                                obj.callback(e.value);
+                            }) },
+                    ].concat(obj.option ?? [])
+                }
+            };
+        })}`;
     }
 }
 export class Element {

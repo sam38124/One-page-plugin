@@ -1,7 +1,7 @@
 import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
-import { ClickEvent } from "../../glitterBundle/plugins/click-event.js";
 import { Editor } from "../../editor.js";
 import { ScriptStyle1 } from "../script-style-1.js";
+import { TriggerEvent } from "../../glitterBundle/plugins/trigger-event.js";
 Plugin.createComponent(import.meta.url, (glitter, editMode) => {
     return {
         defaultData: {},
@@ -120,18 +120,17 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                         widget.data.outro.title = text;
                                         widget.refreshComponent();
                                     },
-                                })}` +
-                                    `
+                                })}` + `
                                 ${glitter.htmlGenerate.editeText({
-                                        gvc: gvc,
-                                        title: '左大標敘文',
-                                        default: widget.data.outro.desc,
-                                        placeHolder: '請輸入左大標下方的描述文',
-                                        callback: (text) => {
-                                            widget.data.outro.desc = text;
-                                            widget.refreshComponent();
-                                        },
-                                    })}
+                                    gvc: gvc,
+                                    title: '左大標敘文',
+                                    default: widget.data.outro.desc,
+                                    placeHolder: '請輸入左大標下方的描述文',
+                                    callback: (text) => {
+                                        widget.data.outro.desc = text;
+                                        widget.refreshComponent();
+                                    },
+                                })}
                                 ` +
                                     Editor.arrayItem({
                                         originalArray: widget.data.outro,
@@ -214,7 +213,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                                                                 widget.refreshComponent();
                                                             },
                                                         }),
-                                                        ClickEvent.editer(gvc, widget, rowData.link, {
+                                                        TriggerEvent.editer(gvc, widget, rowData.link, {
                                                             hover: true,
                                                             option: [],
                                                             title: "這個連結做的事情"

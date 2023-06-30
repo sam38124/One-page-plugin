@@ -150,7 +150,7 @@ export const template=Plugin.createComponent(import.meta.url, (glitter: Glitter,
                                 try {
                                     const imagesLoaded = (window as any).imagesLoaded
                                     setTimeout((()=>{
-                                        imagesLoaded(document.querySelector('#' + gvc.id(id)), function (instance: any) {
+                                        imagesLoaded(document.querySelector(`[gvc-id="${gvc.id(id)}"]`), function (instance: any) {
                                             ($(".isot") as any).isotope({filter: ':not("*")'}), ($(".isot") as any).isotope({filter: "*"});
                                         });
                                     }),200)

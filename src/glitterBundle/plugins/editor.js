@@ -1,376 +1,525 @@
-'use strict';
+import { ShareDialog } from '../dialog/ShareDialog.js';
 export class Editor {
-    generateForm;
-    constructor(gvc) {
-        const editor = this;
-        const glitter = gvc.glitter;
-        const $ = window.$;
-        glitter.share.formExtra = glitter.share.formExtra ?? {};
-        this.generateForm = (data, window, callback, second) => {
-            let id = glitter.getUUID();
-            return `<div id="${id}" class="w-100">
-        ${gvc.bindView({
+    static uploadImage(obj) {
+        const glitter = window.glitter;
+        const $ = glitter.$;
+        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 ${(obj.title) ? `` : `d-none`}">${obj.title}</h3>
+             ${obj.gvc.bindView(() => {
+            const id = glitter.getUUID();
+            return {
                 bind: id,
-                view: function () {
-                    let html = ``;
-                    data.map((dd, index) => {
-                        if (!dd.custom) {
-                            html += `
-                            <div class="w-100 fs-3 d-flex ">
-                                <label class="form-label fw-bold" style="font-size: 16px; font-weight: 400;">
-                                    <span class="fw-bold${dd.need ? `` : ` d-none`}" style="color: red; font-size: 18px; font-weight: 300;"
-                                        >*</span
-                                    >
-                                    ${(typeof dd.name === 'function' ? dd.name() ?? '' : dd.name ?? '') ?? ''}</label
-                                >
-                                <div class="flex-fill"></div>
-                                ${dd.preView
-                                ? `
-                                          <button
-                                              class="btn btn-warning"
-                                              onclick="${gvc.event(() => {
-                                    let editEdit = glitter.getUUID();
-                                    $('#standard-modal').remove();
-                                    $('body').append(` <div
-                                                      id="standard-modal"
-                                                      class="modal fade"
-                                                      tabindex="-1"
-                                                      role="dialog"
-                                                      aria-labelledby="standard-modalLabel"
-                                                      aria-hidden="true"
-                                                  >
-                                                      <div
-                                                          class="modal-dialog modal-dialog-centered${glitter.ut.frSize({ sm: `` }, ' m-0')}"
-                                                      >
-                                                          <div class="modal-content">
-                                                              <div class="modal-header d-flex border-bottom">
-                                                                  <h4
-                                                                      class="modal-title fw-light"
-                                                                      style="font-size: 28px;"
-                                                                      id="standard-modalLabel"
-                                                                  >
-                                                                      預覽
-                                                                  </h4>
-                                                                  <div class="flex-fill"></div>
-                                                                  <button
-                                                                      type="button"
-                                                                      class="btn"
-                                                                      data-bs-dismiss="modal"
-                                                                      aria-hidden="true"
-                                                                      style="margin-right: -10px;"
-                                                                  >
-                                                                      <i
-                                                                          class="fa-regular fa-circle-xmark text-white"
-                                                                          style="font-size: 25px;"
-                                                                      ></i>
-                                                                  </button>
-                                                              </div>
-                                                              <div class="modal-body pt-2 px-2" id="${editEdit}">
-                                                                  ${gvc.bindView(() => {
-                                        return {
-                                            bind: `${editEdit}`,
-                                            view: () => editor.generateForm(JSON.parse(JSON.stringify(dd.value)), window, () => { }),
+                view: () => {
+                    return `<input
+                    class="flex-fill form-control "
+                    placeholder="請輸入圖片連結"
+                    value="${obj.def}"
+                    onchange="${obj.gvc.event((e) => {
+                        obj.callback(e.value);
+                        obj.def = e.value;
+                        obj.gvc.notifyDataChange(id);
+                    })}"
+                    ${obj.readonly ? `readonly` : ``}
+                />
+                <div class="ms-1" style="width: 1px;height: 25px;background-color: white;"></div>
+                <i class="fa-sharp fa-solid fa-eye text-dark ms-2" onclick="${obj.gvc.event(() => {
+                        glitter.openDiaLog(new URL('./dialog/image-preview.js', import.meta.url), 'preview', obj.def);
+                    })}"></i>
+                <i
+                    class="fa-regular fa-upload text-dark ms-2"
+                    style="cursor: pointer;${obj.readonly ? `display:none;` : ``}"
+                    onclick="${obj.gvc.event(() => {
+                        glitter.ut.chooseMediaCallback({
+                            single: true,
+                            accept: 'json,image/*',
+                            callback(data) {
+                                const saasConfig = window.saasConfig;
+                                const dialog = new ShareDialog(obj.gvc.glitter);
+                                dialog.dataLoading({ visible: true });
+                                const file = data[0].file;
+                                saasConfig.api.uploadFile(file.name).then((data) => {
+                                    dialog.dataLoading({ visible: false });
+                                    const data1 = data.response;
+                                    dialog.dataLoading({ visible: true });
+                                    const objP = {
+                                        url: data1.url,
+                                        type: 'put',
+                                        data: file,
+                                        headers: {
+                                            "Content-Type": data1.type
+                                        },
+                                        processData: false,
+                                        crossDomain: true,
+                                        success: () => {
+                                            dialog.dataLoading({ visible: false });
+                                            obj.callback(data1.fullUrl);
+                                            obj.def = data1.fullUrl;
+                                            obj.gvc.notifyDataChange(id);
+                                        },
+                                        error: () => {
+                                            dialog.dataLoading({ visible: false });
+                                            dialog.errorMessage({ text: '上傳失敗' });
+                                        },
+                                    };
+                                    if (file.type.indexOf('svg') !== -1) {
+                                        objP["headers"] = {
+                                            "Content-Type": file.type
                                         };
-                                    })}
-                                                              </div>
-                                                              <div class="modal-footer w-100">
-                                                                  <button
-                                                                      type="button"
-                                                                      class="btn btn-light flex-fill"
-                                                                      data-bs-dismiss="modal"
-                                                                  >
-                                                                      關閉
-                                                                  </button>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                  </div>`);
-                                    $('#standard-modal').modal('show');
-                                })}"
-                                          >
-                                              <i class="fa-solid fa-eye fs-6 me-1 "></i>預覽表單
-                                          </button>
-                                      `
-                                : ``}
-                            </div>
-                        `;
-                        }
-                        switch (dd.elem) {
-                            case 'selected':
-                                html += `<select
-                                class="form-select"
-                                aria-label="Default select example"
-                                style="font-size: 14px;"
-                                onchange="${gvc.event((e) => ((dd.value = $(e).val()), callback(dd)))}"
-                            >
-                                ${glitter.print(() => {
-                                    let html = '';
-                                    dd.option.map((d2) => {
-                                        html += `<option value="${d2.value}" ${d2.value === dd.value ? `selected` : ``}>
-                                            ${d2.name}
-                                        </option>`;
-                                    });
-                                    return html;
-                                })}
-                            </select>`;
-                                break;
-                            case 'checked':
-                                dd.option = glitter.ut.toJson(dd.option, []);
-                                dd.option.map((d2) => {
-                                    let labelID = glitter.getUUID();
-                                    html += `
-                                    <div class="py-1 d-flex">
-                                        <input
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            role="${dd.role ?? ''}"
-                                            id="${labelID}"
-                                            onchange="${gvc.event((e) => {
-                                        dd.type === 'single' && dd.option.map((d3) => (d3.checked = false));
-                                        d2.checked = $(e).get(0).checked;
-                                        gvc.notifyDataChange(id), callback(dd);
-                                    })}"
-                                            ${d2.checked ? `checked` : ``}
-                                        />
-                                        ${glitter.print(() => {
-                                        let h = '';
-                                        if (d2.elem && d2.checked) {
-                                            h += `<div style="width: calc(100% - 30px);">
-                                                    ${glitter.print(() => {
-                                                if (d2.elem === 'form') {
-                                                    return ` <label
-                                                                    class="ms-1"
-                                                                    for="${labelID}"
-                                                                    style="font-size: 16px;font-weight: 400;"
-                                                                >
-                                                                    ${d2.name}
-                                                                </label>
-                                                                ${editor.generateForm(d2.value, window, callback, true)}`;
-                                                }
-                                                else {
-                                                    return `<div class="ms-1">
-                                                                ${editor.generateForm([d2], window, callback, true)}
-                                                            </div>`;
-                                                }
-                                            })}
-                                                </div>`;
-                                        }
-                                        else {
-                                            h += ` <label
-                                                    class="ms-1"
-                                                    for="${labelID}"
-                                                    style="font-size: 16px;font-weight: 400;"
-                                                >
-                                                    ${d2.name}
-                                                </label>`;
-                                        }
-                                        return h;
-                                    })}
-                                    </div>
-                                `;
+                                    }
+                                    $.ajax(objP);
                                 });
-                                break;
-                            case 'form':
-                                html += editor.generateForm(dd.value, window, callback, true);
-                                break;
-                            case 'formEdit':
-                                html += glitter.share.formEdit.formEditor(dd.value, window, dd.formSetting, false);
-                                break;
-                            case 'input':
-                                switch (dd.type) {
-                                    case 'email':
-                                        html += `<div class="input-group input-group-merge">
-                                        <input
-                                            class="form-control"
-                                            type="email"
-                                            placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                            onchange="${gvc.event((e) => (dd.value = $(e).val()))}"
-                                            value="${dd.value ?? ''}"
-                                            ${dd.readonly ? `readonly` : ``}
-                                        />
-                                        ${dd.needAuth
-                                            ? `<div
-                                                  class="btn btn-outline-primary"
-                                                  onclick="${gvc.event(() => {
-                                            })}"
-                                              >
-                                                  <span>驗證</span>
-                                              </div>`
-                                            : ``}
-                                    </div>`;
-                                        break;
-                                    case 'phone':
-                                        html += ` <div class="input-group input-group-merge">
-                                        <input
-                                            class="form-control"
-                                            type="email"
-                                            placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                            onchange="${gvc.event((e) => (dd.value = $(e).val()))}"
-                                            value="${dd.value ?? ''}"
-                                            ${dd.readonly ? `readonly` : ``}
-                                        />
-                                        ${dd.needAuth
-                                            ? ` <div
-                                                      class="btn btn-outline-primary"
-                                                      onclick="${gvc.event(() => {
-                                            })}"
-                                                  >
-                                                      <span>驗證</span>
-                                                  </div>`
-                                            : ``}
-                                    </div>`;
-                                        break;
-                                    case 'text':
-                                        html += `
-                                        <div class="w-100 input-group ">
-                                            <input
-                                                type="text"
-                                                class="form-control w-100"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                                value="${dd.value ?? ''}"
-                                                onchange="${gvc.event((e) => {
-                                            dd.value = $(e).val();
-                                            gvc.notifyDataChange(id), callback(dd);
-                                        })}"
-                                                ${dd.readonly ? `readonly` : ``}
-                                            />
-                                        </div>
-                                    `;
-                                        break;
-                                    case 'date':
-                                        let dateID = glitter.getUUID();
-                                        html += `
-                                        <div class="w-100 input-group " id="${dateID}">
-                                            <input
-                                                type="text"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                                class="form-control"
-                                                data-provide="datepicker"
-                                                data-date-format="yyyy/mm/dd"
-                                                data-date-container="#${dateID}"
-                                                value="${dd.value ?? ''}"
-                                                onchange="${gvc.event((e) => ((dd.value = $(e).val()), callback(dd)))}"
-                                                ${dd.readonly ? `readonly` : ``}
-                                            />
-                                        </div>
-                                    `;
-                                        break;
-                                    case 'number':
-                                        html += `
-                                        <div class="w-100 input-group ">
-                                            <input
-                                                type="text"
-                                                class="form-control w-100"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                                value="${dd.value ?? ''}"
-                                                onchange="${gvc.event((e) => {
-                                            dd.value = glitter.utText.filterNumber($(e).val());
-                                            gvc.notifyDataChange(id), callback(dd);
-                                        })}"
-                                                oninput="${gvc.event((e) => $(e).val(glitter.utText.filterNumber($(e).val())))}"
-                                                ${dd.readonly ? `readonly` : ``}
-                                            />
-                                        </div>
-                                    `;
-                                        break;
-                                    case 'word':
-                                        html += `
-                                        <div class="w-100 input-group ">
-                                            <input
-                                                type="text"
-                                                class="form-control w-100"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                                value="${dd.value ?? ''}"
-                                                onchange="${gvc.event((e) => {
-                                            dd.value = $(e).val().replace(/[\W]/g, '');
-                                            gvc.notifyDataChange(id), callback(dd);
-                                        })}"
-                                                oninput="${gvc.event((e) => $(e).val($(e).val().replace(/[\W]/g, '')))}"
-                                                ${dd.readonly ? `readonly` : ``}
-                                            />
-                                        </div>
-                                    `;
-                                        break;
-                                    case 'time':
-                                        let pickerID = glitter.getUUID();
-                                        html += `
-                                        <div class="mb-3 position-relative">
-                                            ${gvc.bindView({
-                                            bind: pickerID,
-                                            view: () => {
-                                                return `
-                                                        <div
-                                                            id="pickerID${pickerID}"
-                                                            type="text"
-                                                            class="form-control"
-                                                            ${dd.readonly ? `readonly` : ``}
-                                                            onclick="${gvc.event(() => {
-                                                })}"
-                                                        >
-                                                            ${dd.value ??
-                                                    `<span style="color: gray">
-                                                                ${dd.placeholder ?? '請輸入' + dd.name}</span
-                                                            >`}
-                                                        </div>
-                                                    `;
-                                            },
-                                            divCreate: { class: 'w-100 input-group' },
-                                            onCreate: () => { },
-                                        })}
-                                        </div>
-                                    `;
-                                        break;
-                                    default:
-                                        html += `
-                                        <div class="w-100 input-group">
-                                            <input
-                                                type="${dd.type}"
-                                                class="form-control w-100"
-                                                placeholder="${dd.placeholder ?? '請輸入' + dd.name}"
-                                                value="${dd.value ?? ''}"
-                                                onchange="${gvc.event((e) => {
-                                            dd.value = $(e).val();
-                                            gvc.notifyDataChange(id), callback(dd);
-                                        })}"
-                                                ${dd.readonly ? `readonly` : ``}
-                                            />
-                                        </div>
-                                    `;
-                                }
-                                html += ``;
-                                break;
-                            case 'textArea':
-                                html += `<div class="w-100 px-1">
-                                <textarea
-                                    class="form-control border rounded"
-                                    rows="4"
-                                    onchange="${gvc.event((e) => ((dd.value = $(e).val()), callback(dd)))}"
-                                    placeholder="${dd.placeholder ?? ''}"
-                                >${dd.value ?? ''}</textarea
-                                >
-                            </div>`;
-                                break;
-                            case 'button':
-                                html += `<button class="btn btn-primary" onclick="${gvc.event(() => dd.click(window))}">
-                                ${dd.placeholder}
-                            </button>`;
-                                break;
-                            default:
-                                if (glitter.share.formExtra[dd.elem]) {
-                                    html += glitter.share.formExtra[dd.elem](dd, window, callback);
-                                }
-                                break;
-                        }
-                        if (index !== data.length - 1) {
-                            html += `<div class="w-100 my-2 bg-light" style="height: 1px;"></div>`;
-                        }
-                    });
-                    return html;
+                            },
+                        });
+                    })}"
+                   
+                ></i>`;
                 },
-                divCreate: {},
-                onCreate: () => { },
-            })}
-    </div>`;
-        };
+                divCreate: {
+                    class: `d-flex align-items-center mb-3`
+                }
+            };
+        })}`;
     }
+    static uploadFile(obj) {
+        const glitter = window.glitter;
+        const $ = glitter.$;
+        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+            <div class="d-flex align-items-center mb-3">
+                <input
+                    class="flex-fill form-control "
+                    placeholder="請輸入檔案連結"
+                    value="${obj.def}"
+                    onchange="${obj.gvc.event((e) => {
+            obj.callback(e.value);
+        })}"
+                />
+                <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
+                <i
+                    class="fa-regular fa-upload  ms-2"
+                    style="cursor: pointer;"
+                    onclick="${obj.gvc.event(() => {
+            glitter.ut.chooseMediaCallback({
+                single: true,
+                accept: 'json,image/*,video/*',
+                callback(data) {
+                    const saasConfig = window.saasConfig;
+                    const dialog = new ShareDialog(obj.gvc.glitter);
+                    dialog.dataLoading({ visible: true });
+                    const file = data[0].file;
+                    saasConfig.api.uploadFile(file.name).then((data) => {
+                        dialog.dataLoading({ visible: false });
+                        const data1 = data.response;
+                        dialog.dataLoading({ visible: true });
+                        $.ajax({
+                            url: data1.url,
+                            type: 'put',
+                            data: file,
+                            processData: false,
+                            headers: {
+                                "Content-Type": data1.type
+                            },
+                            crossDomain: true,
+                            success: () => {
+                                dialog.dataLoading({ visible: false });
+                                obj.callback(data1.fullUrl);
+                            },
+                            error: () => {
+                                dialog.dataLoading({ visible: false });
+                                dialog.errorMessage({ text: '上傳失敗' });
+                            },
+                        });
+                    });
+                },
+            });
+        })}"
+                ></i>
+            </div>`;
+    }
+    static uploadVideo(obj) {
+        const glitter = window.glitter;
+        const $ = glitter.$;
+        return `<h3 style="color: white;font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+                            <div class="d-flex align-items-center mb-3">
+                                <input class="flex-fill form-control " placeholder="請輸入圖片連結" value="${obj.def}" onchange="${obj.gvc.event((e) => {
+            obj.callback(e.value);
+        })}">
+                                <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
+                                <i class="fa-regular fa-upload text-white ms-2" style="cursor: pointer;" onclick="${obj.gvc.event(() => {
+            glitter.ut.chooseMediaCallback({
+                single: true,
+                accept: 'json,video/*',
+                callback(data) {
+                    const saasConfig = window.saasConfig;
+                    const dialog = new ShareDialog(obj.gvc.glitter);
+                    dialog.dataLoading({ visible: true });
+                    const file = data[0].file;
+                    saasConfig.api.uploadFile(file.name).then((data) => {
+                        dialog.dataLoading({ visible: false });
+                        const data1 = data.response;
+                        dialog.dataLoading({ visible: true });
+                        $.ajax({
+                            url: data1.url,
+                            type: 'put',
+                            data: file,
+                            processData: false,
+                            headers: {
+                                "Content-Type": data1.type
+                            },
+                            crossDomain: true,
+                            success: () => {
+                                dialog.dataLoading({ visible: false });
+                                obj.callback(data1.fullUrl);
+                            },
+                            error: () => {
+                                dialog.dataLoading({ visible: false });
+                                dialog.errorMessage({ text: '上傳失敗' });
+                            },
+                        });
+                    });
+                },
+            });
+        })}"></i>
+                            </div>`;
+    }
+    static uploadLottie(obj) {
+        const glitter = window.glitter;
+        const $ = glitter.$;
+        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2">${obj.title}</h3>
+            <div class="alert alert-primary alert-dismissible fade show" role="alert" style="white-space: normal;word-break: break-word;">
+                <a
+                    onclick="${obj.gvc.event(() => glitter.openNewTab(`https://lottiefiles.com/`))}"
+                    class="fw fw-bold"
+                    style="cursor: pointer;"
+                    >Lottie</a
+                >
+                是開放且免費的動畫平台，可以前往下載動畫檔後進行上傳．
+            </div>
+            <div class="d-flex align-items-center mb-3">
+                <input
+                    class="flex-fill form-control "
+                    placeholder="請輸入圖片連結"
+                    value="${obj.def}"
+                    onchange="${obj.gvc.event((e) => {
+            obj.callback(e.value);
+        })}"
+                />
+                <div class="" style="width: 1px;height: 25px;background-color: white;"></div>
+                <i
+                    class="fa-regular fa-upload  text-dark ms-2"
+                    style="cursor: pointer;${(obj.color) ? `color:${obj.color};` : ``}"
+                    onclick="${obj.gvc.event(() => {
+            glitter.ut.chooseMediaCallback({
+                single: true,
+                accept: 'json,image/*,.json',
+                callback(data) {
+                    const saasConfig = window.saasConfig;
+                    const dialog = new ShareDialog(obj.gvc.glitter);
+                    dialog.dataLoading({ visible: true });
+                    const file = data[0].file;
+                    saasConfig.api.uploadFile(file.name).then((data) => {
+                        dialog.dataLoading({ visible: false });
+                        const data1 = data.response;
+                        dialog.dataLoading({ visible: true });
+                        $.ajax({
+                            url: data1.url,
+                            type: 'put',
+                            data: file,
+                            processData: false,
+                            headers: {
+                                "Content-Type": data1.type
+                            },
+                            crossDomain: true,
+                            success: () => {
+                                dialog.dataLoading({ visible: false });
+                                obj.callback(data1.fullUrl);
+                            },
+                            error: () => {
+                                dialog.dataLoading({ visible: false });
+                                dialog.errorMessage({ text: '上傳失敗' });
+                            },
+                        });
+                    });
+                },
+            });
+        })}"
+                ></i>
+            </div>`;
+    }
+    static h3(title) {
+        return `<h3 style="font-size: 16px;margin-bottom: 10px;" class="mt-2 text-dark">${title}</h3>`;
+    }
+    static plusBtn(title, event) {
+        return `<div class="w-100 my-3 bg-white" style="height: 1px;"></div>
+            <div
+                class="text-white fw-bold align-items-center justify-content-center d-flex p-1 rounded mt-3"
+                style="border: 2px dashed white;"
+                onclick="${event}"
+            >
+                ${title}
+            </div>`;
+    }
+    static fontawesome(obj) {
+        const glitter = window.glitter;
+        return (`
+                ${Editor.h3(obj.title)}
+                <div
+                    class="alert alert-primary alert-dismissible fade show p-2"
+                    role="alert"
+                    style="white-space: normal;word-break: break-all;"
+                >
+                    <a
+                        onclick="${obj.gvc.event(() => glitter.openNewTab('https://fontawesome.com/search'))}"
+                        class="fw-bold fw text-primary"
+                        style="cursor: pointer;"
+                        >fontawesome</a
+                    >
+                    與
+                    <a
+                        onclick="${obj.gvc.event(() => glitter.openNewTab('https://boxicons.com/'))}"
+                        class="fw-bold fw text-primary"
+                        style="cursor: pointer;"
+                        >box-icon</a
+                    >
+                    是開放且免費的icon提供平台，可以前往挑選合適標籤進行設定.
+                </div>
+            ` +
+            glitter.htmlGenerate.editeInput({
+                gvc: obj.gvc,
+                title: '',
+                default: obj.def,
+                placeHolder: '請輸入ICON-標籤',
+                callback: (text) => {
+                    obj.callback(text);
+                },
+            }));
+    }
+    static googleMap(obj) {
+        const glitter = window.glitter;
+        return (`
+                ${Editor.h3(obj.title)}
+                <div
+                    class="alert alert-primary alert-dismissible fade show p-2"
+                    role="alert"
+                    style="white-space: normal;word-break: break-all;"
+                >
+                    <a
+                        onclick="${obj.gvc.event(() => glitter.openNewTab('https://www.google.com/maps/'))}"
+                        class="fw-bold fw text-primary"
+                        style="cursor: pointer;"
+                        >googleMap</a
+                    >
+                   
+                    請搜尋目標地址，再點擊分享，在分頁上選擇嵌入地圖後，會得到一串HTML，請把src後的兩個""內的內容複製上來
+                </div>
+            ` +
+            glitter.htmlGenerate.editeInput({
+                gvc: obj.gvc,
+                title: '',
+                default: obj.def,
+                placeHolder: '請輸入src',
+                callback: (text) => {
+                    obj.callback(text);
+                },
+            }));
+    }
+    static toggleExpand(obj) {
+        const glitter = window.glitter;
+        obj.data.expand = obj.data.expand ?? false;
+        return `${obj.gvc.bindView(() => {
+            const id = glitter.getUUID();
+            return {
+                bind: id,
+                view: () => {
+                    if (obj.data.expand) {
+                        return `<div class="w-100  rounded p-2 ${obj.class}" style="background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);${obj.style};">
+                            <div
+                                class="d-flex  align-items-center mb-2 w-100 text-white  "
+                                onclick="${obj.gvc.event(() => {
+                            obj.data.expand = !obj.data.expand;
+                            obj.gvc.notifyDataChange(id);
+                        })}"
+                                style="cursor: pointer;"
+                            >
+                                <h3 style="font-size: 16px;width: calc(100% - 60px);" class="m-0 p-0 text-white">${obj.title}</h3>
+                                <div class="flex-fill"></div>
+                                <div style="cursor: pointer;">收合<i class="fa-solid fa-up ms-2 text-white"></i></div>
+                            </div>
+                             <div class="w-100 bg-white my-2" style="height:1px;"></div>
+                            ${(typeof obj.innerText === 'string') ? obj.innerText : obj.innerText()}
+                        </div>`;
+                    }
+                    return `<div class="w-100  rounded p-2 ${obj.class}" style="background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);${obj.style};">
+                        <div
+                            class="w-100 d-flex p-0 align-items-center text-white"
+                            onclick="${obj.gvc.event(() => {
+                        obj.data.expand = !obj.data.expand;
+                        obj.gvc.notifyDataChange(id);
+                    })}"
+                            style="cursor: pointer;"
+                        >
+                            <h3 style="font-size: 16px;width: calc(100% - 60px);" class="m-0 p-0 text-white">${obj.title}</h3>
+                            <div class="flex-fill"></div>
+                            <div style="cursor: pointer;">展開<i class="fa-solid fa-down ms-2 text-white"></i></div>
+                        </div>
+                    </div>`;
+                },
+                divCreate: {
+                    class: `toggleInner`
+                },
+            };
+        })}`;
+    }
+    static minusTitle(title, event) {
+        return `<div class="d-flex align-items-center">
+            <i class="fa-regular fa-circle-minus text-danger me-2" style="font-size: 20px;cursor: pointer;" onclick="${event}"></i>
+            <h3 style="color: white;font-size: 16px;" class="m-0">${title}</h3>
+        </div>`;
+    }
+    static searchInput(obj) {
+        const glitter = window.glitter;
+        const gvc = obj.gvc;
+        const $ = glitter.$;
+        return `
+            ${(obj.title) ? Editor.h3(obj.title) : ``}
+            <div class="btn-group dropdown w-100">
+                ${(() => {
+            const id = glitter.getUUID();
+            const id2 = glitter.getUUID();
+            return `
+                        ${obj.gvc.bindView(() => {
+                return {
+                    bind: id2,
+                    view: () => {
+                        return `<input
+                                        class="form-control w-100"
+                                        style="height: 40px;"
+                                        placeholder="${obj.placeHolder}"
+                                        onfocus="${obj.gvc.event(() => {
+                            gvc.getBindViewElem(id).addClass(`show`);
+                        })}"
+                                        onblur="${gvc.event(() => {
+                            setTimeout(() => {
+                                gvc.getBindViewElem(id).removeClass(`show`);
+                            }, 300);
+                        })}"
+                                        oninput="${gvc.event((e) => {
+                            obj.def = e.value;
+                            gvc.notifyDataChange(id);
+                            gvc.getBindViewElem(id).addClass(`show`);
+                        })}"
+                                        value="${obj.def}"
+                                        onchange="${gvc.event((e) => {
+                            obj.def = e.value;
+                            setTimeout(() => {
+                                obj.callback(obj.def);
+                            }, 500);
+                        })}"
+                                    />`;
+                    },
+                    divCreate: { class: `w-100` },
+                };
+            })}
+                        ${obj.gvc.bindView(() => {
+                return {
+                    bind: id,
+                    view: () => {
+                        return obj.array
+                            .filter((d2) => {
+                            return d2.toUpperCase().indexOf(obj.def.toUpperCase()) !== -1;
+                        })
+                            .map((d3) => {
+                            return `<button
+                                                class="dropdown-item"
+                                                onclick="${gvc.event(() => {
+                                obj.def = d3;
+                                gvc.notifyDataChange(id2);
+                                obj.callback(obj.def);
+                            })}"
+                                            >
+                                                ${d3}
+                                            </button>`;
+                        })
+                            .join('');
+                    },
+                    divCreate: {
+                        class: `dropdown-menu`,
+                        style: `transform: translateY(40px);max-height:300px;overflow-y:scroll;`,
+                    },
+                };
+            })}
+                    `;
+        })()}
+            </div>
+        `;
+    }
+    static returnInnerHtml(obj) {
+    }
+    static select(obj) {
+        return `
+            ${Editor.h3(obj.title)}
+            <select
+                class="form-select"
+                onchange="${obj.gvc.event((e) => {
+            obj.callback(e.value);
+        })}"
+            >
+                ${obj.array
+            .map((dd) => {
+            if (typeof dd === 'object') {
+                return `<option value="${dd.value}" ${dd.value === obj.def ? `selected` : ``}>
+                                ${dd.title}
+                            </option>`;
+            }
+            else {
+                return `<option value="${dd}" ${dd === obj.def ? `selected` : ``}>${dd}</option>`;
+            }
+        })
+            .join('')}
+            </select>
+        `;
+    }
+    static arrayItem(obj) {
+        let dragm = {
+            start: 0,
+            end: 0,
+        };
+        return (`<div class="mb-2"></div>` +
+            Editor.toggleExpand({
+                gvc: obj.gvc,
+                title: obj.title,
+                data: obj.expand,
+                innerText: () => {
+                    return obj.array
+                        .map((dd, index) => {
+                        return Editor.toggleExpand({
+                            gvc: obj.gvc,
+                            title: `<div    draggable="true"  ondragenter="${obj.gvc.event((e, event) => {
+                                dragm.end = index;
+                            })}" ondragstart="${obj.gvc.event(() => {
+                                dragm.start = index;
+                                dragm.end = index;
+                            })}"   ondragend="${obj.gvc.event(() => {
+                                swapArr(obj.originalArray, dragm.start, dragm.end);
+                                obj.refreshComponent();
+                            })}">${Editor.minusTitle(dd.title, dd.minus)}</div>`,
+                            data: dd.expand,
+                            innerText: dd.innerHtml,
+                            class: `` + obj.class,
+                            style: `background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);` + obj.style,
+                        });
+                    })
+                        .join('<div class="my-2"></div>') + ((obj.readonly) ? `` : Editor.plusBtn(obj.plus.title, obj.plus.event));
+                },
+                class: ``,
+                style: `background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);`
+            }));
+    }
+}
+export class Element {
+    constructor() {
+    }
+}
+function swapArr(arr, index1, index2) {
+    const data = arr[index1];
+    arr.splice(index1, 1);
+    arr.splice(index2, 0, data);
 }

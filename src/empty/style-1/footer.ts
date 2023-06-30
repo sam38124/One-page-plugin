@@ -1,9 +1,10 @@
 import {HtmlJson, Plugin} from "../../glitterBundle/plugins/plugin-creater.js";
 import {Glitter} from "../../glitterBundle/Glitter.js";
 import {GVC} from "../../glitterBundle/GVController.js";
-import {ClickEvent} from "../../glitterBundle/plugins/click-event.js";
+
 import {Editor} from "../../editor.js";
 import {ScriptStyle1} from "../script-style-1.js";
+import {TriggerEvent} from "../../glitterBundle/plugins/trigger-event.js";
 
 Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) => {
     return {
@@ -11,7 +12,6 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
         render: (gvc: GVC, widget: HtmlJson, setting: HtmlJson[], hoverID: string[]) => {
             return {
                 view:()=>{
-
                     ScriptStyle1.initialScript(gvc,widget)
                     let id = glitter.getUUID()
                     const footer = {
@@ -130,8 +130,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                             widget.data.outro.title = text;
                                             widget.refreshComponent();
                                         },
-                                    })}`+
-                                    `
+                                    })}`+ `
                                 ${glitter.htmlGenerate.editeText({
                                         gvc: gvc,
                                         title: '左大標敘文',
@@ -143,7 +142,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                         },
                                     })}
                                 `+
-                                    Editor.arrayItem({
+                                Editor.arrayItem({
                                         originalArray:widget.data.outro,
                                         gvc: gvc,
                                         title: '行內資訊',
@@ -227,7 +226,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
                                                             widget.refreshComponent();
                                                         },
                                                     }),
-                                                    ClickEvent.editer(gvc, widget, rowData.link, {
+                                                    TriggerEvent.editer(gvc, widget, rowData.link, {
                                                         hover: true,
                                                         option: [],
                                                         title: "這個連結做的事情"
@@ -511,7 +510,7 @@ Plugin.createComponent(import.meta.url, (glitter: Glitter, editMode: boolean) =>
 //                                             },
 //                                         })}
 //                                                 `+`
-//                                                 ${ClickEvent.editer(gvc, widget, rowData.link, {
+//                                                 ${TriggerEvent.editer(gvc, widget, rowData.link, {
 //                                             hover: true,
 //                                             option: [],
 //                                             title: "這個連結做的事情"
