@@ -5,16 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93bccc46-e194-44b4-921c-fc21039b8956" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/shopify-backend/interface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shopify-backend/product/post.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shopify-backend/order/post.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smaple.html" beforeDir="false" afterPath="$PROJECT_DIR$/smaple.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hh.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/official/component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/official/component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/backend_default/dist/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/api/product.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/category/style-1/banner.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/category/style-1/banner.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/api/homee-api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/api/homee-api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/event.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/homee/event.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/user/style-1/information.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homee/user/style-1/information.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shopify-backend/interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shopify-backend/interface.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shopify-backend/interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shopify-backend/interface.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,28 +44,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/src/matching/backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/jianzhi.wang/Desktop/square_studio/APP檔案/Glitter模板列表/LionDesign/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/User/Documents/GitHub/One-page-plugin/src/shopify-backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Users\\User\\Documents\\GitHub\\One-page-plugin\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Documents\GitHub\One-page-plugin\src\shopify-backend" />
       <recent name="$PROJECT_DIR$/src/matching/backend" />
       <recent name="$PROJECT_DIR$/src/glitterBundle/plugins" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.build:tscAuto">
+  <component name="RunManager" selected="npm.start">
     <configuration name="build:tscAuto" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -93,8 +99,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build:tscAuto" />
         <item itemvalue="npm.start" />
+        <item itemvalue="npm.build:tscAuto" />
         <item itemvalue="npm.create" />
       </list>
     </recent_temporary>
@@ -111,6 +117,7 @@
       <workItem from="1687745202574" duration="2896000" />
       <workItem from="1687826890047" duration="16803000" />
       <workItem from="1687881718660" duration="14355000" />
+      <workItem from="1688107086715" duration="9461000" />
     </task>
     <servers />
   </component>
@@ -417,9 +424,6 @@
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.js.map" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/dialog-style-editor.d.ts" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.js.map" />
-        <option value="$PROJECT_DIR$/src/glitterBundle/plugins/click-event.d.ts" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.js.map" />
         <option value="$PROJECT_DIR$/src/glitterBundle/plugins/html-render.d.ts" />
@@ -485,7 +489,20 @@
         <option value="$PROJECT_DIR$/src/testModule.js" />
         <option value="$PROJECT_DIR$/src/shopify-backend/interface.js" />
         <option value="$PROJECT_DIR$/src/shopify-backend/product/post.js" />
+        <option value="$PROJECT_DIR$/src/shopify-backend/order/post.js" />
+        <option value="$PROJECT_DIR$/src/homee/api/product.js" />
       </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
     </option>
   </component>
 </project>
