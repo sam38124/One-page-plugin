@@ -427,5 +427,18 @@ style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
                 },
             };
         },
+    },
+    addImage: {
+        title: `添加圖片`,
+        fun: (gvc, widget, obj, subData, element) => {
+            return {
+                editor: () => {
+                    return ``;
+                },
+                event: () => {
+                    gvc.glitter.openDiaLog(new URL(`./dialog/image-preview.ts`, import.meta.url).href, "", {});
+                }
+            };
+        }
     }
 });

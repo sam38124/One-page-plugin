@@ -80,6 +80,7 @@ export const component = Plugin.createComponent(import.meta.url, (glitter: Glitt
                                     } else {
                                         data = d2.response.result[0]
                                         let createOption=(htmlGenerate ?? {}).createOption ?? {}
+                                     
                                         resolve(new glitter.htmlGenerate(data.config, [], subData).render(gvc, undefined, createOption ?? {}))
 
                                     }

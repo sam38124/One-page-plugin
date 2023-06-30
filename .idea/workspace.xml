@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93bccc46-e194-44b4-921c-fc21039b8956" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/shopify-backend/interface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shopify-backend/product/post.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/one-page/style-1/topBanner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/one-page/style-1/topBanner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smaple.html" beforeDir="false" afterPath="$PROJECT_DIR$/smaple.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hh.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/official/component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/official/component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +110,7 @@
       <workItem from="1686930567069" duration="122572000" />
       <workItem from="1687745202574" duration="2896000" />
       <workItem from="1687826890047" duration="16803000" />
-      <workItem from="1687881718660" duration="6248000" />
+      <workItem from="1687881718660" duration="14355000" />
     </task>
     <servers />
   </component>
@@ -476,6 +483,8 @@
         <option value="$PROJECT_DIR$/src/matching/backend/verify_user.js" />
         <option value="$PROJECT_DIR$/src/matching/backend/verify_company.js" />
         <option value="$PROJECT_DIR$/src/testModule.js" />
+        <option value="$PROJECT_DIR$/src/shopify-backend/interface.js" />
+        <option value="$PROJECT_DIR$/src/shopify-backend/product/post.js" />
       </list>
     </option>
   </component>

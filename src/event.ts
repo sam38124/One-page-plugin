@@ -23,7 +23,7 @@ export class GlobalData {
                     GlobalData.data.pageList = data.response.result.map((dd: any) => {
                         dd.page_config = dd.page_config ?? {};
                         return dd;
-                    }).sort((a:any, b:any) =>  `${a.group}-${a.name}`.localeCompare(`${b.group}-${b.name}`));
+                    }).sort((a: any, b: any) => `${a.group}-${a.name}`.localeCompare(`${b.group}-${b.name}`));
                 } else {
                     GlobalData.data.isRunning = false;
                     GlobalData.data.run();
@@ -194,8 +194,8 @@ ${Editor.h3("選擇頁面")}
                                             goBack: true,
                                             option: {
                                                 animation: gvc.glitter.ut.frSize({
-                                                    sm:gvc.glitter.animation.fade
-                                                },gvc.glitter.animation.rightToLeft)
+                                                    sm: gvc.glitter.animation.fade
+                                                }, gvc.glitter.animation.rightToLeft)
                                             }
                                         }
                                     );
@@ -353,7 +353,7 @@ ${Editor.h3("選擇頁面")}
                                 resolve(a)
                             }
                         } catch (e) {
-                            resolve(   object.errorCode ?? false)
+                            resolve(object.errorCode ?? false)
                         }
 
                     })
@@ -412,6 +412,7 @@ ${gvc.glitter.htmlGenerate.styleEditor(object, gvc).editor(gvc, () => {
                 event: () => {
                     let fal = 0
                     let data: any = undefined
+
                     async function getData() {
                         return new Promise(async (resolve, reject) => {
                             const saasConfig = (window as any).saasConfig
@@ -438,6 +439,7 @@ ${gvc.glitter.htmlGenerate.styleEditor(object, gvc).editor(gvc, () => {
                             })
                         })
                     }
+
                     getData().then((data: any) => {
                         const id = gvc.glitter.getUUID()
                         gvc.glitter.setDrawer(`<div class="w-100 h-100 ${gvc.glitter.htmlGenerate.styleEditor(object, gvc).class()}"
@@ -463,6 +465,19 @@ style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
                 },
             };
         },
+    },
+    addImage: {
+        title: `添加圖片`,
+        fun: (gvc, widget, obj, subData, element) => {
+            return {
+                editor: () => {
+                    return ``
+                },
+                event: () => {
+                    gvc.glitter.openDiaLog(new URL(`./dialog/image-preview.ts`, import.meta.url).href, "", {})
+                }
+            }
+        }
     }
 });
 

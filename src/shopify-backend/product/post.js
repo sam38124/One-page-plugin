@@ -1,4 +1,242 @@
-<div class="Polaris-Frame__Content_xd1mk">
+import { Plugin } from "../../glitterBundle/plugins/plugin-creater.js";
+Plugin.createComponent(import.meta.url, (glitter, editMode) => {
+    return {
+        defaultData: {},
+        render: (gvc, widget, setting, hoverID) => {
+            const data = {
+                "product": {
+                    "id": 8370638291244,
+                    "title": "1 ALCANENA 竹編紙巾收納盒",
+                    "body_html": "<p>ALCANENA 竹編紙巾收納盒以天然材質製作，木片和印尼白藤編織而成，搭配實木蓋板，打造出自然且高品質的收納盒。</p>\n<p>它的特點在於藤木分隔設計，可將紙巾分類收納，提供方便快捷的取用方式。手工制作，確保獨特性和高品質。<br></p>\n<p>將它放置在浴室、廚房、客廳等地方，能為你的空間增添了一份自然和溫暖的氛圍，讓你享受日常生活的小幸福。<br></p>\n<p>ALCANENA 竹編紙巾收納盒它的手工制作和天然材質展現了對細節和品質的追求，感受到大自然的美好和手工工藝帶來的溫暖。</p>\n<p> </p>\n<p> </p>\n<h4>商品規格</h4>\n<table width=\"100%\">\n<tbody>\n<tr style=\"height: 35px;\" data-mce-style=\"height: 35px;\">\n<td style=\"width: 30%; text-align: center; background-color: #efefef; height: 35px;\" data-mce-style=\"width: 30%; text-align: center; background-color: #efefef; height: 35px;\">\n<p><b><meta charset=\"utf-8\">長</b></p>\n</td>\n<td style=\"width: 70%; height: 35px;\" data-mce-style=\"width: 70%; height: 35px;\">\n<p><meta charset=\"utf-8\">兩格：29 公分，三格：20 公分，四格：23 公分</p>\n</td>\n</tr>\n<tr style=\"height: 35px;\" data-mce-style=\"height: 35px;\">\n<td style=\"width: 30%; text-align: center; background-color: #efefef; height: 35px;\" data-mce-style=\"width: 30%; text-align: center; background-color: #efefef; height: 35px;\">\n<p><strong>寬</strong></p>\n</td>\n<td style=\"width: 70%; height: 35px;\" data-mce-style=\"width: 70%; height: 35px;\">\n<p><meta charset=\"utf-8\">兩格：13 公分，三格：20 公分，四格：23 公分</p>\n</td>\n</tr>\n<tr style=\"height: 35px;\" data-mce-style=\"height: 35px;\">\n<td style=\"width: 30%; text-align: center; background-color: #efefef; height: 35px;\" data-mce-style=\"width: 30%; text-align: center; background-color: #efefef; height: 35px;\">\n<p><b>高</b></p>\n</td>\n<td style=\"width: 70%; height: 35px;\" data-mce-style=\"width: 70%; height: 35px;\">\n<p><meta charset=\"utf-8\">兩格：11 公分，三格：11 公分，四格：11 公分<br></p>\n</td>\n</tr>\n</tbody>\n</table>\n \n<table width=\"100%\">\n<tbody>\n<tr>\n<td style=\"width: 30%; text-align: center; background-color: #efefef;\" data-mce-style=\"width: 30%; text-align: center; background-color: #efefef;\">\n<p><b>材質說明</b></p>\n</td>\n<td style=\"width: 70%;\" data-mce-style=\"width: 70%;\">\n<p><span>木片，印尼白藤</span></p>\n</td>\n</tr>\n</tbody>\n</table>\n<p> </p>\n<p> </p>\n<h4>注意事項</h4>\n<p>※ HOMEE 為科技家居服務平台，所有商品皆由原廠提供自有包裝，並享受原廠及 HOMEE 延伸保固。</p>\n<p>※ 訂購前敬請詳閱<a href=\"https://homee.cc/pages/%E9%80%80%E6%AC%BE%E6%94%BF%E7%AD%96\" data-mce-href=\"https://homee.cc/pages/%E9%80%80%E6%AC%BE%E6%94%BF%E7%AD%96\">退換貨說明</a>，您送出訂單的同時將視同您已詳閱、同意以下規定。</p>\n<p>※ 顏色差異：商品顏色或布料會因您觀看的裝置（手機、平板或電腦等）而無法 100% 相同，商品顏色與布料以實品為主。</p>\n<p>※ 尺寸誤差：所有產品尺寸皆為人工丈量，可能因測量不同而存在誤差，0.5 - 2 公分 屬正常。</p>\n<p>※ 溫馨提醒：家具類商品長途運輸難免有碰撞風險，HOMEE 將盡力協助您服務至商品完善，您可放心選購。</p>\n<p>※ 商品交期：HOMEE 提供平台讓您使用合宜價錢直接向供應廠採購因此交期會因工廠有無現貨而有異動，有現貨約 1 週配送，無現貨需等約 2~4 週。</p>",
+                    "vendor": "合慕",
+                    "product_type": "收納盒",
+                    "created_at": "2023-06-06T15:16:30+08:00",
+                    "handle": "alcanena-竹編紙巾收納盒",
+                    "updated_at": "2023-06-29T13:20:21+08:00",
+                    "published_at": null,
+                    "template_suffix": "product1",
+                    "status": "draft",
+                    "published_scope": "web",
+                    "tags": "0-50公分, 木頭, 淺色木紋",
+                    "admin_graphql_api_id": "gid://shopify/Product/8370638291244",
+                    "variants": [
+                        {
+                            "id": 45338809598252,
+                            "product_id": 8370638291244,
+                            "title": "兩格",
+                            "price": "0.00",
+                            "sku": "E010128-1",
+                            "position": 1,
+                            "inventory_policy": "deny",
+                            "compare_at_price": null,
+                            "fulfillment_service": "manual",
+                            "inventory_management": "shopify",
+                            "option1": "兩格",
+                            "option2": null,
+                            "option3": null,
+                            "created_at": "2023-06-06T15:22:29+08:00",
+                            "updated_at": "2023-06-27T09:48:42+08:00",
+                            "taxable": false,
+                            "barcode": "",
+                            "grams": 350,
+                            "image_id": 41890888417580,
+                            "weight": 350.0,
+                            "weight_unit": "g",
+                            "inventory_item_id": 47389250781484,
+                            "inventory_quantity": 100,
+                            "old_inventory_quantity": 100,
+                            "requires_shipping": true,
+                            "admin_graphql_api_id": "gid://shopify/ProductVariant/45338809598252"
+                        },
+                        {
+                            "id": 45338809631020,
+                            "product_id": 8370638291244,
+                            "title": "三格",
+                            "price": "0.00",
+                            "sku": "E010128-2",
+                            "position": 2,
+                            "inventory_policy": "deny",
+                            "compare_at_price": null,
+                            "fulfillment_service": "manual",
+                            "inventory_management": "shopify",
+                            "option1": "三格",
+                            "option2": null,
+                            "option3": null,
+                            "created_at": "2023-06-06T15:22:29+08:00",
+                            "updated_at": "2023-06-27T09:48:42+08:00",
+                            "taxable": false,
+                            "barcode": "",
+                            "grams": 400,
+                            "image_id": 41890940453164,
+                            "weight": 400.0,
+                            "weight_unit": "g",
+                            "inventory_item_id": 47389250814252,
+                            "inventory_quantity": 100,
+                            "old_inventory_quantity": 100,
+                            "requires_shipping": true,
+                            "admin_graphql_api_id": "gid://shopify/ProductVariant/45338809631020"
+                        },
+                        {
+                            "id": 45338809663788,
+                            "product_id": 8370638291244,
+                            "title": "四格",
+                            "price": "0.00",
+                            "sku": "E010128-3",
+                            "position": 3,
+                            "inventory_policy": "deny",
+                            "compare_at_price": null,
+                            "fulfillment_service": "manual",
+                            "inventory_management": "shopify",
+                            "option1": "四格",
+                            "option2": null,
+                            "option3": null,
+                            "created_at": "2023-06-06T15:22:29+08:00",
+                            "updated_at": "2023-06-27T09:48:42+08:00",
+                            "taxable": false,
+                            "barcode": "",
+                            "grams": 450,
+                            "image_id": 41890891661612,
+                            "weight": 450.0,
+                            "weight_unit": "g",
+                            "inventory_item_id": 47389250847020,
+                            "inventory_quantity": 100,
+                            "old_inventory_quantity": 100,
+                            "requires_shipping": true,
+                            "admin_graphql_api_id": "gid://shopify/ProductVariant/45338809663788"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "id": 10613104607532,
+                            "product_id": 8370638291244,
+                            "name": "定制規格",
+                            "position": 1,
+                            "values": [
+                                "兩格",
+                                "三格",
+                                "四格"
+                            ]
+                        }
+                    ],
+                    "images": [
+                        {
+                            "id": 41890888417580,
+                            "product_id": 8370638291244,
+                            "position": 1,
+                            "created_at": "2023-06-27T09:38:23+08:00",
+                            "updated_at": "2023-06-27T09:38:34+08:00",
+                            "alt": null,
+                            "width": 3000,
+                            "height": 3000,
+                            "src": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/f8a382b47021c62f9e8ff16d1aa0c42b_cb49b271-636d-4f8e-82a3-dcd4618d7ef5.jpg?v=1687829914",
+                            "variant_ids": [
+                                45338809598252
+                            ],
+                            "admin_graphql_api_id": "gid://shopify/ProductImage/41890888417580"
+                        },
+                        {
+                            "id": 41890888384812,
+                            "product_id": 8370638291244,
+                            "position": 2,
+                            "created_at": "2023-06-27T09:38:23+08:00",
+                            "updated_at": "2023-06-27T09:38:34+08:00",
+                            "alt": null,
+                            "width": 3000,
+                            "height": 3000,
+                            "src": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/bfvmi.jpg?v=1687829914",
+                            "variant_ids": [],
+                            "admin_graphql_api_id": "gid://shopify/ProductImage/41890888384812"
+                        },
+                        {
+                            "id": 41890888515884,
+                            "product_id": 8370638291244,
+                            "position": 3,
+                            "created_at": "2023-06-27T09:38:23+08:00",
+                            "updated_at": "2023-06-27T09:38:34+08:00",
+                            "alt": null,
+                            "width": 3000,
+                            "height": 3000,
+                            "src": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/dscs.jpg?v=1687829914",
+                            "variant_ids": [],
+                            "admin_graphql_api_id": "gid://shopify/ProductImage/41890888515884"
+                        },
+                        {
+                            "id": 41890888352044,
+                            "product_id": 8370638291244,
+                            "position": 4,
+                            "created_at": "2023-06-27T09:38:22+08:00",
+                            "updated_at": "2023-06-27T09:38:34+08:00",
+                            "alt": null,
+                            "width": 3000,
+                            "height": 3000,
+                            "src": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/fdsf.jpg?v=1687829914",
+                            "variant_ids": [],
+                            "admin_graphql_api_id": "gid://shopify/ProductImage/41890888352044"
+                        },
+                        {
+                            "id": 41890888319276,
+                            "product_id": 8370638291244,
+                            "position": 5,
+                            "created_at": "2023-06-27T09:38:22+08:00",
+                            "updated_at": "2023-06-27T09:38:34+08:00",
+                            "alt": null,
+                            "width": 3000,
+                            "height": 3000,
+                            "src": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/ijijij.jpg?v=1687829914",
+                            "variant_ids": [],
+                            "admin_graphql_api_id": "gid://shopify/ProductImage/41890888319276"
+                        },
+                        {
+                            "id": 41890940453164,
+                            "product_id": 8370638291244,
+                            "position": 6,
+                            "created_at": "2023-06-27T09:48:29+08:00",
+                            "updated_at": "2023-06-27T09:48:31+08:00",
+                            "alt": null,
+                            "width": 3000,
+                            "height": 3000,
+                            "src": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/vca.jpg?v=1687830511",
+                            "variant_ids": [
+                                45338809631020
+                            ],
+                            "admin_graphql_api_id": "gid://shopify/ProductImage/41890940453164"
+                        },
+                        {
+                            "id": 41890891661612,
+                            "product_id": 8370638291244,
+                            "position": 7,
+                            "created_at": "2023-06-27T09:39:01+08:00",
+                            "updated_at": "2023-06-27T09:48:31+08:00",
+                            "alt": null,
+                            "width": 3000,
+                            "height": 3000,
+                            "src": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/fff_a06b1cdb-4730-4892-af81-d45ab020f364.jpg?v=1687830511",
+                            "variant_ids": [
+                                45338809663788
+                            ],
+                            "admin_graphql_api_id": "gid://shopify/ProductImage/41890891661612"
+                        }
+                    ],
+                    "image": {
+                        "id": 41890888417580,
+                        "product_id": 8370638291244,
+                        "position": 1,
+                        "created_at": "2023-06-27T09:38:23+08:00",
+                        "updated_at": "2023-06-27T09:38:34+08:00",
+                        "alt": null,
+                        "width": 3000,
+                        "height": 3000,
+                        "src": "https://cdn.shopify.com/s/files/1/0704/0158/9548/files/f8a382b47021c62f9e8ff16d1aa0c42b_cb49b271-636d-4f8e-82a3-dcd4618d7ef5.jpg?v=1687829914",
+                        "variant_ids": [
+                            45338809598252
+                        ],
+                        "admin_graphql_api_id": "gid://shopify/ProductImage/41890888417580"
+                    }
+                }
+            };
+            return {
+                view: () => {
+                    return `<div class="Polaris-Frame__Content_xd1mk">
     <div class="Polaris-Page_yisnh">
         <div class="Polaris-Box_375yx"
              style="--pc-box-padding-block-end-xs: var(--p-space-4); --pc-box-padding-block-end-md: var(--p-space-5); --pc-box-padding-block-start-xs: var(--p-space-4); --pc-box-padding-block-start-md: var(--p-space-5); --pc-box-padding-inline-start-xs: var(--p-space-4); --pc-box-padding-inline-start-sm: var(--p-space-0); --pc-box-padding-inline-end-xs: var(--p-space-4); --pc-box-padding-inline-end-sm: var(--p-space-0); position: relative;">
@@ -119,7 +357,7 @@
             </div>
         </div>
         <div class="">
-            <form autocomplete="off" method="post"><span
+            <div autocomplete="off" method="post"><span
                     class="Polaris-Text--root_yj4ah Polaris-Text--visuallyHidden_yrtt6"><button type="submit"
                                                                                                 aria-hidden="true"
                                                                                                 tabindex="-1">提交</button></span>
@@ -3336,7 +3574,15 @@
                     </div>
                     <span class="Polaris-Text--root_yj4ah Polaris-Text--bodySm_nvqxj Polaris-Text--visuallyHidden_yrtt6"><input
                             type="submit"></span></div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
+</div>`;
+                },
+                editor: () => {
+                    return ``;
+                }
+            };
+        },
+    };
+});
