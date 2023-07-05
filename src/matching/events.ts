@@ -49,6 +49,7 @@ ${TriggerEvent.editer(gvc, widget, widget.data, {
                     return ``
                 },
                 event: () => {
+
                   return new Promise((resolve, reject)=>{
                       const saasConfig: {
                           config: any;

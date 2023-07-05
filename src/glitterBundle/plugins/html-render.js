@@ -1,16 +1,13 @@
 import { init } from '../GVController.js';
 import { TriggerEvent } from "./trigger-event.js";
 init((gvc, glitter, gBundle) => {
-    var _a;
-    glitter.share.htmlExtension = (_a = glitter.share.htmlExtension) !== null && _a !== void 0 ? _a : {};
+    glitter.share.htmlExtension = glitter.share.htmlExtension ?? {};
     const vm = {
         loading: true
     };
     async function load() {
-        var _a;
         await (new Promise(async (resolve, reject) => {
-            var _a;
-            ((_a = gBundle.page_config.initialList) !== null && _a !== void 0 ? _a : []).map((dd) => {
+            (gBundle.page_config.initialList ?? []).map((dd) => {
                 if (dd.when === 'initial') {
                     if (dd.type === 'script') {
                         try {
@@ -31,7 +28,7 @@ init((gvc, glitter, gBundle) => {
             });
             resolve(true);
         }));
-        ((_a = gBundle.page_config.initialStyleSheet) !== null && _a !== void 0 ? _a : []).map(async (data) => {
+        (gBundle.page_config.initialStyleSheet ?? []).map(async (data) => {
             if (data.type === 'script') {
                 try {
                     gvc.addStyleLink(data);
@@ -67,8 +64,7 @@ init((gvc, glitter, gBundle) => {
                     class: glitter.htmlGenerate.styleEditor(gBundle.page_config).class(), style: `min-height: 100vh;min-width: 100vw;${glitter.htmlGenerate.styleEditor(gBundle.page_config).style()}`
                 },
                 onCreate: () => {
-                    var _a;
-                    ((_a = gBundle.page_config.initialList) !== null && _a !== void 0 ? _a : []).map((dd) => {
+                    (gBundle.page_config.initialList ?? []).map((dd) => {
                         if (dd.when === 'onCreate') {
                             try {
                                 eval(dd.src.official);
