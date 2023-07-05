@@ -243,6 +243,7 @@ export class Glitter {
         } catch (e) {
         }
     }
+
     public setDrawer(src: string, callback: () => void) {
         const gliter = this;
         this.$("#Navigation").html(src);

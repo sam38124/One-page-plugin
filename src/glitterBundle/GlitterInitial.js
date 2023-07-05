@@ -27,9 +27,10 @@ function listenElementChange(id) {
     observer.observe(targetElement, { childList: true, subtree: true });
 }
 function traverseHTML(element) {
+    var _a;
     let result = {};
     result.tag = element.tagName;
-    var attributes = element.attributes ?? [];
+    var attributes = (_a = element.attributes) !== null && _a !== void 0 ? _a : [];
     if (attributes.length > 0) {
         result.attributes = {};
         for (var i = 0; i < attributes.length; i++) {

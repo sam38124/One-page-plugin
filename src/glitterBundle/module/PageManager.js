@@ -115,7 +115,7 @@ export class PageManager {
                 },
                 createResource: () => {
                 },
-                backGroundColor: option.backGroundColor ?? 'transparent',
+                backGroundColor: option.backGroundColor ?? 'white',
                 type: GVCType.Page,
                 animation: option.animation ?? glitter.animation.none
             });
@@ -246,7 +246,7 @@ background: ${config.backGroundColor};display: none;z-index: 9999;overflow: hidd
                 },
                 createResource: () => {
                 },
-                backGroundColor: option.backGroundColor ?? 'transparent',
+                backGroundColor: option.backGroundColor ?? 'white',
                 type: GVCType.Page,
                 animation: option.animation ?? glitter.defaultSetting.pageAnimation
             });

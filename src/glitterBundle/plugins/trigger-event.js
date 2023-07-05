@@ -122,6 +122,7 @@ export class TriggerEvent {
                         const gvc = oj.gvc;
                         const subData = oj.subData;
                         const widget = oj.widget;
+                        let passCommand = false;
                         setTimeout(() => {
                             resolve(true);
                         }, 4000);
@@ -130,7 +131,19 @@ export class TriggerEvent {
                         if (event.dataPlace) {
                             eval(event.dataPlace);
                         }
-                        resolve(true);
+                        if (event.blockCommand) {
+                            try {
+                                passCommand = eval(event.blockCommand);
+                            }
+                            catch (e) {
+                            }
+                        }
+                        if (passCommand) {
+                            resolve("blockCommand");
+                        }
+                        else {
+                            resolve(true);
+                        }
                     }
                     catch (e) {
                         returnData = event.errorCode ?? "";
@@ -168,24 +181,31 @@ export class TriggerEvent {
         return new Promise(async (resolve, reject) => {
             let result = true;
             for (const a of arrayEvent) {
+                let blockCommand = false;
                 result = await new Promise((resolve, reject) => {
                     let fal = 10;
                     function check() {
                         run(a).then((res) => {
-                            if (res || (fal === 0)) {
-                                resolve(res);
+                            if (res === 'blockCommand') {
+                                blockCommand = true;
+                                resolve(true);
                             }
                             else {
-                                setTimeout(() => {
-                                    fal -= 1;
-                                    check();
-                                }, 100);
+                                if (res || (fal === 0)) {
+                                    resolve(res);
+                                }
+                                else {
+                                    setTimeout(() => {
+                                        fal -= 1;
+                                        check();
+                                    }, 100);
+                                }
                             }
                         });
                     }
                     check();
                 });
-                if (!result) {
+                if (!result || blockCommand) {
                     break;
                 }
             }
@@ -339,6 +359,7 @@ ${Editor.arrayItem({
 ${(() => {
                                                             obj.dataPlaceExpand = obj.dataPlaceExpand ?? {};
                                                             obj.errorPlaceExpand = obj.errorPlaceExpand ?? {};
+                                                            obj.blockExpand = obj.blockExpand ?? {};
                                                             return `<div class="mt-2 border-white rounded" style="border-width:3px;">
 ${Editor.toggleExpand({
                                                                 gvc: gvc,
@@ -384,7 +405,31 @@ ${Editor.toggleExpand({
                                                                 },
                                                                 class: ` `,
                                                                 style: `background:#65379B;border:2px solid white;`,
-                                                            })}</div>`;
+                                                            })}</div>` + `<div class="mt-2 border-white rounded" style="border-width:3px;">
+${Editor.toggleExpand({
+                                                                gvc: gvc,
+                                                                title: "<span class='text-black' style=''>中斷指令</span>",
+                                                                data: obj.blockExpand,
+                                                                innerText: () => {
+                                                                    return glitter.htmlGenerate.editeText({
+                                                                        gvc: gvc,
+                                                                        title: "",
+                                                                        default: obj.blockCommand ?? "",
+                                                                        placeHolder: `返回true則中斷指令不往下繼續執行:
+範例:
+ (()=>{
+  return gvc.getBundle()['identify']==='';
+     })()`,
+                                                                        callback: (text) => {
+                                                                            obj.blockCommand = text;
+                                                                            widget.refreshComponent();
+                                                                        }
+                                                                    });
+                                                                },
+                                                                class: ` `,
+                                                                style: `background:#65379B;border:2px solid white;`,
+                                                            })}
+</div>`;
                                                         })()}
 
 `;
