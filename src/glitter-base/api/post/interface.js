@@ -146,16 +146,24 @@ TriggerEvent.create(import.meta.url, {
                                         gvc.notifyDataChange(id);
                                     }
                                 }),
-                                glitter.htmlGenerate.editeText({
-                                    gvc: gvc,
-                                    title: 'Value',
-                                    default: data.value ?? "",
-                                    placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
-                                    callback: (text) => {
-                                        data.value = text;
-                                        gvc.notifyDataChange(id);
+                                (() => {
+                                    if (data.type === 'in') {
+                                        return ``;
                                     }
-                                }),
+                                    else {
+                                        return glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: 'Value',
+                                            default: data.value ?? "",
+                                            placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                            callback: (text) => {
+                                                data.value = text;
+                                                gvc.notifyDataChange(id);
+                                            }
+                                        });
+                                    }
+                                })(),
+                                ,
                                 Editor.select({
                                     gvc: gvc,
                                     title: '資料類型',
@@ -181,7 +189,8 @@ TriggerEvent.create(import.meta.url, {
                                         { title: "<=", value: "<=" },
                                         { title: ">=", value: ">=" },
                                         { title: "!=", value: "!=" },
-                                        { title: "like", value: "" }
+                                        { title: "like", value: "" },
+                                        { title: "in", value: "in" },
                                     ],
                                     callback: (text) => {
                                         data.type = text;
@@ -192,6 +201,59 @@ TriggerEvent.create(import.meta.url, {
                                     if (data.type === 'relative_post') {
                                         data.query = data.query ?? [];
                                         return getArrayItem(data);
+                                    }
+                                    else if (data.type === 'in') {
+                                        data.query = data.query ?? [];
+                                        data.inExpand = data.inExpand ?? {};
+                                        return gvc.bindView(() => {
+                                            const id = glitter.getUUID();
+                                            return {
+                                                bind: id,
+                                                view: () => {
+                                                    return Editor.arrayItem({
+                                                        gvc: gvc,
+                                                        title: '包含內容',
+                                                        array: data.query.map((dd, index) => {
+                                                            return {
+                                                                title: dd.value ?? `項次:${index + 1}`,
+                                                                expand: dd,
+                                                                minus: gvc.event(() => {
+                                                                    data.query.splice(index, 1);
+                                                                    gvc.notifyDataChange(id);
+                                                                }),
+                                                                innerHtml: () => {
+                                                                    return gvc.map([
+                                                                        glitter.htmlGenerate.editeText({
+                                                                            gvc: gvc,
+                                                                            title: "value",
+                                                                            default: dd.value ?? "",
+                                                                            placeHolder: "",
+                                                                            callback: (text) => {
+                                                                                dd.value = text;
+                                                                                gvc.notifyDataChange(id);
+                                                                            }
+                                                                        })
+                                                                    ]);
+                                                                }
+                                                            };
+                                                        }),
+                                                        originalArray: data.query,
+                                                        expand: data.inExpand,
+                                                        plus: {
+                                                            title: "新增項目",
+                                                            event: gvc.event(() => {
+                                                                data.query.push({});
+                                                                gvc.notifyDataChange(id);
+                                                            })
+                                                        },
+                                                        refreshComponent: () => {
+                                                            gvc.notifyDataChange(id);
+                                                        }
+                                                    });
+                                                },
+                                                divCreate: {}
+                                            };
+                                        });
                                     }
                                     else {
                                         return ``;
@@ -320,6 +382,11 @@ TriggerEvent.create(import.meta.url, {
                         }
                         if (dd.dataType === 'number') {
                             value = parseInt(value, 10);
+                            if (dd.type === 'in') {
+                                dd.query.map((dd) => {
+                                    dd.value = parseInt(dd.value, 10);
+                                });
+                            }
                         }
                         return { key: key, value: value, type: dd.type, query: dd.query };
                     }

@@ -115,14 +115,14 @@ TriggerEvent.create(import.meta.url, {
                 query: { key: string, value: any, type: string, query?: any }[],
                 page: number,
                 limit: number,
-                selectOnly:any,
+                selectOnly: any,
                 count: number,
                 datasource: string[]
             } = {
                 data: [],
                 query: [],
                 page: 0,
-                selectOnly:[],
+                selectOnly: [],
                 limit: 50,
                 count: 0,
                 datasource: []
@@ -137,76 +137,137 @@ TriggerEvent.create(import.meta.url, {
             }`
             object.search = object.search ?? "s"
             const id = glitter.getUUID()
-            function getArrayItem(data2:any){
-                data2.query=data2.query??[]
-                data2.queryExpand=data2.queryExpand??{}
-                data2.selectOnly=data2.selectOnly??[]
-                return  Editor.arrayItem({
-                    originalArray:data2.query,
+
+            function getArrayItem(data2: any) {
+                data2.query = data2.query ?? []
+                data2.queryExpand = data2.queryExpand ?? {}
+                data2.selectOnly = data2.selectOnly ?? []
+                return Editor.arrayItem({
+                    originalArray: data2.query,
                     gvc: gvc,
                     title: '搜索條件',
                     array: data2.query.map((data: any, index: number) => {
                         return {
-                            title: data.key ?? `項目:${index+1}`,
+                            title: data.key ?? `項目:${index + 1}`,
                             expand: data,
-                            innerHtml:gvc.map([
+                            innerHtml: gvc.map([
                                 glitter.htmlGenerate.editeText({
-                                    gvc : gvc,
-                                    title : 'Key',
-                                    default : data.key  ?? "",
-                                    placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
-                                    callback:(text:string)=>{
+                                    gvc: gvc,
+                                    title: 'Key',
+                                    default: data.key ?? "",
+                                    placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                    callback: (text: string) => {
                                         data.key = text;
                                         gvc.notifyDataChange(id);
                                     }
                                 }),
-                                glitter.htmlGenerate.editeText({
-                                    gvc : gvc,
-                                    title : 'Value',
-                                    default : data.value  ?? "",
-                                    placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
-                                    callback:(text:string)=>{
-                                        data.value= text;
-                                        gvc.notifyDataChange(id);
-                                    }
-                                }),
-                                Editor.select({
-                                    gvc : gvc,
-                                    title : '資料類型',
-                                    def : data.dataType  ?? "text",
-                                    array:[
-                                        {title:"文字",value:"text"},
-                                        {title:"數字",value:"number"}
-                                    ],
-                                    callback:(text)=>{
-                                        data.dataType= text;
-                                        gvc.notifyDataChange(id);
-                                    }
-                                }),
-                                Editor.select({
-                                    gvc : gvc,
-                                    title : '比較值',
-                                    def : data.type  ?? "",
-                                    array:[
-                                        {title:"內容關聯",value:"relative_post"},
-                                        {title:">",value:">"},
-                                        {title:"=",value:"="},
-                                        {title:"<",value:"<"},
-                                        {title:"<=",value:"<="},
-                                        {title:">=",value:">="},
-                                        {title:"!=",value:"!="},
-                                        {title:"like",value:""}
-                                    ],
-                                    callback:(text)=>{
-                                        data.type= text;
-                                        gvc.notifyDataChange(id);
-                                    }
-                                }),
                                 (()=>{
-                                    if(data.type==='relative_post'){
-                                        data.query=data.query??[]
-                                        return getArrayItem(data)
+                                    if(data.type==='in'){
+                                        return ``
                                     }else{
+                                        return glitter.htmlGenerate.editeText({
+                                            gvc: gvc,
+                                            title: 'Value',
+                                            default: data.value ?? "",
+                                            placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                            callback: (text: string) => {
+                                                data.value = text;
+                                                gvc.notifyDataChange(id);
+                                            }
+                                        })
+                                    }
+                                })(),
+                                ,
+                                Editor.select({
+                                    gvc: gvc,
+                                    title: '資料類型',
+                                    def: data.dataType ?? "text",
+                                    array: [
+                                        {title: "文字", value: "text"},
+                                        {title: "數字", value: "number"}
+                                    ],
+                                    callback: (text) => {
+                                        data.dataType = text;
+                                        gvc.notifyDataChange(id);
+                                    }
+                                }),
+                                Editor.select({
+                                    gvc: gvc,
+                                    title: '比較值',
+                                    def: data.type ?? "",
+                                    array: [
+                                        {title: "內容關聯", value: "relative_post"},
+                                        {title: ">", value: ">"},
+                                        {title: "=", value: "="},
+                                        {title: "<", value: "<"},
+                                        {title: "<=", value: "<="},
+                                        {title: ">=", value: ">="},
+                                        {title: "!=", value: "!="},
+                                        {title: "like", value: ""},
+                                        {title: "in", value: "in"},
+                                    ],
+                                    callback: (text) => {
+                                        data.type = text;
+                                        gvc.notifyDataChange(id);
+                                    }
+                                }),
+                                (() => {
+                                    if (data.type === 'relative_post') {
+                                        data.query = data.query ?? []
+                                        return getArrayItem(data)
+                                    } else if (data.type === 'in') {
+                                        data.query = data.query ?? []
+                                        data.inExpand=data.inExpand??{}
+                                        return gvc.bindView(()=>{
+                                            const id=glitter.getUUID()
+                                            return {
+                                                bind:id,
+                                                view:()=>{
+                                                    return Editor.arrayItem({
+                                                        gvc: gvc,
+                                                        title: '包含內容',
+                                                        array: data.query.map((dd: any, index: number) => {
+                                                            return {
+                                                                title: dd.value ?? `項次:${index+1}`,
+                                                                expand: dd,
+                                                                minus: gvc.event(() => {
+                                                                    data.query.splice(index, 1)
+                                                                    gvc.notifyDataChange(id)
+                                                                }),
+                                                                innerHtml: () => {
+                                                                    return gvc.map([
+                                                                        glitter.htmlGenerate.editeText({
+                                                                            gvc: gvc,
+                                                                            title: "value",
+                                                                            default: dd.value ?? "",
+                                                                            placeHolder: "",
+                                                                            callback: (text: string) => {
+                                                                                dd.value=text
+                                                                                gvc.notifyDataChange(id)
+                                                                            }
+                                                                        })
+                                                                    ])
+                                                                }
+                                                            }
+                                                        }),
+                                                        originalArray: data.query,
+                                                        expand:data.inExpand,
+                                                        plus:{
+                                                            title:"新增項目",
+                                                            event:gvc.event(()=>{
+                                                                data.query.push({})
+                                                                gvc.notifyDataChange(id)
+                                                            })
+                                                        },
+                                                        refreshComponent:()=>{
+                                                           gvc.notifyDataChange(id)
+                                                        }
+                                                    })
+                                                },
+                                                divCreate:{}
+                                            }
+                                        })
+                                    } else {
                                         return ``
                                     }
                                 })()
@@ -222,61 +283,60 @@ TriggerEvent.create(import.meta.url, {
                     plus: {
                         title: '添加區塊',
                         event: gvc.event(() => {
-                            data2.query.push({
-
-                            });
+                            data2.query.push({});
                             gvc.notifyDataChange(id);
                         }),
                     },
-                    refreshComponent:()=>{
+                    refreshComponent: () => {
                         gvc.notifyDataChange(id);
                     }
                 })
             }
-            function getSearchItem(data2:any){
-                data2.selectOnly=data2.selectOnly??[]
-                data2.searchExpand=data2.searchExpand??{}
-                return  Editor.arrayItem({
-                    originalArray:data2.selectOnly,
+
+            function getSearchItem(data2: any) {
+                data2.selectOnly = data2.selectOnly ?? []
+                data2.searchExpand = data2.searchExpand ?? {}
+                return Editor.arrayItem({
+                    originalArray: data2.selectOnly,
                     gvc: gvc,
                     title: '查詢項目',
                     array: data2.selectOnly.map((data: any, index: number) => {
                         return {
-                            title: data.key ?? `項目:${index+1}`,
+                            title: data.key ?? `項目:${index + 1}`,
                             expand: data,
-                            innerHtml:gvc.map([
+                            innerHtml: gvc.map([
                                 Editor.select({
-                                    gvc : gvc,
-                                    title : '類型',
-                                    def :  data.type ?? "enum",
-                                    array:[
-                                        {title:"列舉欄位名稱",value:"enum"},
-                                        {title:"數量",value:"count"},
-                                        {title:"加總",value:"SUM"},
-                                        {title:"平均值",value:"AVG"},
+                                    gvc: gvc,
+                                    title: '類型',
+                                    def: data.type ?? "enum",
+                                    array: [
+                                        {title: "列舉欄位名稱", value: "enum"},
+                                        {title: "數量", value: "count"},
+                                        {title: "加總", value: "SUM"},
+                                        {title: "平均值", value: "AVG"},
                                     ],
-                                    callback:(text)=>{
-                                        data.type= text;
+                                    callback: (text) => {
+                                        data.type = text;
                                         gvc.notifyDataChange(id);
                                     }
                                 }),
-                                (data.type==='count') ? ``:glitter.htmlGenerate.editeText({
-                                    gvc : gvc,
-                                    title : '搜索索引',
-                                    default : data.key  ?? "",
-                                    placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
-                                    callback:(text:string)=>{
+                                (data.type === 'count') ? `` : glitter.htmlGenerate.editeText({
+                                    gvc: gvc,
+                                    title: '搜索索引',
+                                    default: data.key ?? "",
+                                    placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                    callback: (text: string) => {
                                         data.key = text;
                                         gvc.notifyDataChange(id);
                                     }
                                 }),
-                                (data.type==='count') ? ``: glitter.htmlGenerate.editeText({
-                                    gvc : gvc,
-                                    title : '搜索名稱',
-                                    default : data.value  ?? "",
-                                    placeHolder : `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
-                                    callback:(text:string)=>{
-                                        data.value= text;
+                                (data.type === 'count') ? `` : glitter.htmlGenerate.editeText({
+                                    gvc: gvc,
+                                    title: '搜索名稱',
+                                    default: data.value ?? "",
+                                    placeHolder: `直接輸入參數，或者輸入程式碼Return內容進行返回．`,
+                                    callback: (text: string) => {
+                                        data.value = text;
                                         gvc.notifyDataChange(id);
                                     }
                                 })
@@ -292,17 +352,16 @@ TriggerEvent.create(import.meta.url, {
                     plus: {
                         title: '添加區塊',
                         event: gvc.event(() => {
-                            data2.selectOnly.push({
-
-                            });
+                            data2.selectOnly.push({});
                             gvc.notifyDataChange(id);
                         }),
                     },
-                    refreshComponent:()=>{
+                    refreshComponent: () => {
                         gvc.notifyDataChange(id);
                     }
                 })
             }
+
             return {
                 editor: () => {
                     return gvc.bindView(() => {
@@ -319,42 +378,49 @@ TriggerEvent.create(import.meta.url, {
                     })
                 },
                 event: () => {
-                    function getQuery(dd:any){
-                        if(dd.query){
-                            dd.query=dd.query.map((d2:any)=>{
+                    function getQuery(dd: any) {
+                        if (dd.query) {
+                            dd.query = dd.query.map((d2: any) => {
                                 return getQuery(d2)
                             })
                         }
-                        let key=dd.key
-                        let value=dd.value
+                        let key = dd.key
+                        let value = dd.value
                         try {
-                            key=eval(dd.key)
-                        }catch (e){
+                            key = eval(dd.key)
+                        } catch (e) {
 
                         }
 
                         try {
-                            value=eval(dd.value)
-                        }catch (e){
+                            value = eval(dd.value)
+                        } catch (e) {
 
                         }
-                        if(dd.dataType==='number'){
-                            value=parseInt(value,10)
+                        if (dd.dataType === 'number') {
+                            value = parseInt(value, 10)
+                            if(dd.type==='in'){
+                                dd.query.map((dd:any)=>{
+                                    dd.value=parseInt(dd.value, 10)
+                                })
+                            }
                         }
 
-                        return {key: key, value: value, type: dd.type,query:dd.query}
+
+                        return {key: key, value: value, type: dd.type, query: dd.query}
                     }
-                    JSON.parse(JSON.stringify(object.query)).map((dd:any)=>{
-                        const q=getQuery(dd)
-                        if(q.key!==undefined&&q.key!==''){
+
+                    JSON.parse(JSON.stringify(object.query)).map((dd: any) => {
+                        const q = getQuery(dd)
+                        if (q.key !== undefined && q.key !== '') {
                             vm.query.push(getQuery(dd))
                         }
 
                     })
-                    object.selectOnly=object.selectOnly??[]
-                    JSON.parse(JSON.stringify(object.selectOnly)).map((dd:any)=>{
-                        const q=getQuery(dd)
-                        if(q.type==='count' || (q.key!==undefined&&(q.key!==''))){
+                    object.selectOnly = object.selectOnly ?? []
+                    JSON.parse(JSON.stringify(object.selectOnly)).map((dd: any) => {
+                        const q = getQuery(dd)
+                        if (q.type === 'count' || (q.key !== undefined && (q.key !== ''))) {
                             vm.selectOnly.push(q)
                         }
                     })
@@ -364,7 +430,7 @@ TriggerEvent.create(import.meta.url, {
                             page: vm.page,
                             limit: vm.limit,
                             query: vm.query,
-                            selectOnly:vm.selectOnly,
+                            selectOnly: vm.selectOnly,
                             datasource: vm.datasource,
                             callback: (response: any) => {
                                 vm.data = response.data
@@ -397,7 +463,7 @@ TriggerEvent.create(import.meta.url, {
                     ])
                 },
                 event: () => {
-                    return new Promise((resolve, reject)=>{
+                    return new Promise((resolve, reject) => {
                         const dialog = new ShareDialog(gvc.glitter)
                         dialog.dataLoading({visible: true})
                         ApiPost.put({

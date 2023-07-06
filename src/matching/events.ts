@@ -62,7 +62,7 @@ ${TriggerEvent.editer(gvc, widget, widget.data, {
                                   dd.child.map((d2:any)=>{
                                       d2.bigItemId=dd.id
                                       d2.bidTitle=dd.title
-                                      d2.formList=(d2.formList ?? []).concat([
+                                      d2.formList=[
                                           {
                                               "col": "12",
                                               "key": "budget",
@@ -157,7 +157,7 @@ ${TriggerEvent.editer(gvc, widget, widget.data, {
                                               },
                                               "requirement": "true"
                                           }
-                                      ])
+                                      ].concat((d2.formList ?? []))
                                       gvc.glitter.share.service.push(d2)
                                   })
                               })
