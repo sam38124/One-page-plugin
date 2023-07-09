@@ -29,7 +29,7 @@ export class GlobalData {
 }
 TriggerEvent.create(import.meta.url, {
     link: {
-        title: '官方事件-觸發-頁面跳轉',
+        title: '官方事件-畫面-頁面跳轉',
         fun: (gvc, widget, object) => {
             return {
                 editor: () => {
@@ -197,16 +197,7 @@ ${Editor.h3("選擇頁面")}
                         return true;
                     }
                     else {
-                        gvc.glitter.runJsInterFace('openWeb', {
-                            url: object.link,
-                        }, (data) => {
-                            return true;
-                        }, {
-                            webFunction(data, callback) {
-                                gvc.glitter.location.href = object.link;
-                                return true;
-                            },
-                        });
+                        gvc.glitter.location.href = object.link;
                         return true;
                     }
                 },
@@ -214,7 +205,7 @@ ${Editor.h3("選擇頁面")}
         },
     },
     dialog: {
-        title: '官方事件-觸發-彈跳視窗',
+        title: '官方事件-畫面-彈跳視窗',
         fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
@@ -281,57 +272,8 @@ ${Editor.h3("選擇頁面")}
             };
         }
     },
-    test: {
-        title: '官方事件-觸發-點擊測試',
-        fun: (gvc, widget, object) => {
-            return {
-                editor: () => {
-                    return ``;
-                },
-                event: () => {
-                    alert('test');
-                },
-            };
-        },
-    },
-    code: {
-        title: '官方事件-觸發-代碼區塊',
-        fun: (gvc, widget, object, subData, element) => {
-            return {
-                editor: () => {
-                    return gvc.glitter.htmlGenerate.editeText({
-                        gvc: gvc,
-                        title: "代碼區塊",
-                        default: object.code ?? "",
-                        placeHolder: "請輸入代碼區塊",
-                        callback: (text) => {
-                            object.code = text;
-                        }
-                    });
-                },
-                event: () => {
-                    return new Promise(async (resolve, reject) => {
-                        try {
-                            const a = (eval(object.code));
-                            if (a.then) {
-                                a.then((data) => {
-                                    resolve(data);
-                                });
-                            }
-                            else {
-                                resolve(a);
-                            }
-                        }
-                        catch (e) {
-                            resolve(object.errorCode ?? false);
-                        }
-                    });
-                },
-            };
-        },
-    },
     drawer: {
-        title: '官方事件-觸發-打開抽屜',
+        title: '官方事件-畫面-左側導覽列',
         fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
@@ -428,17 +370,79 @@ style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
             };
         },
     },
-    addImage: {
-        title: `添加圖片`,
-        fun: (gvc, widget, obj, subData, element) => {
+    code: {
+        title: '官方事件-觸發-代碼區塊',
+        fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
-                    return ``;
+                    return gvc.glitter.htmlGenerate.editeText({
+                        gvc: gvc,
+                        title: "代碼區塊",
+                        default: object.code ?? "",
+                        placeHolder: "請輸入代碼區塊",
+                        callback: (text) => {
+                            object.code = text;
+                        }
+                    });
                 },
                 event: () => {
-                    gvc.glitter.openDiaLog(new URL(`./dialog/image-preview.ts`, import.meta.url).href, "", {});
-                }
+                    return new Promise(async (resolve, reject) => {
+                        try {
+                            const a = (eval(object.code));
+                            if (a.then) {
+                                a.then((data) => {
+                                    resolve(data);
+                                });
+                            }
+                            else {
+                                resolve(a);
+                            }
+                        }
+                        catch (e) {
+                            resolve(object.errorCode ?? false);
+                        }
+                    });
+                },
             };
-        }
-    }
+        },
+    },
+    registerNotify: {
+        title: '官方事件-推播-註冊推播頻道',
+        fun: (gvc, widget, object, subData, element) => {
+            object.getEvent = object.getEvent ?? {};
+            return {
+                editor: () => {
+                    return TriggerEvent.editer(gvc, widget, object.getEvent, {
+                        option: [],
+                        title: "取得推播頻道",
+                        hover: false
+                    });
+                },
+                event: () => {
+                    return new Promise(async (resolve, reject) => {
+                        try {
+                            const topic = await TriggerEvent.trigger({
+                                gvc, widget, clickEvent: object.getEvent, subData: subData, element
+                            });
+                            if (typeof topic == "string") {
+                                gvc.glitter.runJsInterFace("regNotification", {
+                                    topic: topic
+                                }, (response) => { });
+                            }
+                            else {
+                                topic.map((dd) => {
+                                    gvc.glitter.runJsInterFace("regNotification", {
+                                        topic: dd
+                                    }, (response) => { });
+                                });
+                            }
+                        }
+                        catch (e) {
+                            resolve(object.errorCode ?? false);
+                        }
+                    });
+                },
+            };
+        },
+    },
 });
