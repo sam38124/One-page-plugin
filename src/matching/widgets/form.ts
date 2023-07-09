@@ -136,6 +136,7 @@ export const form = Plugin.createComponent(import.meta.url, (glitter: Glitter, e
                                     }
                                     if (data.type !== 'arrayItem') {
                                         formData[data.key] = (formData[data.key] == undefined) ? ((() => {
+
                                             try {
                                                 return eval(data.def)
                                             } catch (e) {

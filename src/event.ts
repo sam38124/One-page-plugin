@@ -466,7 +466,7 @@ style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
                                 (topic as any).map((dd: any) => {
                                     gvc.glitter.runJsInterFace("regNotification", {
                                         topic: dd
-                                    }, (response) => {
+                                    },  (response) => {
                                     })
                                 })
                             }

@@ -14,7 +14,12 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         const id = glitter.getUUID();
                         let selectBidItem = glitter.getUrlParameter('selectBidItem');
                         let selectChild = glitter.getUrlParameter('selectChildItem');
-                        const formData = {};
+                        const formData = {
+                            contact_phone: gvc.glitter.share.public_api.GlobalUser.userInfo.userData.phone,
+                            serviceAddress: gvc.glitter.share.public_api.GlobalUser.updateUserData.userData.address,
+                            line_id: gvc.glitter.share.public_api.GlobalUser.updateUserData.userData.line,
+                            contact_email: glitter.share.public_api.GlobalUser.userInfo.account
+                        };
                         let formModel = undefined;
                         const saasConfig = window.saasConfig;
                         saasConfig.api.getPage(saasConfig.config.appName, "select_widget").then((data) => {

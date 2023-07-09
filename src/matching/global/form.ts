@@ -49,6 +49,14 @@ export function getPostForm(formList:any){
             "formExpand": {"expand": true}
         }, {
             "col": "12",
+            "key": "contact_email",
+            "colm": "12",
+            "type": "email",
+            "requirement": "true",
+            "label": "聯絡信箱",
+            "formExpand": {"expand": true}
+        },{
+            "col": "12",
             "key": "contact_phone",
             "colm": "12",
             "type": "phone",
