@@ -441,7 +441,7 @@ style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
     registerNotify: {
         title: '官方事件-推播-註冊推播頻道',
         fun: (gvc, widget, object, subData, element) => {
-            object.getEvent=object.getEvent??{}
+            object.getEvent = object.getEvent ?? {}
             return {
                 editor: () => {
                     //gvc.glitter.share.public_api.GlobalUser.updateUserData.userData.service
@@ -454,21 +454,23 @@ style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
                 event: () => {
                     return new Promise<any>(async (resolve, reject) => {
                         try {
-                            const topic=await TriggerEvent.trigger({
+                            const topic = await TriggerEvent.trigger({
                                 gvc, widget, clickEvent: object.getEvent, subData: subData, element
                             });
-                            if(typeof topic=="string"){
+                            if (typeof topic == "string") {
                                 gvc.glitter.runJsInterFace("regNotification", {
-                                    topic:topic
-                                }, (response) => {})
-                            }else{
-                                (topic as any).map((dd:any)=>{
+                                    topic: topic
+                                }, (response) => {
+                                })
+                            } else {
+                                (topic as any).map((dd: any) => {
                                     gvc.glitter.runJsInterFace("regNotification", {
-                                        topic:dd
-                                    }, (response) => {})
+                                        topic: dd
+                                    }, (response) => {
+                                    })
                                 })
                             }
-
+                            resolve(true)
                         } catch (e) {
                             resolve(object.errorCode ?? false)
                         }

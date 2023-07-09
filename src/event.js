@@ -427,15 +427,18 @@ style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
                             if (typeof topic == "string") {
                                 gvc.glitter.runJsInterFace("regNotification", {
                                     topic: topic
-                                }, (response) => { });
+                                }, (response) => {
+                                });
                             }
                             else {
                                 topic.map((dd) => {
                                     gvc.glitter.runJsInterFace("regNotification", {
                                         topic: dd
-                                    }, (response) => { });
+                                    }, (response) => {
+                                    });
                                 });
                             }
+                            resolve(true);
                         }
                         catch (e) {
                             resolve(object.errorCode ?? false);
