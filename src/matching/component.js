@@ -31,5 +31,11 @@ Plugin.create(import.meta.url, (glitter, editMode) => {
             defaultData: {},
             render: Plugin.setComponent(import.meta.url, new URL('./widgets/post_form.js', import.meta.url)),
         },
+        select_service: {
+            title: '服務項目',
+            subContent: '選擇服務項目．',
+            defaultData: {},
+            render: Plugin.setComponent(import.meta.url, new URL('./widgets/select_service.js', import.meta.url)),
+        },
     };
 });

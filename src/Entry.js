@@ -1,6 +1,7 @@
 'use strict';
 export class Entry {
     static onCreate(glitter) {
+        glitter.share.topInset;
         const a = {
             data: [],
             query: [{

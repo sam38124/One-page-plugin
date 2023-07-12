@@ -35,7 +35,7 @@ export class GlobalData {
 
 TriggerEvent.create(import.meta.url, {
     link: {
-        title: '官方事件-觸發-頁面跳轉',
+        title: '官方事件-畫面-頁面跳轉',
         fun: (gvc, widget, object) => {
             return {
                 editor: () => {
@@ -205,29 +205,14 @@ ${Editor.h3("選擇頁面")}
                         })
                         // location.href=
                     } else if (object.link_change_type === 'hashTag') {
+
                         const yOffset = $("header").length > 0 ? -($("header") as any).height() : 0;
                         const element: any = document.getElementsByClassName(`glitterTag${object.link}`)[0];
                         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
                         window.scrollTo({top: y, behavior: "smooth"});
                         return true
                     } else {
-
-                        gvc.glitter.runJsInterFace(
-                            'openWeb',
-                            {
-                                url: object.link,
-                            },
-                            (data) => {
-                                return true
-                            },
-                            {
-                                webFunction(data: any, callback: (data: any) => void): any {
-                                    // gvc.glitter.openNewTab(object.link);
-                                    gvc.glitter.location.href = object.link
-                                    return true
-                                },
-                            }
-                        );
+                        gvc.glitter.location.href = object.link
                         return true
                     }
                 },
@@ -235,7 +220,7 @@ ${Editor.h3("選擇頁面")}
         },
     },
     dialog: {
-        title: '官方事件-觸發-彈跳視窗',
+        title: '官方事件-畫面-彈跳視窗',
         fun: (gvc, widget, object, subData, element) => {
             return {
                 editor: () => {
@@ -311,58 +296,8 @@ ${Editor.h3("選擇頁面")}
             }
         }
     },
-    test: {
-        title: '官方事件-觸發-點擊測試',
-        fun: (gvc, widget, object) => {
-            return {
-                editor: () => {
-                    return ``;
-                },
-                event: () => {
-                    alert('test');
-                },
-            };
-        },
-    },
-    code: {
-        title: '官方事件-觸發-代碼區塊',
-        fun: (gvc, widget, object, subData, element) => {
-
-            return {
-                editor: () => {
-                    return gvc.glitter.htmlGenerate.editeText({
-                        gvc: gvc,
-                        title: "代碼區塊",
-                        default: object.code ?? "",
-                        placeHolder: "請輸入代碼區塊",
-                        callback: (text) => {
-                            object.code = text
-                        }
-                    });
-                },
-                event: () => {
-
-                    return new Promise<any>(async (resolve, reject) => {
-                        try {
-                            const a = (eval(object.code))
-                            if (a.then) {
-                                a.then((data: any) => {
-                                    resolve(data)
-                                })
-                            } else {
-                                resolve(a)
-                            }
-                        } catch (e) {
-                            resolve(object.errorCode ?? false)
-                        }
-
-                    })
-                },
-            };
-        },
-    },
     drawer: {
-        title: '官方事件-觸發-打開抽屜',
+        title: '官方事件-畫面-左側導覽列',
         fun: (gvc, widget, object, subData, element) => {
 
             return {
@@ -466,19 +401,99 @@ style="${gvc.glitter.htmlGenerate.styleEditor(object, gvc).style()}"
             };
         },
     },
-    addImage: {
-        title: `添加圖片`,
-        fun: (gvc, widget, obj, subData, element) => {
+    code: {
+        title: '官方事件-觸發-代碼區塊',
+        fun: (gvc, widget, object, subData, element) => {
+
             return {
                 editor: () => {
-                    return ``
+                    return gvc.glitter.htmlGenerate.editeText({
+                        gvc: gvc,
+                        title: "代碼區塊",
+                        default: object.code ?? "",
+                        placeHolder: "請輸入代碼區塊",
+                        callback: (text) => {
+                            object.code = text
+                        }
+                    });
                 },
                 event: () => {
-                    gvc.glitter.openDiaLog(new URL(`./dialog/image-preview.ts`, import.meta.url).href, "", {})
-                }
-            }
-        }
-    }
+
+                    return new Promise<any>(async (resolve, reject) => {
+                        try {
+                            const a = (eval(object.code))
+                            if (a.then) {
+                                a.then((data: any) => {
+                                    resolve(data)
+                                })
+                            } else {
+                                resolve(a)
+                            }
+                        } catch (e) {
+                            resolve(object.errorCode ?? false)
+                        }
+
+                    })
+                },
+            };
+        },
+    },
+    registerNotify: {
+        title: '官方事件-推播-註冊推播頻道',
+        fun: (gvc, widget, object, subData, element) => {
+            object.getEvent = object.getEvent ?? {}
+            return {
+                editor: () => {
+                    //gvc.glitter.share.public_api.GlobalUser.updateUserData.userData.service
+                    return TriggerEvent.editer(gvc, widget, object.getEvent, {
+                        option: [],
+                        title: "取得推播頻道",
+                        hover: false
+                    });
+                },
+                event: () => {
+                    return new Promise<any>(async (resolve, reject) => {
+                        try {
+                            const topic = await TriggerEvent.trigger({
+                                gvc, widget, clickEvent: object.getEvent, subData: subData, element
+                            });
+                            if (typeof topic == "string") {
+                                gvc.glitter.runJsInterFace("regNotification", {
+                                    topic: topic
+                                }, (response) => {
+                                })
+                            } else {
+                                (topic as any).map((dd: any) => {
+                                    gvc.glitter.runJsInterFace("regNotification", {
+                                        topic: dd
+                                    },  (response) => {
+                                    })
+                                })
+                            }
+                            resolve(true)
+                        } catch (e) {
+                            resolve(object.errorCode ?? false)
+                        }
+
+                    })
+                },
+            };
+        },
+    },
+    // addImage: {
+    //     title: `添加圖片`,
+    //     fun: (gvc, widget, obj, subData, element) => {
+    //         return {
+    //             editor: () => {
+    //                 return ``
+    //             },
+    //             event: () => {
+    //
+    //                 gvc.glitter.openDiaLog(new URL(`./dialog/image-preview.ts`, import.meta.url).href, "", {})
+    //             }
+    //         }
+    //     }
+    // }
 });
 
 

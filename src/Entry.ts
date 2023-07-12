@@ -4,7 +4,7 @@ import {Glitter} from './glitterBundle/Glitter.js';
 export class Entry {
     public static onCreate(glitter: Glitter) {
         // alert(JSON.stringify(subData.userData.fullName));
-
+glitter.share.topInset
         const a = {
             data: [],
             query: [{

@@ -14,7 +14,12 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         const id = glitter.getUUID();
                         let selectBidItem = glitter.getUrlParameter('selectBidItem');
                         let selectChild = glitter.getUrlParameter('selectChildItem');
-                        const formData = {};
+                        const formData = {
+                            contact_phone: gvc.glitter.share.public_api.GlobalUser.userInfo.userData.phone,
+                            serviceAddress: gvc.glitter.share.public_api.GlobalUser.updateUserData.userData.address,
+                            line_id: gvc.glitter.share.public_api.GlobalUser.updateUserData.userData.line,
+                            contact_email: glitter.share.public_api.GlobalUser.userInfo.account
+                        };
                         let formModel = undefined;
                         const saasConfig = window.saasConfig;
                         saasConfig.api.getPage(saasConfig.config.appName, "select_widget").then((data) => {
@@ -44,7 +49,7 @@ Plugin.createComponent(import.meta.url, (glitter, editMode) => {
                         }).view());
                         resolve(`
  <div class=" d-flex align-items-center justify-content-center" style="max-width:calc(100vw - 10px);">
-  <div class="rounded " style="width:700px;border-radius:24px;max-width:calc(100% - 10px);background:white;overflow-y:auto;">
+  <div class="rounded " style="width:700px;border-radius:24px;max-width:calc(100% - 10px);background:white;overflow-y:auto;overflow-x:hidden;">
   <div class="w-100 d-flex align-items-center border-bottom justify-content-center position-relative bg-white rounded-top" style="height: 68px;">
         <h3 class="modal-title fs-4">填寫服務表單</h3>
         <i class="fa-solid fa-xmark text-dark position-absolute " style="font-size:20px;transform: translateY(-50%);right: 20px;top: 50%;cursor: pointer;" onclick="${gvc.event(() => {
