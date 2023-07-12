@@ -36,10 +36,10 @@ TriggerEvent.create(import.meta.url, {
                             data: JSON.stringify({
                                 invoice_data:params
                             })
-                        }).then((response: any) => {
+                        }).then((r: any) => {
                             setTimeout(()=>{
                                 dialog.dataLoading({visible: false})
-                                if(response.result&&response.data.result){
+                                if(r.result&&r.response.result){
                                     dialog.successMessage({text:"發票開立成功!"})
                                 }else{
                                     dialog.errorMessage({text:"發票開立失敗!"})
