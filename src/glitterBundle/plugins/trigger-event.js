@@ -360,8 +360,7 @@ ${(() => {
                                                             obj.dataPlaceExpand = obj.dataPlaceExpand ?? {};
                                                             obj.errorPlaceExpand = obj.errorPlaceExpand ?? {};
                                                             obj.blockExpand = obj.blockExpand ?? {};
-                                                            return `<div class="mt-2 border-white rounded" style="border-width:3px;">
-${Editor.toggleExpand({
+                                                            return `<div class="mt-2 border-white rounded" style="border-width:3px;">${Editor.toggleExpand({
                                                                 gvc: gvc,
                                                                 title: "<span class='text-black' style=''>返回事件</span>",
                                                                 data: obj.dataPlaceExpand,
@@ -386,8 +385,7 @@ ${Editor.toggleExpand({
                                                                 },
                                                                 class: ` `,
                                                                 style: `background:#65379B;border:2px solid white;`,
-                                                            })}
-</div>` + `<div class="mt-2 border-white rounded" style="border-width:3px;">${Editor.toggleExpand({
+                                                            })}</div>` + `<div class="mt-2 border-white rounded" style="border-width:3px;">${Editor.toggleExpand({
                                                                 gvc: gvc,
                                                                 title: "<span class='text-black' style=''>異常返回值</span>",
                                                                 data: obj.errorPlaceExpand,
