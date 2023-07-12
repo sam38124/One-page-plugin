@@ -38,9 +38,10 @@ BackendPlugin.createPlugin((gvc) => {
                 }
 
                 return html`<h3 class=" pb-3">推播通知</h3>
-                <div class=" m-0" style="max-width:100%;width:250px;">
+                <div class=" m-0" style="max-width:100%;width:350px;">
                     ${(()=>{
                         vm.data.fincial=vm.data.fincial ?? "ezpay";
+                        vm.data.point=vm.data.point??"beta";
                         return gvc.map([
                             Editor.select({
                                 title:"選擇金流",
@@ -52,6 +53,18 @@ BackendPlugin.createPlugin((gvc) => {
                                 ],
                                 callback:(text)=>{
                                     vm.data.fincial=text
+                                }
+                            }),
+                            Editor.select({
+                                title:"站點",
+                                gvc:gvc,
+                                def:vm.data.point,
+                                array:[
+                                    {title:"測試區",value:"beta"},
+                                    {title:"正式區",value:"official"},
+                                ],
+                                callback:(text)=>{
+                                    vm.data.point=text
                                 }
                             }),
                             Editor.editeInput({
@@ -78,7 +91,6 @@ BackendPlugin.createPlugin((gvc) => {
                     })()}
                 </div>
                 <div class="d-flex w-100">
-                    <div class="flex-fill"></div>
                     <button class="btn-warning btn" style="color:black;" onclick="${gvc.event(() => {
                         dialog.dataLoading({text: '設定中', visible: true})
                         saasConfig.api.setPrivateConfig(saasConfig.config.appName, "invoice_setting", vm.data).then((r: { response: any, result: boolean }) => {
